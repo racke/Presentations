@@ -452,6 +452,11 @@ b OK NAMESPACE completed.
 		das als Bug des Clients zu werten, führt beim Anwender doch zu
 		erheblicher Verwirrung.
 	  </para>
+	  <para>Die automatische Konfiguration des Namespace gemäß RFC 2342
+		funktioniert bei einigen IMAP-Clients nicht. Für den Anwender erscheint
+		es dann so, als ob er nur Unterordner von <literal>INBOX</literal>
+		anlegen kann.
+	  </para>
 	</section>
 	<section>
 	  <title>Konfiguration</title>
@@ -545,7 +550,7 @@ to "$VDIR/."
 	</para>
 	<section><title>Kalender</title>
 	  <para>Die Kalenderfunktionen werden in der Konfigurationsdatei 
-		<file>calendarmode</file> festgelegt. 
+		<filename>calendarmode</filename> festgelegt. 
 		Diese sind aktiviert, wenn die Datei die Werte <literal>local</literal>
 		(lokaler Modus) oder <literal>net</literal> (Groupware-Modus) enthält.
 	  </para>
@@ -609,11 +614,20 @@ make install-configure
 	  <varlistentry><term><ulink url="http://www.courier-mta.org/" /></term>
 		<listitem><para>Courier Homepage</para></listitem>
 	  </varlistentry>	  
-	  <varlistentry><term><ulink url="http://lists.sourceforge.net/mailman/listinfo/courier-users">courier-users</ulink></term>
-		<listitem><para>Allgemeine Mailingliste für Courierbenutzer</para></listitem>
-	  </varlistentry>	  
+	  <varlistentry><term><ulink url="http://www.courier-mta.org/FAQ.html" /></term>
+		<listitem><para>Courier FAQ</para></listitem>
+	  </varlistentry>
 	  <varlistentry><term><ulink url="http://lists.sourceforge.net/mailman/listinfo/courier-announce">courier-announce</ulink></term>
 		<listitem><para>Ankündigungen zum Courier-Mailserver</para></listitem>
+	  </varlistentry>	  
+	  <varlistentry><term><ulink url="http://lists.sourceforge.net/mailman/listinfo/courier-users">courier-users</ulink></term>
+		<listitem><para>Mailingliste für Courier-Mailserver</para></listitem>
+	  </varlistentry>	  
+	  <varlistentry><term><ulink url="http://lists.sourceforge.net/mailman/listinfo/courier-imap">courier-imap</ulink></term>
+		<listitem><para>Mailingliste für Courier-IMAP</para></listitem>
+	  </varlistentry>	  
+	  <varlistentry><term><ulink url="http://lists.sourceforge.net/mailman/listinfo/courier-maildrop">maildrop</ulink></term>
+		<listitem><para>Mailingliste für Maildrop</para></listitem>
 	  </varlistentry>	  
 	</variablelist>
 	<section>
