@@ -90,7 +90,8 @@
 	  zum Zugriff auf Emails. Dabei werden die einzelnen Emails in einer
 	  Hierarchie von Verzeichnisse abgelegt. Die Vorteile dieses Verfahrens
 	  gegenüber Mailboxdateien sind geringerer Resourcenbedarf, keine
-	  Lockingprobleme und gleichzeitiger 
+	  Lockingprobleme (auch wenn sich die Postfächer auf einem NFS-Dateisystem
+	  befinden) und gleichzeitiger 
 	  Lese- und Schreibzugriff durch mehrere Mailclients.
 	</para>
 	<para>
@@ -145,6 +146,11 @@ maildirmake /home/racke/Maildir
 maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  </programlisting>
 	 </section>
+	<section><title>Interne Struktur</title></section>
+	<para>Das Verzeichnis <filename>courierimapkeywords</filename> enthält die
+	  Schlagwörter für die Emails in einem Maildir++-Ordner. Diese können
+	  mit <literal>maildirkw -L .</literal> angezeigt werden.
+	</para>
 </section>
 
 <section id="auth">
@@ -300,16 +306,66 @@ opt BOFHBADMIME=accept
 	  Neben den Features, die sich durch das 
 	  <link linkend="framework">Courier-Framework</link> ergeben,
 	  zeichnet sich Courier-IMAP u.a. durch geringen Speicherverbrauch,
-	  und Unterstützung verschiedener IMAP-Erweiterungen aus.
+	  und Unterstützung verschiedener IMAP-Erweiterungen aus:
 	</para>
+	<itemizedlist>
+	<listitem><para>IMAP Schlagwörter</para></listitem>
+	</itemizedlist>
+	
+	<section>
+	  <title>Namespaces</title>
+	  <para>
+		...
+	  </para>
+	</section>
+
+	<section>
+	  <title>Typische Probleme</title>
+	  <para>Einige moderne IMAP-Clients öffnen für
+		jeden Ordner eine Verbindung zum IMAP-Server. Bei einer konservativen
+		Einstellung für <literal>MAXPERIP</literal> wie die Voreinstellung 4
+		stehen schnell zu wenig Verbindungen zur Verfügung. Das kann z.B. dazu
+		führen, daß der IMAP-Client einen leeren Ordner anzeigt. Sicherlich ist
+		das als Bug des Clients zu werten, führt beim Anwender doch zu
+		erheblicher Verwirrung.
+	  </para>
+	</section>
 	<section>
 	  <title>Konfiguration</title>
-	  <para>
-		Die Standardeinstellung für die maximale Anzahl von einer IP-Adresse
-		ausgehenden Verbindungen (<literal>MAXPERIP</literal>) ist 4. Dies ist im
-		praktischen Betrieb normalerweise zu knapp bemessen, da diverse
-		IMAP-Clients mehrere Verbindungen zum IMAP-Server gleichzeitig aufbauen.
+	  <para>Ausgewählte Konfigurationsvariablen aus
+		<filename>/etc/courier/imapd</filename>:
 	  </para>
+	  <table>
+		<title>IMAP-Konfiguration</title>
+		<tgroup cols="2">
+		  <thead>
+			<row>
+			  <entry>Variable</entry>
+			  <entry>Beschreibung</entry>
+			  <entry>Standardwert</entry>
+			</row>
+		  </thead>
+		  <tbody>
+			<row>
+			  <entry>MAXDAEMONS</entry>
+			  <entry>maximale Anzahl der IMAP-Server</entry>
+			  <entry>40</entry>
+			</row>
+			<row>
+			  <entry>MAXPERIP</entry>
+			  <entry>maximale Anzahl der von einer IP-Adresse
+				ausgehenden Verbindungen 
+				  (u.U. mehrere pro IMAP-Client !)</entry>
+			  <entry>4</entry>
+			</row>
+			<row>
+			  <entry>IMAP_KEYWORDS</entry>
+			  <entry>IMAP-Schlagworte</entry>
+			  <entry>1</entry>
+			</row>
+			</tbody>
+		  </tgroup>
+		</table>
 	</section>
 </section>
 
@@ -431,6 +487,24 @@ make install-configure
 		<listitem><para>Ankündigungen zum Courier-Mailserver</para></listitem>
 	  </varlistentry>	  
 	</variablelist>
+	<section>
+	  <title>RFCs</title>
+	  <table><title>RFCs</title>
+		<tgroup cols="3">
+		  <tbody>
+			<row>
+			  <entry>2095</entry><entry>Authentication</entry><entry>CRAM-MD5</entry>
+			</row>
+			<row>
+			  <entry>2342</entry><entry>IMAP</entry><entry>NAMESPACE</entry>
+			</row>
+			<row>
+			  <entry>2595</entry><entry>SSL/TLS</entry><entry>STARTTLS</entry>
+			</row>
+		  </tbody>
+		</tgroup>
+	  </table>
+	</section>
 </section>
 
 </article>
