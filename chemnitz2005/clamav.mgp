@@ -13,9 +13,10 @@
 %tab 1 size 7,   prefix "      ", icon box "red" 30
 %tab 2 size 5,   prefix "                "
 %tab small size 5, prefix "      ", icon box "red" 30
-%tab code size 5, prefix "             ", font "typewriter"
 %tab aprog size 5, prefix "      ", font "standard"
 %tab prog size 3, prefix "                      ", font "typewriter"
+%tab lit size 5, prefix "             ", font "typewriter"
+%tab litbig size 7, prefix "             ", font "typewriter"
 %tab intro size 9, font "standard", center
 %tab intro2 size 6, font "standard", center
 %tab centersmall size 4, font "standard", center
@@ -55,7 +56,7 @@ Was bietet ClamAV ?
 
 # was entdeckt ClamAV
 	umfangreiche und aktuelle Datenbank
-		mehr als 30000 Viren, Würmer und Trojaner
+		mehr als 31000 Viren, Würmer und Trojaner
 
 	modernes Updateverfahren
 
@@ -72,6 +73,7 @@ Warum ClamAV ?
 # open anti virus.org
 	Signaturen up-to-date
 		häufige Aktualisierungen
+		konkurrenzfähig
 
 	breites Spektrum an Malware
 		Macros, JPEG, Phishing
@@ -107,6 +109,8 @@ Architektur
 		
 	Virusdatenbank
 
+	Infrastruktur & Updates
+
 	Werkzeuge
 
 	Dämon
@@ -120,11 +124,13 @@ Engine
 		
 # Archivbomben
 	Archive und komprimierte Dateien
+		ZIP, RAR, Cabinet, CHM
 
 	Portable Executable Dateien
 		UPX, FSG, Petite
 
 	Email-Attachments
+		mbox, Maildir, Datei
 
 %page
 
@@ -145,15 +151,34 @@ Infrastruktur
 	DNS-Server
 		current.cvd.clamav.net
 
-	fast 100 Spiegelserver
+	Spiegelserver
 		database.clamav.net
+		db.local.clamav.net
 		db.de.clamav.net
-
-	Updates innerhalb einer Minute
 
 %page
 
-freshclam
+DNS-Abfrage
+
+	TXT-Datensatz abfragen
+
+&lit dig +short -t TXT current.cvd.clamav.net
+
+&lit "0.83:29:748:1110011436"
+
+%page
+
+Spiegelserver
+
+	90 Spiegelserver
+		
+	Updates innerhalb einer Minute
+
+	2.5 TByte je Monat (August 2004)
+
+%page
+
+Updates mit freshclam
 
 	Datenbankversionsprüfung durch DNS
 
@@ -173,7 +198,7 @@ freshclam
 	viele Clients im LAN
 		Proxy
 		interner Webserver
-			DatabaseMirror clamav.local
+&lit DatabaseMirror clamav.local
 
 %page
 
@@ -194,7 +219,7 @@ Dämon
 	Unix/TCP Sockets
 
 	Threads
-	
+
 ##
 ## KONFIGURATION
 ##
@@ -203,6 +228,8 @@ Dämon
 Konfiguration
 
 	Benutzer und Pfade
+
+	Dateitypen
 
 # ClamAV Benutzer		
 	Grenzen und Regeln für Archive
@@ -221,6 +248,24 @@ Benutzer und Pfade
 	AllowSupplementaryGroups
 
 	DatabaseDirectory /var/lib/clamav
+
+%page
+
+Dateitypen
+
+	ScanArchive
+
+	ScanMail
+
+	ScanPE
+		Portable Executable
+
+	ScanHTML
+&aprog HTML-Normalisierung und Dechiffrierung 
+&aprog von MS Script Encoder Code
+
+	ScanOLE2
+&aprog Microsoft Office Makros
 			
 %page
 
@@ -254,30 +299,33 @@ Regeln für Archive
 	ArchiveMaxCompressionRatio 250
 		Oversized.ArchiveType, z.B. Oversized.Zip
 
-%page
-
-Macros
-
-	ScanHTML
-&aprog HTML-Normalisierung und Dechiffrierung 
-&aprog von MS Script Encoder Code
-
-	ScanOLE2
-&aprog Microsoft Office Macros
 
 %page
 
 freshclam Konfiguration
 
 	/etc/clamav/freshclam.conf
-&code DatabaseOwner clamav
-&code DatabaseDirectory /var/lib/clamav/
-&code UpdateLogFile /var/log/clamav/freshclam.log
-&code DNSDatabaseInfo current.cvd.clamav.net
-&code DatabaseMirror db.de.clamav.net
-&code DatabaseMirror database.clamav.net
-&code MaxAttempts 5
-&code NotifyClamd
+%font "typewriter"
+&litbig DatabaseOwner clamav
+&litbig DatabaseDirectory /var/lib/clamav/
+&litbig UpdateLogFile /var/log/clamav/freshclam.log
+&litbig DNSDatabaseInfo current.cvd.clamav.net
+&litbig DatabaseMirror db.de.clamav.net
+&litbig DatabaseMirror database.clamav.net
+&litbig MaxAttempts 5
+&litbig NotifyClamd
+
+%page
+
+freshclam Aufruf
+
+&prog root@linuxia.de:~# freshclam
+&prog ClamAV update process started at Sat Mar  5 11:04:53 2005
+&prog main.cvd is up to date (version: 29, sigs: 29086, f-level: 3, builder: tomek)
+&prog Downloading daily.cvd [*]
+&prog daily.cvd updated (version: 748, sigs: 2274, f-level: 4, builder: ccordes)
+&prog Database updated (31360 signatures) from db.de.clamav.net (IP: 62.112.154.203)
+&prog Clamd successfully notified about the update.
 
 ##
 ## Praxis
@@ -302,12 +350,13 @@ Exim Vorbereitungen
 
 	Content-Filter in Local/Makefile
 		
-		&code WITH_CONTENT_SCAN=yes
+		&lit WITH_CONTENT_SCAN=yes
 
 	Leserechte für clamd
 		
-		&code /var/spool/exim4/scan
-		&code adduser clamav Debian-exim
+		&lit /var/spool/exim4/scan
+		&lit adduser clamav Debian-exim
+		&lit /etc/init.d/clamav-daemon restart
 
 %page
 
@@ -326,11 +375,6 @@ Exim Konfiguration
 &prog deny message = Hallo Virusschleuder ($malware_name)
 &prog	malware = */defer_ok
 
-%page
-
-amavisd-new
-
-	http://www.ijs.si/software/amavisd/
 
 %page
 
@@ -348,6 +392,47 @@ sendmail und clamav-milter
 	Sendmail neu starten
 &prog cd /etc/mail; make
 &prog /etc/init.d/sendmail reload
+
+%page
+
+amavisd-new und postfix
+
+	Benutzer
+
+&lit adduser clamav amavis
+&lit /etc/init.d/clamav-daemon restart
+
+	amavisd
+
+&lit $inet_socket_port = 10024;    
+
+%page 
+
+Postfix Konfiguration
+
+	Emails an amavisd weiterleiten 
+		/etc/postfix/main.cf
+
+&lit content_filter=smtp-amavis:[127.0.0.1]:10024
+
+	Filter definieren und SMTPD ohne Filter
+		/etc/postfix/master.cf
+
+&lit smtp-amavis unix - - n - 2  smtp
+
+&lit 127.0.0.1:10025 inet n - n - -  smtpd
+&lit    -o content_filter=
+&lit    -o smtp_send_xforward_command=yes'
+
+%page
+
+Sympa
+
+	Programm
+&lit antivirus_path /usr/bin/clamscan
+
+	Kommandozeilenargumente
+&lit antivirus_args -stdout --unzip --unrar --arj --unzoo --lha
 
 ##
 ## Community
@@ -378,7 +463,7 @@ Mailinglisten
 	clamav-announce@lists.clamav.net
 		Ankündigung neuer Version
 
-	clamav-users@lists.clamav.net	
+	clamav-users@lists.clamav.net
 		Benutzer
 
 	clamav-devel@lists.clamav.net
@@ -398,5 +483,17 @@ Virenkandidaten vorschlagen
 		http://www.clamav.net/sendvirus.html
 
 
+%page
+
+3rd Party
+
+	ClamWin
+		ClamAV GUI für Windows
+	
+	KlamAV
+		ClamAV GUI für KDE
+
+	samba-vscan
+		VFS-Modul
 # Q&A:
 # Fragen wiederholen
