@@ -1,0 +1,77 @@
+INTRODUCTION
+
+Motivation
+Features
+History
+up-to-date
+
+PHISHING
+
+
+ARCHITECTUR
+
+
+
+SCENARIOS MAILSERVER
+
+- sendmail/clamav-milter
+- MTA/amavisd-new
+
+FRESHCLAM
+
+THIRD-PARTY SOFTWARE
+
+COMMUNITY
+- submit samples/false positives
+- mailing lists
+
+
+Features
+- POSIX complaint, portable
+- Fast scanning
+- on-access scanning Linux/FreeBSD
+...
+
+Struktur
+- Datenbankverzeichnis (/var/lib/clamav)
+- clamscan, clamdscan
+- clamd.conf
+- Daemon
+
+Funktionsweise
+
+     The  daemon  listens  for incoming connections on Unix or TCP socket and scans files or directories on demand. It's a part of the Clam AntiVirus package. It
+       reads its configuration information from a clamd.conf file. It provides on-access scanning feature (clamuko) under Linux.
+
+Commands
+
+     PING   Check the server's state. It should reply with "PONG".
+
+       VERSION
+              Print a version information.
+
+       RELOAD Reload the virus databases.
+
+       QUIT   Perform a clean exit.
+
+       SCAN file/directory
+              Scan a file or a directory (recursively) with archive support enabled (if not disabled in clamd.conf). A full path is required.
+
+       RAWSCAN file/directory
+              Scan a file or directory (recursively) with archive support disabled. A full path is required.
+
+       CONTSCAN file/directory
+              Scan a file or directory (recursively) with archive support enabled and continue scanning even when virus is found. A full path is required.
+
+       STREAM Scan stream - on this command clamd will return "PORT number" and you can connect to that port and send a data to scan.
+
+
+database
+
+- main.cvd
+- daily.cvd
+
+3rd party software
+
+
+clamav-milter
