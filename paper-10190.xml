@@ -21,25 +21,33 @@
 	  die konsequente Unterstützung des Maildir++-Formats für die 
 	  Speicherung der Emails, Authentifizierung mittels eines speziellen
 	  Dienstes für System- und virtuelle Konten, sowie geteilte Konten.
+	  Dazu werden offene Standards wie LDAP und SSL/TLS unterstützt.
 	</para>
 	<para>
-	  Offene Standards wie LDAP, SSL/TLS ...
-	</para>
-	<para>
-	  Courier wurde von Sam Varshavchik entwickelt und nach wie vor ....
+	  Courier entstand aus verschiedenen Projekten von Sam Varshavchik,
+	  der auch heute noch den größten Anteil an der Weiterentwicklung
+	  dieser Software hat.
 	</para>
 </section>
 
 <section>
 	<title>Pro und Contra</title>
 	<para>
-	  Für den EinsatzVorteile:
+	  Courier zeichnet sich dadurch aus, das es sowohl als umfassendes
+	  Paket aus Maildiensten verwendet werden kann als auch
+	  in Kombinationen von verschiedenen Softwarepaketen, z.B.
+	  mit Exim oder Postfix als SMTP-Server.
 	</para>
-	  <itemizedlist>
-		<listitem><para>Komplettpaket</para></listitem>
-		<listitem><para>Flexibilität</para></listitem>
-		<listitem><para>kontinuierliche Weiterentwicklung und Support auf der Mailingliste</para></listitem>
-	  </itemizedlist>
+	<para>
+	  Ein weiterer wichtiger Pluspunkt ist die kontinuierliche
+	  Weiterentwicklung und der umfangreiche Support auf den
+	  Mailinglisten vom Autor und anderen Interessierten.
+	</para>	
+	<para>
+	  Für den Einsatz von Courier ist eine gewisse Einarbeitung erforderlich,
+	  zumal die Standardkonfiguration nicht für den typischen Kundenkreis
+	  eines ISP geeignet ist.
+	</para>
 </section>
 
 <section>
@@ -105,7 +113,7 @@
 	</para>
 	<para>
 	  Die wichtigsten Authentifizierungsmodule neben dem 
-	  Authentifizierungsdaemon (authdaemon) sind:
+	  Authentifizierungsdämon (authdaemon) sind:
 	</para>
 
 	<variablelist>
@@ -113,28 +121,44 @@
 		<listitem><para>PAM-Authentifizierung</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authuserdb</term>
-		<listitem><para></para></listitem>
+		<listitem><para>Authentifizierung anhand einer Unix-Datenbank</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authmysql</term>
-		<listitem><para>Authentifizierung durch eine MySQL-Datenbank</para></listitem>
+		<listitem><para>Authentifizierung anhand einer MySQL-Datenbank</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authpgsql</term>
-		<listitem><para>Authentifizierung durch eine PostgreSQL-Datenbank</para></listitem>
+		<listitem><para>Authentifizierung anhand einer PostgreSQL-Datenbank</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authldap</term>
-		<listitem><para></para></listitem>
+		<listitem><para>Authentifizierung anhand eines LDAP-Verzeichnisses</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authvchkpw</term>
-		<listitem><para></para></listitem>
+		<listitem><para>Authentifizierung anhand von virtuelle Domains von vpopmail</para></listitem>
 	  </varlistentry>
 	</variablelist>  
+	<para>Der Authentifizierungsdämon ist ein als Dämon laufender Proxy, der
+	  dauerhafte Verbindungen zu der Authentifizierungsdatenbank herstellt
+	  und dadurch eine deutliche schneller Authentifizierung ermöglicht, 
+	  als mit den oben genannten Authentifizierungsmodulen. authdaemon
+	  kann ebenfalls mehrere Authentifizierungsmodule nacheinander befragen.
+	</para>
 </section>
 
 <section>
 	<title>SMTP-Server (Courier)</title>
 	<para>
+	  Die Konfiguration des SMTP-Servers erfolgt über eine Anzahl von
+	  Konfigurationsdateien, die sich in einem Verzeichnis befinden.
+	  Wir werden als Konfigurationsverzeichnis, auch für die anderen
+	  Komponenten, <filename>/etc/courier</filename> verwenden.
+	</para>
+	<para>
+	  Einige Konfigurationsdateien können anstatt als einfache Textdatei 
+	  auch als Sammlung von Textdateien in einem Unterverzeichnis von
+	  <filename>/etc/courier</filename> zur Verfügung gestellt werden.
 	</para>
 </section>
+
 
 <section>
 	<title>Maildrop</title>
@@ -142,6 +166,47 @@
 	</para>
 </section>
 
+<section>
+	<title>SqWebMail</title>
+	<para>
+	  Die Webmailvariante aus dem Courierpaket nennt sich SqWebMail und besteht
+	  aus einem minimalen CGI-Programm und einem Dämon für die Auslieferung der
+	  eigentlichen HTML-Seiten.
+	</para>
+	<para>
+	</para>
+	<para>
+	  Im Gegensatz zu vielen anderen Webmailer arbeitet SqWebMail auf der
+	  Dateisystemebene und verbindet sich nicht mit einem vorhandenen POP-
+	  bzw. IMAP-Server. Häufig wird SqWebMail aber durch eine solche Lösung
+	  ersetzt.
+	  </para>
+  </section>
+
+<section>
+	<title>Installation</title>
+	<para>
+	  Die Installation von Courier kann direkt aus den Sourcen erfolgen
+	  oder es können Debian- bzw. RPM-Pakete verwendet werden.
+	</para>
+	<para>
+	  Die Installation aus den Sourcen wird umfangreich im
+	  <filename>INSTALL</filename>-Dokument beschrieben, daß im
+	  Quellarchive vorhanden ist bzw. online verfügbar ist.
+	 </para>
+	<para>
+	  Zusätzlich zu den typischen Befehlen zur Kompilierung und Installation
+	  eines Open-Source-Pakets werden im letzten Schritt die
+	  Konfigurationsdateien installiert bzw. aktualisiert:
+	  <programlisting>
+./configure
+make
+make install
+make install-configure
+	  </programlisting>
+	 </para> 
+</section>
+	
 <section>
 	<title>Weitere Quellen</title>
 	<table>
