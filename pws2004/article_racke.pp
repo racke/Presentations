@@ -315,8 +315,8 @@ zu bauen.
 
 ===Performance
 
-Die Wahl von Perl als Programmiersprache für Interchange war auch in
-Hinsicht auf die Performance der Anwendung als gut erwiesen. Mit
+Die Wahl von Perl als Programmiersprache für Interchange hat sich auch
+im Hinblick auf die Performance der Anwendung als gut erwiesen. Mit
 ähnlichen Systemen in anderen Programmiersprache ist Interchange
 konkurrenzfähig und wird für großen Websites mit viel Traffic 
 eingesetzt. Selbstredend sind dann Optimierungsmaßnahmen erforderlich.
