@@ -19,7 +19,7 @@
 %tab litsmall1 size 3, prefix "           ", font "typewriter"
 %tab litsmall2 size 3, prefix "             ", font "typewriter"
 %tab intro size 9, font "standard", center
-%tab intro2 size 6, font "standard", center
+%tab intro2 size 5, font "standard", center
 %tab centersmall size 4, font "standard", center
 #
 #
@@ -46,17 +46,17 @@ Kriterien
 
 	Features
 		Plattformen, Umfang, Aktualität
-
+&three_fit
 	Installation
 		Updates, Automatisierung
-
+&three_fit
 # Zukunftssicherheit: Plattformen
 	Never change a running system
 		Stabilität, Sicherheit
-
+&three_fit
 	Troubleshooting
 		BTS, Community, kommerzieller Support
-
+&three_fit
 	Entwicklung
 		Pakete, Werkzeuge, Varianten
 
@@ -88,7 +88,7 @@ Umfang
 	Perlmodule
 		Amavis, Sympa, Interchange
 
-	moderne Server
+	moderne  Server
 		MyDNS, pure-ftpd
 
 %page
@@ -108,15 +108,21 @@ Aktualität
 
 Installation
 
-	vernünftige Voreinstellungen
-		Anpassung 
-
+	Erstinstallation
+		Debian Installer
+&three_fit		
+	Voreinstellungen
+		Paketauswahl (Mail, FTP)
+		Debconf
+		Anpassung für hohe Anforderungen
+&three_fit		
 	Automatisierung
 		Images
 		Debconf Preseed
 		FAI
-
+&three_fit		
 	Updates
+		apt-get
 		Konfigurationsdateien
 
 %page
@@ -126,6 +132,11 @@ Stabilität
 	keine Releasetermine
 
 	keine Experimente
+
+	Richtlinien (Policy)
+		Konfigurationsdateien in /etc
+		Abhängigkeiten
+		Installationsskripte
 
 %page
 
@@ -171,7 +182,7 @@ Community
 
 Support
 
-	http://www.debian.org/consultants/	
+&intro2	http://www.debian.org/consultants/	
 
 %page
 
@@ -180,6 +191,9 @@ Lösungen
 	Einsatz von testing/sid
 
 	Backports
+
+	Debianfamilie
+		Ubuntu
 
 	debian-volatile
 
@@ -194,6 +208,7 @@ Backports
 		debhelper, debconf
 		
 	Adrian Bunk
+		http://www.fs.tum.de/~bunk/packages/
 		
 	www.backports.org
 		libfoo_1.2.3-4 => libfoo_1.2.3-3.backports.org.1		
@@ -208,7 +223,6 @@ Backports
 debian-volatile
 
 # The main issue of volatile is to allow system administrators to update their systems in a nice, consistent way without getting the drawbacks of using unstable, even without getting the drawback for the selected packages.
-	
 	schnell veränderliche Software
 		Virenscanner
 		Spamfilter
@@ -230,5 +244,27 @@ Softwareauswahl
 		Debian Maintainer
 
 %page
+
+Beispiele
+
+&one_fit Webserver
+&two_fit Apache
+&three_fit
+&one_fit Mailserver
+&two_fit Exim
+&two_fit Courier
+&three_fit
+&one_fit Datenbank
+&two_fit MySQL
+&three_fit
+&one_fit DNS
+&two_fit bind => tinydns => MyDNS
+&three_fit
+&one_fit FTP
+&two_fit ProFTPd => PureFTPd
+		
+%page
 %nodefault
 %center, fore "black"
+
+# empty line above is needed
