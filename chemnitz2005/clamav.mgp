@@ -509,8 +509,19 @@ Kandidaten vorschlagen
 		VFS-Modul
 
 %page
-%nodefault
-%center, fore "black"
+
+Abspann
+
+	Folien
+		http://www.linuxia.de/Presentations/ClamAV/
+
+	Email
+		racke@linuxia.de
+
+	Credits 
+		ClamAV Team
+		Stephen Gran (Debian-Maintainer)
+
 
 # Q&A:
 # Fragen wiederholen
