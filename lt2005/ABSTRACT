@@ -1,0 +1,46 @@
+Clam AntiVirus 
+
+Seit 2004 erfreut sich ClamAntivirus (kurz ClamAV) deutlich gestiegener 
+Beliebtheit und kann als erster Open-Source-Virenscanner den
+Vergleich mit kommerziellen Produkten standhalten. Ausschlaggebend
+für diese rasante Entwicklung ist die ständige Anpassung an aktuelle 
+Bedrohungen durch häufige Aktualisierungen der Virusdatenbank und 
+der Weiterentwicklung des Programmcodes durch das ClamAV-Team.
+
+Die Arbeit der Entwickler konzentriert sich auf den Einsatz von ClamAV als
+Virenscanner für Mailserver. Dennoch gibt es einige andere
+Anwendungsmöglichkeiten für diese Software. Eine Kommandozeilenversion
+ermöglicht die Überprüfung von Dateien und auch die Überprüfung
+unmittelbar beim Zugriff (on-access scanning) ist möglich. Einige
+Emailclients erlauben auch die Integration von ClamAV zum Scannen
+von Emailanhängen.
+
+Geschwindigkeit, Skalierbarkeit und Stabilität sind neben einer guten
+Erkennungsrate die Hauptanforderungen an einen Virenscanner. Zur
+Erfüllung der ersten beiden Kriterien ist ClamAV als Dämon realisiert,
+der in mehreren Threads abläuft. Mit dem Erscheinen der Version 0.80
+im Oktober 2004 ist auch ein wenig Ruhe in die mitunter etwas hektische
+Entwicklung eingekehrt. Neben der erwähnten Kommandozeilenversion
+komplettieren ein Werkzeug zum automatischen Update der Virusdatenbank
+und eine dynamische Bibliothek das Gesamtpaket.
+
+Praktisch alle gängigen Mailserver für Unix wie Exim, Postfix, Courier,
+Sendmail und Qmail können mit ClamAV zusammenarbeiten, entweder direkt, 
+über einen sogenannten Milter oder mit einem Framework für die
+Viruserkennung (AmaViS o.ä). Unterstützung für bekannte Archivierungs- und
+Komprimierungssoftware ist eingebaut, die Kommandozeilenversion
+kann außerdem zusätzlich externe Entpacker verwenden.
+
+Nach einem kurzen Überblick über die Architektur von ClamAV und
+der dazugehörigen Infrastruktur für die Verteilung der Virusdatenbank
+beschäftigt sich der Vortrag schwerpunktmäßig mit der Konfiguration 
+und verschiedenen Anwendungsszenarios. Dabei wird auf die Vermittlung von
+einfachen "Kochrezepten" für die unterschiedlichen Fallbeispiele Wert 
+gelegt. Abgeschlossen wird der Vortrag durch einen Ausblick auf die
+zukünftige Entwicklung von ClamAV und durch Hinweise auf weiterführende 
+Informationen.
+
+
+
+
+
