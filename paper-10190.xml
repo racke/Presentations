@@ -111,16 +111,31 @@ maildirmake /home/racke/Maildir
 	</programlisting>
 	<section>
 	  <title>Quotas</title>
+	  <para>Die bevorzugte Methode, um Platzbeschränkungen (Quotas) auf
+		Benutzerpostfächer zu erzwingen, sind 
+		Quotas pro Benutzer, basierend auf dem Dateisystem 
+		(<ulink url="http://www.tldp.org/HOWTO/Quota.html" />). 
+	  </para>
+	  <para>Diese Lösung ist
+		offensichtlich ungeeignet für virtuelle Postfächer, wo viele
+		Postfächer die gleiche Benutzerkennung verwenden. Für diesen Fall
+		kann der Speicherplatz in Maildir++-Postfächer durch sogenannte
+		freiwillige Quotas eingeschränkt werden. Diese funktionieren
+		jedoch nur, wenn alle  Anwendungen, die Emails in
+		diese Postfächer ausliefern, sich an diese Konvention halten.
+		Außerdem dürfen die Benutzer keinen direkten Zugriff auf das
+		Dateisystem haben, ansonsten können sie die Beschränkungen einfach
+		umgehen.
+<!-- TODO: add more information from README.maildirquota -->
+	  </para>
+	  <para>
+		Beim Anlegen eines Maildir++-Postfachs kann die Quota mit 
+		der Kommandozeilenoption <literal>-q</literal> des
+		<literal>maildirmake</literal>-Kommandos eingerichtet werden:
+	  </para>
 	  <programlisting>
 maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  </programlisting>
-	  <para>
-		Mit der Kommandozeilenoption <literal>-q</literal> wird ein Quota für
-		das 
-		Maildir eingerichtet. Diese Maildir-Quotas sind freiwillig und
-		funktionieren deshalb nur so lange alle Anwendungen, die Emails in
-		dieses Maildir ausliefern, sich an diese Konvention halten.
-	  </para>
 	 </section>
 </section>
 
