@@ -156,7 +156,7 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 		kompiliert.
 	  </para>
 	 </section>
-	<section><title>Interne Struktur</title></section>
+	<section><title>Interne Struktur</title>
 	<para>Ist für ein Postfach Quota gesetzt, wird diese in der Datei
 	  <filename>maildirsize</filename> verwaltet.
 	</para>
@@ -164,6 +164,7 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  Schlagwörter für die Emails in einem Maildir++-Ordner. Diese können
 	  mit <literal>maildirkw -L .</literal> angezeigt werden.
 	</para>
+	</section>
 </section>
 
 <section id="auth">
