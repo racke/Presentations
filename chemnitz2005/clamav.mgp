@@ -1,0 +1,256 @@
+# ClamAV-Vortrag Chemnitzer Linux-Tage 2005
+#
+# Zeit: 45 Minuten + 10 Minuten Q&A
+# 
+# -----------------------------------------------------------
+# defaults
+%deffont "standard" tfont "verdana.ttf"
+%default 1 fore "blue", back "white", font "standard", center
+%default 2 fore "blue", back "white", font "standard"
+%default 4 fore "black", back "white", font "standard", left
+%tab 1 size 7, prefix "      ", icon box "red" 30
+%tab 2 size 5, prefix "                "
+%tab small size 5, prefix "      ", icon box "red" 30
+#
+#
+%page
+%charset "iso8859-1"
+
+# Einleitung:
+
+# Hinweis auf Fragen am Ende des Vortrags
+
+%nodefault
+%center, fore "black"
+
+# Part I: Architecture
+%page
+%font "standard"
+
+Was ist ClamAV ?
+
+	Open Source Software
+
+	Antivirus-Toolkit
+
+# Fokus
+	Mailscanner
+
+
+# Überleitung:
+# wie ist das Maildir++-Format entstanden
+
+%page
+
+Was bietet ClamAV ?
+
+	schneller und mächtiger Scanner
+		on-access Linux/FreeBSD
+
+# was entdeckt ClamAV
+	umfangreiche und aktuelle Datenbank
+		mehr als 30000 Viren, Würmer und Trojaner
+
+	modernes Updateverfahren
+
+	Engine in Bibliothek
+
+%page
+
+Warum ClamAV ?
+
+%page
+
+Wozu ClamAV ?
+
+	Scanner für MTAs
+		Exim,Courier,Postfix,Sendmail
+
+	Scanner für Proxys
+		FTP,WWW(Squid),POP3
+
+	On-Access Scanner
+
+	Plugin für MUAs
+
+	Virenscanner für Desktops
+
+##
+## ARCHITEKTUR
+##
+
+%page
+
+Architektur
+
+	Engine
+
+	Virusdatenbank
+
+	Dämonen und Tools
+
+%page
+
+Engine
+
+# Archivbomben
+	Archive und komprimierte Dateien
+
+	Portable Executable Dateien
+		UPX, FSG, Petite
+
+%page
+
+Virusdatenbank
+
+# ClamAV-Virusdatenbank, 
+	CVD-Dateien
+		digital signierte Tararchive
+
+	main.cvd
+
+	daily.cvd
+
+%page
+
+Datenbankupdates
+
+	digitale Signaturen
+
+	DNS-basierte Versionsabfragen
+
+%page
+
+freshclam
+
+	Dämon
+
+	cron
+
+	manuell
+
+##
+## KONFIGURATION
+##
+%page
+
+Konfiguration
+
+# ClamAV Benutzer		
+	Grenzen und Regeln für Archive
+
+	Macros
+
+	freshclam
+			
+%page
+
+Grenzen für Archive
+
+# "0" = unbegrenzt
+	ArchiveMaxRecursion 5
+
+# maximale Anzahl von Dateien
+	ArchiveMaxFiles 1000
+
+# maximale Dateigröße
+	ArchiveMaxFileSize 10M
+
+# maximale Komprimierungsrate
+
+
+%page
+
+Regeln für Archive
+
+# Archive als Virus markieren
+	ArchiveBlockEncrypted
+		Encrypted.ArchiveType, z.B. Encrypted.RAR
+
+# Archive über Limits als Virus markieren
+	ArchiveBlockMax
+		RAR.ExceededFileSize, Zip.ExceededFilesLimit
+
+# Archivbomben
+	ArchiveMaxCompressionRatio 250
+		Oversized.ArchiveType, z.B. Oversized.Zip
+
+%page
+
+Macros
+
+	ScanHTML
+		HTML normalisation and decryption of MS Script Encoder code
+
+	ScanOLE2
+		Microsoft Office document macros
+
+%page
+
+freshclam Konfiguration
+
+	DNSDatabaseInfo current.cvd.clamav.net
+
+##
+## Praxis
+##
+
+%page
+
+Integration
+
+	Exim 4
+
+	amavisd-new
+
+	sendmail und clamav-milter
+
+%page
+
+Exim 4
+
+	av_scanner = clamd:/var/run/clamav/clamd.ctl
+
+%page
+
+amavisd-new
+
+	http://www.ijs.si/software/amavisd/
+
+%page
+
+sendmail und clamav-milter
+
+	Definition in /etc/mail/sendmail.mc
+		INPUT_MAIL_FILTER(clmilter)
+		define(confINPUT_MAIL_FILTERS)
+
+##
+## Community
+##
+
+%page
+
+Community
+
+%page
+
+Virenkandidaten vorschlagen
+
+	Testen mit ClamAV Online Scanner
+		http://test.clamav.power-netz.de/
+
+	Vorschlag einreichen
+		http://www.clamav.net/sendvirus.html
+
+%page
+
+Mailinglisten
+
+
+%page
+
+Phishing
+
+# Q&A:
+# Fragen wiederholen
