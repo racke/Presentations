@@ -21,7 +21,7 @@
 	  die konsequente Unterstützung des Maildir++-Formats für die 
 	  Speicherung der Emails, Authentifizierung mittels eines speziellen
 	  Dienstes für System- und virtuelle Konten, sowie geteilte Konten.
-	  Dazu werden offene Standards wie LDAP und SSL/TLS unterstützt.
+	  Dazu werden offene Standards wie LDAP, SSL/TLS und IPv6 unterstützt.
 	</para>
 	<para>
 	  Courier entstand aus verschiedenen Projekten von Sam Varshavchik,
@@ -46,7 +46,9 @@
 	<para>
 	  Für den Einsatz von Courier ist eine gewisse Einarbeitung erforderlich,
 	  zumal die Standardkonfiguration nicht für den typischen Kundenkreis
-	  eines ISP geeignet ist.
+	  eines ISP geeignet ist. Dazu sind einige Einstellungen wie die maximale
+	  Anzahl der Verbindungen pro IP beim IMAP-Server und der Umgang mit nicht
+	  MIME-konformer Email zu konservativ.
 	</para>
 </section>
 
@@ -67,21 +69,44 @@
 	<para>
 	  Neben dem kompletten Quellpaket sind auch ausgewählte Komponenten
 	  als gesonderte Distributionen erhältlich. Dies sind Courier-IMAP,
-	  SqWebMail und Maildrop. Allerdings bestehen subtile Unterschiede beim
-	  Kompilieren aus dem Gesamtpaket bzw. den Einzelpaketen.
+	  SqWebMail und Maildrop. Allerdings bestehen mitunter subtile Unterschiede
+	  zwischen den aus dem Gesamtpaket erstellten Kompilaten und den
+	  Einzelpaketen.
 	</para>
 </section>
 
 <section>
 	<title>Maildir++</title>
 	<para>Courier benutzt das sogenannte Maildir++-Format zur Speicherung und
-	  zum Zugriff auf Emails. Mailboxdateien werden z.T. unterstützt,
-	  z.B. für die Auslieferung von Emails durch Maildrop.
-	</para>
-	<para>Maildir++ ist eine Erweiterung vom Maildir-Format und erlaubt
+	  zum Zugriff auf Emails. Dabei werden die einzelnen Emails in einer
+	  Hierarchie von Verzeichnisse abgelegt. Die Vorteile dieses Verfahrens
+	  gegenüber Mailboxdateien sind geringerer Resourcenbedarf, keine
+	  Lockingprobleme und gleichzeitiger 
+	  Lese- und Schreibzugriff durch mehrere Mailclients.
+	  Maildir++ ist eine Erweiterung des durch qmail eingeführten
+	  Maildir-Format und erlaubt 
 	  Platzbeschränkungen (Quota) unabhängig vom Dateisystem.
-<!-- Exim nativ, sonst deliverquota -->
 	</para>
+	<para>
+	  Mailboxdateien werden zwar z.T. unterstützt,
+	  z.B. für die Auslieferung von Emails durch Maildrop, empfehlenswert ist
+	  jedoch nur der Einsatz der Maildir-Formate.
+	</para>
+	<para>
+	  Andere SMTP-Server wie Exim beherrschen die Auslieferung in Maildirs
+	  entweder von Haus aus oder es existieren entsprechende Patches. Ist
+	  beides nicht möglich, kann zur lokalen Auslieferung von Emails entweder
+	  <literal>maildrop</literal> oder <literal>deliverquota</literal>
+	  verwendet werden.
+	</para>
+	<para>
+	  Zum Anlegen von Maildirs kann <literal>maildirmake</literal> verwendet
+	  werden: 
+	</para>
+	<programlisting>
+	  maildirmake /home/racke/Maildir
+	  maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
+	</programlisting>
 </section>
 
 <section>
@@ -121,7 +146,8 @@
 		<listitem><para>PAM-Authentifizierung</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authuserdb</term>
-		<listitem><para>Authentifizierung anhand einer Unix-Datenbank</para></listitem>
+		<listitem><para>Authentifizierung anhand einer Unix-Datenbank (GDBM
+			oder DB)</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authmysql</term>
 		<listitem><para>Authentifizierung anhand einer MySQL-Datenbank</para></listitem>
@@ -145,6 +171,27 @@
 </section>
 
 <section>
+	<title>Gemeinsame Ordner</title>
+	<para>Courier-IMAP und SqWebMail können zwei Typen von gemeinsamen Ordner
+	  verwenden: 
+	</para>
+	<orderedlist>
+	  <listitem><para>Basierend auf Dateizugriffsrechten, für Systeme mit
+		  traditionellen Shellbenutzerkonten</para></listitem>
+	  <listitem><para>Virtuelle gemeinsame Ordner, für geschlossene Systeme mit
+		  gemeinsamen Benutzer- und Gruppenkennungen</para></listitem>		
+	</orderedlist>
+	<para>
+	  Virtuelle gemeinsame Ordner basieren auf Zugangskontrollisten (ACL),
+	  die nicht dem gleichnamigen Dateisystem-ACL verwechselt werden sollten.
+	  Jeder Benutzer kann einem anderen Benutzer oder einer anderen
+	  Benutzergruppen den Zugriff auf einen Ordner gewähren. Durch die
+	  Zugangskontrollisten ist ein fein abgestufte Kontrolle der Zugriffsrechte
+	  möglich.
+	</para>
+</section>
+
+<section>
 	<title>SMTP-Server (Courier)</title>
 	<para>
 	  Die Konfiguration des SMTP-Servers erfolgt über eine Anzahl von
@@ -156,14 +203,67 @@
 	  Einige Konfigurationsdateien können anstatt als einfache Textdatei 
 	  auch als Sammlung von Textdateien in einem Unterverzeichnis von
 	  <filename>/etc/courier</filename> zur Verfügung gestellt werden.
+	  Dies ist sogar erforderlich, wenn man das Web-Administrationsfrontend
+	  verwenden möchte.
 	</para>
+<section>
+	  <title>Aliase</title>
+	<para>
+	  Systemaliase können z.B. in
+	  <filename>/etc/courier/aliases/system</filename> 
+	  abgelegt werden:
+	</para>
+	<programlisting>
+root: postmaster
+mailer-daemon: postmaster
+MAILER-DAEMON: postmaster
+postmaster: racke
+	</programlisting>
+	  <para>
+		Nach Änderungen ist das Programm <literal>makealiases</literal>
+		aufzurufen.
+	  </para>
+</section>
 </section>
 
+<section>
+	<title>IMAP-Server (Courier-IMAP)</title>
+	<para>
+	  Die Standardeinstellung für die maximale Anzahl von einer IP-Adresse
+	  ausgehenden Verbindungen (<literal>MAXPERIP</literal>) ist 4. Dies ist im
+	  praktischen Betrieb normalerweise zu knapp bemessen, da diverse
+	  IMAP-Clients mehrere Verbindungen zum IMAP-Server gleichzeitig aufbauen.
+	</para>
+</section>
 
 <section>
 	<title>Maildrop</title>
 	<para>
+	  Maildrop wird zur Filterung und lokalen Auslieferung von Emails
+	  verwendet.
 	</para>
+	<para>
+	  Folgendes einfache Beispiel illustriert die Filterung mit einem
+	  externen Programm:
+	</para>
+	<programlisting>
+import VDIR
+
+# Send everything smaller than 256 KB to Spamassassin
+if ($SIZE &lt; 262144)
+{
+	xfilter "/usr/bin/spamc -U /var/run/spamd.sock"
+
+	if (/^X-Spam-Status: Yes/:h)
+	{
+    	exception {
+	       to "$VDIR/.SPAM/."
+    	}
+	}	
+}
+
+to "$VDIR/."	  
+	</programlisting>
 </section>
 
 <section>
@@ -182,6 +282,33 @@
 	  ersetzt.
 	  </para>
   </section>
+
+<section>
+	<title>couriermlm</title>
+	<para>
+	  Auf den Mailinglistenserver aus dem Courierpaket möchte ich an dieser
+	  Stelle nicht weiter eingehen, da er eher geringe Verbreitung erfahren
+	  hat. Statt couriermlm können Alternativen wie Sympa oder Mailman
+	  eingesetzt werden.
+	</para>
+  </section>
+  
+<section>
+	<title>SSL/TLS</title>
+	<para>
+	  Alle relevanten Komponenten des Courier-Mailservers erlauben die
+	  Abwicklung über mit SSL/TLS geschützten Verbindungen. Dies geschieht
+	  entweder über direkt über einen speziellen Port (465 für SMTP,
+	  993 für IMAP und 995 für POP3) oder über die STARTTLS-Erweiterung
+	  der jeweiligen Protokolle.
+	</para>
+	<para>
+	  Durch Einsatz eines speziellen SSL/TLS-Wrappers
+	  (<literal>couriertls</literal>) werden keine gesonderten Programme
+	  benötigt, sondern es können dieselben wie für ungeschützte Verbindungen
+	  verwendet werden.
+	</para>
+</section>
 
 <section>
 	<title>Installation</title>
