@@ -8,23 +8,30 @@
 %deffont "typewriter" tfont "courbd.ttf"
 %default 1 fore "blue", back "white", font "standard", center
 %default 2 fore "blue", back "white", font "standard"
+%default 3 size 3, fore "black", back "white", font "standard", left
 %default 4 fore "black", back "white", font "standard", left
 %tab 1 size 7,   prefix "      ", icon box "red" 30
 %tab 2 size 5,   prefix "                "
 %tab small size 5, prefix "      ", icon box "red" 30
+%tab code size 5, prefix "             ", font "typewriter"
 %tab aprog size 5, prefix "      ", font "standard"
-%tab prog size 3, prefix "      ", font "typewriter"
+%tab prog size 3, prefix "                      ", font "typewriter"
+%tab intro size 9, font "standard", center
+%tab intro2 size 6, font "standard", center
+%tab centersmall size 4, font "standard", center
 #
 #
 %page
 %charset "iso8859-1"
-
 # Einleitung:
-
 # Hinweis auf Fragen am Ende des Vortrags
+%image "clam.png"
+%center
+&intro Clam AntiVirus
 
-%nodefault
-%center, fore "black"
+&intro2 Architektur, Konfiguration und Integration
+
+&centersmall Stefan Hornburg (Racke) <racke@linuxia.de>
 
 # Part I: Architecture
 %page
@@ -58,10 +65,17 @@ Was bietet ClamAV ?
 
 Warum ClamAV ?
 
-# lange Liste in Doku
-	portabel
+# lange Liste in Doku, BeOS
+	portabel und POSIX-kompatibel
 		Linux, *BSD, Mac OS X, Windows
 
+# open anti virus.org
+	Signaturen up-to-date
+		häufige Aktualisierungen
+
+	breites Spektrum an Malware
+		Macros, JPEG, Phishing
+		
 %page
 
 Wozu ClamAV ?
@@ -73,10 +87,13 @@ Wozu ClamAV ?
 		FTP,WWW(Squid),POP3
 
 	On-Access Scanner
+		Dazuko, Clamuko
 
 	Plugin für MUAs
 
+# Sourceforge Project of February
 	Virenscanner für Desktops
+		ClamWin
 
 ##
 ## ARCHITEKTUR
@@ -87,20 +104,27 @@ Wozu ClamAV ?
 Architektur
 
 	Engine
-
+		
 	Virusdatenbank
 
 	Werkzeuge
+
+	Dämon
 
 %page
 
 Engine
 
+	Kapselung in Bibliothek
+		libclamav (GPL)
+		
 # Archivbomben
 	Archive und komprimierte Dateien
 
 	Portable Executable Dateien
 		UPX, FSG, Petite
+
+	Email-Attachments
 
 %page
 
@@ -116,28 +140,40 @@ Virusdatenbank
 
 %page
 
-Datenbankupdates
+Infrastruktur
 
-	digitale Signaturen
+	DNS-Server
+		current.cvd.clamav.net
 
-	DNS-basierte Versionsabfragen
+	fast 100 Spiegelserver
+		database.clamav.net
+		db.de.clamav.net
+
+	Updates innerhalb einer Minute
 
 %page
 
 freshclam
 
-	Dämon
+	Datenbankversionsprüfung durch DNS
 
-	cron
+	digitale Signaturen
 
-	manuell
+	Proxy mit Authentifizierung
+
+	Fehlerbehandlung
+
 
 %page
 
-Update
+freshclam
 
-%filter "/usr/bin/freshclam --log=/tmp/fc.log --datadir=/var/tmp --stdout"
-%endfilter
+	manuell, Cron, Dämon
+		
+	viele Clients im LAN
+		Proxy
+		interner Webserver
+			DatabaseMirror clamav.local
 
 %page
 
@@ -149,12 +185,24 @@ Werkzeuge
 
 	clamdscan
 
+%page
+
+Dämon
+
+	clamd
+
+	Unix/TCP Sockets
+
+	Threads
+	
 ##
 ## KONFIGURATION
 ##
 %page
 
 Konfiguration
+
+	Benutzer und Pfade
 
 # ClamAV Benutzer		
 	Grenzen und Regeln für Archive
@@ -165,10 +213,11 @@ Konfiguration
 
 %page
 
-Benutzer
+Benutzer und Pfade
 
 	User clamav
 
+# read spool directory
 	AllowSupplementaryGroups
 
 	DatabaseDirectory /var/lib/clamav
@@ -210,16 +259,25 @@ Regeln für Archive
 Macros
 
 	ScanHTML
-		HTML normalisation and decryption of MS Script Encoder code
+&aprog HTML-Normalisierung und Dechiffrierung 
+&aprog von MS Script Encoder Code
 
 	ScanOLE2
-		Microsoft Office document macros
+&aprog Microsoft Office Macros
 
 %page
 
 freshclam Konfiguration
 
-	DNSDatabaseInfo current.cvd.clamav.net
+	/etc/clamav/freshclam.conf
+&code DatabaseOwner clamav
+&code DatabaseDirectory /var/lib/clamav/
+&code UpdateLogFile /var/log/clamav/freshclam.log
+&code DNSDatabaseInfo current.cvd.clamav.net
+&code DatabaseMirror db.de.clamav.net
+&code DatabaseMirror database.clamav.net
+&code MaxAttempts 5
+&code NotifyClamd
 
 ##
 ## Praxis
@@ -229,17 +287,44 @@ freshclam Konfiguration
 
 Integration
 
-	Exim 4
+	Exim
 
-	amavisd-new
+	amavisd-new und postfix
 
 	sendmail und clamav-milter
 
+	Sympa
+
+
 %page
 
-Exim 4
+Exim Vorbereitungen
 
-	av_scanner = clamd:/var/run/clamav/clamd.ctl
+	Content-Filter in Local/Makefile
+		
+		&code WITH_CONTENT_SCAN=yes
+
+	Leserechte für clamd
+		
+		&code /var/spool/exim4/scan
+		&code adduser clamav Debian-exim
+
+%page
+
+Exim Konfiguration
+
+	Hauptkonfiguration
+&prog acl_smtp_data = acl_check_data
+&prog av_scanner = clamd:/var/run/clamav/clamd.ctl
+
+	Access Control Lists
+&prog acl_check_data:
+&prog deny message = Hallo Virusschleuder ($malware_name)
+&prog	malware = *
+&prog
+&prog acl_check_data:
+&prog deny message = Hallo Virusschleuder ($malware_name)
+&prog	malware = */defer_ok
 
 %page
 
@@ -251,10 +336,18 @@ amavisd-new
 
 sendmail und clamav-milter
 
-&aprog Definition in /etc/mail/sendmail.mc
+	Milter starten
+&prog /etc/init.d/clamav-milter
+&prog /usr/sbin/clamav-milter -lo /var/run/clamav/clamav-milter.ctl
+
+	Definition in /etc/mail/sendmail.mc
 &prog INPUT_MAIL_FILTER(`clmilter',`S=local:/var/run/clamav/clamav-milter.ctl,
 &prog F=, T=S:4m;R:4m')dnl
 &prog define(confINPUT_MAIL_FILTERS)
+
+	Sendmail neu starten
+&prog cd /etc/mail; make
+&prog /etc/init.d/sendmail reload
 
 ##
 ## Community
@@ -263,6 +356,36 @@ sendmail und clamav-milter
 %page
 
 Community
+
+	Webseite
+
+	Mailinglisten
+
+	Virenkandidaten
+
+	3rd Party
+
+%page
+
+Webseite
+
+	http://www.clamav.net/
+
+%page
+
+Mailinglisten
+
+	clamav-announce@lists.clamav.net
+		Ankündigung neuer Version
+
+	clamav-users@lists.clamav.net	
+		Benutzer
+
+	clamav-devel@lists.clamav.net
+		Entwickler, technische Diskussionen
+
+	clamav-virusdb@lists.clamav.net
+		Ankündigung neuer Datenbankversionen
 
 %page
 
@@ -274,14 +397,6 @@ Virenkandidaten vorschlagen
 	Vorschlag einreichen
 		http://www.clamav.net/sendvirus.html
 
-%page
-
-Mailinglisten
-
-
-%page
-
-Phishing
 
 # Q&A:
 # Fragen wiederholen
