@@ -1,0 +1,19 @@
+DataFilter - Framework für Datenverarbeitung in Perl
+
+Datenverarbeitung ist eine der wichtigste Grundlagen der Datenverarbeitung
+überhaupt. Dabei werden häufig immer wieder die gleichen Aufgaben aufs Neue
+entweder durch Skripte/Programme bzw. nicht selten manuell durchgeführt.
+
+DataFilter will solche Aufgaben erleichtern, indem es mit minimalen 
+Informationen zurechtkommt und auch flexibel genug ist, komplizierte
+Verknüpfungen zu verarbeiten.
+
+Ein einfaches Modell für die Anwendung von DataFilter ist die Definition
+der Datenquelle und des Datenziels, die durch Typ, Name und Credentials
+festgelegt werden und einer Zuordnung (Mapping) von Quell- und Zielfeldern.
+
+Neben der Umwandlung der Daten sind weitere Aufgaben das Erkennen von
+fehlerhaften Eingabedaten und die Beseitigung der Fehler durch Interaktion.
+
+DataFilter wird bereits erfolgreich eingesetzt bei B2B und B2C Projekten,
+u.a. zum Hochladen von Kundendaten.
