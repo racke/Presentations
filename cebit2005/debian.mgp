@@ -45,6 +45,8 @@ Kriterien
 	Features
 		Plattformen, Umfang, Aktualität
 
+	Installation
+
 # Zukunftssicherheit: Plattformen
 	Never change a running system
 		Stabilität, Sicherheit
@@ -87,7 +89,14 @@ Aktualität
 		Exim, Courier
 
 %page
+Sicherheit
 
+	schnelle Updates
+
+	Umfang und Plattformen
+
+	Security Audit Project
+		Dezember 2002
 
 %page
 Transparenz
@@ -150,3 +159,6 @@ debian-volatile
 	http://volatile.debian.net/
 
 	Status: im Aufbau
+
+%page
+Softwareauswahl
