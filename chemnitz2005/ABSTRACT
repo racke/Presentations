@@ -1,0 +1,11 @@
+Clam AntiVirus
+
+Als Virenscanner hat sich ClamAV in jüngerer Vergangenheit
+einen sehr guten Namen gemacht, insbesondere auch durch seine häufigen
+Aktualisierungen seiner Virusdatenbank. Die Open-Source-Software 
+kommt hauptsächlich in Mailservern zum Einsatz und kann sich
+durchaus mit kommerziellen Produkten messen. Weitere Möglichkeiten
+sind manuelle oder automatische Überprüfungen von Dateien, z.B.
+auf einem Samba-Fileserver oder mit einem GUI für Windows oder Mac.
+In diesem Vortrag wird der Schwerpunkt auf die Konfiguration und
+die praktischen Einsatzmöglichkeiten von ClamAV gelegt.
