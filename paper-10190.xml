@@ -28,7 +28,7 @@
 </section>
 
 <section>
-	<title>Komponenten</title>
+	<title>Komponenten im Überblick</title>
 	<para>
 	  Der Courier-Mailserver setzt sich aus den folgenden Komponenten zusammen:
 	 <itemizedlist>
@@ -40,8 +40,64 @@
 		<listitem><para>MDA mit Filterfähigkeiten (Maildrop)</para></listitem>
 		<listitem><para>Webadministration (courierwebadmin)</para></listitem>
 	  </itemizedlist>
-	  
+	  Neben dem kompletten Quellpaket sind auch ausgewählte Komponenten
+	  als gesonderte Distributionen erhältlich. Dies sind Courier-IMAP,
+	  SqWebMail und Maildrop. Allerdings bestehen subtile Unterschiede beim
+	  Kompilieren aus dem Gesamtpaket bzw. den Einzelpaketen.
 	</para>
+</section>
+
+<section>
+	<title>Authentifizierung</title>
+	<para>
+	  Die Authentifizierung für die einzelnen Komponenten wird durch 
+	  Authentifizierungsmodule realisiert. Dabei wird die Authentifizierung 
+	  durch die folgenden beiden Aufgaben charakterisiert:
+	</para>
+	<orderedlist>
+	  <listitem><para>Zu einer Emailadresse das lokale Benutzerkonto mit
+		  Heimatverzeichnis, Benutzerkennung (UID) und Gruppenkennung (GID)
+		  bestimmen.</para></listitem>
+	  <listitem><para>Zu einem Benutzername und einem Passwort das 
+		  lokale Benutzerkonto mit
+		  Heimatverzeichnis, Benutzerkennung (UID) und Gruppenkennung (GID)
+		  bestimmen
+		</para></listitem>
+	</orderedlist>
+	<para>
+	  In den Konfigurationsdateien der einzelnen Dienste können die
+	  gewünschten Authentifizierungsmodule angegeben werden. Dabei
+	  werden die Module nacheinander durchlaufen. Signalisiert eines
+	  der Module eine erfolgreiche Authentifizierung, steht der Dienst
+	  dem Benutzer zur Verfügung. Dieses Daisy-Chaining erlaubt z.B.
+	  PAM-Authentifizierung für Systembenutzer und Authentifizierung
+	  gegen eine MySQL-Datenbank für virtuelle Mailkonten ohne
+	  Systembenutzer.
+	</para>
+	<para>
+	  Die wichtigsten Authentifizierungsmodule neben dem 
+	  Authentifizierungsdaemon (authdaemon) sind:
+	</para>
+	<variablelist>
+	  <varlistentry><term>authpam</term>
+		<listitem></listitem>
+	  </varlistentry>
+	  <varlistentry><term>authuserdb</term>
+		<listitem></listitem>
+	  </varlistentry>
+	  <varlistentry><term>authmysql</term>
+		<listitem></listitem>
+	  </varlistentry>
+	  <varlistentry><term>authpgsql</term>
+		<listitem></listitem>
+	  </varlistentry>
+	  <varlistentry><term>authldap</term>
+		<listitem></listitem>
+	  </varlistentry>
+	  <varlistentry><term>authvchkpw</term>
+		<listitem></listitem>
+	  </varlistentry>
+	</variablelist>  
 </section>
 
 <section>
@@ -58,6 +114,27 @@
 
 <section>
 	<title>Weitere Quellen</title>
+	<table>
+	  <tgroup cols="2">
+		<thead>
+		  <row>
+			<entry>Beschreibung</entry>
+			<entry>URL</entry>
+		  </row>
+		</thead>
+		<tbody>
+		  <row>
+			<entry>Courier Homepage</entry>
+			<entry><ulink url="http://www.courier-mta.org/" /></entry>
+		  </row>
+		  <row>
+			<entry>Courier Mailingliste</entry>
+			<entry></entry>
+		  </row>
+		</tbody>
+		</tgroup>
+	  
+	</table>
 </section>
 
 </article>
