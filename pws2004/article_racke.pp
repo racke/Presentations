@@ -31,12 +31,24 @@ als Kataloge bezeichnete Anwendungen unterstützt. Im klassischen
 Anwendungsfall entspricht jeder Katalog einem Onlineshop.
 
 Die Kommunikation mit den Benutzern wird durch einen Webserver vermittelt.
-Beim Abruf einer Webseite wird die URL, CGI-Parameter und Umgebungsvariable
+Beim Abruf einer Webseite werden die URL, CGI-Parameter und Umgebungsvariable
 an ein kleines CGI-Programm weitergeleitet. Dieses CGI-Programm kontaktiert
 den Interchange-Dämon über einen Unix- oder TCP/IP-Socket und gibt diese
 Daten weiter. Der Interchange-Dämon parst die Daten im Kontext des
 jeweiligen Katalogs und gibt eine fertige HTML-Seite über CGI-Programm
 und Webserver an den Benutzer zurück. 
+
+===Kataloge und ITL
+
+Ein Katalog setzt sich aus folgende Komponenten zusammen:
+
+* Konfiguration (catalog.cfg, eigene Funktionen)
+
+* Datenquellen
+
+* Seiten, Templates und Komponenten
+
+Letztere setzen sich aus HTML und ITL (Interchange Tag Language) zusammen.
 
 ==Organisation
 
@@ -103,14 +115,14 @@ gewöhnlich verschiedene Versionen dieser Module installiert haben.
 
 Für die Kommunikation der Entwickler untereinander und mit den
 Anwendern sind weiterhin u.a. Mailinglisten und eine Website
-hilfreich. Die Website C<http://www.icdevgroup.org/> ist gleichzeitig
+hilfreich. Die Website \C<http://www.icdevgroup.org/> ist gleichzeitig
 auch eine Interchange-Anwendung.
 
 ===Lesetip
 
 Für das Erlernen von Programmiertechniken, dem Einsatz von
 Versionskontrollsystemen und Testverfahren sind die Bücher
-der Pragmatic Programmers sehr gut geeignet.
+der Pragmatic Programmers (siehe Bibliographie) sehr gut geeignet.
 
 ==Schnittstellen (Module)
 
@@ -264,13 +276,27 @@ undef $Vend::Calc_initialized;
 return $ready_safe;
 EOC
 
-===Interchange-Erweiterungen
+Diese Safe-Umgebungen werden auch verwendet, um embedded Perl
+in Interchange-Seiten zu implementieren:
 
-Interchange bietet dazu u.a. die folgenden Möglichkeiten:
+<<EOC
+<html>
+<head>
+<title>Embedded Perl Example</title>
+<body>
+[perl]
+return 'Hello world';
+[/perl]
+</body>
+</html>
+EOC
 
-* eigene Usertags
+Die Abarbeitung der \C<[perl]>-Blocks geschieht im wesentlichen
+mit folgenden Aufruf:
 
-* eigene Paymentmodule
+<<EOC
+$result = $ready_safe->reval($body);
+EOC
 
 ==Praktischer Einsatz
 
@@ -301,7 +327,7 @@ Eigentlich sollte durch die Verwendung einer Skriptsprache wie Perl
 das Betriebssystem wenig Einfluß auf die Anwendung haben.
 In der Praxis sind bei der Entwicklung von Interchange doch eine
 Reihe von teilweise unerwarteten und nur schwierig zu lösenden
-Problemen aufgetreten:
+Problemen aufgetreten wie z.B. folgendes:
 
 * fehlerhaftes Verhalten von \C<\X<getppid>> auf Linuxsystemen mit threaded
   Perl, als Workaround wurde eine Konfigurationsmöglichkeit geschaffen,
@@ -311,8 +337,8 @@ Problemen aufgetreten:
 
 # ICDEVGROUP. \I<Interchange-Homepage.> \C<http://www.icdevgroup.org>
 
-# Andrew Hunt, David Thomas. \I<The Pragmatic Programmer: From Journeyman to
+# Dave Thomas, Andrew Hunt. \I<The Pragmatic Programmer: From Journeyman to
 Master>. Addison-Wesley, 1999. \C<http://www.pragmaticprogrammer.com/>
 
 # Dave Thomas, Andrew Hunt. \I<Pragmatic Version Control with CVS>. The
-Pragmatic Bookshelf, 2003.
+Pragmatic Bookshelf, 2003. \C<http://www.pragmaticprogrammer.com/>
