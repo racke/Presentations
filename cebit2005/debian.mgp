@@ -264,7 +264,17 @@ Beispiele
 &two_fit ProFTPd => PureFTPd
 		
 %page
-%nodefault
-%center, fore "black"
 
-# empty line above is needed
+Abspann
+
+	Folien
+		http://www.linuxia.de/Presentations/Debian/
+
+	Email
+		racke@linuxia.de
+
+	Credits
+		Debian Maintainer
+		Bug Submitter
+
+
