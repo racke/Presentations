@@ -17,12 +17,21 @@
 	<para>
 	  Der Courier-Mailserver ist eine integrierte und zugleich
 	  modulare Mail- und Groupwarelösung, die sich zunehmender
-	  Beliebtheit erfreut. Besondere Merkmale sind u.a.
-	  die konsequente Unterstützung des Maildir++-Formats für die 
-	  Speicherung der Emails, Authentifizierung mittels eines speziellen
-	  Dienstes für System- und virtuelle Konten, sowie geteilte Konten.
-	  Dazu werden offene Standards wie LDAP, SSL/TLS und IPv6 unterstützt.
-	</para>
+	  Beliebtheit erfreut.
+    </para>
+	<para id="framework">
+	  Das Courier-Framework stellt den einzelnen Komponenten die folgenden
+	  Funktionalitäten zur Verfügung:
+    </para>
+	<itemizedlist>
+	  <listitem><para>Postfächer im <link linkend="maildir">Maildir++-Format</link></para></listitem>
+	  <listitem><para>virtuelle Postfächer</para></listitem>
+	  <listitem><para><link linkend="sharedfolders">gemeinsame Ordner</link></para></listitem>
+	  <listitem><para><link linkend="auth">Authentifizierung</link> mittels eines speziellen
+	  Dienstes</para></listitem>
+	  <listitem><para><link linkend="ssl">SSL/TLS</link></para></listitem>
+	  <listitem><para>Unterstützung von IPv6</para></listitem>
+	 </itemizedlist>
 	<para>
 	  Courier entstand aus verschiedenen Projekten von Sam Varshavchik,
 	  der auch heute noch den größten Anteil an der Weiterentwicklung
@@ -75,7 +84,7 @@
 	</para>
 </section>
 
-<section>
+<section id="maildir">
 	<title>Maildir++</title>
 	<para>Courier benutzt das sogenannte Maildir++-Format zur Speicherung und
 	  zum Zugriff auf Emails. Dabei werden die einzelnen Emails in einer
@@ -126,7 +135,6 @@ maildirmake /home/racke/Maildir
 		Außerdem dürfen die Benutzer keinen direkten Zugriff auf das
 		Dateisystem haben, ansonsten können sie die Beschränkungen einfach
 		umgehen.
-<!-- TODO: add more information from README.maildirquota -->
 	  </para>
 	  <para>
 		Beim Anlegen eines Maildir++-Postfachs kann die Quota mit 
@@ -139,7 +147,7 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	 </section>
 </section>
 
-<section>
+<section id="auth">
 	<title>Authentifizierung</title>
 	<para>
 	  Die Authentifizierung für die einzelnen Komponenten wird durch 
@@ -200,10 +208,10 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	</para>
 </section>
 
-<section>
+<section id="sharedfolders">
 	<title>Gemeinsame Ordner</title>
 	<para>Courier-IMAP und SqWebMail können zwei Typen von gemeinsamen Ordner
-	  verwenden: 
+	  (shared folders) verwenden: 
 	</para>
 	<orderedlist>
 	  <listitem><para>Basierend auf Dateizugriffsrechten, für Systeme mit
@@ -289,20 +297,21 @@ opt BOFHBADMIME=accept
 <section>
 	<title>IMAP-Server (Courier-IMAP)</title>
 	<para>
-	  Die Standardeinstellung für die maximale Anzahl von einer IP-Adresse
-	  ausgehenden Verbindungen (<literal>MAXPERIP</literal>) ist 4. Dies ist im
-	  praktischen Betrieb normalerweise zu knapp bemessen, da diverse
-	  IMAP-Clients mehrere Verbindungen zum IMAP-Server gleichzeitig aufbauen.
+	  Neben den Features, die sich durch das 
+	  <link linkend="framework">Courier-Framework</link> ergeben,
+	  zeichnet sich Courier-IMAP u.a. durch geringen Speicherverbrauch,
+	  und Unterstützung verschiedener IMAP-Erweiterungen aus.
 	</para>
+	<section>
+	  <title>Konfiguration</title>
+	  <para>
+		Die Standardeinstellung für die maximale Anzahl von einer IP-Adresse
+		ausgehenden Verbindungen (<literal>MAXPERIP</literal>) ist 4. Dies ist im
+		praktischen Betrieb normalerweise zu knapp bemessen, da diverse
+		IMAP-Clients mehrere Verbindungen zum IMAP-Server gleichzeitig aufbauen.
+	  </para>
+	</section>
 </section>
-
-<!--
-<section>
-	<title>POP-Server (Courier-POP)</title>
-		<para>
-		</para>
-  </section>
-  -->
 
 <section>
 	<title>Maildrop</title>
@@ -361,7 +370,7 @@ to "$VDIR/."
 	</para>
   </section>
   
-<section>
+<section id="ssl">
 	<title>SSL/TLS</title>
 	<para>
 	  Alle relevanten Komponenten des Courier-Mailservers erlauben die
