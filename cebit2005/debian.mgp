@@ -1,8 +1,8 @@
 %deffont "standard" tfont "verdana.ttf"
 %deffont "typewriter" tfont "courbd.ttf"
-%default 1 fore "blue", back "white", font "standard", center
-%default 2 fore "blue", back "white", font "standard"
-%default 3 size 5, vgap 20, fore "black", back "white", font "standard", left
+%default 1 size 4, vgap 20, fore "blue", back "white", font "standard", center
+%default 2 size 10, vgap 10, fore "blue", back "white", font "standard"
+%default 3 size 5, vgap 10, fore "black", back "white", font "standard", left
 %default 4 fore "black", back "white", font "standard", left
 %tab 1 size 6, vgap 40,  prefix "    ", font "standard", left, icon box "red" 30
 %tab 2 size 4, vgap 25,  prefix "           "
@@ -30,6 +30,7 @@
 
 %center
 %image "debian.png"
+
 %center
 &intro Debian im ISP-Umfeld
 
@@ -40,19 +41,21 @@
 # Behebung von Schwachstellen
 
 %page
+
 Kriterien
 
 	Features
 		Plattformen, Umfang, Aktualität
 
 	Installation
+		Updates, Automatisierung
 
 # Zukunftssicherheit: Plattformen
 	Never change a running system
 		Stabilität, Sicherheit
 
 	Troubleshooting
-		Community, kommerzieller Support
+		BTS, Community, kommerzieller Support
 
 	Entwicklung
 		Pakete, Werkzeuge, Varianten
@@ -64,19 +67,32 @@ Kriterien
 #		zertifizierung
 
 %page
+
 Plattformen
 
+	11 Architekturen
+		i386 
+		ia64
+		powerpc
+		
+		...
+
+	AMD64
+		
 %page
+
 Umfang
 
-    grundsätzlich viele Pakete
+	Vielzahl von Paketen
 
 	Perlmodule
 		Amavis, Sympa, Interchange
 
-	moderne 
+	moderne Server
+		MyDNS, pure-ftpd
 
 %page
+
 Aktualität
 
 	lange Releasezyklen
@@ -89,76 +105,130 @@ Aktualität
 		Exim, Courier
 
 %page
+
+Installation
+
+	vernünftige Voreinstellungen
+		Anpassung 
+
+	Automatisierung
+		Images
+		Debconf Preseed
+		FAI
+
+	Updates
+		Konfigurationsdateien
+
+%page
+
+Stabilität
+
+	keine Releasetermine
+
+	keine Experimente
+
+%page
+
 Sicherheit
 
 	schnelle Updates
 
 	Umfang und Plattformen
 
+	Security Team
+
 	Security Audit Project
 		Dezember 2002
 
 %page
-Transparenz
 
-	Debian BTS
+Bugtracking System
 
-	Entwicklerdiskussionen
+	Bedienung durch Emails
+		submit@bugs.debian.org
+		control@bugs.debian.org
 
-%page
-Aktualität
+	übersichtliche Struktur
+		Pakete
+		Versionen
+		Tags
 
-	Features
-
-	Support Upstream
-		
-
-%page
-Portabilität
+	LDAP Gateway
+		http://people.debian.org/~aba/bt2ldap/
 
 %page
-Umfang
 
-%page
 Community
 
-	Bugreports an submit@bugs.debian.org
+	Mailinglisten
+
+	IRC
+
+	Maintainer
+		interchange@packages.debian.org
 
 %page
+
+Support
+
+	http://www.debian.org/consultants/	
+
+%page
+
 Lösungen
 
-		Einsatz von testing/sid
+	Einsatz von testing/sid
 
-		Backports
+	Backports
 
-		debian-volatile
+	debian-volatile
 
 %page
+
 Backports
 
 # schwerer, je weiter von Release weg
 # abhängig vom Paket
 # debconf/debhelper
-
 	do it yourself
+		debhelper, debconf
+		
+	Adrian Bunk
 		
 	www.backports.org
+		libfoo_1.2.3-4 => libfoo_1.2.3-3.backports.org.1		
 
 	www.apt-get.org
 
-	Pakete mit eigenen Backports
-		ClamAV
+	Backports / Woodypakete
+		ClamAV, Samba
 
 %page
+
 debian-volatile
 
 # The main issue of volatile is to allow system administrators to update their systems in a nice, consistent way without getting the drawbacks of using unstable, even without getting the drawback for the selected packages.
-
-	Spamfilter, Virenscanner, Intrusion Detection	
+	
+	schnell veränderliche Software
+		Virenscanner
+		Spamfilter
+		chkrootkit, nessus
 
 	http://volatile.debian.net/
 
-	Status: im Aufbau
+	im Aufbau
 
 %page
+
 Softwareauswahl
+
+	Konzept
+
+	Aktivität
+		Autor
+		Community
+		Debian Maintainer
+
+%page
+%nodefault
+%center, fore "black"
