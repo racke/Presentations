@@ -219,7 +219,7 @@ Anwendungen hilfreich, wenn man sie nicht auf die Spitze treibt.
 
 ==Flexibilität
 
-Große Anwendungen sollte ein hohes Maß an Flexibilität ausweisen, um
+Große Anwendungen sollten ein hohes Maß an Flexibilität aufweisen, um
 dem Benutzer weitgehende Konfigurations- und Erweiterungsmöglichkeiten
 zu geben.
 
@@ -298,6 +298,7 @@ mit folgenden Aufruf:
 $result = $ready_safe->reval($body);
 EOC
 
+
 ==Praktischer Einsatz
 
 ===Perl mit Threadunterstützung
@@ -309,9 +310,9 @@ wirklich benutzen.
 
 Interchange an sich sollte keinerlei Probleme damit haben, aber das
 kann nicht für alle benutzten Module garantiert werden. Deshalb weigert
-sich Interchange zur Zeit, mit dieser Perlvariante zu starten. Das
+sich Interchange zur Zeit, mit "threaded Perl" zu starten. Das
 führt dazu, daß viele Anwender gezwungen sind, sich ihr eigenes Perl
-zu bauen.
+ohne Threadunterstützung zu bauen.
 
 ===Performance
 
@@ -332,6 +333,9 @@ Problemen aufgetreten wie z.B. folgendes:
 * fehlerhaftes Verhalten von \C<\X<getppid>> auf Linuxsystemen mit threaded
   Perl, als Workaround wurde eine Konfigurationsmöglichkeit geschaffen,
   die Interchange anweist \C<getppid> durch \C<\X<syscall(64)>> zu ersetzen
+
+* die Implementation von \X<Signale>n in Perl hat sich mehrmals als
+  unzulässig und fehlerhaft erwiesen
 
 ==Bibliographie
 
