@@ -308,8 +308,10 @@ opt BOFHBADMIME=accept
 	  zeichnet sich Courier-IMAP u.a. durch geringen Speicherverbrauch,
 	  und Unterstützung verschiedener IMAP-Erweiterungen aus:
 	</para>
+
 	<itemizedlist>
-	<listitem><para>IMAP Schlagwörter</para></listitem>
+	  <listitem><para>serverseitiges Sortieren und Threading</para></listitem>
+	  <listitem><para>IMAP Schlagwörter</para></listitem>
 	</itemizedlist>
 	
 	<section>
@@ -362,6 +364,12 @@ opt BOFHBADMIME=accept
 			  <entry>IMAP_KEYWORDS</entry>
 			  <entry>IMAP-Schlagworte</entry>
 			  <entry>1</entry>
+			</row>
+			<row>
+			  <entry>IMAP_ULIMITD</entry>
+			  <entry>maximale Größe des Datensegments des
+				Serverprozesses (Schutzmaßnahme gegen Speicherlecks)</entry>
+			  <entry>65536</entry>
 			</row>
 			</tbody>
 		  </tgroup>
