@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<article id="paper-10190">
+  <articleinfo>
+    <title>Courier-Mailserver</title>
+    <author>
+      <firstname>Stefan</firstname>
+      <surname>Hornburg</surname>
+    </author>
+    <copyright>
+      <year>2004</year>
+      <holder>Stefan Hornburg</holder>
+    </copyright>
+  </articleinfo>
+
+<section>
+  <title>Courier-Mailserver</title>
+	<para>
+	  Der Courier-Mailserver ist eine integrierte und zugleich
+	  modulare Mail- und Groupwarelösung, die sich zunehmender
+	  Beliebtheit erfreut. Besondere Merkmale sind u.a.
+	  die konsequente Unterstützung des Maildir++-Formats für die 
+	  Speicherung der Emails, Authentifizierung mittels eines speziellen
+	  Dienstes für System- und virtuelle Konten, sowie geteilte Konten.
+	</para>
+	<para>
+	  Offene Standards wie LDAP, SSL/TLS ...
+	</para>
+</section>
+
+<section>
+	<title>Komponenten</title>
+	<para>
+	  Der Courier-Mailserver setzt sich aus den folgenden Komponenten zusammen:
+	 <itemizedlist>
+		<listitem><para>SMTP-Server (Courier)</para></listitem>
+		<listitem><para>IMAP-Server (Courier-IMAP)</para></listitem>
+		<listitem><para>POP3-Server (Courier-POP)</para></listitem>
+		<listitem><para>Webmail (SqWebMail)</para></listitem>
+		<listitem><para>Mailinglisten-Server (couriermlm)</para></listitem>
+		<listitem><para>MDA mit Filterfähigkeiten (Maildrop)</para></listitem>
+		<listitem><para>Webadministration (courierwebadmin)</para></listitem>
+	  </itemizedlist>
+	  
+	</para>
+</section>
+
+<section>
+	<title>SMTP-Server (Courier)</title>
+	<para>
+	</para>
+</section>
+
+<section>
+	<title>Maildrop</title>
+	<para>
+	</para>
+</section>
+
+<section>
+	<title>Weitere Quellen</title>
+</section>
+
+</article>
