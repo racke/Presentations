@@ -357,8 +357,15 @@ to "$VDIR/."
 	  Dateisystemebene und verbindet sich nicht mit einem vorhandenen POP-
 	  bzw. IMAP-Server. Häufig wird SqWebMail aber durch eine solche Lösung
 	  ersetzt.
+	</para>
+	<section><title>Kalender</title>
+	  <para>Die Kalenderfunktionen werden in der Konfigurationsdatei 
+		<file>calendarmode</file> festgelegt. 
+		Diese sind aktiviert, wenn die Datei die Werte <literal>local</literal>
+		(lokaler Modus) oder <literal>net</literal> (Groupware-Modus) enthält.
 	  </para>
-  </section>
+	</section>
+</section>
 
 <section>
 	<title>couriermlm</title>
