@@ -1,16 +1,39 @@
+*** Check vs Abstract ***
+
 COURIER
 
 ÜBERBLICK
 
+* Maildir++
+
 KOMPONENTEN
+
+* MTA
+* Maildrop
+* POP
+* IMAP
+* SqWebmail, PCP
+* MLM
+* Webadmin
+
+* Zusammenspiel
 
 SPECIALS
 
 * Authentifizierungsdämon
+see discussion on authlib manpage why we need it etc.
 * Shared folders
 
 MODULARISIERUNG
 
 KONFIGURATION
 
+HISTORY
+
+* http://www.courier-mta.org/history.html
+
 RESOURCEN
+
+* Mailinglisten
+* Homepages
+  Courier Mail Server http://www.courier-mta.org/
