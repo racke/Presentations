@@ -19,12 +19,41 @@ Entwicklungsprozesses gesammelt wurden.
 ==Kolloboration
 
 Größere Programmierprojekte werden häufig als Teamwork durchgeführt.
+Die Zusammenarbeit der einzelnen Mitglieder ist ein wichtiger Aspekt.
 
 ==Versionsverwaltung
 
 ==Testsuite
 
 ==Module
+
+===Externe Module
+
+Die Verwendung von externen Module verkürzt oftmals die Entwicklungszeit,
+es sind jedoch einige Punkte zu bedenken.
+
+Gerade wenn Benutzer gewöhnlich die Software selbst in ihrer Perlumgebung
+installieren, kann es Schwierigkeiten geben, wenn die Module ihre
+Schnittstellen ändern.
+
+Ein typisches Beispiel für so ein Problem waren Änderungen in
+SQL::Statement, die zu Fehlern bei Interchanges internen SQL-Parser
+geführt haben. Letztendlich wurde SQL::Statement durch ein eigenes
+Interchange-Modul Vend::SQL_Parser ersetzt.
+
+===Interne Module
+
+==Flexibilität
+
+Große Anwendungen sollte ein hohes Maß an Flexibilität ausweisen, um
+dem Benutzer weitgehende Konfigurations- und Erweiterungsmöglichkeiten
+zu geben.
+
+Interchange bietet dazu u.a. die folgenden Möglichkeiten:
+
+* eigene Usertags
+
+* eigene Paymentmodule
 
 ==Performance
 
