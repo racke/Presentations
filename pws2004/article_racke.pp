@@ -6,53 +6,86 @@ Stefan Hornburg (Racke) \C<<racke@linuxia.de>>
 
 ==Abstract
 
-Interchange ist die führende Open-Source-Software für eCommerce und wird
+Interchange ist die führende Open Source-Software für eCommerce und wird
 ebenfalls als Datenbankfrontend oder CMS eingesetzt. Interchange ist
-komplett in Perl implementiert und nutzt zahlreiche Module aus dem CPAN.   
+fast ausschließlich in Perl implementiert und nutzt zahlreiche Module aus dem CPAN.   
 Der Einsatz von Perl erlaubt ein großes Maß an Flexibilität, ohne die
 Performance entscheidend zu beeinträchtigen. 
+
+Interchange hat sich von einem minimalen Warenkorb zu einem
+ausgewachsenen Applikationsserver entwickelt hat. Gleichzeitig ist
+das Entwicklungsteam von einer One-Man-Show auf eine weltweit vertretende
+Gruppe (\X<ICDEVGROUP>) mit dem Schwerpunkt in den USA gewachsen.
 
 Dieser Vortrag von einem leitenden Interchange-Programmierer berichtet über
 die Erfahrungen und Probleme, die im Verlaufe des 8-jährigen
 Entwicklungsprozesses gesammelt wurden.
 
-==Interchange
+==Funktionsweise von Interchange
 
-Interchange ist eine fast ausschließlich in Perl programmierte 
-Open-Source-Software, die sich von einem minimalen Warenkorb zu einem
-ausgewachsenen Applikationsserver entwickelt hat. Gleichzeitig ist
-das Entwicklungsteam von einer One-Man-Show auf eine weltweit vertretende
-Gruppe (\X<ICDEVGROUP>) mit dem Schwerpunkt in den USA gewachsen.
+Zum besseren Verständnis der folgenden Ausführungen erläutern wir hier kurz
+die Funktionsweise und Architektur von Interchange.
+
+Interchange ist ein Applikationsserver, der prinzipiell beliebige viele
+als Kataloge bezeichnete Anwendungen unterstützt. Im klassischen
+Anwendungsfall entspricht jeder Katalog einem Onlineshop.
+
+Die Kommunikation mit den Benutzern wird durch einen Webserver vermittelt.
+Beim Abruf einer Webseite wird die URL, CGI-Parameter und Umgebungsvariable
+an ein kleines CGI-Programm weitergeleitet. Dieses CGI-Programm kontaktiert
+den Interchange-Dämon über einen Unix- oder TCP/IP-Socket und gibt diese
+Daten weiter. Der Interchange-Dämon parst die Daten im Kontext des
+jeweiligen Katalogs und gibt eine fertige HTML-Seite über CGI-Programm
+und Webserver an den Benutzer zurück. 
 
 ==Organisation
 
-Größere Programmierprojekte werden häufig als Teamwork durchgeführt.
+Größere Programmierprojekte werden häufig in Teamarbeit durchgeführt.
 Die Zusammenarbeit der einzelnen Mitglieder ist ein wichtiger Aspekt,
-besonders wenn die Team-Mitglieder keinen oder seltenen direkten
-Kontakt miteinander haben, wie es bei OpenSource-Projekten häufig
+besonders wenn die Team-Mitglieder selten oder niemals direkten
+Kontakt miteinander haben, wie es in Open Source-Projekten häufig
 der Fall ist.
 
-Folgende Punkte sind für große Programmierprojekte wichtig:
+Auf einige wichtige Gesichtspunkte bezüglich großer Programmierprojekte
+gehe ich im folgenden ein:
 
 * Styleguide
 
 * Versionsverwaltung
 
-* Freigabepolitik
-
 * Regressiontests
 
 * Pflege
 
-Für das Erlernen von Programmiertechniken, dem Einsatz von
-Versionskontrollsystemen und Testverfahren sind die Bücher
-der Pragmatic Programmers sehr gut geeignet.
+===Styleguide
+
+Ein Styleguide erlaubt es den Programmieren, den Quellcode
+einheitlich aufzubauen und zu gestalten. Das erleichtert
+Neulingen den Einstieg und außerdem die Arbeit mit der Versionsverwaltung.
 
 ===Versionsverwaltung
 
-===Freigabepolitik
+Eine Versionsverwaltung ist für jedes Programmierprojekt zu
+empfehlen, selbst wenn es klein ist und nur ein Entwickler
+daran arbeitet. Zwingend erforderlich ist es bei einer
+verteilten Gruppe von Programmieren, die zudem mehrere
+Entwicklungsstränge verfolgen und pflegen müssen.
+
+Die \C<ICDEVGROUP> setzt CVS für Interchange ein, weitere
+Open Source-Versionverwaltungen wie subversion sind verfügbar.
+Spezielle Probleme mit Perlanwendungen und CVS sind dem
+Autor nicht bekannt.
 
 ===Regressiontests
+
+Regressiontests haben eine wichtige Bedeutung bei jeder Art
+von Programmierprojekten. Diese Tests können überraschende
+Verhaltungsänderungen ans Tageslicht bringen und vermeiden
+somit Probleme vor Auslieferung der Software. Perl bietet
+eine umfangreiche Infrastruktur für Tests.
+
+Die Interchange CVS-Version enthält einen Testkatalog, mit
+dessen Hilfe Regressiontests durchgeführt werden können.
 
 ===Pflege
 
@@ -68,7 +101,25 @@ gewöhnlich verschiedene Versionen dieser Module installiert haben.
 
 ===Mailingliste, Website
 
+Für die Kommunikation der Entwickler untereinander und mit den
+Anwendern sind weiterhin u.a. Mailinglisten und eine Website
+hilfreich. Die Website C<http://www.icdevgroup.org/> ist gleichzeitig
+auch eine Interchange-Anwendung.
+
+===Lesetip
+
+Für das Erlernen von Programmiertechniken, dem Einsatz von
+Versionskontrollsystemen und Testverfahren sind die Bücher
+der Pragmatic Programmers sehr gut geeignet.
+
 ==Schnittstellen (Module)
+
+Umfangreiche Anwendungen zeichnen sich gewöhnlich durch ein
+Angebot an eigenen Schnittstellen und die Nutzung externer
+Schnittstellen aus.
+
+Module bieten sich für die Realisierung von Schnittstellen
+in Perlanwendungen an.
 
 ===Externe Module
 
@@ -98,7 +149,7 @@ Ein besonders guter Ansatz ist die Schaffung von Basismodule für bestimmte
 Funktionalitäten, da dies Erweiterungen, auch von anderen Entwicklern
 möglich macht.
 
-In Interchange gibt es diese Basismodule für
+In Interchange gibt es diese Basismodule u.a. für
 
 * Datenquellen (Modul \C<Vend::Table::Common>)
 
@@ -122,29 +173,37 @@ Interchange zurückgeflossen, wie folgende Tabelle verdeutlicht.
 
 @|
 Typ	| Modul	| Beschreibung
-Table | \C<Vend::Table::DBI> | SQL-Datenquellen
-Table | \C<Vend::Table::LDAP> | LDAP-Datenquellen
-Table | \C<Vend::Table::GDBM> | GDBM-Datenquellen 
-Table | \C<Vend::Table::SDBM> | SDBM-Datenquellen 
-Payment | \C<Vend::Payment::AuthorizeNet> |
-Payment | \C<Vend::Payment::BoA> |
-Payment | \C<Vend::Payment::CyberCash> |
-Payment | \C<Vend::Payment::ECHO> |
-Payment | \C<Vend::Payment::EFSNet> |
-Payment | \C<Vend::Payment::Linkpoint> |
-Payment | \C<Vend::Payment::MCVE> |
-Payment | \C<Vend::Payment::PSiGate> |
-Payment | \C<Vend::Payment::Signio> |
-Payment | \C<Vend::Payment::Skipjack> |
-Payment | \C<Vend::Payment::TCLink> |
-Payment | \C<Vend::Payment::TestPayment> |
-Payment | \C<Vend::Payment::WellsFargo> |
-Payment | \C<Vend::Payment::iTransact> |
+Datenquellen | \C<Vend::Table::DBI> | SQL-Datenbank
+Datenquellen | \C<Vend::Table::LDAP> | LDAP-Verzeichnis
+Datenquellen | \C<Vend::Table::GDBM> | Unix-Datenbank (GDBM)
+Datenquellen | \C<Vend::Table::SDBM> | Unix-Datenbank (SDBM)
+Datenquellen | \C<Vend::Table::DB_File> | Unix-Datenbank (Berkeley)
+Datenquellen | \C<Vend::Table::InMemory> | Datenbank im Hauptspeicher
+Datenquellen | \C<Vend::Table::Shadow> | Hülle für verschiedenen Datenbanken
+Payment | \C<Vend::Payment::AuthorizeNet> | AuthorizeNet
+Payment | \C<Vend::Payment::BoA> | Bank of America
+Payment | \C<Vend::Payment::CyberCash> | CyberCash
+Payment | \C<Vend::Payment::ECHO> | ECHO
+Payment | \C<Vend::Payment::EFSNet> | Concord EFSNet
+Payment | \C<Vend::Payment::iTransact> | iTransact
+Payment | \C<Vend::Payment::Linkpoint> | Linkpoint
+Payment | \C<Vend::Payment::MCVE> | Mainstreet Credit Verification Engine
+Payment | \C<Vend::Payment::PSiGate> | PSiGate
+Payment | \C<Vend::Payment::Signio> | Verisign/Signio Payflow Prow
+Payment | \C<Vend::Payment::Skipjack> | Skipjack
+Payment | \C<Vend::Payment::TCLink> | TrustCommerce
+Payment | \C<Vend::Payment::TestPayment> | Test module
+Payment | \C<Vend::Payment::WellsFargo> | WellsFargo
 Search | \C<Vend::DbSearch> | Suche in einer Datenbank
 Search | \C<Vend::TextSearch> | Textsuche mit \C<Search::Dict>
 Search | \C<Vend::Swish> | Textsuche mit Swish-e 
 
-=== Objektorientierte Programmierung
+===Objektorientierte Programmierung
+
+Perl bietet in seinem typischen geradlinigen und pragmatischen Ansatz
+die Möglichkeit der objektorientierten Programmierung mit fast allem,
+was dazugehört. Auch und gerade diese Eigenschaften sind in großen
+Anwendungen hilfreich, wenn man sie nicht auf die Spitze treibt.
 
 ==Flexibilität
 
@@ -159,18 +218,53 @@ anzubieten, z.B. durch:
 
 * AUTOLOAD
 
-=== eval und Safe
+===eval und Safe
 
 Mit eval bietet Perl eine hervorragende Möglichkeit, selbstgeschriebenen
 Code einer Anwendung hinzufügen. Um nicht die Stabilität der gesamten
 Anwendung zu gefährden sowie fremden Code nur geringen Spielraum für
 böswilligen Aktivitäten zu geben, bietet sich es an, mit Hilfe von
-C<Safe> bzw. C<Safe::Hole> den Code in einer abgeschottenen Umgebung
+\C<\X<Safe>> bzw. \C<\X<Safe::Hole>> den Code in einer abgeschottenen Umgebung
 ablaufen zu lassen. Allerdings verhindert das nicht das Lahmlegen
 der Anwendung durch Endlosschleifen bzw. übermäßigen 
 Speicherplatzverbrauch.
 
-=== Interchange-Erweiterungen
+Der folgende Ausschnitt aus dem Interchange-Quellcode erzeugt eine
+solche abgeschottene Umgebung:
+
+<<EOC
+...
+else {
+	my $pkg = 'MVSAFE' . int(rand(100000));
+	undef $MVSAFE::Safe;
+	$ready_safe = new Safe $pkg;
+	$ready_safe->share_from('MVSAFE', ['$safe']);
+	$ready_safe->trap(@{$Global::SafeTrap});
+	$ready_safe->untrap(@{$Global::SafeUntrap});
+	no strict 'refs';
+	$Document   = new Vend::Document;
+	*Log = \&Vend::Util::logError;
+	*Debug = \&Vend::Util::logDebug;
+	*uneval = \&Vend::Util::uneval_it;
+	*HTML = \&Vend::Document::HTML;
+	$ready_safe->share(@Share_vars, @Share_routines);
+	$DbSearch   = new Vend::DbSearch;
+	$TextSearch = new Vend::TextSearch;
+	$Tag        = new Vend::Tags;
+}
+$Tmp        = {};
+undef $s;
+undef $q;
+undef $item;
+%Db = ();
+%Sql = ();
+undef $Shipping;
+$Vend::Calc_reset = 1;
+undef $Vend::Calc_initialized;
+return $ready_safe;
+EOC
+
+===Interchange-Erweiterungen
 
 Interchange bietet dazu u.a. die folgenden Möglichkeiten:
 
@@ -209,9 +303,9 @@ In der Praxis sind bei der Entwicklung von Interchange doch eine
 Reihe von teilweise unerwarteten und nur schwierig zu lösenden
 Problemen aufgetreten:
 
-* fehlerhaftes Verhalten von \C<getppid> auf Linuxsystemen mit threaded
+* fehlerhaftes Verhalten von \C<\X<getppid>> auf Linuxsystemen mit threaded
   Perl, als Workaround wurde eine Konfigurationsmöglichkeit geschaffen,
-  die Interchange anweist \C<getppid> durch \C<syscall(64)> zu ersetzen
+  die Interchange anweist \C<getppid> durch \C<\X<syscall(64)>> zu ersetzen
 
 ==Bibliographie
 
