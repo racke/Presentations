@@ -225,6 +225,45 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  als mit den oben genannten Authentifizierungsmodulen. authdaemon
 	  kann ebenfalls mehrere Authentifizierungsmodule nacheinander befragen.
 	</para>
+	<para>Normale Module sind in dem Standardprogramm
+	  <filename>authdaemond.plain</filename> für den
+	  Authentifizierungsdämon enthalten. Module, die externe Bibliotheken
+	  erfordern wie <literal>authmysql</literal>, <literal>authpgsql</literal>
+	  und <literal>authldap</literal> benötigen angepaßte Programme für den 
+	  Authentifizierungsdämon (<filename>authdaemond.mysql</filename>) etc.
+	</para>
+	<para>Die Konfiguration für den Authentifizierungsdämon befindet sich der
+	  Datei <filename>authdaemonrc</filename>, die wichtigsten Variablen sind: 
+	  </para>	
+<table>
+		<title>Konfiguration Authentifizierungsdämon</title>
+		<tgroup cols="2">
+		  <thead>
+			<row>
+			  <entry>Variable</entry>
+			  <entry>Beschreibung</entry>
+			  <entry>Standardwert</entry>
+			</row>
+		  </thead>
+		  <tbody>
+			<row>
+			  <entry><literal>authmodulelist</literal></entry>
+			  <entry>Liste der Authentifizierungsmodule</entry>
+			  <entry>-</entry>
+			</row>
+			<row>
+			  <entry><literal>daemons</literal></entry>
+			  <entry>Anzahl der zu startenden Dämonen</entry>
+			  <entry>5</entry>
+			</row>
+			<row>
+			  <entry><literal>version</literal></entry>
+			  <entry>Programm für den Authentifizierungsdämon</entry>
+			  <entry>-</entry>
+			</row>
+			</tbody>
+		  </tgroup>
+		</table>
 </section>
 
 <section id="sharedfolders">
@@ -257,7 +296,7 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  der Kompilierung von Courier festgelegt.
 	  Im folgenden wählen wir als Konfigurationsverzeichnis, 
 	  auch für die anderen
-	  Komponenten, <filename>/etc/courier</filename> verwenden.
+	  Komponenten, <filename>/etc/courier</filename>.
 	</para>
 	<para>
 	  Einige Konfigurationsdateien können anstatt als einfache Textdatei 
