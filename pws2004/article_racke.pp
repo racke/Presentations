@@ -1,24 +1,26 @@
-=Vorbild::Beitrag::PP - Ein Vorbildartikel für den Tagungsband
+=Entwicklung großer Perlanwendungen am Beispiel von Interchange
 
 ==Autor
 
-Steffen Schwigon \C<<schwigon@webit.de>>
+Stefan Hornburg (Racke) \C<<racke@linuxia.de>>
 
 ==Abstract
 
-Der Zweck dieses Textes ist die Präsentation eines korrekten
-PerlPoint-Artikels für den Deutschen Perl Workshop. Es werden
-Gesamtstruktur und wichtige Elemente demonstriert.
+Interchange ist die führende Open-Source-Software für eCommerce und wird
+ebenfalls als Datenbankfrontend oder CMS eingesetzt. Interchange ist
+komplett in Perl implementiert und nutzt zahlreiche Module aus dem CPAN.   
+Der Einsatz von Perl erlaubt ein großes Maß an Flexibilität, ohne die
+Performance entscheidend zu beeinträchtigen. 
 
-Ziel ist es, den Tagungsband des diesjährigen Perlworkshop "aus
-einem Guß" herzustellen. Das Tagungsband-Team wird seine Energien
-vorrangig in die Unterstützung der Autoren bei der Erstellung
-korrekter Beiträge investieren.
+Dieser Vortrag von einem leitenden Interchange-Programmierer berichtet über
+die Erfahrungen und Probleme, die im Verlaufe des 8-jährigen
+Entwicklungsprozesses gesammelt wurden.
 
-Bei Problemen jeglicher Art bitte an mich \C<<schwigon@webit.de>>
-oder die anderen freundlichen Helfer bei \C<<wsorga@perlworkshop.de>>
-wenden.
+==Module
 
+==Performance
+
+==Portierungsprobleme
 
 ==Grundregeln
 
