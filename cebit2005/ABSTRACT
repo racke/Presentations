@@ -1,0 +1,8 @@
+Debian im ISP-Umfeld
+
+Debian wird häufig als Distribution für Linuxserver aller Art 
+(Mail, WWW, FTP, DNS, Datenbank, Fileserver, etc.) verwendet. 
+Dieser Vortrag erläutert, warum Debian besonders gut geeignet 
+für den Einsatz im ISP-Umfeld ist und wie man mit typischen
+Problematiken dieser Distribution umgeht. Außerdem werden
+Kriterien für die Auswahl von Serversoftware vorgestellt.
