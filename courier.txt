@@ -1,0 +1,40 @@
+Title: Courier-Mailserver
+
+Short Abstract:
+Der Courier-Mailserver ist eine integrierte und zugleich
+modulare Mail- und Groupwarelösung, die sich zunehmender
+Beliebtheit erfreut. Besondere Merkmale sind u.a.
+die konsequente Unterstützung des Maildir++-Formats für die 
+Speicherung der Emails, Authentifizierung mittels eines speziellen
+Dienstes für System- und virtuelle Konten, sowie geteilte Konten.
+
+Der Schwerpunkt dieses Vortrag liegt auf der Architektur
+und Konfiguration des Systems. Zusätzlich wird die Benutzung
+einiger Besonderheiten von Courier erläutert.
+
+Abstract:
+Der Courier-Mailserver ist eine integrierte und zugleich
+modulare Mail- und Groupwarelösung, die sich zunehmender
+Beliebtheit erfreut. Besondere Merkmale sind u.a.
+die konsequente Unterstützung des Maildir++-Formats für die 
+Speicherung der Emails, Authentifizierung mittels eines speziellen
+Dienstes für System- und virtuelle Konten, sowie geteilte Konten.
+
+Courier bietet die Dienste ESMTP, IMAP, POP3, Webmail
+und Mailinglisten in einem konsistenten Framework an.
+Diese Dienste können separat aktivieren werden, aber
+auch zusammen mit anderen MTAs verwendet werden.
+Typische Szenarios im praktischen Einsatz sind z.B.
+exim oder postfix zusammen mit courier-imap und
+squirrelmail.
+
+Die Konfiguration erfolgt durch Textdateien, die auch
+mit dem mitgelieferten Administrationsfrontend bearbeitet
+werden können.
+
+Der Schwerpunkt dieses Vortrag liegt auf der Architektur
+und Konfiguration des Systems. Zusätzlich wird die Benutzung
+einiger Besonderheiten von Courier erläutert.
+
+
+
