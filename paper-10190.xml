@@ -310,6 +310,7 @@ opt BOFHBADMIME=accept
 	</para>
 
 	<itemizedlist>
+	  <listitem><para>NAMESPACE (<ulink url="http://www.rfc-editor.org/rfc/rfc2342.txt">RFC 2342</ulink>)</para></listitem>
 	  <listitem><para>serverseitiges Sortieren und Threading</para></listitem>
 	  <listitem><para>IMAP Schlagwörter</para></listitem>
 	</itemizedlist>
@@ -317,8 +318,25 @@ opt BOFHBADMIME=accept
 	<section>
 	  <title>Namespaces</title>
 	  <para>
-		...
+		Namespaces sind die Anordnung der Ordner auf dem Server. Courier-IMAP
+		verwendet <literal>INBOX.</literal> als Namespace für private Ordner
+		und <literal>shared.</literal> bzw. <literal>#shared.</literal> als
+		Namespace für gemeinsame Ordner. 
+		Die von Courier-IMAP unterstützte NAMESPACE IMAP-Erweiterung erlaubt es
+		IMAP-Clients diese NAMESPACE-Konfiguration abzufragen:
 	  </para>
+	  <programlisting>
+racke#~ > telnet localhost 143
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+* OK [CAPABILITY IMAP4rev1 UIDPLUS CHILDREN NAMESPACE THREAD=ORDEREDSUBJECT THREAD=REFERENCES SORT QUOTA IDLE ACL ACL2=UNION STARTTLS] Courier-IMAP ready. Copyright 1998-2004 Double Precision, Inc.  See COPYING for distribution information.
+a login racke@linuxia.de secret
+a OK LOGIN Ok.
+b namespace
+* NAMESPACE (("INBOX." ".")) NIL (("#shared." "")("shared." "."))
+b OK NAMESPACE completed.
+	  </programlisting>
 	</section>
 
 	<section>
