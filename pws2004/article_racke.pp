@@ -178,13 +178,47 @@ Interchange bietet dazu u.a. die folgenden Möglichkeiten:
 
 * eigene Paymentmodule
 
-==Real World
+==Praktischer Einsatz
+
+===Perl mit Threadunterstützung
+
+Aktuelle Linuxdistributionen werden mit einem Perl ausgeliefert, das
+mit Threadunterstützung kompiliert wurde, obwohl die Perlautoren
+selber davon abraten und nur wenige Anwendungen die Threadunterstützung
+wirklich benutzen.
+
+Interchange an sich sollte keinerlei Probleme damit haben, aber das
+kann nicht für alle benutzten Module garantiert werden. Deshalb weigert
+sich Interchange zur Zeit, mit dieser Perlvariante zu starten. Das
+führt dazu, daß viele Anwender gezwungen sind, sich ihr eigenes Perl
+zu bauen.
 
 ===Performance
 
+Die Wahl von Perl als Programmiersprache für Interchange war auch in
+Hinsicht auf die Performance der Anwendung als gut erwiesen. Mit
+ähnlichen Systemen in anderen Programmiersprache ist Interchange
+konkurrenzfähig und wird für großen Websites mit viel Traffic 
+eingesetzt. Selbstredend sind dann Optimierungsmaßnahmen erforderlich.
+
 ===Portierungsprobleme
+
+Eigentlich sollte durch die Verwendung einer Skriptsprache wie Perl
+das Betriebssystem wenig Einfluß auf die Anwendung haben.
+In der Praxis sind bei der Entwicklung von Interchange doch eine
+Reihe von teilweise unerwarteten und nur schwierig zu lösenden
+Problemen aufgetreten:
+
+* fehlerhaftes Verhalten von \C<getppid> auf Linuxsystemen mit threaded
+  Perl, als Workaround wurde eine Konfigurationsmöglichkeit geschaffen,
+  die Interchange anweist \C<getppid> durch \C<syscall(64)> zu ersetzen
 
 ==Bibliographie
 
 # ICDEVGROUP. \I<Interchange-Homepage.> \C<http://www.icdevgroup.org>
 
+# Andrew Hunt, David Thomas. \I<The Pragmatic Programmer: From Journeyman to
+Master>. Addison-Wesley, 1999. \C<http://www.pragmaticprogrammer.com/>
+
+# Dave Thomas, Andrew Hunt. \I<Pragmatic Version Control with CVS>. The
+Pragmatic Bookshelf, 2003.
