@@ -83,8 +83,11 @@
 	  gegenüber Mailboxdateien sind geringerer Resourcenbedarf, keine
 	  Lockingprobleme und gleichzeitiger 
 	  Lese- und Schreibzugriff durch mehrere Mailclients.
-	  Maildir++ ist eine Erweiterung des durch qmail eingeführten
-	  Maildir-Format und erlaubt 
+	</para>
+	<para>
+	  Maildir++ erweitert das durch qmail eingeführten
+	  <ulink url="http://www.qmail.org/man/man5/maildir.html">Maildir-Format</ulink>
+	  um Ordner und 
 	  Platzbeschränkungen (Quota) unabhängig vom Dateisystem.
 	</para>
 	<para>
@@ -100,13 +103,25 @@
 	  verwendet werden.
 	</para>
 	<para>
-	  Zum Anlegen von Maildirs kann <literal>maildirmake</literal> verwendet
-	  werden: 
+	  Für das Anlegen von Maildirs wird das Courier-Programm
+	  <literal>maildirmake</literal> empfohlen, 
 	</para>
 	<programlisting>
-	  maildirmake /home/racke/Maildir
-	  maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
+maildirmake /home/racke/Maildir
 	</programlisting>
+	<section>
+	  <title>Quotas</title>
+	  <programlisting>
+maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
+	  </programlisting>
+	  <para>
+		Mit der Kommandozeilenoption <literal>-q</literal> wird ein Quota für
+		das 
+		Maildir eingerichtet. Diese Maildir-Quotas sind freiwillig und
+		funktionieren deshalb nur so lange alle Anwendungen, die Emails in
+		dieses Maildir ausliefern, sich an diese Konvention halten.
+	  </para>
+	 </section>
 </section>
 
 <section>
