@@ -145,8 +145,21 @@ maildirmake /home/racke/Maildir
 	  <programlisting>
 maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  </programlisting>
+	  <para>
+		In diesem Beispiel wurde auf dem Postfach ein Quota von ungefähr 10
+		Megabyte gesetzt.
+	  </para>
+	  <para>
+		Gelöschte Email und der Inhalt des Trash-Ordners werden bei der
+		Berechnung des verbrauchten Speicherplatz nicht berücksichtigt,
+		außer Courier wurde mit der Option <literal>--with-trashquota</literal>
+		kompiliert.
+	  </para>
 	 </section>
 	<section><title>Interne Struktur</title></section>
+	<para>Ist für ein Postfach Quota gesetzt, wird diese in der Datei
+	  <filename>maildirsize</filename> verwaltet.
+	</para>
 	<para>Das Verzeichnis <filename>courierimapkeywords</filename> enthält die
 	  Schlagwörter für die Emails in einem Maildir++-Ordner. Diese können
 	  mit <literal>maildirkw -L .</literal> angezeigt werden.
@@ -239,8 +252,11 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	<title>SMTP-Server (Courier)</title>
 	<para>
 	  Die Konfiguration des SMTP-Servers erfolgt über eine Anzahl von
-	  Konfigurationsdateien, die sich in einem Verzeichnis befinden.
-	  Wir werden als Konfigurationsverzeichnis, auch für die anderen
+	  Konfigurationsdateien, die sich im Konfigurationsverzeichnis von
+	  Courier befinden. Der genaue Ort dieses Verzeichnisse wird während
+	  der Kompilierung von Courier festgelegt.
+	  Im folgenden wählen wir als Konfigurationsverzeichnis, 
+	  auch für die anderen
 	  Komponenten, <filename>/etc/courier</filename> verwenden.
 	</para>
 	<para>
@@ -250,7 +266,59 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	  Dies ist sogar erforderlich, wenn man das Web-Administrationsfrontend
 	  verwenden möchte.
 	</para>
-<section>
+	<para>
+	  Damit Änderungen an der Konfiguration wirksam werden, ist in vielen
+	  Fällen ein Kommando aufzurufen, wie z.B. das auch von
+	  <literal>sendmail</literal> bekannte <literal>makealiases</literal>.
+	  Diese Kommandos sind in der folgenden Tabelle zusammengefaßt:
+	</para>	
+	<table>
+	  <title>Konfigurationskommandos SMTP-Server</title>
+	  <tgroup cols="2">
+		<thead>
+		  <row>
+			<entry>Datei</entry>
+			<entry>Kommando</entry>
+		  </row>
+		</thead>
+		<tbody>
+		  <row>
+			<entry><literal>aliases</literal></entry>
+			<entry><literal>makealiases</literal></entry>
+		  </row>
+		  <row>
+			<entry><literal>esmtpacceptmailfor</literal></entry>
+			<entry><literal>makeacceptmailfor</literal></entry>
+		  </row>
+		  <row>
+			<entry><literal>hosteddomains</literal></entry>
+			<entry><literal>makehosteddomains</literal></entry>
+		  </row>
+		  <row>
+			<entry><literal>smtpaccess</literal></entry>
+			<entry><literal>makesmtpaccess</literal></entry>
+		  </row>
+		</tbody>
+	  </tgroup>
+	</table>
+	<section>
+	  <title>Lokale Domains</title>
+	  <para>
+		Lokale Domains sind in <literal>locals</literal> und
+		<literal>hosteddomains</literal> konfiguriert. Der einzige Unterschied
+		zwischen Domains in <literal>locals</literal> und
+		<literal>hosteddomains</literal> ist die Methode zum Auffinden der
+		lokalen Postfächern. Bei Domains in <literal>locals</literal> wird dazu
+		die Domain aus der Emailadresse entfernt (aus
+		<literal>racke@linuxia.de</literal> wird <literal>racke</literal>), 
+		bei <literal>hosteddomains</literal> nicht.		
+	  </para>
+	  <para>
+		Weitere Domains, für die Courier Emails via ESMTP annimmt, können
+		in der Datei <literal>esmtpacceptmailfor</literal> angegeben werden.
+	  </para>
+	</section>
+	<section>
 	  <title>Aliase</title>
 	<para>
 	  Systemaliase können z.B. in
@@ -263,10 +331,6 @@ mailer-daemon: postmaster
 MAILER-DAEMON: postmaster
 postmaster: racke
 	</programlisting>
-	  <para>
-		Nach Änderungen ist das Programm <literal>makealiases</literal>
-		aufzurufen.
-	  </para>
 </section>
 <section>
 	  <title>MIME-Konformität</title>
