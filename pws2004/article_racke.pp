@@ -16,6 +16,14 @@ Dieser Vortrag von einem leitenden Interchange-Programmierer berichtet über
 die Erfahrungen und Probleme, die im Verlaufe des 8-jährigen
 Entwicklungsprozesses gesammelt wurden.
 
+==Kolloboration
+
+Größere Programmierprojekte werden häufig als Teamwork durchgeführt.
+
+==Versionsverwaltung
+
+==Testsuite
+
 ==Module
 
 ==Performance
