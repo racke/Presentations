@@ -511,6 +511,19 @@ b OK NAMESPACE completed.
 	  verwendet.
 	</para>
 	<para>
+	  Die Filterung kann anhand von Mailheadern und dem Inhalt dem Email
+	  erfolgen.
+	</para>
+	<para>
+	  Maildrop ist nicht MIME-fähig und aus diesem Grunde trifft die folgende
+	  Regel auf alle MIME-Emails zu:
+	</para>
+	<programlisting>
+if (( /Type/:b )){ 
+	  to $FOLDER 
+} 
+	</programlisting>
+	<para>
 	  Folgendes einfache Beispiel illustriert die Filterung mit einem
 	  externen Programm:
 	</para>
