@@ -25,12 +25,28 @@
 	<para>
 	  Offene Standards wie LDAP, SSL/TLS ...
 	</para>
+	<para>
+	  Courier wurde von Sam Varshavchik entwickelt und nach wie vor ....
+	</para>
+</section>
+
+<section>
+	<title>Pro und Contra</title>
+	<para>
+	  Für den EinsatzVorteile:
+	</para>
+	  <itemizedlist>
+		<listitem><para>Komplettpaket</para></listitem>
+		<listitem><para>Flexibilität</para></listitem>
+		<listitem><para>kontinuierliche Weiterentwicklung und Support auf der Mailingliste</para></listitem>
+	  </itemizedlist>
 </section>
 
 <section>
 	<title>Komponenten im Überblick</title>
 	<para>
 	  Der Courier-Mailserver setzt sich aus den folgenden Komponenten zusammen:
+	</para>
 	 <itemizedlist>
 		<listitem><para>SMTP-Server (Courier)</para></listitem>
 		<listitem><para>IMAP-Server (Courier-IMAP)</para></listitem>
@@ -40,10 +56,23 @@
 		<listitem><para>MDA mit Filterfähigkeiten (Maildrop)</para></listitem>
 		<listitem><para>Webadministration (courierwebadmin)</para></listitem>
 	  </itemizedlist>
+	<para>
 	  Neben dem kompletten Quellpaket sind auch ausgewählte Komponenten
 	  als gesonderte Distributionen erhältlich. Dies sind Courier-IMAP,
 	  SqWebMail und Maildrop. Allerdings bestehen subtile Unterschiede beim
 	  Kompilieren aus dem Gesamtpaket bzw. den Einzelpaketen.
+	</para>
+</section>
+
+<section>
+	<title>Maildir++</title>
+	<para>Courier benutzt das sogenannte Maildir++-Format zur Speicherung und
+	  zum Zugriff auf Emails. Mailboxdateien werden z.T. unterstützt,
+	  z.B. für die Auslieferung von Emails durch Maildrop.
+	</para>
+	<para>Maildir++ ist eine Erweiterung vom Maildir-Format und erlaubt
+	  Platzbeschränkungen (Quota) unabhängig vom Dateisystem.
+<!-- Exim nativ, sonst deliverquota -->
 	</para>
 </section>
 
@@ -78,24 +107,25 @@
 	  Die wichtigsten Authentifizierungsmodule neben dem 
 	  Authentifizierungsdaemon (authdaemon) sind:
 	</para>
+
 	<variablelist>
 	  <varlistentry><term>authpam</term>
-		<listitem></listitem>
+		<listitem><para>PAM-Authentifizierung</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authuserdb</term>
-		<listitem></listitem>
+		<listitem><para></para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authmysql</term>
-		<listitem></listitem>
+		<listitem><para>Authentifizierung durch eine MySQL-Datenbank</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authpgsql</term>
-		<listitem></listitem>
+		<listitem><para>Authentifizierung durch eine PostgreSQL-Datenbank</para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authldap</term>
-		<listitem></listitem>
+		<listitem><para></para></listitem>
 	  </varlistentry>
 	  <varlistentry><term>authvchkpw</term>
-		<listitem></listitem>
+		<listitem><para></para></listitem>
 	  </varlistentry>
 	</variablelist>  
 </section>
@@ -115,6 +145,7 @@
 <section>
 	<title>Weitere Quellen</title>
 	<table>
+	  <title>Quellen</title>
 	  <tgroup cols="2">
 		<thead>
 		  <row>
