@@ -438,9 +438,13 @@ Escape character is '^]'.
 a login racke@linuxia.de secret
 a OK LOGIN Ok.
 b namespace
-* NAMESPACE (("INBOX." ".")) NIL (("#shared." "")("shared." "."))
+* NAMESPACE (("INBOX." ".")) NIL (("#shared." ".")("shared." "."))
 b OK NAMESPACE completed.
 	  </programlisting>
+	  <para>
+		Die Antwort ist übrigens in den Versionen 3.0.0 bis 3.0.4 von Courier
+		IMAP fehlerhaft.
+	  </para>
 	</section>
 
 	<section>
