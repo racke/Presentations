@@ -35,27 +35,59 @@
 
 &centersmall Stefan Hornburg (Racke) <racke@linuxia.de>
 
+# welche Kriterien stelle ich an eine Distribution ?
+# wie erfüllt Debian diese Kriterien
+# Behebung von Schwachstellen
+
 %page
 Kriterien
 
 	Features
-		Plattform
-		Umfang
-		Aktualität
+		Plattformen, Umfang, Aktualität
 
+# Zukunftssicherheit: Plattformen
 	Never change a running system
-		Stabilität
-		Sicherheit
+		Stabilität, Sicherheit
 
-	Support
-		Community
-		kommerzieller Support
+	Troubleshooting
+		Community, kommerzieller Support
+
+	Entwicklung
+		Pakete, Werkzeuge, Varianten
 
 #	Transparenz
 #	Community
 #		Offsprings
 #	Support
 #		zertifizierung
+
+%page
+Plattformen
+
+%page
+Umfang
+
+    grundsätzlich viele Pakete
+
+	Perlmodule
+		Amavis, Sympa, Interchange
+
+	moderne 
+
+%page
+Aktualität
+
+	lange Releasezyklen
+		woody: 19. Juli 2002
+		sarge: ??. ???? 2005
+
+	Features
+
+	Support Upstream
+		Exim, Courier
+
+%page
+
 
 %page
 Transparenz
@@ -71,8 +103,6 @@ Aktualität
 
 	Support Upstream
 		
-	lange Releasezyklen
-		woody: 19. Juli 2002
 
 %page
 Portabilität
@@ -87,6 +117,8 @@ Community
 
 %page
 Lösungen
+
+		Einsatz von testing/sid
 
 		Backports
 
