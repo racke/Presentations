@@ -236,7 +236,7 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 	<para>Die Konfiguration für den Authentifizierungsdämon befindet sich der
 	  Datei <filename>authdaemonrc</filename>, die wichtigsten Variablen sind: 
 	  </para>	
-<table>
+	<table>
 		<title>Konfiguration Authentifizierungsdämon</title>
 		<tgroup cols="2">
 		  <thead>
@@ -265,6 +265,45 @@ maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
 			</tbody>
 		  </tgroup>
 		</table>
+	<section>
+	  <title>Optionen für Postfächer</title>
+	  <para>Bei den für virtuelle Postfächer geeigneten
+		Authentifizierungsmethoden (userdb, LDAP, MySQL, PostgreSQL) können
+		Optionen in einem bestimmten Feld als kommaseparierte Schlüssel- und
+		Wertpaare gespeichert werden. Damit ist es
+		u.a. möglich, einem Benutzer nur einen Teil der Dienste
+		zur Verfügung zu stellen. Das folgende Beispiel erlaubt lediglich
+		Zugriff via Webmail auf das entsprechende Postfach:
+	  </para>
+	  <programlisting>
+disableimap=1,disablepop=1
+	  </programlisting>
+	  <table>
+		<title>Optionen für Postfächer</title>
+		<tgroup cols="2">
+		  <tbody>
+			<row>
+			  <entry><literal>disableimap</literal></entry>
+			  <entry>kein IMAP-Zugriff, wenn auf 1 gesetzt</entry>
+			</row>
+			<row>
+			  <entry><literal>disablepop3</literal></entry>
+			  <entry>kein POP3-Zugriff, wenn auf 1 gesetzt</entry>
+			</row>
+			<row>
+			  <entry><literal>disablewebmail</literal></entry>
+			  <entry>kein Webmail-Zugriff, wenn auf 1 gesetzt</entry>
+			</row>
+			<row>
+			  <entry><literal>sharedgroup</literal></entry>
+			  <entry>hängt den Wert an den Namen der Indexdatei für gemeinsame
+				Ordner an und beschränkt damit den Zugriff auf gemeinsame
+				Ordner für dieses Postfach</entry>
+			  </row>
+			</tbody>
+		  </tgroup>
+		</table>
+	</section>
 </section>
 
 <section id="sharedfolders">
