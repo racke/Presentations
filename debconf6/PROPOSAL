@@ -1,0 +1,17 @@
+Debian and Perl
+
+Vital parts of the Debian packaging system like Debconf or debhelper 
+are written in Perl, which is a widely use programming language with
+the most extensive set of modules provided by the CPAN network.
+
+This talk discusses the Perl infrastructure in Debian, 
+pro and cons of using Debian as a platform for Perl applications
+and explains methods to create Debian packages from Perl modules 
+and applications. 
+
+Finally a couple of practical issues are presented, including:
+
+* Apache2/mod_perl on Sarge
+* Interchange and threaded Perl
+* Using Perl in maintainer scripts
+
