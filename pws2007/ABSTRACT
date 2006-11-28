@@ -1,0 +1,38 @@
+Spamassassin, Antivirus und Email via Perl
+
+Die Bedeutung von Email für die Kommunikation hat einen hohen
+Stellenwert erreicht und ist oftmals nicht aus dem täglichen
+Leben und aus der Arbeitswelt wegzudenken. Attacken auf dieses
+wichtige Instrument mittlels SPAM, Viren und Phishing nehmen
+kontinuierlich zu. Nützliche Emails drohen in einer Flut von unerwünschter
+und potentiell schädlichen Post unterzugehen, wenn Gegenmaßnahmen
+nicht oder nur unzureichend greifen.
+
+Für Perl sind eine Reihe von Modulen vorhanden, die die Erstellung
+von Programmen zum Zugriff auf Email und die Bewertung der Email
+erleichtern:
+
+	Net::SMTP (Emailversand)
+	Mail::IMAPClient (Zugriff auf Email mit IMAP)
+	Mail::Spamassassin (Spamassassin)
+	ClamAV::Client (Clam Antivirus)
+	
+Nach einer kurzen Einführung in die Benutzung dieser Module beschäftigt
+sich der Hauptteil des Vortrags mit der Beschreibung von Anwendungen
+zur Verbesserung der Abwehr von SPAM, Viren und Phishing.
+
+Zur Demonstration werden Emails von einem IMAP-Server heruntergeladen 
+und von ClamAV auf Viren und Phishing geprüft und anschließend durch
+SpamAssassin bewertet. Anschließend wird gezeigt, wie diese Emails vom
+Server gelöscht oder in bestimmte Verzeichnisse auf dem IMAP-Server verschoben
+werden können. Die Behandlung von Fehlerkennungen (False Positives)
+wird ebenso erläutert.
+
+Im Anschluß wird die Erstellung von Statistiken über das Aufkommen
+von Viren und SPAM besprochen und wie man daraus Schlüsse zur Optimierung
+zur Abwehr treffen kann.
+
+
+
+
+
