@@ -1,0 +1,23 @@
+Aufbau
+======
+
+Schema Mailprocessing (SMTP, Scanning, IMAP, Statistiken)
+pro Modul Zusammenfassung/HOWTO
+
+Module
+======
+
+ClamAV::Client
+--------------
+
+Homepage: http://search.cpan.org/dist/ClamAV-Client/
+
+what can be scanned
+what emails to be considered ?
+
+Notes:
+* full path needed !?
+
+* file must be accessible by the antivirus scanner, or
+
+Invalid server response to scan command: "amavis.conf.test: Access denied. ERROR" at /usr/local/share/perl/5.8.4/ClamAV/Client.pm line 492.
