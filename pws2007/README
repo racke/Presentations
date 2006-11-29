@@ -2,7 +2,7 @@ Aufbau
 ======
 
 Schema Mailprocessing (SMTP, Scanning, IMAP, Statistiken)
-pro Modul Zusammenfassung/HOWTO
+pro Modul Zusammenfassung/Fähigkeiten/HOWTO
 
 Module
 ======
@@ -21,3 +21,15 @@ Notes:
 * file must be accessible by the antivirus scanner, or
 
 Invalid server response to scan command: "amavis.conf.test: Access denied. ERROR" at /usr/local/share/perl/5.8.4/ClamAV/Client.pm line 492.
+
+Mail::SpamAssassin
+------------------
+
+Statistiken
+===========
+
+SpamAssassin
+------------
+
+sa-stats: http://david.hexstream.co.uk/scripts/
+
