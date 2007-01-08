@@ -56,3 +56,10 @@ sa-stats.pl: http://david.hexstream.co.uk/scripts/
 sa-stats.pl: http://www.rulesemporium.com/programs/sa-stats-1.0.txt
 	Dallas Engelken <dallase@uribl.com>, Perl, 3.1.x and above
 
+Mailgraph
+=========
+
+RRDtool frontend for Mail statistics
+
+http://people.ee.ethz.ch/~dws/software/mailgraph/
+
