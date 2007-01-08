@@ -4,8 +4,22 @@ Aufbau
 Schema Mailprocessing (SMTP, Scanning, IMAP, Statistiken)
 pro Modul Zusammenfassung/Fähigkeiten/HOWTO
 
+Timing
+======
+
+10 Minuten Module
+20 Minuten Praxis
+10 Minuten Sonstiges
+
 Module
 ======
+
+Für jedes Modul:
+
+* Einführung
+* Überblick über die wichtigsten Funktionen
+* Beispiel(e)
+* Einschränkungen und Alternativen
 
 IMAP
 ----
