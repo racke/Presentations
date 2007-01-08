@@ -83,11 +83,11 @@ und strukturell die letztendliche \LaTeX-Umgebung simuliert.
 \item Labels für Verweise, Bibliographie-Einträge, müssen mit
 einem eindeutigen Präfix versehen werden, z.B. mit einem
 Autorenkürzel. Im vorliegenden Beispielartikel wird durchgängig
-\verb/sts72:/ verwendet.
+\verb/racke:/ verwendet.
 
 \item Zusätzliche Dateien (z.B. Grafiken) müssen in genau einem
 getrennten Unterverzeichnis abgelegt werden, z.B. bestehend aus dem
-Autorenkürzel. Im vorliegenden Beispielartikel wurde \verb/sts72/
+Autorenkürzel. Im vorliegenden Beispielartikel wurde \verb/racke/
 verwendet.
 
 \end{itemize}
@@ -122,11 +122,11 @@ extend our perlworkshop style file.}
 
 \item Labels for cross references, bibliography entries, etc. must me
 used with unique prefix, i.e. the AUTHORMNEMONIC. In the current
-example I use \verb/sts72:/.
+example I use \verb/racke:/.
 
 \item Additional files (e.g., images) must be provided within a
 separate sub directory, e.g., named like your AUTHORMNEMONIC.  In the
-current example I use sub directory \verb/sts72/.
+current example I use sub directory \verb/racke/.
 
 \end{itemize}
 
@@ -183,7 +183,7 @@ at the end of the document.
 \noindent
 Der \WSIndex{Scheik} von \WSIndex{Alessandria}\footnote{Auszug aus dem
 \WSIndex{Wilhelm Hauff}-Märchen / extraction from a fairy-tale of Wilhelm
-Hauff. {\em Der Scheik von Alessandria},~\cite{sts72:hauff}},
+Hauff. {\em Der Scheik von Alessandria},~\cite{racke:hauff}},
 \WSIndex{Ali Banu}, war ein sonderbarer \WSIndex{Mann}; wenn er
 morgens durch die Straßen der Stadt ging, angetan mit einem
 \WSIndex{Turban}, aus den \WSIndex{köstlich}sten \WSIndex{Kaschmir}s
@@ -287,14 +287,14 @@ The well-know column of figures with verbatim:
 \end{verbatim}
 
 \subsection{includegraphics, label}
-\label{sts72:section:graphics}
+\label{racke:section:graphics}
 \noindent
 Hier ein Bild, in Originalgröße und zentriert.
 
 An image, original size, centred.
 
 \begin{center}
- \includegraphics{sts72/hype.eps}             % original size
+ \includegraphics{racke/hype.eps}             % original size
 \end{center}
 
 \noindent
@@ -303,7 +303,7 @@ Hier das gleiche Bild, skaliert auf 25\% der Textbreite:
 The same image, scaled to  25\% of text width:
 
 \begin{center}
- \includegraphics[width=0.25\textwidth]{sts72/hype.eps}  % scaled
+ \includegraphics[width=0.25\textwidth]{racke/hype.eps}  % scaled
 \end{center}
 
 \noindent
@@ -312,7 +312,7 @@ Hier noch die Einbindung eines PNG-Bildes.
 And here an example how to include PNG images.
 
 \begin{center}
- \includegraphics[width=\textwidth]{sts72/kram.png}
+ \includegraphics[width=\textwidth]{racke/kram.png}
 \end{center}
 
 \noindent
@@ -324,23 +324,23 @@ Additionally there is an invisible\footnote{Regards from the
 this subsection.
 
 \subsection{figure, ref, cite}
-Wie man Bilder einbindet wurde im Kapitel \ref{sts72:section:graphics}
+Wie man Bilder einbindet wurde im Kapitel \ref{racke:section:graphics}
 gezeigt. Hier verweisen wir nun auf eine ``irgendwo'' automatisch
-platzierte Abbildung \ref{sts72:fig:datenfluss}. Weiterhin verweisen wir
+platzierte Abbildung \ref{racke:fig:datenfluss}. Weiterhin verweisen wir
 auf einen Eintrag in unserer Bibliographie, und zwar auf
-\cite{sts72:ExampleManual}.
+\cite{racke:ExampleManual}.
 
-Chapter \ref{sts72:section:graphics} already showed how to include
+Chapter \ref{racke:section:graphics} already showed how to include
 images. Now we reference to a figure
-\ref{sts72:fig:datenfluss}, which is automatically placed ``anywhere''
+\ref{racke:fig:datenfluss}, which is automatically placed ``anywhere''
 by latex. Additionally we refer to an entry in the bibliography,
 namely
-\cite{sts72:ExampleManual}.
+\cite{racke:ExampleManual}.
 \begin{figure}
  \centering
- \includegraphics[width=\textwidth]{sts72/datenfluss.eps}  % scale to textwidth
+ \includegraphics[width=\textwidth]{racke/datenfluss.eps}  % scale to textwidth
  \caption{Datenfluß}
- \label{sts72:fig:datenfluss}
+ \label{racke:fig:datenfluss}
 \end{figure}
 
 \subsection{enumerate}
@@ -356,30 +356,30 @@ namely
 \end{enumerate}
 
 \subsection{Verbatim Sourcecode}
-\verbatiminput{sts72/Categorization.pm}
+\verbatiminput{racke/Categorization.pm}
 
 \subsection{Listings}
 \lstset{language=Perl,basicstyle=\footnotesize,columns=fixed}
-\lstinputlisting{sts72/Categorization.pm}
+\lstinputlisting{racke/Categorization.pm}
 
 \begin{thebibliography}{99}
 
-\bibitem{sts72:hauff} Wilhelm Hauff. \emph{Märchen-Almanach auf das Jahr
+\bibitem{racke:hauff} Wilhelm Hauff. \emph{Märchen-Almanach auf das Jahr
 1827}. Project Gutenberg, 2003. \texttt{http://gutenberg.net}. 
 
-\bibitem{sts72:gnu} Free Software Foundation.
+\bibitem{racke:gnu} Free Software Foundation.
 \emph{GNU's not Unix.} \texttt{http://www.gnu.org} 
 
-\bibitem{sts72:ExampleManual} Sabine Mustermann. \emph{The Example Manual -
+\bibitem{racke:ExampleManual} Sabine Mustermann. \emph{The Example Manual -
 Doing by Learning.} Addison-Snipes, Writing, Massachusetts, 1991.
 
-\bibitem{sts72:gnus} D. E. Knudson.
+\bibitem{racke:gnus} D. E. Knudson.
 \emph{1966 World Gnus Almanac.} 
 
-\bibitem{sts72:Zomtec} Charles Zomtec, Inc.
+\bibitem{racke:Zomtec} Charles Zomtec, Inc.
 \emph{Zomtec.} Green Bottle, Oregon, 2001.
 
-\bibitem{sts72:perlws} German Perl Workshop.
+\bibitem{racke:perlws} German Perl Workshop.
 \emph{German Perl Workshop Website.}
 \texttt{http://www.perl-workshop.de}
 

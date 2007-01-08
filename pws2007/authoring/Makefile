@@ -2,7 +2,7 @@
 
 # auxiliary variables
 
-AUTHOR_ID = sts72
+AUTHOR_ID = racke
 
 # ----- Please don't modify the stuff below -----
 
