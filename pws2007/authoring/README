@@ -1,0 +1,52 @@
+
+                  ==================================
+                  Tagungsband Deutscher Perlworkshop
+                                  -
+                            LaTeX-Umgebung
+                  ==================================
+
+
+* Dieses Unterverzeichnis ist eine Entwicklungs-Umgebung,
+  in welcher LaTeX-Beiträge für den Tagungsband des Deutschen Perl
+  Workshop erstellt werden können.
+
+
+* Letzten Endes benötigen wir als Beitrag nur die Datei
+  "article_AUTORKÜRZEL.tex" und ggf. zusätzliche Include-Dateien
+  (Bilder u.ä.) in einem Unterverzeichnis AUTORKÜRZEL/.
+  Alles andere hier dient nur der Unterstützung für die Autoren.
+  Bei "make mydist" sollte alles dabei sein.
+
+
+* Wie man startet, ist in der Datei "HOWTO" beschrieben.
+
+
+* Die Datei "main.tex" und der zugehörige Style "perlws.sty"
+  simulieren unsere endgültige LaTeX-Umgebung für den Tagungsband.
+  Dein Artikel muß im Rahmen der main.tex-Datei funktionieren. Das
+  beiliegende Makefile enthält alle notwendigen Schritte, um einen
+  Tagungsband zu erzeugen.
+
+
+* Die Datei "article_sts72.tex" ist ein Beispielartikel, der als
+  Vorlage verwendet werden sollte. Vor eigenen Änderungen muß überall
+  das AUTORKÜRZEL (derzeit sts72) geändert werden. Dies ist
+  detailliert in der Datei "HOWTO" beschrieben.
+
+
+* Mehrere Beiträge bitte komplett getrennt, mit unterschiedlichen
+  AUTORKÜRZELN einreichen, z.B. mit einem weiteren Buchstaben
+  versehen: sts72a, sts72b, sts72c.
+
+
+* Für andere Formate neben LaTeX (PerlPoint, POD) stehen eigene
+  Beispielprojekte bereit, siehe "www.perl-workshop.de".
+
+
+* Fragen? Einfach eine Mail an das freundliche Workshop-Orga-Team:
+
+    <wsorga@perl-workshop.de>
+
+
+
+Viel Spaß!

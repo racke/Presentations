@@ -1,0 +1,117 @@
+
+          =================================================
+          Tagungsband Deutscher Perlworkshop - HOW TO START
+          =================================================
+
+             Wie startet man seinen eigenen LaTeX-Artikel
+
+
+
+- Das gesamte Verzeichnis irgendwohin kopieren;
+  diese Kopie wird das neue Arbeitsverzeichnis.
+
+
+- In dieses Arbeitsverzeichnis wechseln.
+
+
+- Das Unterverzeichnis "sts72" umbenennen,
+  z.B. in "maxe68"
+  (wähle irgendein Autoren-spezifisches Kürzel, das
+  voraussichtlich nicht mit anderen Autoren kollidiert)
+
+
+- Falls Du mehrere Beiträge einreichst, lege für jeden ein eigenes
+  Arbeistverzeichnis an und verwende unterschiedliche AUTORKÜRZEL,
+  z.B. "maxe68a", "maxe68b", "maxe68c", ...
+
+
+- Die Datei "article_sts72.tex" umbenennen in "article_maxe68.tex"
+
+
+- in der Datei "main.tex" die Zeile
+
+    \input{article_sts72.tex}
+
+  in
+
+    \input{article_maxe68.tex}
+
+  ändern.
+
+
+- In der Datei "article_maxe68.tex" folgende
+  Zeichenketten-Ersetzung vornehmen:
+
+    sts72  ->  maxe68
+
+
+- Im Makefile die Zeile
+
+    AUTHOR_ID = sts72
+
+  in
+
+    AUTHOR_ID = maxe68
+
+  ändern.
+
+
+- article_maxe68.tex nach Belieben verändern, und mit eigenem
+  Inhalt füllen.
+
+
+- Bitte schreibe genau ein Kapitel "\subsection*{Autor}", in welchem
+  in einzelnen Zeilen untereinander die Autoren des Beitrages
+  aufgelistet sind.
+
+
+- Schreibe ein Kapitel "\subsection*{Bio Dein Name}" mit einer
+  Kurzbiographie des Authors. Verwende ggf. mehrere solcher Kapitel für
+  mehrere Autoren.
+
+
+- Bitte schreibe genau ein Kapitel "\subsection*{Abstract}" mit einer
+  kurzen Zusammenfassung ohne weitere Unterkapitel.
+
+
+- Testen. Entweder mit "make" oder manuell mit dieser Sequenz
+
+    $ latex main.tex
+    $ makeindex -s main.ist main.idx
+    $ latex main.tex
+    $ latex main.tex
+    $ dvipdf main.dvi
+
+
+- Falls Fehler bei "latex" auftreten, weil Packages fehlen, die in
+  "perlws.sty" enthalten sind, aber für den eigenen Artikel nicht
+  benötigt werden, dann die entsprechenden \usepackage-Zeilen in
+  "perlws.sty" auskommentieren, mit '%' am Zeilenanfang. (Das
+  "listings"-Paket ist beispielsweise oft nicht vorhanden.)
+
+
+- Schlagwörter für Deinen Beitrag, die nicht im Artikel- oder
+  Abstract-Text markiert sind, kannst Du in einer optionalen Datei
+  "indexlist_maxe68" bereitstellen. Dabei zählt jede Zeile als ein
+  Eintrag. 
+
+
+- Zusatzdaten für die CD (weiterführende Artikel, Bilder, Beispiele,
+  Distributionen etc.) bitte in ein Verzeichnis "goodies_maxe68"
+  kopieren.  Wir übernehmen dieses Verzeichnis direkt auf die
+  CD. Enthält "goodies_maxe68" eine Datei "index.html", wird dieses
+  auf der CD als Einstiegspunkt verlinkt. Ansonsten legen wir einen Link
+  auf das Verzeichnis selbst an. 
+
+
+- Bitte so zeitig wie möglich eine frühe Version der Datei
+  "article_maxe68.tex" zusammen mit dem Unterverzeichnis "maxe68"
+  an das Tagungsband-Team senden.
+
+
+- Rückfragen bitte per Mail an das freundliche Workshop-Orga-Team:
+
+    <wsorga@perl-workshop.de>
+
+
+Viel Spaß!

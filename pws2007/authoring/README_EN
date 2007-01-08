@@ -1,0 +1,50 @@
+
+		=====================================
+		Proceedings paper German Perlworkshop
+                                  -
+			  LaTeX environment
+		=====================================
+
+
+* This subdirectory is a development environment in which LaTeX
+  articles for the German Perlworkshop can be created.
+
+
+* After all we need the file "article_AUTHORMNEMONIC.tex" and, where
+  appropriate, additional includes (e.g., images) in a sub directory
+  named AUTHORMNEMONIC/. Everything else is just support for the
+  authors.
+  "make mydist" should create a zip with all needed files.
+
+
+* The file HOWTO_EN describes how to start.
+
+
+* The files "main.tex" and "perlws.sty" simulate our final LaTeX
+  environment for the proceedings paper. Your Artikel must work within
+  the main.tex-context. The Makefile contains every needed steps
+  toward a complete proceedings paper.
+
+
+* The file "article_sts72.tex" is an example article that should be
+  used as a template. Before you change it you must change the
+  AUTHORMNEMONIC (currently sts72). See HOWTO_EN for a detailed
+  description.
+
+
+* In case you provide more than one article, please submit them
+  completely independent with distinguishing AUTHORMNEMONICs,
+  e.g., use sts72a, sts72b, sts72c, ...
+
+
+* There are example projects for other formats beside LaTeX
+  (PerlPoint, POD), see hints for authors at "www.perl-workshop.de".
+
+
+* Any questions? Just email to the friendly workshop organization team:
+
+    <wsorga@perl-workshop.de>
+
+
+
+Have fun!

@@ -1,0 +1,387 @@
+%% -*- mode: latex; -*-
+
+\section{Vorbild::Beitrag::LaTeX - Ein Vorbildartikel für den Tagungsband}
+
+An example article for the proceedings paper.
+
+This article is written in ``dual language free style''\texttrademark,
+sometimes additional subsections, sometimes just additional english
+paragraphs, sometimes obvious examples are not translated. Please
+report any language problems, you could imagine.
+
+\subsection*{Autor}
+Steffen Schwigon \verb/<schwigon@webit.de>/,
+Jochen Stenzel \verb/<perl@jochen-stenzel.de>/,
+
+\subsection*{Bio Steffen Schwigon}
+
+Dieser Abschnitt enthält eine Kurzbiographie (Bio). Beschreibe Dich
+kurz in eigenen Worten und dem Stil Deiner Wahl.
+
+This section contains your short biography. Describe yourself with
+your own words and with your preferred style.
+
+\subsection*{Bio Jochen Stenzel}
+
+Dieser Abschnitt enthält die Kurzbiographie (Bio) eines weiteren
+Autors. Beschreibe Dich kurz in eigenen Worten und dem Stil Deiner
+Wahl.
+
+This section contains the short biography of another author if there
+is more than one. Describe yourself with your own words and with your
+preferred style.
+
+\subsection*{Abstract}
+Der Zweck dieses Textes ist die Präsentation eines korrekten
+\LaTeX-Artikels für den Deutschen Perl Workshop. Es werden die
+verfügbaren Packages und wichtige Elemente demonstriert.
+
+Ziel ist es, den Tagungsband des diesjährigen Perlworkshop ``aus einem
+Guß'' herzustellen. Das Tagungsband-Team wird seine Energien
+vordergründig in die Unterstützung der Autoren bei der Erstellung
+korrekter Beiträge investieren.
+
+Bei Problemen jeglicher Art bitte an Deinen Betreuer oder die anderen
+freundlichen Helfer bei \verb/<wsorga@perl-workshop.de>/ wenden.
+
+\subsection*{Abstract}
+This article is meant to be a presentation of a correct contribution
+to the German Perl Workshop. It shows available packages and some
+important features.
+
+The main goal is to create the proceedings paper of a piece. The
+proceedings paper team will mainly use its energy in supporting the
+authors to provide correct contributions.
+
+In case of problems just mail them to your designated sponsor (tutor)
+or the other friendly organizers at \verb/<wsorga@perl-workshop.de>/.
+
+\subsection{Grundregeln}
+
+Prinzipiell kann man sich recht frei entfalten. Die Beiträge sind
+\verb/\section/s eines Gesamtdokumentes der KOMA-Klasse {\em
+scrartcl}. Damit sich alle Beiträge zusammenfügen, hier die
+wichtigsten Hinweise.
+
+\begin{itemize}
+
+\item Der Beitrag ist eine Datei {\em article\_AUTORKÜRZEL.tex}.
+
+\item Der Beitrag beginnt mit \verb/\section/.
+
+\item Es darf {\bf kein} \verb/\usepackage/ verwendet
+werden\footnote{Sollte wirklich ein unverzichtbares Paket fehlen,
+erweitern wir unsere Perlworkshop-Style-Datei.}.
+
+\item Alle verfügbaren Packages sind der Datei {\em perlws.sty}
+entnehmbar. 
+
+\item Der Beitrag muß im Rahmen der mitgelieferten, unveränderten
+Datei {\em main.tex} funktionieren, welche den Artikel importiert
+und strukturell die letztendliche \LaTeX-Umgebung simuliert.
+
+\item Labels für Verweise, Bibliographie-Einträge, müssen mit
+einem eindeutigen Präfix versehen werden, z.B. mit einem
+Autorenkürzel. Im vorliegenden Beispielartikel wird durchgängig
+\verb/sts72:/ verwendet.
+
+\item Zusätzliche Dateien (z.B. Grafiken) müssen in genau einem
+getrennten Unterverzeichnis abgelegt werden, z.B. bestehend aus dem
+Autorenkürzel. Im vorliegenden Beispielartikel wurde \verb/sts72/
+verwendet.
+
+\end{itemize}
+
+\noindent
+Der vorliegende Artikel dient als Beispiel für einen korrekten Artikel
+und demonstriert wichtige \LaTeX-Elemente.
+
+\subsection{Main rules}
+
+Generally feel free. The contributions are \verb/\section/s of a main
+document of the KOMA class {\em scrartcl}. This class is more german
+language centric, especially regarding layout. Anyway it should work
+for you, too.
+
+For nicely fitting all contributions together, here are the most
+important hints.
+
+\begin{itemize}
+
+\item The contribution is a file {\em article\_AUTHORMNEMONIC.tex}.
+
+\item The contribution starts with \verb/\section/.
+
+\item You {\bf must not} use \verb/\usepackage/. \footnote{In case
+you really, really need an additional package, write us and we try to
+extend our perlworkshop style file.}
+
+\item All available packages can be seen in the file {\em perlws.sty}.
+
+\item The contribution must work within the context of the provided file {\em main.tex}, which imports your article and simulates our final \LaTeX environment.
+
+\item Labels for cross references, bibliography entries, etc. must me
+used with unique prefix, i.e. the AUTHORMNEMONIC. In the current
+example I use \verb/sts72:/.
+
+\item Additional files (e.g., images) must be provided within a
+separate sub directory, e.g., named like your AUTHORMNEMONIC.  In the
+current example I use sub directory \verb/sts72/.
+
+\end{itemize}
+
+\noindent
+The current article is an example for a correct contribution and
+demonstrates some important \LaTeX features.
+
+\subsection{Sonderzeichen / Special characters}
+
+Hier ein paar Sonderzeichen, die in \LaTeX\, besonders ausgezeichnet
+werden müssen. Die \LaTeX-Kommandos bitte dem Quelltext entnehmen.
+
+Here are some special characters, that must be used in a special way
+in \LaTeX. Please see the source code for the \LaTeX commands. Ignore
+the funny german descriptions, just look at the special
+characters.
+
+\begin{quotation}
+\noindent
+\begin{labeling}[~:~]{GeschweifteKlammerRechts}
+ \item [Ampersand]  \&
+ \item [Underline]  \_
+ \item [Backslash]  $\backslash$
+ \item [Tilde]      \verb/~/
+ \item [Dach]       \verb/^/
+ \item [Gartenzaun] \#
+ \item [Dollar]     \$
+ \item [Prozent]    \%
+ \item [GeschweifteKlammerLinks] \{
+ \item [GeschweifteKlammerRechts] \}
+\end{labeling}
+\end{quotation}
+
+\subsection{Index, Fußnoten / Index, footnotes}
+Im folgenden Abschnitt (nach der englischen Übersetzung) sind viele
+Wörter für den Index markiert. Bitte hierfür das Makro
+\begin{verbatim}
+ \WSIndex{indexwort}
+\end{verbatim}
+verwenden (siehe Quelltext). Die markierten Wörter werden im Index am
+Ende des Dokumentes aufgelistet.
+
+~
+
+In the following paragraph many words are marked for the index. Please
+use the macro
+\begin{verbatim}
+ \WSIndex{indexword}
+\end{verbatim}
+for marking (see source code). The marked words are listed in the index
+at the end of the document.
+
+\begin{quotation}
+\noindent
+Der \WSIndex{Scheik} von \WSIndex{Alessandria}\footnote{Auszug aus dem
+\WSIndex{Wilhelm Hauff}-Märchen / extraction from a fairy-tale of Wilhelm
+Hauff. {\em Der Scheik von Alessandria},~\cite{sts72:hauff}},
+\WSIndex{Ali Banu}, war ein sonderbarer \WSIndex{Mann}; wenn er
+morgens durch die Straßen der Stadt ging, angetan mit einem
+\WSIndex{Turban}, aus den \WSIndex{köstlich}sten \WSIndex{Kaschmir}s
+gewunden, mit dem \WSIndex{Festkleide} und dem reichen
+\WSIndex{Gürtel}, der \WSIndex{fünfzig} \WSIndex{Kamele} wert war,
+wenn er einherging langsamen, gravitätischen Schrittes, seine
+\WSIndex{Stirn}e in finstere Falten gelegt, seine
+\WSIndex{Augenbrauen} zusammengezogen, die \WSIndex{Augen}
+niedergeschlagen und alle fünf Schritte \WSIndex{gedankenvoll} seinen
+langen, schwarzen Bart streichend; wenn er so hinging nach der
+\WSIndex{Moschee}, um, wie es seine \WSIndex{Würde} forderte, den
+\WSIndex{Gläubige}n \WSIndex{Vorlesungen} über den \WSIndex{Koran} zu
+halten: da blieben die Leute auf der Straße stehen, schauten ihm nach
+und sprachen zueinander: ``Es ist doch ein schöner, stattlicher Mann,
+und reich, ein reicher \WSIndex{Herr}'', setzte wohl ein anderer
+hinzu, ``sehr reich; hat er nicht ein \WSIndex{Schloß} am
+\WSIndex{Hafen von Stambul}?  Hat er nicht \WSIndex{Güter} und
+\WSIndex{Felder} und viele tausend Stück \WSIndex{Vieh} und viele
+\WSIndex{Sklaven}?''
+
+\end{quotation}
+
+\subsection{Tabellen / Tables}
+
+\subsubsection{tabularx}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{|p{3cm}|r|l|X|} \hline
+Column A  & right-aligned  &
+left-aligned & Restlicher Platz/remaining space  \\\hline
+
+Perl    & 1.0  &  2.1  &  3.2  \\ \hline
+Python  & 4    &  5    &  6    \\ \hline
+Ruby    & 7    &  8    &  9    \\ \hline
+
+\end{tabularx}
+\caption{tabularx}
+\end{table}
+
+\subsubsection{\WSIndex{tabularx} mit multirow / tabularx with multirow}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|} \hline
+Column A  & Column B  & Column C & Column D  \\\hline
+
+\multirow{3}{5cm}{Gerade \newline Woche} & 1 & 2 & 3  \\ \cline{2-4}
+                                         & 4 & 5 & 6  \\ \cline{2-4}
+                                         & 7 & 8 & 9  \\ \hline
+\end{tabularx}
+\caption{tabularx mit multirow}
+\end{table}
+
+\subsubsection{tabularx mit multirow, ohne Trennlinien / tabularx with multirow, without separators}
+
+\begin{center}
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{p{3cm}XXX}
+Spalte A  & Spalte B  & Spalte C & Spalte D  \\\hline
+
+\multirow{3}{5cm}{Gerade \newline Woche} & 1 & 2 & 3  \\ 
+                                         & 4 & 5 & 6  \\ 
+                                         & 7 & 8 & 9  \\ 
+\end{tabularx}
+\caption{tabularx mit multirow ohne Trennlinien}
+\end{table}
+\end{center}
+
+\subsubsection{supertabular*}
+Beispiel für eine beeindruckend \WSIndex{unspektakuläre
+Zahlenkolonne}.
+
+Example for an impressively unspectacular column of figures.
+
+\begin{center}
+\bottomcaption{Die supertabular-Umgebung}
+\begin{supertabular*}
+ {\textwidth}{@{}p{40mm}p{40mm}p{70mm}@{}}
+ 040002 & 45221110 & ~   \\
+ 040002 & 45221120 & ~   \\
+ 040002 & 45221160 & (!) \\
+ 040002 & 23221110 & ~   \\
+ 040003 & 45221110 & ~   \\
+ 040003 & 45221120 & ~   \\
+ usw.   & ~        & ~   \\
+\end{supertabular*}
+\end{center}
+
+\subsection{verbatim}
+Die bekannte Zahlenkolonne in verbatim:
+
+The well-know column of figures with verbatim:
+
+\begin{verbatim}
+ 040002 45221110
+ 040002 45221120
+ 040002 45221160        (!)
+ 040002 23221110
+ 040003 45221110
+ 040003 45221120
+ usw.
+\end{verbatim}
+
+\subsection{includegraphics, label}
+\label{sts72:section:graphics}
+\noindent
+Hier ein Bild, in Originalgröße und zentriert.
+
+An image, original size, centred.
+
+\begin{center}
+ \includegraphics{sts72/hype.eps}             % original size
+\end{center}
+
+\noindent
+Hier das gleiche Bild, skaliert auf 25\% der Textbreite:
+
+The same image, scaled to  25\% of text width:
+
+\begin{center}
+ \includegraphics[width=0.25\textwidth]{sts72/hype.eps}  % scaled
+\end{center}
+
+\noindent
+Hier noch die Einbindung eines PNG-Bildes.
+
+And here an example how to include PNG images.
+
+\begin{center}
+ \includegraphics[width=\textwidth]{sts72/kram.png}
+\end{center}
+
+\noindent
+Außerdem gibt es in diesem Kapitel ein unsichtbares\footnote{Grüße von
+{\em Hollow Man}.} Label für Verweise auf dieses Kapitel.
+
+Additionally there is an invisible\footnote{Regards from the
+{\em Hollow Man}.} label for cross references into
+this subsection.
+
+\subsection{figure, ref, cite}
+Wie man Bilder einbindet wurde im Kapitel \ref{sts72:section:graphics}
+gezeigt. Hier verweisen wir nun auf eine ``irgendwo'' automatisch
+platzierte Abbildung \ref{sts72:fig:datenfluss}. Weiterhin verweisen wir
+auf einen Eintrag in unserer Bibliographie, und zwar auf
+\cite{sts72:ExampleManual}.
+
+Chapter \ref{sts72:section:graphics} already showed how to include
+images. Now we reference to a figure
+\ref{sts72:fig:datenfluss}, which is automatically placed ``anywhere''
+by latex. Additionally we refer to an entry in the bibliography,
+namely
+\cite{sts72:ExampleManual}.
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{sts72/datenfluss.eps}  % scale to textwidth
+ \caption{Datenfluß}
+ \label{sts72:fig:datenfluss}
+\end{figure}
+
+\subsection{enumerate}
+\begin{enumerate}
+ \item Perl
+   \begin{enumerate}
+     \item strict
+     \item warnings
+     \item diagnostics
+   \end{enumerate}
+ \item Python
+ \item Ruby
+\end{enumerate}
+
+\subsection{Verbatim Sourcecode}
+\verbatiminput{sts72/Categorization.pm}
+
+\subsection{Listings}
+\lstset{language=Perl,basicstyle=\footnotesize,columns=fixed}
+\lstinputlisting{sts72/Categorization.pm}
+
+\begin{thebibliography}{99}
+
+\bibitem{sts72:hauff} Wilhelm Hauff. \emph{Märchen-Almanach auf das Jahr
+1827}. Project Gutenberg, 2003. \texttt{http://gutenberg.net}. 
+
+\bibitem{sts72:gnu} Free Software Foundation.
+\emph{GNU's not Unix.} \texttt{http://www.gnu.org} 
+
+\bibitem{sts72:ExampleManual} Sabine Mustermann. \emph{The Example Manual -
+Doing by Learning.} Addison-Snipes, Writing, Massachusetts, 1991.
+
+\bibitem{sts72:gnus} D. E. Knudson.
+\emph{1966 World Gnus Almanac.} 
+
+\bibitem{sts72:Zomtec} Charles Zomtec, Inc.
+\emph{Zomtec.} Green Bottle, Oregon, 2001.
+
+\bibitem{sts72:perlws} German Perl Workshop.
+\emph{German Perl Workshop Website.}
+\texttt{http://www.perl-workshop.de}
+
+\end{thebibliography}
+

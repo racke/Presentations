@@ -1,0 +1,111 @@
+
+	 ====================================================
+	 Proceedings paper German Perlworkshop - HOW TO START
+	 ====================================================
+
+		 How to start your own LaTeX article
+
+
+
+- Copy the whole directory "somewhere"; 
+  this copy will become the new working directory
+
+
+- Change into that working directory
+
+
+- Rename the subdir "sts72"
+  e.g. into "maxe68"
+  (choose an author specific mnemonic that
+  probably doesn't collide with other authors)
+
+
+- If you provide more than one article, create an own working
+  directory for each one and choose distinguishing AUTHORMNEMONICs,
+  for instance "maxe68a", "maxe68b", "maxe68c", ...
+
+
+- Rename the file "article_sts72.tex" into "article_maxe68.tex".
+
+
+- In file "main.tex" change the line
+
+    \input{article_sts72.tex}
+
+  into
+
+    \input{article_maxe68.tex}
+
+
+
+- In file "article_maxe68.tex" do the following string substitution:
+
+    sts72  ->  maxe68
+
+
+- In Makefile change the line
+
+    AUTHOR_ID = sts72
+
+  into
+
+    AUTHOR_ID = maxe68
+
+
+
+- Change content of "article_maxe68.tex" as you like, it's now your
+  article.
+
+
+- Please provide one section "\subsection*{Author}", in which all
+  authors of the article are listed in single lines.
+
+
+- Provide a section "\subsection*{Bio Your Name}" with a short
+  biography of that author. Use more such sections for more authors.
+
+
+- Please provide one section "\subsection*{Abstract}" with a short
+  abstract without further sub headlines.
+
+
+- Test it. Either via "make" oder manuelly via these commands:
+
+    $ latex main.tex
+    $ makeindex -s main.ist main.idx
+    $ latex main.tex
+    $ latex main.tex
+    $ dvipdf main.dvi
+
+
+- In case of latex errors due to missing packages, that we expect in
+  "perlws.sty", but that you don't need, feel free to comment out the
+  corresponding \usepackage lines (use '%' at beginning of a line).
+  Most often this happens to the "listings" package which isn't
+  available in each system.
+
+
+- Keywords of your talk that are not marked either in the abstract or
+  in the article can be provided in an optional "indexlist_maxe68"
+  file. Each word in a single line.
+
+
+- In case you want provide optional goodies for the CD, please copy
+  them into a subdir named "goodies_maxe68/". This directory will be
+  made part of the CD.  A file "index.html" can be provided as an entry
+  point, otherwise a link to the directory will be made. 
+
+
+- Please send an early version of the file "article_maxe68.tex"
+  together with the subdirectory "maxe68" to the proceedings team
+  or your designated sponsor (tutor).
+
+
+- Any questions? Feel free to ask the friendly workshop organisation
+  team at:
+
+    <wsorga@perl-workshop.de>
+
+
+Have fun!
+
