@@ -1,6 +1,6 @@
 %% -*- mode: latex; -*-
 
-\section{Vorbild::Beitrag::LaTeX - Ein Vorbildartikel für den Tagungsband}
+\section{Spamassassin, Antivirus und Email via Perl}
 
 An example article for the proceedings paper.
 
@@ -10,10 +10,9 @@ paragraphs, sometimes obvious examples are not translated. Please
 report any language problems, you could imagine.
 
 \subsection*{Autor}
-Steffen Schwigon \verb/<schwigon@webit.de>/,
-Jochen Stenzel \verb/<perl@jochen-stenzel.de>/,
+Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
 
-\subsection*{Bio Steffen Schwigon}
+\subsection*{Bio Stefan Hornburg}
 
 Dieser Abschnitt enthält eine Kurzbiographie (Bio). Beschreibe Dich
 kurz in eigenen Worten und dem Stil Deiner Wahl.
@@ -21,144 +20,62 @@ kurz in eigenen Worten und dem Stil Deiner Wahl.
 This section contains your short biography. Describe yourself with
 your own words and with your preferred style.
 
-\subsection*{Bio Jochen Stenzel}
-
-Dieser Abschnitt enthält die Kurzbiographie (Bio) eines weiteren
-Autors. Beschreibe Dich kurz in eigenen Worten und dem Stil Deiner
-Wahl.
-
-This section contains the short biography of another author if there
-is more than one. Describe yourself with your own words and with your
-preferred style.
-
 \subsection*{Abstract}
-Der Zweck dieses Textes ist die Präsentation eines korrekten
-\LaTeX-Artikels für den Deutschen Perl Workshop. Es werden die
-verfügbaren Packages und wichtige Elemente demonstriert.
+Die Bedeutung von Email für die Kommunikation hat einen hohen
+Stellenwert erreicht und ist oftmals nicht aus dem täglichen
+Leben und aus der Arbeitswelt wegzudenken. Attacken auf dieses
+wichtige Instrument mittlels SPAM, Viren und Phishing nehmen
+kontinuierlich zu. Nützliche Emails drohen in einer Flut von unerwünschter
+und potentiell schädlichen Post unterzugehen, wenn Gegenmaßnahmen
+nicht oder nur unzureichend greifen.
 
-Ziel ist es, den Tagungsband des diesjährigen Perlworkshop ``aus einem
-Guß'' herzustellen. Das Tagungsband-Team wird seine Energien
-vordergründig in die Unterstützung der Autoren bei der Erstellung
-korrekter Beiträge investieren.
+Für Perl sind eine Reihe von Modulen vorhanden, die die Erstellung
+von Programmen zum Zugriff auf Email und die Bewertung der Email
+erleichtern:
 
-Bei Problemen jeglicher Art bitte an Deinen Betreuer oder die anderen
-freundlichen Helfer bei \verb/<wsorga@perl-workshop.de>/ wenden.
+	Net::SMTP (Emailversand)
+	Mail::IMAPClient (Zugriff auf Email mit IMAP)
+	Mail::Spamassassin (Spamassassin)
+	ClamAV::Client (Clam Antivirus)
+	
+Nach einer kurzen Einführung in die Benutzung dieser Module beschäftigt
+sich der Hauptteil des Vortrags mit der Beschreibung von Anwendungen
+zur Verbesserung der Abwehr von SPAM, Viren und Phishing.
 
-\subsection*{Abstract}
-This article is meant to be a presentation of a correct contribution
-to the German Perl Workshop. It shows available packages and some
-important features.
+Zur Demonstration werden Emails von einem IMAP-Server heruntergeladen 
+und von ClamAV auf Viren und Phishing geprüft und anschließend durch
+SpamAssassin bewertet. Anschließend wird gezeigt, wie diese Emails vom
+Server gelöscht oder in bestimmte Verzeichnisse auf dem IMAP-Server verschoben
+werden können. Die Behandlung von Fehlerkennungen (False Positives)
+wird ebenso erläutert.
 
-The main goal is to create the proceedings paper of a piece. The
-proceedings paper team will mainly use its energy in supporting the
-authors to provide correct contributions.
+Im Anschluß wird die Erstellung von Statistiken über das Aufkommen
+von Viren und SPAM besprochen und wie man daraus Schlüsse zur Optimierung
+zur Abwehr treffen kann.
 
-In case of problems just mail them to your designated sponsor (tutor)
-or the other friendly organizers at \verb/<wsorga@perl-workshop.de>/.
+\subsection{Mailversand mit Net::SMTP}
+\begin{verbatim}
+use Net::SMTP;
 
-\subsection{Grundregeln}
+my $smtp = new Net::SMTP;
+\end{verbatim}
 
-Prinzipiell kann man sich recht frei entfalten. Die Beiträge sind
-\verb/\section/s eines Gesamtdokumentes der KOMA-Klasse {\em
-scrartcl}. Damit sich alle Beiträge zusammenfügen, hier die
-wichtigsten Hinweise.
+\subsection{Virenscanner mit ClamAV::Client}
 
-\begin{itemize}
+\subsection{Spamfilter mit Mail::Spamassassin}
 
-\item Der Beitrag ist eine Datei {\em article\_AUTORKÜRZEL.tex}.
+\subsection{Mailempfang mit Mail::IMAPClient}
+FÃ¼ü
+\begin{verbatim}
+use Mail::IMAPClient;
 
-\item Der Beitrag beginnt mit \verb/\section/.
+my $params = (Server => $server,
+              User => $login,
+              Password => $password,
+              Peek => 1);
 
-\item Es darf {\bf kein} \verb/\usepackage/ verwendet
-werden\footnote{Sollte wirklich ein unverzichtbares Paket fehlen,
-erweitern wir unsere Perlworkshop-Style-Datei.}.
-
-\item Alle verfügbaren Packages sind der Datei {\em perlws.sty}
-entnehmbar. 
-
-\item Der Beitrag muß im Rahmen der mitgelieferten, unveränderten
-Datei {\em main.tex} funktionieren, welche den Artikel importiert
-und strukturell die letztendliche \LaTeX-Umgebung simuliert.
-
-\item Labels für Verweise, Bibliographie-Einträge, müssen mit
-einem eindeutigen Präfix versehen werden, z.B. mit einem
-Autorenkürzel. Im vorliegenden Beispielartikel wird durchgängig
-\verb/racke:/ verwendet.
-
-\item Zusätzliche Dateien (z.B. Grafiken) müssen in genau einem
-getrennten Unterverzeichnis abgelegt werden, z.B. bestehend aus dem
-Autorenkürzel. Im vorliegenden Beispielartikel wurde \verb/racke/
-verwendet.
-
-\end{itemize}
-
-\noindent
-Der vorliegende Artikel dient als Beispiel für einen korrekten Artikel
-und demonstriert wichtige \LaTeX-Elemente.
-
-\subsection{Main rules}
-
-Generally feel free. The contributions are \verb/\section/s of a main
-document of the KOMA class {\em scrartcl}. This class is more german
-language centric, especially regarding layout. Anyway it should work
-for you, too.
-
-For nicely fitting all contributions together, here are the most
-important hints.
-
-\begin{itemize}
-
-\item The contribution is a file {\em article\_AUTHORMNEMONIC.tex}.
-
-\item The contribution starts with \verb/\section/.
-
-\item You {\bf must not} use \verb/\usepackage/. \footnote{In case
-you really, really need an additional package, write us and we try to
-extend our perlworkshop style file.}
-
-\item All available packages can be seen in the file {\em perlws.sty}.
-
-\item The contribution must work within the context of the provided file {\em main.tex}, which imports your article and simulates our final \LaTeX environment.
-
-\item Labels for cross references, bibliography entries, etc. must me
-used with unique prefix, i.e. the AUTHORMNEMONIC. In the current
-example I use \verb/racke:/.
-
-\item Additional files (e.g., images) must be provided within a
-separate sub directory, e.g., named like your AUTHORMNEMONIC.  In the
-current example I use sub directory \verb/racke/.
-
-\end{itemize}
-
-\noindent
-The current article is an example for a correct contribution and
-demonstrates some important \LaTeX features.
-
-\subsection{Sonderzeichen / Special characters}
-
-Hier ein paar Sonderzeichen, die in \LaTeX\, besonders ausgezeichnet
-werden müssen. Die \LaTeX-Kommandos bitte dem Quelltext entnehmen.
-
-Here are some special characters, that must be used in a special way
-in \LaTeX. Please see the source code for the \LaTeX commands. Ignore
-the funny german descriptions, just look at the special
-characters.
-
-\begin{quotation}
-\noindent
-\begin{labeling}[~:~]{GeschweifteKlammerRechts}
- \item [Ampersand]  \&
- \item [Underline]  \_
- \item [Backslash]  $\backslash$
- \item [Tilde]      \verb/~/
- \item [Dach]       \verb/^/
- \item [Gartenzaun] \#
- \item [Dollar]     \$
- \item [Prozent]    \%
- \item [GeschweifteKlammerLinks] \{
- \item [GeschweifteKlammerRechts] \}
-\end{labeling}
-\end{quotation}
+my $client = new Mail::IMAPClient (%params);
+\end{verbatim}
 
 \subsection{Index, Fußnoten / Index, footnotes}
 Im folgenden Abschnitt (nach der englischen Übersetzung) sind viele
