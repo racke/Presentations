@@ -44,7 +44,10 @@ if ($cref->{fnfolder}) {
 	my @msgs = reverse($imap->search('ALL'));
 	
 	my $i = 0;
-	my ($subject, $date, $message, $samsgref, $sastatus, $sanum);
+	my ($subject, $date, $message, $samsgref, $sastatus, $sanum, $lstatus);
+
+	# initialize learning
+	$sa->init_learner({wait_for_lock => 1, learn_to_journal => 1});
 	
 	for my $msgno (@msgs) {
 		$subject = $imap->subject($msgno);
@@ -63,10 +66,14 @@ if ($cref->{fnfolder}) {
 		} else {
 			print "$msgno HAM ($sanum) $subject\n";
 		}
+
+		# now learn as SPAM
+		$lstatus = $sa->learn($samsgref, undef, 1);
 		
 		last if $i++ > 10;
 	}
-	
+
+	$sa->rebuild_learner_caches({verbose => 1});
 }
 
 
