@@ -60,21 +60,6 @@ use Net::SMTP;
 my $smtp = new Net::SMTP;
 \end{verbatim}
 
-\subsection{Virenscanner mit ClamAV::Client}
-\WSIndex{ClamAV::Client}
-\begin{verbatim}
-use ClamAV::Client;
-
-my $scanner;
-
-$scanner = new ClamAV::Client;
-
-unless (defined $scanner && $scanner->ping()) {
-	die "$0: connection to ClamAV daemon failed\n";
-}
-\end{verbatim}
-\subsection{Spamfilter mit Mail::Spamassassin}
-
 \subsection{Mailempfang mit Mail::IMAPClient}
 
 Eine IMAP-Verbindung kann einfach durch die Erzeugung eines
@@ -98,8 +83,6 @@ Dies ist nicht moeglich, wenn man eine SSL-gesch¸tzte Verbindung aufbauen
 moechte. In diesem Fall erzeugt man die Verbindung mit dem
 \verb/IO::Socket::SSL/-Modul: 
 
-\WSIndex{IO::Socket::SSL}
-
 \begin{verbatim}
 use IO::Socket::SSL;
 use Mail::IMAPClient;
@@ -115,192 +98,52 @@ $imap = new Mail::IMAPClient (Socket => $conn,
 							  Password => $password);
 \end{verbatim}
 
-\subsection{Index, Fuﬂnoten / Index, footnotes}
-Im folgenden Abschnitt (nach der englischen ‹bersetzung) sind viele
-Wˆrter f¸r den Index markiert. Bitte hierf¸r das Makro
+\subsection{Virenscanner mit ClamAV::Client}
+\WSIndex{ClamAV::Client}
 \begin{verbatim}
- \WSIndex{indexwort}
+use ClamAV::Client;
+
+my $scanner;
+
+$scanner = new ClamAV::Client;
+
+unless (defined $scanner && $scanner->ping()) {
+	die "$0: connection to ClamAV daemon failed\n";
+}
 \end{verbatim}
-verwenden (siehe Quelltext). Die markierten Wˆrter werden im Index am
-Ende des Dokumentes aufgelistet.
-
-~
-
-In the following paragraph many words are marked for the index. Please
-use the macro
-\begin{verbatim}
- \WSIndex{indexword}
-\end{verbatim}
-for marking (see source code). The marked words are listed in the index
-at the end of the document.
-
-\begin{quotation}
-\noindent
-Der \WSIndex{Scheik} von \WSIndex{Alessandria}\footnote{Auszug aus dem
-\WSIndex{Wilhelm Hauff}-M‰rchen / extraction from a fairy-tale of Wilhelm
-Hauff. {\em Der Scheik von Alessandria},~\cite{racke:hauff}},
-\WSIndex{Ali Banu}, war ein sonderbarer \WSIndex{Mann}; wenn er
-morgens durch die Straﬂen der Stadt ging, angetan mit einem
-\WSIndex{Turban}, aus den \WSIndex{kˆstlich}sten \WSIndex{Kaschmir}s
-gewunden, mit dem \WSIndex{Festkleide} und dem reichen
-\WSIndex{G¸rtel}, der \WSIndex{f¸nfzig} \WSIndex{Kamele} wert war,
-wenn er einherging langsamen, gravit‰tischen Schrittes, seine
-\WSIndex{Stirn}e in finstere Falten gelegt, seine
-\WSIndex{Augenbrauen} zusammengezogen, die \WSIndex{Augen}
-niedergeschlagen und alle f¸nf Schritte \WSIndex{gedankenvoll} seinen
-langen, schwarzen Bart streichend; wenn er so hinging nach der
-\WSIndex{Moschee}, um, wie es seine \WSIndex{W¸rde} forderte, den
-\WSIndex{Gl‰ubige}n \WSIndex{Vorlesungen} ¸ber den \WSIndex{Koran} zu
-halten: da blieben die Leute auf der Straﬂe stehen, schauten ihm nach
-und sprachen zueinander: ``Es ist doch ein schˆner, stattlicher Mann,
-und reich, ein reicher \WSIndex{Herr}'', setzte wohl ein anderer
-hinzu, ``sehr reich; hat er nicht ein \WSIndex{Schloﬂ} am
-\WSIndex{Hafen von Stambul}?  Hat er nicht \WSIndex{G¸ter} und
-\WSIndex{Felder} und viele tausend St¸ck \WSIndex{Vieh} und viele
-\WSIndex{Sklaven}?''
-
-\end{quotation}
-
-\subsection{Tabellen / Tables}
-
-\subsubsection{tabularx}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{|p{3cm}|r|l|X|} \hline
-Column A  & right-aligned  &
-left-aligned & Restlicher Platz/remaining space  \\\hline
-
-Perl    & 1.0  &  2.1  &  3.2  \\ \hline
-Python  & 4    &  5    &  6    \\ \hline
-Ruby    & 7    &  8    &  9    \\ \hline
-
-\end{tabularx}
-\caption{tabularx}
-\end{table}
-
-\subsubsection{\WSIndex{tabularx} mit multirow / tabularx with multirow}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|} \hline
-Column A  & Column B  & Column C & Column D  \\\hline
-
-\multirow{3}{5cm}{Gerade \newline Woche} & 1 & 2 & 3  \\ \cline{2-4}
-                                         & 4 & 5 & 6  \\ \cline{2-4}
-                                         & 7 & 8 & 9  \\ \hline
-\end{tabularx}
-\caption{tabularx mit multirow}
-\end{table}
-
-\subsubsection{tabularx mit multirow, ohne Trennlinien / tabularx with multirow, without separators}
-
-\begin{center}
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{p{3cm}XXX}
-Spalte A  & Spalte B  & Spalte C & Spalte D  \\\hline
-
-\multirow{3}{5cm}{Gerade \newline Woche} & 1 & 2 & 3  \\ 
-                                         & 4 & 5 & 6  \\ 
-                                         & 7 & 8 & 9  \\ 
-\end{tabularx}
-\caption{tabularx mit multirow ohne Trennlinien}
-\end{table}
-\end{center}
-
-\subsubsection{supertabular*}
-Beispiel f¸r eine beeindruckend \WSIndex{unspektakul‰re
-Zahlenkolonne}.
-
-Example for an impressively unspectacular column of figures.
-
-\begin{center}
-\bottomcaption{Die supertabular-Umgebung}
-\begin{supertabular*}
- {\textwidth}{@{}p{40mm}p{40mm}p{70mm}@{}}
- 040002 & 45221110 & ~   \\
- 040002 & 45221120 & ~   \\
- 040002 & 45221160 & (!) \\
- 040002 & 23221110 & ~   \\
- 040003 & 45221110 & ~   \\
- 040003 & 45221120 & ~   \\
- usw.   & ~        & ~   \\
-\end{supertabular*}
-\end{center}
-
-\subsection{verbatim}
-Die bekannte Zahlenkolonne in verbatim:
-
-The well-know column of figures with verbatim:
+\subsection{Spamfilter mit Mail::Spamassassin}
+Eine Email kann wie folgt mit \WSIndex{Mail::Spamassassin} untersucht werden:
 
 \begin{verbatim}
- 040002 45221110
- 040002 45221120
- 040002 45221160        (!)
- 040002 23221110
- 040003 45221110
- 040003 45221120
- usw.
+# initiate Spamassassin object
+$sa = new Mail::SpamAssassin;
+# retrieve a message from the IMAP server
+$message = $imap->message_string($msgno);
+# let SpamAssassin parse the message
+$samsg = $sa->parse($message);
+$status = $sa->check($samsg);
+# score and matched rules
+$sascore = $status->get_hits();
+
+# SPAM or HAM 
 \end{verbatim}
 
+\subsection{Scenarios}
+\subsubsection{Bayes}
+Update Bayes from FN/FP.
+Die Emaildateien koennten auch direkt aus dem Dateisystem gelesen werden,
+aber bei Zugriff mit IMAP brauchen wir keine Annahmen ueber die 
+Verzeichnisstruktur zu machen bzw. koennen Mailserver und SA-Server auf
+verschiedenen Rechnern sein.
 
-\subsection{figure, ref, cite}
-Wie man Bilder einbindet wurde im Kapitel \ref{racke:section:graphics}
-gezeigt. Hier verweisen wir nun auf eine ``irgendwo'' automatisch
-platzierte Abbildung \ref{racke:fig:datenfluss}. Weiterhin verweisen wir
-auf einen Eintrag in unserer Bibliographie, und zwar auf
-\cite{racke:ExampleManual}.
+\subsubsection{Virus}
+Scan mails on remote server and delete them
 
-Chapter \ref{racke:section:graphics} already showed how to include
-images. Now we reference to a figure
-\ref{racke:fig:datenfluss}, which is automatically placed ``anywhere''
-by latex. Additionally we refer to an entry in the bibliography,
-namely
-\cite{racke:ExampleManual}.
-\begin{figure}
- \centering
- \includegraphics[width=\textwidth]{racke/datenfluss.eps}  % scale to textwidth
- \caption{Datenfluﬂ}
- \label{racke:fig:datenfluss}
-\end{figure}
-
-\subsection{enumerate}
-\begin{enumerate}
- \item Perl
-   \begin{enumerate}
-     \item strict
-     \item warnings
-     \item diagnostics
-   \end{enumerate}
- \item Python
- \item Ruby
-\end{enumerate}
-
-\subsection{Verbatim Sourcecode}
-\verbatiminput{racke/Categorization.pm}
-
-\subsection{Listings}
-\lstset{language=Perl,basicstyle=\footnotesize,columns=fixed}
-\lstinputlisting{racke/Categorization.pm}
+\subsubsection{Spamassassin}
+Scan mails on remote server and move them, idea: better SPAM fighting
+from local machine, especially on new waves.
 
 \begin{thebibliography}{99}
-
-\bibitem{racke:hauff} Wilhelm Hauff. \emph{M‰rchen-Almanach auf das Jahr
-1827}. Project Gutenberg, 2003. \texttt{http://gutenberg.net}. 
-
-\bibitem{racke:gnu} Free Software Foundation.
-\emph{GNU's not Unix.} \texttt{http://www.gnu.org} 
-
-\bibitem{racke:ExampleManual} Sabine Mustermann. \emph{The Example Manual -
-Doing by Learning.} Addison-Snipes, Writing, Massachusetts, 1991.
-
-\bibitem{racke:gnus} D. E. Knudson.
-\emph{1966 World Gnus Almanac.} 
-
-\bibitem{racke:Zomtec} Charles Zomtec, Inc.
-\emph{Zomtec.} Green Bottle, Oregon, 2001.
-
-\bibitem{racke:perlws} German Perl Workshop.
-\emph{German Perl Workshop Website.}
-\texttt{http://www.perl-workshop.de}
 
 \end{thebibliography}
 
