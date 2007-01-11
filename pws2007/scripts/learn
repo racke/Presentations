@@ -1,0 +1,72 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use IO::Socket::SSL;
+use Mail::IMAPClient;
+use Mail::SpamAssassin;
+
+use PWSConfig;
+
+my ($cref, $imap, $sa);
+
+$cref = PWSConfig::setup_vars (required => 'server,user,password');
+
+# initialize SpamAssassin
+$sa = new Mail::SpamAssassin;
+
+my $conn = new IO::Socket::SSL("$cref->{server}:imaps");
+
+unless ($conn) {
+	die "$0: imaps connection to $cref->{server} failed: $!\n";
+}
+							
+$imap = new Mail::IMAPClient (Socket => $conn,
+							  User => $cref->{user},
+							  Password => $cref->{password},
+							  Peek => 1);
+
+# set state manually to "Connected"
+$imap->{State} = 1;
+
+unless ($imap->login()) {
+	die "Error: " . $imap->LastError() . "\n";
+}
+
+if ($cref->{fnfolder}) {
+	# examine folder with false negatives
+	unless ($imap->select($cref->{fnfolder})) {
+		die "$0: Failed to select IMAP folder $cref->{fnfolder}: " . $imap->LastError() . "\n";
+	}
+
+	# get sequence numbers for messages in folders
+	my @msgs = reverse($imap->search('ALL'));
+	
+	my $i = 0;
+	my ($subject, $date, $message, $samsgref, $sastatus, $sanum);
+	
+	for my $msgno (@msgs) {
+		$subject = $imap->subject($msgno);
+		$date = $imap->date($msgno);
+
+		print '#', $msgno, ": $date -- $subject\n";
+
+		# get SA score just for fun
+		$message = $imap->message_string($msgno);
+		$samsgref = $sa->parse($message);
+		$sastatus = $sa->check($samsgref);
+		$sanum = $sastatus->get_hits();
+		
+		if ($sastatus->is_spam()) {
+			print "$msgno SPAM ($sanum) $subject\n";
+		} else {
+			print "$msgno HAM ($sanum) $subject\n";
+		}
+		
+		last if $i++ > 10;
+	}
+	
+}
+
+
