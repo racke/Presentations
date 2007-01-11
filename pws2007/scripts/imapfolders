@@ -1,0 +1,37 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use IO::Socket::SSL 0.90;
+use Mail::IMAPClient;
+use PWSConfig;
+
+my ($cref, $imap);
+
+$cref = PWSConfig::setup_vars (required => 'server,user,password');
+
+my $ssl = IO::Socket::SSL->new (Proto => 'tcp',
+								SSL_verify_mode => 0x00,
+								PeerAddr=> $cref->{server},
+								PeerPort=> 993);
+
+$imap = new Mail::IMAPClient (Server => $cref->{server},
+									User => $cref->{user},
+									Password => $cref->{password},
+									Socket => $ssl);
+
+# set state manually to "Connected"
+$imap->{State} = 1;
+$imap->login();
+
+if ($@) {
+	die $@;
+}
+
+my @folders = $imap->folders();
+my $count;
+
+for (sort(@folders)) {
+	print "$_ is a folder with ", $imap->message_count($_) || 0, " messages.\n";
+}
