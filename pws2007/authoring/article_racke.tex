@@ -61,16 +61,27 @@ my $smtp = new Net::SMTP;
 \end{verbatim}
 
 \subsection{Virenscanner mit ClamAV::Client}
+\WSIndex{ClamAV::Client}
+\begin{verbatim}
+use ClamAV::Client;
 
+my $scanner;
+
+$scanner = new ClamAV::Client;
+
+unless (defined $scanner && $scanner->ping()) {
+	die "$0: connection to ClamAV daemon failed\n";
+}
+\end{verbatim}
 \subsection{Spamfilter mit Mail::Spamassassin}
 
 \subsection{Mailempfang mit Mail::IMAPClient}
 
 Eine IMAP-Verbindung kann einfach durch die Erzeugung eines
 \verb/Mail::IMAPClient/-Objektes
-mit den geeigneten Parametern hergestellt werden. Dafuer muessen
+mit den geeigneten Parametern hergestellt werden. Dafür müssen
 zumindestens der Servername (Server), Benutzername (User) und Passwort
-(Password) uebergeben werden. Dann erfolgt der Verbindungsaufbau und die
+(Password) übergeben werden. Dann erfolgt der Verbindungsaufbau und die
 Anmeldung automatisch.
 
 \begin{verbatim}
@@ -83,7 +94,7 @@ my $params = (Server => $server,
 my $client = new Mail::IMAPClient (%params);
 \end{verbatim}
 
-Dies ist nicht moeglich, wenn man eine SSL-geschuetzte Verbindung aufbauen
+Dies ist nicht moeglich, wenn man eine SSL-geschützte Verbindung aufbauen
 moechte. In diesem Fall erzeugt man die Verbindung mit dem
 \verb/IO::Socket::SSL/-Modul: 
 
