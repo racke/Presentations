@@ -65,16 +65,43 @@ my $smtp = new Net::SMTP;
 \subsection{Spamfilter mit Mail::Spamassassin}
 
 \subsection{Mailempfang mit Mail::IMAPClient}
-FÃ¼ü
+
+Eine IMAP-Verbindung kann einfach durch die Erzeugung eines
+\verb/Mail::IMAPClient/-Objektes
+mit den geeigneten Parametern hergestellt werden. Dafuer muessen
+zumindestens der Servername (Server), Benutzername (User) und Passwort
+(Password) uebergeben werden. Dann erfolgt der Verbindungsaufbau und die
+Anmeldung automatisch.
+
 \begin{verbatim}
 use Mail::IMAPClient;
 
 my $params = (Server => $server,
               User => $login,
-              Password => $password,
-              Peek => 1);
+              Password => $password);
 
 my $client = new Mail::IMAPClient (%params);
+\end{verbatim}
+
+Dies ist nicht moeglich, wenn man eine SSL-geschuetzte Verbindung aufbauen
+moechte. In diesem Fall erzeugt man die Verbindung mit dem
+\verb/IO::Socket::SSL/-Modul: 
+
+\WSIndex{IO::Socket::SSL}
+
+\begin{verbatim}
+use IO::Socket::SSL;
+use Mail::IMAPClient;
+
+my $conn;
+
+unless ($conn = new IO::Socket::SSL->new ("${server}:imaps")) {
+    die "$0: imaps connection to $server failed: $!\n";
+}
+
+$imap = new Mail::IMAPClient (Socket => $conn,
+							  User => $user,
+							  Password => $password);
 \end{verbatim}
 
 \subsection{Index, Fußnoten / Index, footnotes}
@@ -203,42 +230,6 @@ The well-know column of figures with verbatim:
  usw.
 \end{verbatim}
 
-\subsection{includegraphics, label}
-\label{racke:section:graphics}
-\noindent
-Hier ein Bild, in Originalgröße und zentriert.
-
-An image, original size, centred.
-
-\begin{center}
- \includegraphics{racke/hype.eps}             % original size
-\end{center}
-
-\noindent
-Hier das gleiche Bild, skaliert auf 25\% der Textbreite:
-
-The same image, scaled to  25\% of text width:
-
-\begin{center}
- \includegraphics[width=0.25\textwidth]{racke/hype.eps}  % scaled
-\end{center}
-
-\noindent
-Hier noch die Einbindung eines PNG-Bildes.
-
-And here an example how to include PNG images.
-
-\begin{center}
- \includegraphics[width=\textwidth]{racke/kram.png}
-\end{center}
-
-\noindent
-Außerdem gibt es in diesem Kapitel ein unsichtbares\footnote{Grüße von
-{\em Hollow Man}.} Label für Verweise auf dieses Kapitel.
-
-Additionally there is an invisible\footnote{Regards from the
-{\em Hollow Man}.} label for cross references into
-this subsection.
 
 \subsection{figure, ref, cite}
 Wie man Bilder einbindet wurde im Kapitel \ref{racke:section:graphics}
