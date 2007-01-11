@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IO::Socket::SSL 0.90;
+use IO::Socket::SSL;
 use Mail::IMAPClient;
 use PWSConfig;
 
