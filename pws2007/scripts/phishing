@@ -1,0 +1,59 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use IO::Socket::SSL;
+use Mail::IMAPClient;
+use ClamAV::Client;
+
+use PWSConfig;
+
+my ($cref, $clam, $conn, $imap);
+
+$cref = PWSConfig::setup_vars (required => 'server,user,password,folder');
+
+# initiate ClamAV first
+$clam = new ClamAV::Client;
+
+unless ($conn = new IO::Socket::SSL("$cref->{server}:imaps")) {
+	die "$0: imaps connection to $cref->{server} failed: $!\n";
+}
+		
+$imap = new Mail::IMAPClient (Socket => $conn,
+							  User => $cref->{user},
+							  Peek => 1,
+							  Password => $cref->{password});
+
+# set state manually to "Connected"
+$imap->{State} = 1;
+$imap->login();
+
+unless ($imap->login()) {
+	die "Error: " . $imap->LastError() . "\n";
+}
+
+# select phishing folder
+unless ($imap->select($cref->{folder})) {
+	die "$0: Failed to select IMAP folder $cref->{folder}: " . $imap->LastError() . "\n";
+}
+
+my ($subject, $date, $message, $result);
+
+for my $msgno ($imap->search('ALL')) {
+	$subject = $imap->subject($msgno) || '';
+	$date = $imap->date($msgno) || '';
+
+	print '#', $msgno, ": $date -- $subject\n";
+
+	# retrieve message
+	$message = $imap->message_string($msgno);
+
+	$result = $clam->scan_scalar(\$message);
+
+	if ($result) {
+		print "$0: INFECTED: $result\n";
+	} else {
+		print "$0: OK\n";
+	}
+}

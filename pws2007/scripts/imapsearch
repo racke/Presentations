@@ -1,0 +1,42 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use IO::Socket::SSL;
+use Mail::IMAPClient;
+use PWSConfig;
+
+my ($cref, $imap);
+
+$cref = PWSConfig::setup_vars (required => 'server,user,password');
+
+my $conn = new IO::Socket::SSL("$cref->{server}:imaps");
+
+unless ($conn) {
+	die "$0: imaps connection to $cref->{server} failed: $!\n";
+}
+							
+$imap = new Mail::IMAPClient (Socket => $conn,
+							  User => $cref->{user},
+							  Password => $cref->{password});
+
+# set state manually to "Connected"
+$imap->{State} = 1;
+$imap->login();
+
+unless ($imap->login()) {
+	die "Error: " . $imap->LastError() . "\n";
+}
+
+unless ($imap->select($cref->{folder})) {
+	die "$0: Failed to select IMAP folder $cref->{folder}: " . $imap->LastError();
+}
+
+my @msgs = $imap->search('SUBJECT', $imap->Quote('Rechnung'));
+
+for my $msgno (@msgs) {
+	print "$msgno: " . $imap->subject($msgno) . "\n";
+}
+
+
