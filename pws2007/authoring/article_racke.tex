@@ -239,6 +239,29 @@ eigenen Check zu fahren:
 \item Emails mit Viren können durch IMAP-Operation ins Postfach gelangen
 \end{itemize}
 
+Emails mit Malware spiegelt dem Empfänger vor, von seriösen Unternehmen wie
+Banken, Telekommunikationsunternehmen oder sogar der GEZ versandt worden zu
+sein. Im folgenden Beispiel betrachten wir nur Emails mit dem typischen
+Betreff Rechnung.
+
+\begin{verbatim}
+$imap->select('INBOX');
+
+@msgs = $imap->search('SUBJECT', $imap->Quote('Rechnung'));
+
+for my $msgno (@msgs) {
+    $message = $imap->message_string($msgno);
+
+    $result = $scanner->scan_scalar(\$message);
+
+    if ($result) {
+        print "INFECTED: $result\n";
+    } else {
+        print "OK\n";
+    }
+}
+\end{verbatim}
+
 %\subsubsection{Spamassassin}
 %Scan mails on remote server and move them, idea: better SPAM fighting
 %from local machine, especially on new waves.
