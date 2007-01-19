@@ -66,8 +66,8 @@ my $params = (Server => $server,
 my $client = new Mail::IMAPClient (%params);
 \end{verbatim}
 
-Dies ist nicht moeglich, wenn man eine SSL-geschützte Verbindung aufbauen
-moechte. In diesem Fall erzeugt man die Verbindung mit dem
+Dies ist nicht möglich, wenn man eine SSL-geschützte Verbindung aufbauen
+möchte. In diesem Fall erzeugt man die Verbindung mit dem
 \verb/IO::Socket::SSL/-Modul: 
 
 \begin{verbatim}
@@ -152,14 +152,15 @@ from local machine, especially on new waves.
 
 \subsection{Emails loeschen oder verschieben}
 
-Das Loeschen von Emails auf einen IMAP-Server kann man nicht mit dem
-Loeschen einer Datei auf einem Linux-System vergleichen. Emails werden
-zunaechst nur zum Loeschen markiert. 
+Das Löschen von Emails auf einen IMAP-Server kann man nicht mit dem
+Löschen einer Datei auf einem Linux-System vergleichen. Emails werden
+zunaechst nur zum Löschen markiert. 
 
-Die \verb/delete_message/-Methode fuehrt das folgende IMAP-Kommando aus:
-\verb/UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)/. Die Emails sind
-weiterhin sichtbar. Erst durch das Schliessen des IMAP-Ordners oder
-dem expliziten \verb/expunge/ werden die Emails physikalisch geloescht.
+Die \verb/delete_message/-Methode führt das folgende IMAP-Kommando aus:
+\begin{verbatim}UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)\end{verbatim}. 
+Die Emails sind weiterhin sichtbar. Durch das Schließen des
+IMAP-Ordners mit \verb/close/ (implizit) oder dem expliziten \verb/expunge/
+werden die Emails dann auch physikalisch gelöscht.
 
 \begin{thebibliography}{99}
 
