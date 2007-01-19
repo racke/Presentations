@@ -19,13 +19,13 @@ $clam = new ClamAV::Client;
 if ($clam) {
 	my ($engine, $dbid, $dbdate) = split('/', $clam->version());
 
-	print <<EOF;
+	if ($cref->{debug}) {
+		print <<EOF;
 Engine: $engine
 Database release(daily.cvd): $dbid
 Database date: $dbdate\n";
 EOF
-
-	exit 0;
+	}
 }
 
 unless ($conn = new IO::Socket::SSL("$cref->{server}:imaps")) {
