@@ -93,7 +93,7 @@ Danach beendet man die Verbindung.
 $smtp->quit();
 \end{verbatim}
 
-\subsection{Mailempfang mit Mail::IMAPClient}
+\subsection{Mailempfang mit \WSIndex{Mail::IMAPClient}}
 
 Eine IMAP-Verbindung kann einfach durch die Erzeugung eines
 \verb/Mail::IMAPClient/-Objektes
@@ -132,10 +132,11 @@ $imap = new Mail::IMAPClient (Socket => $conn,
 \end{verbatim}
 
 Unbekannte Methoden werden direkt in IMAP-Befehle umgesetzt, was durchaus
-zur Verwirrung des Programmierers führen kann.
+zur Verwirrung des Programmierers führen kann. Andererseits kann es genutzt
+werden, um proprieträre Erweiterungen des IMAP-Befehlssatz anzusprechen.
 
-\subsection{Virenscanner mit ClamAV::Client}
-Das Modul \WSIndex{ClamAV::Client} bietet eine Schnittstelle zum ClamAV
+\subsection{Virenscanner mit \WSIndex{ClamAV::Client}}
+Das Modul \verb/ClamAV::Client/ bietet eine Schnittstelle zum ClamAV
 Virenscanner. Beim Anlegen des Objektes wird eine Verbindung zum 
 \verb/clamd/-Daemon aufgebaut.
 
@@ -167,6 +168,8 @@ Engine: $engine
 Database release (daily.cvd): $dbrelease
 Database date: $dbdate
 \end{verbatim}
+
+Das Resultat sieht dann so aus:
 
 \begin{verbatim}
 Engine: ClamAV 0.87.1
@@ -201,6 +204,26 @@ $sascore = $status->get_hits();
 
 %Problem: verbraucht viel RAM
 
+\subsubsection{Emails abrufen}
+
+Die in einer Verzeichnisstruktur gespeicherten Emails werden durch
+Auswahl eines Ordners und einer Suche in diesem Ordner in eine
+Liste von Messagenummern überführt.
+
+Mit diesen Nummern ist eine Vielzahl von Operationen möglich,
+wie z.B. die komplette Email in einen String zu schreiben:
+
+\begin{verbatim}
+$imap->select($folder);
+
+@msgs = $imap->search('ALL');
+
+for my $msgno (@msgs) {
+    $message = $imap->message_string($msgno);
+}
+
+\end{verbatim}
+
 \subsubsection{Virus}
 Mit einer lokalen Installation von ClamAV können Postfächer auf anderen
 Servern auf Malware untersucht werden. Zwar wird jeder seriöse Emailprovider
@@ -216,11 +239,11 @@ eigenen Check zu fahren:
 \item Emails mit Viren können durch IMAP-Operation ins Postfach gelangen
 \end{itemize}
 
-\subsubsection{Spamassassin}
-Scan mails on remote server and move them, idea: better SPAM fighting
-from local machine, especially on new waves.
+%\subsubsection{Spamassassin}
+%Scan mails on remote server and move them, idea: better SPAM fighting
+%from local machine, especially on new waves.
 
-\subsection{Emails loeschen oder verschieben}
+\subsection{Emails löschen oder verschieben}
 
 Das Löschen von Emails auf einen IMAP-Server kann man nicht mit dem
 Löschen einer Datei auf einem Linux-System vergleichen. Emails werden
