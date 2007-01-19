@@ -1,0 +1,30 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Net::SMTP;
+
+use PWSConfig;
+
+my ($cref, $smtp);
+
+$cref = PWSConfig::setup_vars (required => 'server,from,to');
+
+$smtp = new Net::SMTP ($cref->{server},
+					   Hello => 'localhost');
+unless ($smtp) {
+	die "$0: SMTP error: $!\n";
+}
+
+$smtp->mail($cref->{from});
+$smtp->to($cref->{to});
+
+$smtp->data();
+$smtp->datasend("To: $cref->{to}\n");
+$smtp->datasend("Subject: Hello world\n");
+$smtp->datasend("\n");
+$smtp->datasend("Welcome to Net::SMTP.\n");
+$smtp->dataend("Welcome to Net::SMTP.\n");
+
+$smtp->quit();
