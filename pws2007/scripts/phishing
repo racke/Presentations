@@ -16,6 +16,18 @@ $cref = PWSConfig::setup_vars (required => 'server,user,password,folder');
 # initiate ClamAV first
 $clam = new ClamAV::Client;
 
+if ($clam) {
+	my ($engine, $dbid, $dbdate) = split('/', $clam->version());
+
+	print <<EOF;
+Engine: $engine
+Database release(daily.cvd): $dbid
+Database date: $dbdate\n";
+EOF
+
+	exit 0;
+}
+
 unless ($conn = new IO::Socket::SSL("$cref->{server}:imaps")) {
 	die "$0: imaps connection to $cref->{server} failed: $!\n";
 }
@@ -40,7 +52,16 @@ unless ($imap->select($cref->{folder})) {
 
 my ($subject, $date, $message, $result);
 
-for my $msgno ($imap->search('ALL')) {
+# determine messages
+my (@msgs, @badmsgs);
+
+if ($cref->{subject}) {
+	@msgs = $imap->search('SUBJECT', $imap->Quote($cref->{subject}));
+} else {
+	@msgs = $imap->search('ALL');
+}
+
+for my $msgno (@msgs) {
 	$subject = $imap->subject($msgno) || '';
 	$date = $imap->date($msgno) || '';
 
@@ -53,7 +74,30 @@ for my $msgno ($imap->search('ALL')) {
 
 	if ($result) {
 		print "$0: INFECTED: $result\n";
+		push (@badmsgs, $msgno);
 	} else {
 		print "$0: OK\n";
 	}
 }
+
+# delete "bad" messages
+
+if (@badmsgs) {
+	my @results;
+	
+	unless ($imap->delete_message(@badmsgs)) {
+		warn "$0: Failed to delete messages: " . $imap->LastError() . "\n";
+	}
+
+	@results = $imap->Results();
+	print "Results for DELETE: " . join("\n", @results) . "\n";
+	
+	unless ($imap->close()) {
+		warn "$0: Failed to close: " . $imap->LastError() . "\n";
+	}
+
+	@results = $imap->Results();
+	print "Results for DELETE: " . join("\n", @results) . "\n";
+}
+	
+	
