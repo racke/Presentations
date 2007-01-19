@@ -21,10 +21,13 @@ $smtp->mail($cref->{from});
 $smtp->to($cref->{to});
 
 $smtp->data();
-$smtp->datasend("To: $cref->{to}\n");
-$smtp->datasend("Subject: Hello world\n");
-$smtp->datasend("\n");
-$smtp->datasend("Welcome to Net::SMTP.\n");
-$smtp->dataend("Welcome to Net::SMTP.\n");
+$smtp->datasend(<<EOF);
+To: $cref->{to}
+Subject: Hello world
+
+Welcome to Net::SMTP.
+EOF
+
+$smtp->dataend();
 
 $smtp->quit();
