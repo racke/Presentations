@@ -57,11 +57,40 @@ Im Anschluß wird die Erstellung von Statistiken über das Aufkommen
 von Viren und SPAM besprochen und wie man daraus Schlüsse zur Optimierung
 zur Abwehr treffen kann.
 
-\subsection{Mailversand mit Net::SMTP}
+\subsection{Mailversand mit \WSIndex{Net::SMTP}}
+
+Eine SMTP-Verbindung wird durch die Erzeugung eines
+\verb/Net::SMTP/-Objektes mit der Angabe des Mailservers
+aufgebaut.
+
 \begin{verbatim}
 use Net::SMTP;
 
-my $smtp = new Net::SMTP;
+my $smtp = new Net::SMTP ($server);
+\end{verbatim}
+
+Über diese Verbindung können nun eine oder mehrere Emails abgesetzt
+werden.
+
+\begin{verbatim}
+$smtp->mail($from});
+$smtp->to($to});
+
+$smtp->data();
+$smtp->datasend(<<EOF);
+To: $to}
+Subject: Hello world
+
+Welcome to Net::SMTP.
+EOF
+
+$smtp->dataend();
+\end{verbatim}
+
+Danach beendet man die Verbindung.
+
+\begin{verbatim}
+$smtp->quit();
 \end{verbatim}
 
 \subsection{Mailempfang mit Mail::IMAPClient}
@@ -76,7 +105,7 @@ Anmeldung automatisch.
 \begin{verbatim}
 use Mail::IMAPClient;
 
-my $params = (Server => $server,
+my %params = (Server => $server,
               User => $login,
               Password => $password);
 
@@ -102,12 +131,14 @@ $imap = new Mail::IMAPClient (Socket => $conn,
 							  Password => $password);
 \end{verbatim}
 
-Unbekannte Methoden werden direkt in IMAP-Befehle umgesetzt.
+Unbekannte Methoden werden direkt in IMAP-Befehle umgesetzt, was durchaus
+zur Verwirrung des Programmierers führen kann.
 
 \subsection{Virenscanner mit ClamAV::Client}
 Das Modul \WSIndex{ClamAV::Client} bietet eine Schnittstelle zum ClamAV
 Virenscanner. Beim Anlegen des Objektes wird eine Verbindung zum 
 \verb/clamd/-Daemon aufgebaut.
+
 \begin{verbatim}
 use ClamAV::Client;
 
@@ -116,17 +147,31 @@ my $scanner;
 $scanner = new ClamAV::Client;
 
 unless (defined $scanner && $scanner->ping()) {
-	die "$0: connection to ClamAV daemon failed\n";
+    die "$0: connection to ClamAV daemon failed\n";
 }
 \end{verbatim}
+
 Mit den Parametern \verb/socket_name/, \verb/socket_host/,
-\verb/socket_port/ wird die Art der Verbindung (TCP oder Unixsocket)
-und die Verbindungsparameter definiert.
+\verb/socket_port/ kann die Art der Verbindung (TCP oder Unixsocket)
+und die Verbindungsparameter definiert werden, falls \verb/clamd/ nicht
+am Default-Socket \verb%/var/run/clamav/clamd.ctl% lauscht.
 
 Mit Hilfe der \verb/version/-Methode kann man bestimmen, ob die Virusengine
 und die Virusdatenbank von ClamAV auf dem neuesten Stand ist:
 
 \begin{verbatim}
+my ($engine, $dbrelease, $dbdate) = split('/', $scanner->version());
+
+print <<EOF;
+Engine: $engine
+Database release (daily.cvd): $dbrelease
+Database date: $dbdate
+\end{verbatim}
+
+\begin{verbatim}
+Engine: ClamAV 0.87.1
+Database release(daily.cvd): 2466
+Database date: Fri Jan 19 00:49:11 2007
 \end{verbatim}
 
 \subsection{Spamfilter mit Mail::Spamassassin}
@@ -147,21 +192,29 @@ $sascore = $status->get_hits();
 \end{verbatim}
 
 \subsection{Scenarios}
-\subsubsection{Bayes}
-Update Bayes from FN/FP.
-Die Emaildateien koennten auch direkt aus dem Dateisystem gelesen werden,
-aber bei Zugriff mit IMAP brauchen wir keine Annahmen ueber die 
-Verzeichnisstruktur zu machen bzw. koennen Mailserver und SA-Server auf
-verschiedenen Rechnern sein.
+%\subsubsection{Bayes}
+%Update Bayes from FN/FP.
+%Die Emaildateien koennten auch direkt aus dem Dateisystem gelesen werden,
+%aber bei Zugriff mit IMAP brauchen wir keine Annahmen ueber die 
+%Verzeichnisstruktur zu machen bzw. koennen Mailserver und SA-Server auf
+%verschiedenen Rechnern sein.
 
-Problem: verbraucht viel RAM
+%Problem: verbraucht viel RAM
 
 \subsubsection{Virus}
-Mit einer lokalen Installation von ClamAV koennen Postfaecher auf anderen
-Servern auf Malware untersucht werden.
+Mit einer lokalen Installation von ClamAV können Postfächer auf anderen
+Servern auf Malware untersucht werden. Zwar wird jeder seriöse Emailprovider
+eingehende Emails auf Viren prüfen, aber es gibt doch gute Gründe einen
+eigenen Check zu fahren:
 
-Selbst bei einem geschuetzten 
-Scan mails on remote server and delete them
+\begin{itemize}
+\item Viren können im Postfach landen bevor diese in die Virusdatenbank des
+  verwendeten Virenscanners aufgenommen wurde
+\item jeder Virenscanner hat eigene Stärken und Schwächen bei der Erkennung
+\item ClamAV erkennt Malware aller Art, darunter auch \WSIndex{Phishing} und
+  \WSIndex{Trojaner}
+\item Emails mit Viren können durch IMAP-Operation ins Postfach gelangen
+\end{itemize}
 
 \subsubsection{Spamassassin}
 Scan mails on remote server and move them, idea: better SPAM fighting
@@ -178,6 +231,8 @@ Die \verb/delete_message/-Methode führt das folgende IMAP-Kommando aus:
 Die Emails sind weiterhin sichtbar. Durch das Schließen des
 IMAP-Ordners mit \verb/close/ (implizit) oder dem expliziten \verb/expunge/
 werden die Emails dann auch physikalisch gelöscht.
+
+\subsection{Statistiken}
 
 \begin{thebibliography}{99}
 
