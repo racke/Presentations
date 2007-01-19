@@ -2,23 +2,10 @@
 
 \section{Spamassassin, Antivirus und Email via Perl}
 
-An example article for the proceedings paper.
-
-This article is written in ``dual language free style''\texttrademark,
-sometimes additional subsections, sometimes just additional english
-paragraphs, sometimes obvious examples are not translated. Please
-report any language problems, you could imagine.
-
 \subsection*{Autor}
 Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
 
 \subsection*{Bio Stefan Hornburg}
-
-Dieser Abschnitt enthält eine Kurzbiographie (Bio). Beschreibe Dich
-kurz in eigenen Worten und dem Stil Deiner Wahl.
-
-This section contains your short biography. Describe yourself with
-your own words and with your preferred style.
 
 \subsection*{Abstract}
 Die Bedeutung von Email für die Kommunikation hat einen hohen
@@ -98,8 +85,12 @@ $imap = new Mail::IMAPClient (Socket => $conn,
 							  Password => $password);
 \end{verbatim}
 
+Unbekannte Methoden werden direkt in IMAP-Befehle umgesetzt.
+
 \subsection{Virenscanner mit ClamAV::Client}
-\WSIndex{ClamAV::Client}
+Das Modul \WSIndex{ClamAV::Client} bietet eine Schnittstelle zum ClamAV
+Virenscanner. Beim Anlegen des Objektes wird eine Verbindung zum 
+\verb/clamd/-Daemon aufgebaut.
 \begin{verbatim}
 use ClamAV::Client;
 
@@ -111,6 +102,16 @@ unless (defined $scanner && $scanner->ping()) {
 	die "$0: connection to ClamAV daemon failed\n";
 }
 \end{verbatim}
+Mit den Parametern \verb/socket_name/, \verb/socket_host/,
+\verb/socket_port/ wird die Art der Verbindung (TCP oder Unixsocket)
+und die Verbindungsparameter definiert.
+
+Mit Hilfe der \verb/version/-Methode kann man bestimmen, ob die Virusengine
+und die Virusdatenbank von ClamAV auf dem neuesten Stand ist:
+
+\begin{verbatim}
+\end{verbatim}
+
 \subsection{Spamfilter mit Mail::Spamassassin}
 Eine Email kann wie folgt mit \WSIndex{Mail::Spamassassin} untersucht werden:
 
@@ -136,12 +137,29 @@ aber bei Zugriff mit IMAP brauchen wir keine Annahmen ueber die
 Verzeichnisstruktur zu machen bzw. koennen Mailserver und SA-Server auf
 verschiedenen Rechnern sein.
 
+Problem: verbraucht viel RAM
+
 \subsubsection{Virus}
+Mit einer lokalen Installation von ClamAV koennen Postfaecher auf anderen
+Servern auf Malware untersucht werden.
+
+Selbst bei einem geschuetzten 
 Scan mails on remote server and delete them
 
 \subsubsection{Spamassassin}
 Scan mails on remote server and move them, idea: better SPAM fighting
 from local machine, especially on new waves.
+
+\subsection{Emails loeschen oder verschieben}
+
+Das Loeschen von Emails auf einen IMAP-Server kann man nicht mit dem
+Loeschen einer Datei auf einem Linux-System vergleichen. Emails werden
+zunaechst nur zum Loeschen markiert. 
+
+Die \verb/delete_message/-Methode fuehrt das folgende IMAP-Kommando aus:
+\verb/UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)/. Die Emails sind
+weiterhin sichtbar. Erst durch das Schliessen des IMAP-Ordners oder
+dem expliziten \verb/expunge/ werden die Emails physikalisch geloescht.
 
 \begin{thebibliography}{99}
 
