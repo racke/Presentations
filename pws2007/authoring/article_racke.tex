@@ -6,7 +6,22 @@
 Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
 
 \subsection*{Bio Stefan Hornburg}
+Stefan Hornburg arbeitet seit 1998 als Open Source Consultant mit den
+Schwerpunkten Linux, Perl und Interchange. 
 
+%% with Linux, Perl and Interchange (the former MiniVend) as main
+%% fields of interest. System administration belongs also to
+%% his daily business. His customers are spread over the world,
+%% most of them in the USA, but also in Austria, Switzerland, Germany
+%% and Canada.
+
+%He became one of the main developers of Interchange relatively
+%early in his consultant career and serves now as captain of
+%the ICDEVGROUP, which took over the responsibility and maintenance
+%of this eCommerce software from RedHat.
+%Additionally, he maintains Debian packages for the Courier, PureFTPd,
+%%Interchange and Sympa servers.
+ 
 \subsection*{Abstract}
 Die Bedeutung von Email für die Kommunikation hat einen hohen
 Stellenwert erreicht und ist oftmals nicht aus dem täglichen
@@ -20,10 +35,12 @@ Für Perl sind eine Reihe von Modulen vorhanden, die die Erstellung
 von Programmen zum Zugriff auf Email und die Bewertung der Email
 erleichtern:
 
-	Net::SMTP (Emailversand)
-	Mail::IMAPClient (Zugriff auf Email mit IMAP)
-	Mail::Spamassassin (Spamassassin)
-	ClamAV::Client (Clam Antivirus)
+\begin{itemize}
+\item Net::SMTP (Emailversand)
+\item Mail::IMAPClient (Zugriff auf Email mit IMAP)
+\item Mail::Spamassassin (Spamassassin)
+\item ClamAV::Client (Clam Antivirus)
+\end{itemize}
 	
 Nach einer kurzen Einführung in die Benutzung dieser Module beschäftigt
 sich der Hauptteil des Vortrags mit der Beschreibung von Anwendungen
@@ -33,7 +50,7 @@ Zur Demonstration werden Emails von einem IMAP-Server heruntergeladen
 und von ClamAV auf Viren und Phishing geprüft und anschließend durch
 SpamAssassin bewertet. Anschließend wird gezeigt, wie diese Emails vom
 Server gelöscht oder in bestimmte Verzeichnisse auf dem IMAP-Server verschoben
-werden können. Die Behandlung von Fehlerkennungen (False Positives)
+werden können. Die Behandlung von Fehlerkennungen (\WSIndex{False Positives})
 wird ebenso erläutert.
 
 Im Anschluß wird die Erstellung von Statistiken über das Aufkommen
@@ -154,10 +171,10 @@ from local machine, especially on new waves.
 
 Das Löschen von Emails auf einen IMAP-Server kann man nicht mit dem
 Löschen einer Datei auf einem Linux-System vergleichen. Emails werden
-zunaechst nur zum Löschen markiert. 
+zunächst nur zum Löschen markiert. 
 
 Die \verb/delete_message/-Methode führt das folgende IMAP-Kommando aus:
-\begin{verbatim}UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)\end{verbatim}. 
+\begin{verbatim}100 UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)\end{verbatim}. 
 Die Emails sind weiterhin sichtbar. Durch das Schließen des
 IMAP-Ordners mit \verb/close/ (implizit) oder dem expliziten \verb/expunge/
 werden die Emails dann auch physikalisch gelöscht.
