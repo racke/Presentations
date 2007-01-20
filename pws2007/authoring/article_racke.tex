@@ -135,6 +135,38 @@ Unbekannte Methoden werden direkt in IMAP-Befehle umgesetzt, was durchaus
 zur Verwirrung des Programmierers führen kann. Andererseits kann es genutzt
 werden, um proprieträre Erweiterungen des IMAP-Befehlssatz anzusprechen.
 
+\subsubsection{Emails abrufen}
+
+Die in einer Verzeichnisstruktur gespeicherten Emails werden durch
+Auswahl eines Ordners und einer Suche in diesem Ordner in eine
+Liste von Messagenummern überführt.
+
+Mit diesen Nummern ist eine Vielzahl von Operationen möglich,
+wie z.B. die komplette Email in einen String zu schreiben:
+
+\begin{verbatim}
+$imap->select($folder);
+
+@msgs = $imap->search('ALL');
+
+for my $msgno (@msgs) {
+    $message = $imap->message_string($msgno);
+}
+
+\end{verbatim}
+
+\subsubsection{Emails löschen oder verschieben}
+
+Das Löschen von Emails auf einen IMAP-Server kann man nicht mit dem
+Löschen einer Datei auf einem Linux-System vergleichen. Emails werden
+zunächst nur zum Löschen markiert. 
+
+Die \verb/delete_message/-Methode führt das folgende IMAP-Kommando aus:
+\begin{verbatim}100 UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)\end{verbatim}. 
+Die Emails sind weiterhin sichtbar. Durch das Schließen des
+IMAP-Ordners mit \verb/close/ (implizit) oder dem expliziten \verb/expunge/
+werden die Emails dann auch physikalisch gelöscht.
+
 \subsection{Virenscanner mit \WSIndex{ClamAV::Client}}
 Das Modul \verb/ClamAV::Client/ bietet eine Schnittstelle zum ClamAV
 Virenscanner. Beim Anlegen des Objektes wird eine Verbindung zum 
@@ -177,12 +209,20 @@ Database release(daily.cvd): 2466
 Database date: Fri Jan 19 00:49:11 2007
 \end{verbatim}
 
-\subsection{Spamfilter mit Mail::Spamassassin}
+\subsection{Spamfilter mit \WSIndex{Mail::Spamassassin}}
+Im Gegensatz zu den anderen Modulen wird beim Anlegen eines
+\verb/Mail::SpamAssassin/-Objekts keine Verbindung zum Spamasssassin-Dämon
+\verb/spamd/ aufgebaut.
+
+\begin{verbatim}
+use Mail::SpamAssassin;
+
+$sa = new Mail::Spamassassin;
+\end{verbatim}
+
 Eine Email kann wie folgt mit \WSIndex{Mail::Spamassassin} untersucht werden:
 
 \begin{verbatim}
-# initiate Spamassassin object
-$sa = new Mail::SpamAssassin;
 # retrieve a message from the IMAP server
 $message = $imap->message_string($msgno);
 # let SpamAssassin parse the message
@@ -204,25 +244,7 @@ $sascore = $status->get_hits();
 
 %Problem: verbraucht viel RAM
 
-\subsubsection{Emails abrufen}
 
-Die in einer Verzeichnisstruktur gespeicherten Emails werden durch
-Auswahl eines Ordners und einer Suche in diesem Ordner in eine
-Liste von Messagenummern überführt.
-
-Mit diesen Nummern ist eine Vielzahl von Operationen möglich,
-wie z.B. die komplette Email in einen String zu schreiben:
-
-\begin{verbatim}
-$imap->select($folder);
-
-@msgs = $imap->search('ALL');
-
-for my $msgno (@msgs) {
-    $message = $imap->message_string($msgno);
-}
-
-\end{verbatim}
 
 \subsubsection{Virus}
 Mit einer lokalen Installation von ClamAV können Postfächer auf anderen
@@ -265,18 +287,6 @@ for my $msgno (@msgs) {
 %\subsubsection{Spamassassin}
 %Scan mails on remote server and move them, idea: better SPAM fighting
 %from local machine, especially on new waves.
-
-\subsection{Emails löschen oder verschieben}
-
-Das Löschen von Emails auf einen IMAP-Server kann man nicht mit dem
-Löschen einer Datei auf einem Linux-System vergleichen. Emails werden
-zunächst nur zum Löschen markiert. 
-
-Die \verb/delete_message/-Methode führt das folgende IMAP-Kommando aus:
-\begin{verbatim}100 UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)\end{verbatim}. 
-Die Emails sind weiterhin sichtbar. Durch das Schließen des
-IMAP-Ordners mit \verb/close/ (implizit) oder dem expliziten \verb/expunge/
-werden die Emails dann auch physikalisch gelöscht.
 
 \subsection{Statistiken}
 
