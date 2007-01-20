@@ -135,6 +135,22 @@ Unbekannte Methoden werden direkt in IMAP-Befehle umgesetzt, was durchaus
 zur Verwirrung des Programmierers führen kann. Andererseits kann es genutzt
 werden, um proprieträre Erweiterungen des IMAP-Befehlssatz anzusprechen.
 
+\subsubsection{Emails suchen}
+
+Der \verb/SEARCH/-Befehl ist das mächtigste Kommando und dient zur
+serverseitigen Suche. Die Suche erstreckt sich jedoch nur auf einen
+zuvor ausgewählten Ordner.
+
+\begin{verbatim}
+$imap->select($folder);
+
+@msgs = $imap->search('SUBJECT', $imap->Quote('Rechnung'));
+
+if ($@) {
+    die "$0: IMAP search failed: " . $imap->LastError();
+}
+\end{verbatim}
+
 \subsubsection{Emails abrufen}
 
 Die in einer Verzeichnisstruktur gespeicherten Emails werden durch
@@ -149,6 +165,10 @@ $imap->select($folder);
 
 @msgs = $imap->search('ALL');
 
+if ($@) {
+    die "$0: IMAP search failed: " . $imap->LastError();
+}
+
 for my $msgno (@msgs) {
     $message = $imap->message_string($msgno);
 }
@@ -157,15 +177,23 @@ for my $msgno (@msgs) {
 
 \subsubsection{Emails löschen oder verschieben}
 
-Das Löschen von Emails auf einen IMAP-Server kann man nicht mit dem
-Löschen einer Datei auf einem Linux-System vergleichen. Emails werden
-zunächst nur zum Löschen markiert. 
+Das IMAP-Protokoll bietet keine Möglichkeit Emails unmittelbar
+zu löschen. Die Emails werden zunächst als gelöscht markiert und beim
+nächsten Aufräumvorgang physikalisch gelöscht.
 
-Die \verb/delete_message/-Methode führt das folgende IMAP-Kommando aus:
+Die \verb/delete_message/-Methode führt den folgenden IMAP-Befehl aus:
 \begin{verbatim}100 UID store 3,4,5,6,7 +FLAGS.SILENT (\Deleted)\end{verbatim}. 
 Die Emails sind weiterhin sichtbar. Durch das Schließen des
 IMAP-Ordners mit \verb/close/ (implizit) oder dem expliziten \verb/expunge/
 werden die Emails dann auch physikalisch gelöscht.
+
+Das Verschieben einer Email wird wie folgt implementiert:
+
+\begin{itemize}
+\item Emails aus Originalordner in Zielordner kopieren
+\item Email im Originalordner als gelöscht markieren
+\item Originalordner 
+\end{itemize}
 
 \subsection{Virenscanner mit \WSIndex{ClamAV::Client}}
 Das Modul \verb/ClamAV::Client/ bietet eine Schnittstelle zum ClamAV
