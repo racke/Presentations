@@ -314,10 +314,18 @@ for my $msgno (@msgs) {
 
     if ($result) {
         print "INFECTED: $result\n";
+        push(@badmsgs, $msgno);
     } else {
         print "OK\n";
     }
 }
+\end{verbatim}
+
+Die als schädlich erkannten Emails werden anschließend gelöscht:
+
+\begin{verbatim}
+$imap->delete_message(@badmsgs);
+$imap->expunge();
 \end{verbatim}
 
 %\subsubsection{Spamassassin}
