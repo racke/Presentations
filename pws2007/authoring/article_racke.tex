@@ -192,8 +192,16 @@ Das Verschieben einer Email wird wie folgt implementiert:
 \begin{itemize}
 \item Emails aus Originalordner in Zielordner kopieren
 \item Email im Originalordner als gelöscht markieren
-\item Originalordner 
+\item Originalordner aufraeumen
 \end{itemize}
+
+Die IMAP-Befehle dazu sehen wie folgt aus:
+
+\begin{verbatim}
+100 UID COPY 21,24,43,46,65 INBOX.Junk
+101 UID store 21,24,43,46,65 +FLAGS.SILENT (\Deleted)
+102 expunge
+\end{verbatim}
 
 \subsection{Virenscanner mit \WSIndex{ClamAV::Client}}
 Das Modul \verb/ClamAV::Client/ bietet eine Schnittstelle zum ClamAV
