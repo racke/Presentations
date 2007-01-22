@@ -248,7 +248,7 @@ Database date: Fri Jan 19 00:49:11 2007
 \subsection{Spamfilter mit \WSIndex{Mail::Spamassassin}}
 Im Gegensatz zu den anderen Modulen wird beim Anlegen eines
 \verb/Mail::SpamAssassin/-Objekts keine Verbindung zum Spamasssassin-Dämon
-\verb/spamd/ aufgebaut.
+\verb/spamd/ aufgebaut. 
 
 \begin{verbatim}
 use Mail::SpamAssassin;
@@ -256,13 +256,17 @@ use Mail::SpamAssassin;
 $sa = new Mail::Spamassassin;
 \end{verbatim}
 
-Eine Email kann wie folgt mit \WSIndex{Mail::Spamassassin} untersucht werden:
+Der erste Schritt beim Auswerten einer Email mit \verb/Mail::Spamassassin/
+ist das Erzeugen eines \verb/Mail::SpamAssassin::Message/-Objektes.
+Dazu werden nur die Header der Email ausgewertet, wenn es nicht explizit
+anders angegeben wird.
 
 \begin{verbatim}
-# retrieve a message from the IMAP server
 $message = $imap->message_string($msgno);
-# let SpamAssassin parse the message
 $samsg = $sa->parse($message);
+\end{verbatim}
+
+
 $status = $sa->check($samsg);
 # score and matched rules
 $sascore = $status->get_hits();
