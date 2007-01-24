@@ -1,6 +1,6 @@
 %% -*- mode: latex; -*-
 
-\section{Spamassassin, Antivirus und Email via Perl}
+\section{SpamAssassin, Antivirus und Email via Perl}
 
 \subsection*{Autor}
 Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
@@ -38,7 +38,7 @@ erleichtern:
 \begin{itemize}
 \item Net::SMTP (Emailversand)
 \item Mail::IMAPClient (Zugriff auf Email mit IMAP)
-\item Mail::Spamassassin (Spamassassin)
+\item Mail::SpamAssassin (SpamAssassin)
 \item ClamAV::Client (Clam Antivirus)
 \end{itemize}
 	
@@ -245,7 +245,7 @@ Database release(daily.cvd): 2466
 Database date: Fri Jan 19 00:49:11 2007
 \end{verbatim}
 
-\subsection{Spamfilter mit \WSIndex{Mail::Spamassassin}}
+\subsection{Spamfilter mit \WSIndex{Mail::SpamAssassin}}
 Im Gegensatz zu den anderen Modulen wird beim Anlegen eines
 \verb/Mail::SpamAssassin/-Objekts keine Verbindung zum Spamasssassin-Dämon
 \verb/spamd/ aufgebaut. 
@@ -253,10 +253,10 @@ Im Gegensatz zu den anderen Modulen wird beim Anlegen eines
 \begin{verbatim}
 use Mail::SpamAssassin;
 
-$sa = new Mail::Spamassassin;
+$sa = new Mail::SpamAssassin;
 \end{verbatim}
 
-Der erste Schritt beim Auswerten einer Email mit \verb/Mail::Spamassassin/
+Der erste Schritt beim Auswerten einer Email mit \verb/Mail::SpamAssassin/
 ist das Erzeugen eines \verb/Mail::SpamAssassin::Message/-Objektes.
 Dazu werden nur die Header der Email ausgewertet, wenn es nicht explizit
 anders angegeben wird.
@@ -266,12 +266,14 @@ $message = $imap->message_string($msgno);
 $samsg = $sa->parse($message);
 \end{verbatim}
 
+Nun kann die vom Objekt repräsentierte Email auf ihren SPAM-Status
+untersucht werden. Als Ergebnis erhalten wir ein
+\verb/Mail::SpamAssassin::PerMsgStatus/-Objekt zurück. 
 
+
+\begin{verbatim}
 $status = $sa->check($samsg);
-# score and matched rules
 $sascore = $status->get_hits();
-
-# SPAM or HAM 
 \end{verbatim}
 
 \subsection{Scenarios}
@@ -332,7 +334,7 @@ $imap->delete_message(@badmsgs);
 $imap->expunge();
 \end{verbatim}
 
-%\subsubsection{Spamassassin}
+%\subsubsection{SpamAssassin}
 %Scan mails on remote server and move them, idea: better SPAM fighting
 %from local machine, especially on new waves.
 
