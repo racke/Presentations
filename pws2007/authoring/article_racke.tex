@@ -282,7 +282,6 @@ if ($status->is_spam()) {
 \end{verbatim}
 
 \subsection{Scenarios}
-%\subsubsection{Bayes}
 %Update Bayes from FN/FP.
 %Die Emaildateien koennten auch direkt aus dem Dateisystem gelesen werden,
 %aber bei Zugriff mit IMAP brauchen wir keine Annahmen ueber die 
@@ -343,7 +342,36 @@ $imap->expunge();
 %Scan mails on remote server and move them, idea: better SPAM fighting
 %from local machine, especially on new waves.
 
-\subsection{Statistiken}
+\subsubsection{\WSIndex{Bayes}}
+Die Erkennung von SPAM beruht auf heuristischen Verfahren und ist ebenso
+abhängig von der Organisation oder der Person, die die Emails empfängt.
+Daher kommt es zu Fehlerkennungen, False Positives und False Negatives.
+
+False Positives sind Emails, die fälschlich als SPAM behandelt wurden,
+während False Negatives SPAMs sind die den Filter überwunden haben.
+
+Um die Erkennung zu verbessern und vor allem an die jeweiligen Gegebenheiten
+anzupassen, werden die Emails SpamAssassin zum Lernen eingetrichtert.
+
+Mit Perl kann man das wie folgt realisieren:
+
+\begin{verbatim}
+$imap->select('INBOX.NOSPAM');
+
+@msgs = $imap->search('ALL');
+
+$sa->init_learner({wait_for_lock => 1, learn_to_journal => 1});
+
+for $msgno (@msgs) {
+    $message = $imap->message_string($msgno);
+	$samsgref = $sa->parse($message);
+	$status = $sa->learn($samsgref, undef, 1);
+}
+
+$sa->rebuild_learner_caches({verbose => 1});
+\end{verbatim}
+
+%\subsection{Statistiken}
 
 \begin{thebibliography}{99}
 \bibitem{racke:imaprfclist} IMAP Documents: RFCs and Drafts
