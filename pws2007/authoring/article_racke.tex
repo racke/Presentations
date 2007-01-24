@@ -266,14 +266,18 @@ $message = $imap->message_string($msgno);
 $samsg = $sa->parse($message);
 \end{verbatim}
 
-Nun kann die vom Objekt repräsentierte Email auf ihren SPAM-Status
-untersucht werden. Als Ergebnis erhalten wir ein
+Die \verb/check/-Methode überprüft die Email und liefert ein 
 \verb/Mail::SpamAssassin::PerMsgStatus/-Objekt zurück. 
-
 
 \begin{verbatim}
 $status = $sa->check($samsg);
-$sascore = $status->get_hits();
+$num = $status->get_score();
+
+if ($status->is_spam()) {
+    print "SPAM ($num)\n";
+} else {
+    print "HAM ($num)\n";
+}
 \end{verbatim}
 
 \subsection{Scenarios}
