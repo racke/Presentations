@@ -272,9 +272,10 @@ Die \verb/check/-Methode überprüft die Email und liefert ein
 \begin{verbatim}
 $status = $sa->check($samsg);
 $num = $status->get_score();
+$names = $status->get_names_of_tests_hit();
 
 if ($status->is_spam()) {
-    print "SPAM ($num)\n";
+    print "SPAM ($num), Treffer: $names\n";
 } else {
     print "HAM ($num)\n";
 }
