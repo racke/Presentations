@@ -39,41 +39,49 @@ if ($cref->{fnfolder}) {
 	unless ($imap->select($cref->{fnfolder})) {
 		die "$0: Failed to select IMAP folder $cref->{fnfolder}: " . $imap->LastError() . "\n";
 	}
-
+	
 	# get sequence numbers for messages in folders
 	my @msgs = reverse($imap->search('ALL'));
 	
 	my $i = 0;
-	my ($subject, $date, $message, $samsgref, $sastatus, $sanum, $lstatus);
+	my ($subject, $date, $message, $samsgref, $sastatus, $sanum, $sanames, $lstatus);
 
 	# initialize learning
 	$sa->init_learner({wait_for_lock => 1, learn_to_journal => 1});
 	
 	for my $msgno (@msgs) {
-		$subject = $imap->subject($msgno);
-		$date = $imap->date($msgno);
-
-		print '#', $msgno, ": $date -- $subject\n";
-
-		# get SA score just for fun
-		$message = $imap->message_string($msgno);
-		$samsgref = $sa->parse($message);
-		$sastatus = $sa->check($samsgref);
-		$sanum = $sastatus->get_score();
-		
-		if ($sastatus->is_spam()) {
-			print "$msgno SPAM ($sanum) $subject\n";
-		} else {
-			print "$msgno HAM ($sanum) $subject\n";
-		}
-
-		# now learn as SPAM
-		$lstatus = $sa->learn($samsgref, undef, 1);
-		
-		last if $i++ > 10;
+		learn($imap, $msgno, $sa, 1);
+				
+		last if $i++ > 100;
 	}
 
 	$sa->rebuild_learner_caches({verbose => 1});
 }
 
+sub learn {
+	my ($imap, $msgno, $sa, $isspam) = @_;
+	my ($subject, $date, $message, $samsgref, $sastatus, $sanum, $sanames, $lstatus);
+
+	$subject = $imap->subject($msgno);
+	$date = $imap->date($msgno);
+
+	print '#', $msgno, ": $date -- $subject\n";
+
+	# get SA score just for fun
+	$message = $imap->message_string($msgno);
+	$samsgref = $sa->parse($message);
+	$sastatus = $sa->check($samsgref);
+	$sanum = $sastatus->get_score();
+	$sanames = $sastatus->get_names_of_tests_hit();
+			
+	if ($sastatus->is_spam()) {
+		print "$msgno SPAM ($sanum for $sanames) $subject\n";
+	} else {
+		print "$msgno HAM ($sanum for $sanames) $subject\n";
+	}
+
+	# now learn as SPAM
+	$lstatus = $sa->learn($samsgref, undef, 1);
+	
+}
 
