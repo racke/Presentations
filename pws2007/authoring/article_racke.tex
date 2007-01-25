@@ -358,7 +358,7 @@ for $msgno (@msgs) {
 	$status = $sa->learn($samsgref, undef, 1);
 }
 
-$sa->rebuild_learner_caches({verbose => 1});
+$sa->rebuild_learner_caches();
 \end{verbatim}
 
 %\subsection{Statistiken}
