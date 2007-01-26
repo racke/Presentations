@@ -1,0 +1,7 @@
+* scenarios/statistics
+* bayes-szenario
+* Spamfilter Sektion
+* Fehlerbehandlung/Debugging
+* MIME::Lite
+* SMTP Auth
+* IMAP: Ausnahmefall expunge
