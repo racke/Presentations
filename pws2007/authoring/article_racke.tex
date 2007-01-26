@@ -361,10 +361,29 @@ for $msgno (@msgs) {
 $sa->rebuild_learner_caches();
 \end{verbatim}
 
-%\subsection{Statistiken}
+\subsection{Statistiken}
+\subsubsection{SpamAssassin}
+Für die Erstellung von Statistiken der SPAM/HAM-Verteilung gibt es zwei
+gleichnamige Perlskripte \verb/sa-stats.pl/ von David Ramsden
+\cite{racke:sastatsramsden} und Dallas Engelken \cite{racke:sastatsengelken}.
+
+Beide untersuchen
+Emaillogdateien (gewöhnlich \verb%/var/log/mail.info%) auf Einträge 
+des SpamAssassin-Dämons \verb/spamd/.
+Verkürzt dargestellt sehen die Einträge wie folgt aus:
+
+\begin{verbatim}
+identified spam (15.1/5.0) for virtmail:104 in 3.0 seconds, 6737 bytes. 
+result: Y 15 - BAYES_80,FORGED_RCVD_HELO,HTML_MESSAGE,MIME_HTML_ONLY,...
+\end{verbatim}
 
 \begin{thebibliography}{99}
 \bibitem{racke:imaprfclist} IMAP Documents: RFCs and Drafts
 \texttt{http://www.imap.org/papers/biblio.html}
+\bibitem{racke:sastatsramsden} David Ramsden. \emph{sa-stats.pl}
+\texttt{http://david.hexstream.co.uk/scripts/}
+\bibitem{racke:sastatsengelken} Dallas Engelken. \emph{sa-stats.pl}
+\texttt{http://www.rulesemporium.com/programs/sa-stats-1.0.txt}
 \end{thebibliography}
+
 
