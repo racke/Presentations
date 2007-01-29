@@ -19,7 +19,13 @@ my $dir = cwd();
 # scan files from commandline
 for (@ARGV) {
 	if (-f) {
-		my ($file, $result) = $scanner->scan_path("$dir/$_");
+		my ($file, $result);
+
+		if (m%^/%) {
+			($file, $result) = $scanner->scan_path($_);
+		} else {
+			($file, $result) = $scanner->scan_path("$dir/$_");
+		}
 
 		if ($result) {
 			print "$0: file $_ INFECTED: $result\n";
