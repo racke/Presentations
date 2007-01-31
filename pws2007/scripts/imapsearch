@@ -29,11 +29,18 @@ unless ($imap->login()) {
 	die "Error: " . $imap->LastError() . "\n";
 }
 
+# defaults
+$cref->{folder} ||= 'INBOX';
+$cref->{searchtype} ||= 'ALL';
+
+# select IMAP folder
 unless ($imap->select($cref->{folder})) {
 	die "$0: Failed to select IMAP folder $cref->{folder}: " . $imap->LastError();
 }
 
-my @msgs = $imap->search('SUBJECT', $imap->Quote('Rechnung'));
+# search messages
+my @msgs = $imap->search('HEADER', $cref->{searchtype},
+						 $imap->Quote($cref->{searchtoken}));
 
 for my $msgno (@msgs) {
 	print "$msgno: " . $imap->subject($msgno) . "\n";
