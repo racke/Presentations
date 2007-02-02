@@ -41,474 +41,86 @@
 
 &centersmall Stefan Hornburg (Racke) <racke@linuxia.de>
 
-# Part I: Architecture
+# Konzept
 %page
 %font "standard"
 
-Was ist ClamAV ?
+Klassisches Konzept (bind)
 
-	Open Source Software
-
-	Antivirus-Toolkit
-
-# Fokus
-	Mailscanner
-
-%page
-
-Was bietet ClamAV ?
-
-	schneller und mächtiger Scanner
-		on-access Linux/FreeBSD
-
-# was entdeckt ClamAV
-	umfangreiche und aktuelle Datenbank
-		mehr als 31000 Viren, Würmer und Trojaner
-
-	modernes Updateverfahren
-			
-	Engine in Bibliothek
-
-%page
-
-Warum ClamAV ?
-
-# lange Liste in Doku, BeOS
-	portabel und POSIX-kompatibel
-		Linux, *BSD, Mac OS X, Windows
-
-# open anti virus.org
-	Signaturen up-to-date
-		häufige Aktualisierungen
-		konkurrenzfähig
-
-	breites Spektrum an Malware
-		Macros, JPEG, Phishing
+	Textdateien
+# Neustart nach Änderung
 		
-%page
+	Master/Slave 
+# per Zone
+# Zonentransfers
+# Seriennummern
 
-Wozu ClamAV ?
+	rekursiv 
 
-&one_fit Scanner für MTAs
-&two_fit Exim,Courier,Postfix,Sendmail
-&three_fit
-&one_fit Scanner für Proxys
-&two_fit FTP,WWW(Squid),POP3
-&three_fit
-&one_fit On-Access Scanner
-&two_fit Dazuko, Clamuko
-&three_fit
-&one_fit Plugin für MUAs
-&two_fit Sylpheed Claws, KMail
-&three_fit
-# Sourceforge Project of February
-&one_fit Virenscanner für Desktops
-&two_fit ClamWin
+# Tabelle 'RR'
 
-##
-## ARCHITEKTUR
-##
+%page 
+
+Konzept von MyDNS
+
+	(My)SQL Backend
+
+	Standalone 
+	
+	nicht rekursiv
 
 %page
 
-Architektur
+Tabellen
 
-	Datenbank
+	soa (Zonen)
 
-%page
-
-Datenbank I
-
-
-Engine
-
-	Kapselung in Bibliothek
-		libclamav (GPL)
-		
-# Archivbomben
-	Archive und komprimierte Dateien
-		ZIP, RAR, Cabinet, CHM
-
-	Portable Executable Dateien
-		UPX, FSG, Petite
-
-	Email-Attachments
-		mbox, Maildir, Datei
+	rr (Daten)
 
 %page
 
-Virusdatenbank
+Beispiel: Zone
 
-# ClamAV-Virusdatenbank, 
-	CVD-Dateien
-		digital signierte Tararchive
-
-	main.cvd
-
-	daily.cvd
-
-%page
-
-Infrastruktur
-
-	DNS-Server
-		current.cvd.clamav.net
-
-	Spiegelserver
-		database.clamav.net
-		db.local.clamav.net
-		db.de.clamav.net
-
-%page
-
-DNS-Abfrage
-
-	TXT-Datensatz abfragen
-
-&lit dig +short -t TXT current.cvd.clamav.net
-
-&lit "0.83:29:748:1110011436"
-
-%page
-
-Spiegelserver
-
- 
-	90 Spiegelserver
-
-	Updates innerhalb einer Minute
-
-	2.5 TByte je Monat (August 2004)
-
-%page
-
-Updates mit freshclam
-
-	Datenbankversionsprüfung durch DNS
-
-	digitale Signaturen
-
-	Proxy mit Authentifizierung
-
-	Fehlerbehandlung
-
-
-%page
-
-freshclam
-
-	manuell, Cron, Dämon
-		
-	viele Clients im LAN
-		Proxy
-		interner Webserver
-			DatabaseMirror clamav.local
-
-%page
-
-Werkzeuge
-
-	sigtool
-		sigtool -l /var/lib/clamav/daily.cvd
-
-	clamscan
-		clamscan -r /home/racke/Maildir
-
-	clamdscan
-		clamdscan /home/racke/Maildir
-
-%page
-
-Dämon
-
-	clamd
-
-	Unix/TCP Sockets
-
-	Threads
-
-##
-## KONFIGURATION
-##
 %page
 
 Konfiguration
 
-	Benutzer und Pfade
-
-	Dateitypen
-
-# ClamAV Benutzer		
-	Grenzen und Regeln für Archive
-
-	Macros
-
-	freshclam
-
-%page
-
-Benutzer und Pfade
-
-	User clamav
-
-# read spool directory
-	AllowSupplementaryGroups
-
-	DatabaseDirectory /var/lib/clamav
-
-	LocalSocket /var/run/clamav/clamd.ctl
-
-	FixStaleSocket
-
-%page
-
-Dateitypen
-
-	ScanArchive
-
-	ScanMail
-
-	ScanPE
-		Portable Executable
-
-	ScanOLE2
-		Microsoft Office Makros
-			
-%page
-
-Grenzen für Archive
-
-# "0" = unbegrenzt
-	ArchiveMaxRecursion 5
-
-# maximale Anzahl von Dateien
-	ArchiveMaxFiles 1000
-
-# maximale Dateigröße
-	ArchiveMaxFileSize 10M
-
-# maximale Komprimierungsrate
-
-
-%page
-
-Regeln für Archive
-
-# Archive als Virus markieren
-	ArchiveBlockEncrypted
-		Encrypted.ArchiveType, z.B. Encrypted.RAR
-
-# Archive über Limits als Virus markieren
-	ArchiveBlockMax
-		RAR.ExceededFileSize, Zip.ExceededFilesLimit
-
-# Archivbomben
-	ArchiveMaxCompressionRatio 250
-		Oversized.ArchiveType, z.B. Oversized.Zip
-
-
-%page
-
-freshclam Konfiguration
-
-	/etc/clamav/freshclam.conf
-%font "typewriter"
-&litbig DatabaseOwner clamav
-&litbig DatabaseDirectory /var/lib/clamav/
-&litbig UpdateLogFile /var/log/clamav/freshclam.log
-&litbig DNSDatabaseInfo current.cvd.clamav.net
-&litbig DatabaseMirror db.de.clamav.net
-&litbig DatabaseMirror database.clamav.net
-&litbig MaxAttempts 5
-&litbig NotifyClamd
-
-%page
-
-freshclam Aufruf
-
-&callprog root@linuxia.de:~# freshclam
-&callprog ClamAV update process started at Sat Mar  5 11:04:53 2005
-&callprog main.cvd is up to date (version: 29, sigs: 29086, f-level: 3, builder: tomek)
-&callprog Downloading daily.cvd [*]
-&callprog daily.cvd updated (version: 748, sigs: 2274, f-level: 4, builder: ccordes)
-&callprog Database updated (31360 signatures) from db.de.clamav.net (IP: 62.112.154.203)
-&callprog Clamd successfully notified about the update.
-
-##
-## Praxis
-##
-
-%page
-
-Integration
-
-	Exim
-
-	amavisd-new und postfix
-
-	sendmail und clamav-milter
-
-	Sympa
-
-
-%page
-
-Exim Vorbereitungen
-
-	Content-Filter in Local/Makefile
-		
-&lit WITH_CONTENT_SCAN=yes
-
-	Leserechte für clamd
-		
-&lit /var/spool/exim4/scan
-&lit adduser clamav Debian-exim
-&lit /etc/init.d/clamav-daemon restart
-
-%page
-
-Exim Konfiguration
-
-	Hauptkonfiguration
-&litsmall acl_smtp_data = acl_check_data
-&litsmall av_scanner = clamd:/var/run/clamav/clamd.ctl
-
-	Access Control Lists
-&litsmall acl_check_data:
-&litsmall1     deny message = Hallo Virusschleuder ($malware_name)
-&litsmall2	      malware = *
-&litsmall
-&litsmall acl_check_data:
-&litsmall1	deny message = Hallo Virusschleuder ($malware_name)
-&litsmall2	      malware = */defer_ok
-
-
-%page
-
-sendmail + clamav-milter
-
-	Milter starten
-&litsmall /etc/init.d/clamav-milter
-&litsmall /usr/sbin/clamav-milter -ol local:/var/run/clamav/clamav-milter.ctl
-
-	Definition in /etc/mail/sendmail.mc
-&litsmall INPUT_MAIL_FILTER(`clmilter',
-&litsmall `S=local:/var/run/clamav/clamav-milter.ctl,F=, T=S:4m;R:4m')dnl
-&litsmall define(confINPUT_MAIL_FILTERS)
-
-	Sendmail neu starten
-&litsmall cd /etc/mail; make
-&litsmall /etc/init.d/sendmail reload
-
-%page
-
-amavisd-new und postfix
-
-	Benutzer
-
-&litsmall adduser clamav amavis
-&litsmall /etc/init.d/clamav-daemon restart
-
-	amavisd
-
-&litsmall $inet_socket_port = 10024;    
+	database=
+	db-host=
+    db-user=
+    db-password=	
 
 %page 
 
-Postfix Konfiguration
+MyDNS und Replikation
 
-	Emails an amavisd weiterleiten 
-		/etc/postfix/main.cf
+	MySQL Master/Slave
 
-&litsmall content_filter=smtp-amavis:[127.0.0.1]:10024
-
-	Filter definieren und SMTPD ohne Filter
-		/etc/postfix/master.cf
-
-&litsmall smtp-amavis unix - - n - 2  smtp
-
-&litsmall 127.0.0.1:10025 inet n - n - -  smtpd
-&litsmall    -o content_filter=
-&litsmall    -o smtp_send_xforward_command=yes'
+	Selektive Replikation
 
 %page
 
-Sympa
-
-	Programm
-&litsmall antivirus_path /usr/bin/clamscan
-
-	Kommandozeilenargumente
-&litsmall antivirus_args -stdout --unzip --unrar --arj --unzoo --lha
-
-##
-## Community
-##
+Round Robin
 
 %page
 
-Community
-
-	Webseite
-
-	Mailinglisten
-
-	Virenkandidaten
-
-	3rd Party
+Loadbalancing
 
 %page
 
-Webseite
-
-	http://www.mydns.bboy.net/
+Export/Import
 
 %page
 
-Mailinglisten
+Administration
 
-	clamav-announce@lists.clamav.net
-		Ankündigung neuer Version
-
-	clamav-users@lists.clamav.net
-		Benutzer
-
-	clamav-devel@lists.clamav.net
-		Entwickler, technische Diskussionen
-
-	clamav-virusdb@lists.clamav.net
-		Ankündigung neuer Datenbankversionen
-
-%page
-
-Kandidaten vorschlagen
-
-	Testen mit ClamAV Online Scanner
-		http://test.clamav.power-netz.de/
-
-	Vorschlag einreichen
-		http://www.clamav.net/sendvirus.html
-
-
-%page
-
-3rd Party
-
-	ClamWin
-		ClamAV GUI für Windows
-
-	KlamAV
-		ClamAV GUI für KDE
-
-	samba-vscan
-		VFS-Modul
-
+	
 %page
 
 Abspann
 
 	Folien
-		http://www.linuxia.de/Presentations/ClamAV/
+		http://www.linuxia.de/Presentations/MyDNS/
 
 	Email
 		racke@linuxia.de
