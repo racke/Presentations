@@ -1,0 +1,9 @@
+MyDNS ist ein relativ junger Nameserver für Unixsysteme, der auf
+Sicherheit, Stabilität, Performance und Interoperabilität ausgelegt
+ist. Seine Besonderheiten sind die Verwaltung der DNS-Datensätze in
+einer SQL-Datenbank und der Verzicht auf das Master-Slave-Konzept.
+
+Der Vortrag beschreibt das Konzept von MyDNS und gibt Kochrezepte
+zu Einrichtung und Betrieb von MyDNS. Im Zusammenhang mit MySQL
+besonders interessant ist der Einsatz von Replikation zwischen
+mehreren MyDNS-Servern. 
