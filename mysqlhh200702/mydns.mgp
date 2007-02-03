@@ -95,9 +95,15 @@ Beispiel: Zone
 
 Installation
 
-	mydns --dump-config
+	Compile
+		./configure && make && make install
 
-	mydns --create-tables
+	Datenbank anlegen
+		mysqladmin create mydns
+		mydns --create-tables | mysql mydns
+
+	Konfiguration
+		mydns --dump-config > /etc/mydns.conf
 
 ##
 ## KONFIGURATION
@@ -108,15 +114,19 @@ Installation
 Konfiguration
 
 	Datenbank
-&lit database=mydns
-&lit db-host=localhost
-&lit db-user=racke
-&lit db-password=mysecret
+&litsmall database=mydns
+&litsmall db-host=localhost
+&litsmall db-user=racke
+&litsmall db-password=mysecret
 
 	Dämon
-&lit user = nobody
-&lit group = nogroup
-&lit listen = *
+&litsmall user = nobody
+&litsmall group = nogroup
+&litsmall listen = *
+
+	Logging
+&litsmall log = LOG_DAEMON
+&litsmall pidfile = /var/run/mydns.pid
 
 %page
 
