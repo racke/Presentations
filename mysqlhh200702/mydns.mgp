@@ -37,7 +37,7 @@
 %center
 &intro MyDNS
 
-&intro2 Architektur, Konfiguration und Integration
+&intro2 Konzept, Konfiguration und Integration
 
 &centersmall Stefan Hornburg (Racke) <racke@linuxia.de>
 
@@ -45,31 +45,33 @@
 %page
 %font "standard"
 
-Klassisches Konzept (bind)
+BIND vs MyDNS
 
-	Textdateien
 # Neustart nach Änderung
-		
-	Master/Slave 
+	Textdateien  <=> SQL
+
 # per Zone
 # Zonentransfers
 # Seriennummern
+	Master/Slave <=> Standalone
 
-	rekursiv 
+	rekursiv     <=> nicht rekursiv
 
-# Tabelle 'RR'
+	umfangreich  <=> minimal
 
 %page 
 
-Konzept von MyDNS
+Backends
 
-	(My)SQL Backend
+	Textdateien
+		Neustart nach Änderung
+		Seriennummern
 
-	Standalone 
-	
-	nicht rekursiv
+	SQL
+		sofortige Auswirkung
 
-	KISS
+
+# Tabelle 'RR'
 
 %page
 
@@ -85,14 +87,38 @@ Beispiel: Zone
 
 %page
 
-Konfiguration
-
-	database=
-	db-host=
-    db-user=
-    db-password=	
+##
+## INSTALLATION
+##
 
 %page 
+
+Installation
+
+	mydns --dump-config
+
+	mydns --create-tables
+
+##
+## KONFIGURATION
+##
+
+%page
+
+Konfiguration
+
+	Datenbank
+&lit database=mydns
+&lit db-host=localhost
+&lit db-user=racke
+&lit db-password=mysecret
+
+	Dämon
+&lit user = nobody
+&lit group = nogroup
+&lit listen = *
+
+%page
 
 MyDNS und Replikation
 
