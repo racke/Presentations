@@ -77,15 +77,50 @@ Backends
 
 Tabellen
 
-	soa (Zonen)
+	soa (Zonen/Domains)
 
 	rr (Daten)
 
 %page
+# Domains/Zonen siehe wikipedia
 
-Beispiel: Zone
+soa: Zonen
+
+	id 	
+		Schlüssel
+
+	origin 
+		Zonenname (mysql.com.)
+
+	ns, mailbox, serial
+
+	minimum, ttl
+
+	refresh, retry, expire
+		RFC 1537
 
 %page
+# resource records
+
+rr: Zonendaten
+
+	id 
+		Schlüssel
+
+	zone
+		Schlüssel für Zone
+
+	type
+		
+
+%page
+
+Beispiel
+
+&callprog insert into soa (origin) values ('mysql.com.');
+&callprog insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.29');
+&callprog insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.82');
+
 
 ##
 ## INSTALLATION
