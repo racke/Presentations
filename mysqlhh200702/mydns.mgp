@@ -54,7 +54,10 @@ Vorteile
 
 	einfache Administration
 
+	einfache Konfiguration
+
 %page
+
 BIND vs MyDNS
 
 # Neustart nach Änderung
@@ -63,7 +66,7 @@ BIND vs MyDNS
 # per Zone
 # Zonentransfers
 # Seriennummern
-	Master/Slave <=> Standalone
+	Primary/Secondary <=> Primary
 
 	rekursiv     <=> nicht rekursiv
 
@@ -81,16 +84,20 @@ Backends
 		Echtzeitauflösung
 
 
-# Tabelle 'RR'
-
 %page
 
 Tabellen
 
 	soa (Zonen/Domains)
+		mysql.com.
+		linuxia.de.
+		de.mysql.com.
 
 	rr (Daten)
-
+		A       213.136.52.29
+		CNAME   www.mysql.com.
+		MX      10 mailgate.mysql.com.
+		
 %page
 # Domains/Zonen siehe wikipedia
 
@@ -100,13 +107,12 @@ soa: Zonen
 		Schlüssel
 
 	origin 
-		Zonenname (mysql.com.)
+		Zonenname (mysql.com.), Wurzel
 
 	ns, mailbox, serial
 
-	minimum, ttl
-
 	refresh, retry, expire
+	minimum, ttl
 		RFC 1537
 
 %page
@@ -121,7 +127,7 @@ rr: Zonendaten
 		Schlüssel für Zone
 
 	type
-		
+		A, CNAME, MX, NS, PTR, TXT		
 
 %page
 
@@ -189,11 +195,6 @@ Round Robin
 
 Loadbalancing
 
-%page
-
-Export/Import
-
-	
 ##
 ## INTEGRATION
 ##
@@ -202,18 +203,22 @@ Export/Import
 
 Integration
 
-	mehrere Nameserver
+	Secondary Nameserver
 		Ausfallsicherheit, Anforderungen Registrare
 
 	Administration
 
+	Export/Import
+
 %page
 
-Mehrere Nameserver
+Secondary Nameserver
 
-	mehrere Nameserver, gleiche Datenbank
+	BIND als Secondary Nameserver
 
-	ein Nameserver, NAT
+	Zugriff auf gleiche Datenbank
+
+	NAT
 
 	Datenbankreplikation
 
@@ -241,6 +246,20 @@ Administration
 
 %page
 
+Export/Import
+
+	Zonentransfers
+
+	mydnsimport
+		mydnsimport --axfr=bind.example.com example.com example.net
+		mydnsimport --axfr=bind.example.com 1.168.192.in-addr.arpa
+
+	mydnsexport
+		Konfiguration für BIND und MyDNS	
+
+
+%page
+
 Abspann
 
 	Folien
@@ -248,10 +267,6 @@ Abspann
 
 	Email
 		racke@linuxia.de
-
-	Credits 
-		ClamAV Team
-		Stephen Gran (Debian-Maintainer)
 
 
 # Q&A:
