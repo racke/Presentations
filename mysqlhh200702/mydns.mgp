@@ -24,7 +24,7 @@
 %tab litsmall size 3, prefix "         ", font "typewriter"
 %tab litsmall1 size 3, prefix "           ", font "typewriter"
 %tab litsmall2 size 3, prefix "             ", font "typewriter"
-%tab intro size 9, font "standard", center
+%tab intro fore "blue", size 9, font "standard", center
 %tab intro2 size 6, font "standard", center
 %tab centersmall size 4, font "standard", center
 #
@@ -35,16 +35,26 @@
 # Hinweis auf Fragen am Ende des Vortrags
 
 %center
+
 &intro MyDNS
 
 &intro2 Konzept, Konfiguration und Integration
 
 &centersmall Stefan Hornburg (Racke) <racke@linuxia.de>
 
-# Konzept
+## 
+## KONZEPT
+##
 %page
 %font "standard"
 
+Vorteile
+
+	Echtzeitauflösung
+
+	einfache Administration
+
+%page
 BIND vs MyDNS
 
 # Neustart nach Änderung
@@ -68,7 +78,7 @@ Backends
 		Seriennummern
 
 	SQL
-		sofortige Auswirkung
+		Echtzeitauflösung
 
 
 # Tabelle 'RR'
@@ -183,11 +193,52 @@ Loadbalancing
 
 Export/Import
 
+	
+##
+## INTEGRATION
+##
+
+%page 
+
+Integration
+
+	mehrere Nameserver
+		Ausfallsicherheit, Anforderungen Registrare
+
+	Administration
+
+%page
+
+Mehrere Nameserver
+
+	mehrere Nameserver, gleiche Datenbank
+
+	ein Nameserver, NAT
+
+	Datenbankreplikation
+
+%page
+
+Replikation
+
+	Masterserver, mehrere Slaveserver
+
 %page
 
 Administration
 
-	
+	phpmyadmin
+
+	admin.php
+
+	MyDNSConfig 
+		http://www.mydnsconfig.org/
+
+	mydns_admin
+		http://groovis.net/projects/mydns_admin.html
+
+	eigenständige Lösung
+
 %page
 
 Abspann
