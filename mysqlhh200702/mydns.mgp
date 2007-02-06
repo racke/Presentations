@@ -432,7 +432,7 @@ Export/Import
 &callprog		mydnsimport --axfr=bind.example.com 1.168.192.in-addr.arpa
 
 	mydnsexport
-		Konfiguration für BIND und MyDNS	
+		Konfiguration für BIND und TinyDNS	
 
 %page
 %charset "iso8859-1"
