@@ -1,76 +1,113 @@
-# MyDNS-Vortrag Chemnitzer Linux-Tage 2005
-#
-# Zeit: 45 Minuten + 10 Minuten Q&A
-# 
+# MyDNS-Vortrag 
 # -----------------------------------------------------------
 # defaults
 %deffont "standard" tfont "verdana.ttf"
 %deffont "typewriter" tfont "courbd.ttf"
-%default 1 fore "blue", back "white", font "standard", center
+%default 1 vgap 0, fore "blue", back "white", font "standard", center
 %default 2 fore "blue", back "white", font "standard"
 %default 3 size 5, vgap 20, fore "black", back "white", font "standard", left
 %default 4 fore "black", back "white", font "standard", left
-%tab 1 size 6, vgap 40,  prefix "    ", font "standard", left, icon box "red" 30
+%tab 1 fore "black", size 6, vgap 40,  prefix "    ", font "standard", left, icon box "red" 30
 %tab 2 size 4, vgap 25,  prefix "           "
 %tab 3 size 3,   prefix "                   "
 %tab one_fit size 6, vgap 40,  prefix "    ", icon box "red" 30
 %tab two_fit size 4, vgap 10,  prefix "           "
 %tab three_fit size 2, vgap 10
-%tab small size 5, prefix "      ", icon box "red" 30
+%tab small fore "black", size 5, prefix "      ", icon box "red" 30
 %tab aprog size 5, prefix "             ", font "standard"
-%tab callprog size 3,   prefix " ", font "typewriter"
+%tab callprog  fore "black", size 3,   prefix "     ", font "typewriter"
+%tab callproggy fore "black", size 3,   prefix "     ", font "typewriter"
 %tab lit size 5,    prefix "    ", font "typewriter"
-%tab litbig size 5,    prefix "   ", font "typewriter"
+%tab litbig fore "black", size 5,    prefix "      ", font "typewriter"
+%tab litgrey fore "grey", size 5,    prefix "      ", font "typewriter"
 %tab litsmall size 3, prefix "         ", font "typewriter"
 %tab litsmall1 size 3, prefix "           ", font "typewriter"
 %tab litsmall2 size 3, prefix "             ", font "typewriter"
 %tab intro fore "blue", size 9, font "standard", center
 %tab intro2 size 6, font "standard", center
 %tab centersmall size 4, font "standard", center
+%tab grey fore "grey", size 6, prefix "    ", icon box "red" 30
+%tab smallgrey fore "grey", size 5, prefix "      ", icon box "red" 30
+
 #
 #
 %page
 %charset "iso8859-1"
+%ccolor "blue"
 # Einleitung:
 # Hinweis auf Fragen am Ende des Vortrags
+# 
+# Bewertungskriterien in der Praxis
+# Mysql
 
 %center
 
 &intro MyDNS
 
-&intro2 Konzept, Konfiguration und Integration
+&intro2 Struktur, Konfiguration und Integration
 
 &centersmall Stefan Hornburg (Racke) <racke@linuxia.de>
 
 ## 
 ## KONZEPT
 ##
+
 %page
 %font "standard"
 
-Vorteile
+Was ist MyDNS ?
 
-	Echtzeitauflösung
+	Domain Name Server
+		BIND
 
-	einfache Administration
+	RDBMS 
+		MySQL, PostgreSQL
 
-	einfache Konfiguration
+%page
+%font "standard"
+
+Erwartungen
+
+&small	Sicherheit, Stabilität, Performance
+
+&small	KISS, Interoperabilität
+
+&small	einfache/flexible Konfiguration
+
+&small	aktive Entwicklung
+
+&small	Support durch Mailingliste(n)
+
+%page
+
+Bewertung
+		
+	Struktur
+		Vergleich mit BIND
+
+	Konfiguration
+
+	Integration
 
 %page
 
 BIND vs MyDNS
 
 # Neustart nach Änderung
-	Textdateien  <=> SQL
+&small	Backends
+		Textdateien  <=> SQL
 
 # per Zone
 # Zonentransfers
 # Seriennummern
-	Primary/Secondary <=> Primary
+&small	Nameserver
+		Primary/Secondary <=> Primary
 
-	rekursiv     <=> nicht rekursiv
+&small	Dienste
+		rekursiv <=> nicht rekursiv
 
-	umfangreich  <=> minimal
+&small	Funktionsumfang
+		groß  <=> minimal
 
 %page 
 
@@ -82,16 +119,44 @@ Backends
 
 	SQL
 		Echtzeitauflösung
+		keine Seriennummern
 
+%page
+# refresh:
+# retry:
+# expire:
+# minimum:
+
+BIND Zonendatei
+
+%font "typewriter"
+&litsmall $TTL 86400
+&litsmall @	IN SOA ns1.first-ns.de. postmaster.robot.first-ns.de. (
+&litsmall		2005112500     ; serial
+&litsmall		14400          ; refresh
+&litsmall		1800           ; retry
+&litsmall		604800         ; expire
+&litsmall		86400 )        ; minimum
+&litsmall 
+&litsmall @                IN	NS	robotns2.second-ns.de.
+&litsmall @                IN	NS	ns1.first-ns.de.
+&litsmall 
+&litsmall @                IN	A	213.239.219.101
+&litsmall www              IN	A	213.239.219.101
+&litsmall mail              IN	CNAME	www
+&litsmall @                IN	MX 10	mail
 
 %page
 
 Tabellen
+# Start of Authority
 
 	soa (Zonen/Domains)
 		mysql.com.
 		linuxia.de.
 		de.mysql.com.
+
+# Resource Records
 
 	rr (Daten)
 		A       213.136.52.29
@@ -99,44 +164,81 @@ Tabellen
 		MX      10 mailgate.mysql.com.
 		
 %page
+%charset "iso8859-1"
 # Domains/Zonen siehe wikipedia
+# refresh: Slave Servers
+# retry: Slave Servers (wait)
+# expire: Slave Servers (expire zone)
 
 soa: Zonen
 
-	id 	
-		Schlüssel
+&small	id 	
+		Zonenschlüssel
 
-	origin 
+&small	origin 
 		Zonenname (mysql.com.), Wurzel
 
-	ns, mailbox, serial
+&small	ns, mailbox, serial
 
-	refresh, retry, expire
-	minimum, ttl
-		RFC 1537
+&small	minimum, ttl
+&small	refresh, retry, expire
+		Voreinstellungen nach RFC 1537
 
 %page
+%charset "iso8859-1"
 # resource records
 
 rr: Zonendaten
 
-	id 
-		Schlüssel
+&small	id, zone
+		
+&small  name
+		Subdomain
 
-	zone
-		Schlüssel für Zone
-
-	type
+&small	type
 		A, CNAME, MX, NS, PTR, TXT		
+
+&small	data, aux, ttl
 
 %page
 
-Beispiel
+Zone anlegen
 
 &callprog insert into soa (origin) values ('mysql.com.');
+
 &callprog insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.29');
+
 &callprog insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.82');
 
+%page
+
+Round Robin
+
+&callprog insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.29');
+
+&callprog insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.82');
+
+%page
+
+Loadbalancing
+
+&callproggy insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.29');
+
+&callproggy insert into rr (zone, name, type, data) values (1, 'www', 'A', '213.136.52.82');
+
+&callprog update rr set aux = 5 where id = 1;
+
+&callprog update rr set aux = 10 where id = 2;
+
+
+%page
+%charset "iso8859-1"
+
+Fazit Struktur
+
+	Echtzeitauflösung
+
+	einfache Datenstruktur
 
 ##
 ## INSTALLATION
@@ -146,14 +248,14 @@ Beispiel
 
 Installation
 
-	Compile
+	Programme bauen
 		./configure && make && make install
 
 	Datenbank anlegen
 		mysqladmin create mydns
 		mydns --create-tables | mysql mydns
 
-	Konfiguration
+	Konfiguration anlegen
 		mydns --dump-config > /etc/mydns.conf
 
 ##
@@ -162,38 +264,49 @@ Installation
 
 %page
 
-Konfiguration
+Konfiguration Datenbank
 
-	Datenbank
-&litsmall database=mydns
-&litsmall db-host=localhost
-&litsmall db-user=racke
-&litsmall db-password=mysecret
+&litbig database = mydns
+&litbig db-host = localhost
+&litbig db-user = racke
+&litbig db-password = mysecret
 
-	Dämon
-&litsmall user = nobody
-&litsmall group = nogroup
-&litsmall listen = *
+%page
+%charset "iso8859-1"
 
-	Logging
-&litsmall log = LOG_DAEMON
-&litsmall pidfile = /var/run/mydns.pid
+Konfiguration Dämon
+
+&litbig user = nobody
+&litbig group = nogroup
+&litbig listen = *
+
+&litbig log = LOG_DAEMON
+&litbig pidfile = /var/run/mydns.pid
 
 %page
 
-MyDNS und Replikation
+Caching
 
-	MySQL Master/Slave
+&small	Zone Cache
 
-	Selektive Replikation
+&litbig zone-cache-size = 2048
+&litbig zone-cache-expire = 60
+
+&small	Reply Cache
+
+&litbig reply-cache-size = 2048
+&litbig reply-cache-expire = 30
 
 %page
+%charset "iso8859-1"
 
-Round Robin
+Fazit Konfiguration
 
-%page
+&grey	Echtzeitauflösung
 
-Loadbalancing
+&grey	einfache Datenstruktur
+
+	einfache Konfiguration
 
 ##
 ## INTEGRATION
@@ -224,43 +337,125 @@ Secondary Nameserver
 
 %page
 
-Replikation
+MySQL Replikation
 
-	Masterserver, mehrere Slaveserver
+	Primary: MySQL Master
+
+	Secondary: MySQL Slave
+
+	Selektive Replikation
+
+%page
+%charset "iso8859-1"
+
+Logging, ID, Zugriff
+
+	binäres Logging einschalten
+		SHOW MASTER STATUS
+
+	Server-ID
+		SHOW VARIABLES LIKE 'server_id'
+		server_id explizit angeben
+
+	Slave-Zugriff
+		GRANT REPLICATION SLAVE ON *.*
+		    TO 'german'@'slave.mysql.com' IDENTIFIED BY 'mysecret';
 
 %page
 
+Slave-Konfiguration
+
+&litgrey	skip_slave_start  
+&litbig	master_host=master.mysql.com
+&litbig	master_user=german
+&litbig	master_password=mysecret
+&litbig	replicate_do_table=mydns.rr
+&litbig	replicate_do_table=mydns.soa
+&litbig	replicate_wild_ignore_table=mysql.%
+
+%page
+%charset "iso8859-1"
+
+Snapshot
+
+	Snapshot
+		FLUSH TABLE WITH READ LOCK
+		tar czf /tmp/mydns.tgz /var/lib/mysql/mydns/{soa,rr}*
+		SHOW MASTER STATUS
+
+&litsmall +---------------+----------+--------------+------------------+
+&litsmall | File          | Position | Binlog_do_db | Binlog_ignore_db |
+&litsmall +---------------+----------+--------------+------------------+
+&litsmall | mysql-bin.129 | 263      |              |                  |
+&litsmall +---------------+----------+--------------+------------------+
+&litsmall 1 row in set (0.00 sec)
+
+		UNLOCK TABLES
+
+%page
+%charset "iso8859-1"
+
+Slave aktivieren
+
+	MySQL neu starten
+
+	Binäre Logs lesen
+		CHANGE MASTER TO master_log_file = 'mysql-bin.129', 
+			master_log_pos = 263;
+
+	Slave starten
+		START SLAVE
+ 
+%page
+%charset "iso8859-1"
+
 Administration
 
-	phpmyadmin
+&small	phpmyadmin
 
-	admin.php
+&small	admin.php
 
-	MyDNSConfig 
+&small	MyDNSConfig 
 		http://www.mydnsconfig.org/
 
-	mydns_admin
+&small	mydns_admin
 		http://groovis.net/projects/mydns_admin.html
 
-	eigenständige Lösung
+&small	eigenständige Lösung
 
 %page
 
 Export/Import
 
-	Zonentransfers
-
 	mydnsimport
-		mydnsimport --axfr=bind.example.com example.com example.net
-		mydnsimport --axfr=bind.example.com 1.168.192.in-addr.arpa
+&callprog		mydnsimport --axfr=bind.example.com example.com example.net
+&callprog		mydnsimport --axfr=bind.example.com 1.168.192.in-addr.arpa
 
 	mydnsexport
 		Konfiguration für BIND und MyDNS	
 
+%page
+%charset "iso8859-1"
+%font "standard"
+
+Fazit Integration
+
+&smallgrey	Echtzeitauflösung
+
+&smallgrey	einfache Datenstruktur
+
+&smallgrey	einfache Konfiguration
+
+&small	einfache Administration
+
+&small	Integration
 
 %page
 
 Abspann
+
+	Web
+		http://mydns.bboy.net/
 
 	Folien
 		http://www.linuxia.de/Presentations/MyDNS/
