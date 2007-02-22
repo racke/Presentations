@@ -20,7 +20,9 @@
 %tab lit size 5,    prefix "    ", font "typewriter"
 %tab litbig fore "black", size 5,    prefix "          ", font "typewriter"
 %tab litgrey fore "grey", size 5,    prefix "      ", font "typewriter"
-%tab litsmall size 3, prefix "         ", font "typewriter"
+%tab litnorm fore "black", size 4, prefix "            ", font "typewriter"
+%tab litnorm1 fore "black", size 4, prefix "                ", font "typewriter"
+%tab litsmall size 3, prefix "            ", font "typewriter"
 %tab litsmall1 size 3, prefix "           ", font "typewriter"
 %tab litsmall2 size 3, prefix "             ", font "typewriter"
 %tab intro fore "blue", size 9, font "standard", center
@@ -52,45 +54,56 @@
 ##
 
 %page
+%charset "iso8859-1"
 %font "standard"
 
 Überblick
 
 	Module
+		Net::SMTP
+		Mail::IMAPClient
+		ClamAV::Client
+		Mail::SpamAssassin
 
 	Szenarien
+		Malware
+		Bayes
 
 %page
+%charset "iso8859-1"
 %font "standard"
 
 Mailversand mit Net::SMTP
 
 	Verbindungsaufbau
-&litsmall use Net::SMTP;
-&litsmall my $smtp = new Net::SMTP ('linuxia.de');
+&litnorm use Net::SMTP;
+&litnorm my $smtp = new Net::SMTP ('linuxia.de');
+
+	Umschlag
+&litnorm $smtp->mail('pws@linuxia.de');
+&litnorm $smtp->to('racke@linuxia.de');
 
 %page
+%charset "iso8859-1"
 %font "standard"
 
 Mailversand mit Net::SMTP
 
-	Versand
-&litsmall $smtp->mail($from);
-&litsmall $smtp->to($to);
-
-&litsmall $smtp->data();
-&litsmall $smtp->datasend(<<EOF);
+	Daten
+&litnorm $smtp->data();
+&litnorm $smtp->datasend(<<EOF);
 &litsmall To: racke@linuxia.de
 &litsmall Subject: Hello world
 
 &litsmall Welcome to Net::SMTP.
-&litsmall EOF
+&litnorm EOF
+&litnorm $smtp->dataend();
 
-&litsmall $smtp->dataend();
-
-&litsmall $smtp->quit();
+	Verbindungsabbau
+&litnorm $smtp->quit();
 
 %page
+%charset "iso8859-1"
 %font "standard"
 
 Mail::IMAPClient
@@ -103,9 +116,10 @@ Mail::IMAPClient
 &litsmall              User => 'racke@linuxia.de',
 &litsmall              Password => 'mysecret');
 
-&litsmall my $client = new Mail::IMAPClient (%params);
+&litsmall my $imap = new Mail::IMAPClient (%params);
 
 %page
+%charset "iso8859-1"
 %font "standard"
 
 Mail::IMAPClient
@@ -121,7 +135,7 @@ Mail::IMAPClient
 &litsmall              User => 'racke@linuxia.de',
 &litsmall              Password => 'mysecret');
 
-&litsmall my $client = new Mail::IMAPClient (%params);
+&litsmall my $imap = new Mail::IMAPClient (%params);
 
 %page
 %charset "iso8859-1"
@@ -130,8 +144,15 @@ Mail::IMAPClient
 Emails abrufen
 
 	Ordner auswählen
+&litnorm $imap->select('INBOX');
 
 	Suche durchführen
+&litnorm @msgs = $imap->search('ALL');
+
+	Emails abholen
+&litnorm for my $msgno (@msgs) {
+&litnorm1 $message = $imap->message_string($msgno);
+&litnorm }
 
 %page
 %charset "iso8859-1"
@@ -155,10 +176,9 @@ Emails verschieben
 ClamAV::Client
 
 	Verbindungsaufbau
-
-&litbig use ClamAV::Client;
-&litbig my $scanner = ClamAV::Client;
-&litbig $scanner->ping();
+&litnorm use ClamAV::Client;
+&litnorm my $scanner = ClamAV::Client;
+&litnorm $scanner->ping();
 
 %page
 %charset "iso8859-1"
@@ -166,6 +186,10 @@ ClamAV::Client
 
 Mail::SpamAssassin
 
+	Verbindungsaufbau
+		-
+
+	
 &litbig use Mail::SpamAssassin;
 
 	keine Verbindung zum Dämon
