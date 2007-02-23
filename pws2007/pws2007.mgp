@@ -109,14 +109,15 @@ Mailversand mit Net::SMTP
 %charset "iso8859-1"
 %font "standard"
 
-Hinweise zu Net::SMTP
+Hinweise
 
 	dynamische IP
 		Port 25 gesperrt
 		Score/Block
-
+	Header
+		Datum
 	SMTP AUTH, SSL
-
+		Net::SMTP::TLS
 	MIME
 		MIME::Lite
 
@@ -203,6 +204,35 @@ Emails verschieben
 &litnorm 100 UID COPY 21,24,43,46,65 INBOX.Junk
 &litnorm 101 UID store 21,24,43,46,65 +FLAGS.SILENT (\\Deleted)
 &litnorm 102 expunge
+
+%page 
+%charset "iso8859-1"
+%font "standard"
+
+Emails suchen
+
+	Betreff
+&litnorm my @msgs = $imap->search('SUBJECT',
+&litnorm1 $imap->Quote('Workshop');
+
+	Kopfzeile
+&litnorm my @msgs = $imap->search('HEADER', 
+&litnorm1 'List-ID',
+&litnorm1 $imap->Quote('IMAP'));
+
+%page
+%charset "iso8859-1"
+%font "standard"
+
+Hinweise
+
+	Automatischer Aufruf von IMAP-Befehlen
+		proprietäre/neue Erweiterungen
+		Typos
+
+	Suche
+		beschränkter Umfang
+		Zeichensatz
 
 %page
 %charset "iso8859-1"
@@ -299,7 +329,7 @@ Szenarios
 %charset "iso8859-1"
 %font "standard"
 
-Kontrolle auf Malware
+Malware
 
 	aktuellere Datenbank
 
