@@ -4,11 +4,11 @@
 %deffont "standard" tfont "verdana.ttf"
 %deffont "typewriter" tfont "courbd.ttf"
 %default 1 vgap 0, fore "blue", back "white", font "standard", center
-%default 2 fore "blue", back "white", font "standard"
+%default 2 vgap 0, fore "blue", back "white", font "standard"
 %default 3 size 5, vgap 10, fore "black", back "white", font "standard", left
-%default 4 fore "black", back "white", font "standard", left
-%tab 1 fore "black", size 6, vgap 30,  prefix "    ", font "standard", left, icon box "red" 30
-%tab 2 size 4, vgap 25,  prefix "           "
+%default 4 fore "black", vgap 10, back "white", font "standard", left
+%tab 1 fore "black", size 6, vgap 25,  prefix "    ", font "standard", left, icon box "red" 30
+%tab 2 size 4, vgap 20,  prefix "           "
 %tab 3 size 3,   prefix "                   "
 %tab one_fit size 6, vgap 40,  prefix "    ", icon box "red" 30
 %tab two_fit size 4, vgap 10,  prefix "           "
@@ -23,9 +23,9 @@
 %tab litnorm fore "black", size 4, prefix "            ", font "typewriter"
 %tab litnorm1 fore "black", size 4, prefix "                ", font "typewriter"
 %tab litnorm2 fore "black", size 4, prefix "                             ", font "typewriter"
-%tab litsmall size 3, prefix "                ", font "typewriter"
-%tab litsmall1 size 3, prefix "           ", font "typewriter"
-%tab litsmall2 size 3, prefix "             ", font "typewriter"
+%tab litsmall size 3, prefix  "                ", font "typewriter"
+%tab litsmall1 size 3, prefix "                    ", font "typewriter"
+%tab litsmall2 size 3, prefix "                        ", font "typewriter"
 %tab intro fore "blue", size 9, font "standard", center
 %tab intro2 size 6, font "standard", center
 %tab centersmall size 4, font "standard", center
@@ -69,6 +69,7 @@
 
 	Szenarien
 		Malware
+		Blacklists
 		Bayes
 
 %page
@@ -113,6 +114,8 @@ Hinweise zu Net::SMTP
 	dynamische IP
 		Port 25 gesperrt
 		Score/Block
+
+	SMTP AUTH, SSL
 
 	MIME
 		MIME::Lite
@@ -191,6 +194,8 @@ Emails löschen
 
 Emails verschieben
 
+	Emails verschieben
+
 &litnorm $imap->select('INBOX');
 &litnorm $imap->move('INBOX.Junk', [21,24,43,46,65]);
 &litnorm $imap->expunge();
@@ -222,7 +227,6 @@ ClamAV::Client
 ClamAV::Client
 
 	Dateien prüfen
-
 &litnorm	my ($file, $result) = $scanner->scan_path($path);
 
 &litnorm		if ($result) {
@@ -230,6 +234,10 @@ ClamAV::Client
 &litnorm		} else {
 &litnorm1			print "$0: path $path OK\\n";
 &litnorm		}
+
+	Daten prüfen
+&litnorm my $message = $imap->message_string($msgno);
+&litnorm my $result = $scanner->scan_scalar(\\$message);
 
 %page
 %charset "iso8859-1"
@@ -257,8 +265,6 @@ Mail::SpamAssassin
 &litnorm $message = $imap->message_string($msgno);
 &litnorm $samsg = $sa->parse($message);
 
-		=> Mail::SpamAssassin::Message
-
 %page
 %charset "iso8859-1"
 %font "standard"
@@ -267,6 +273,16 @@ Mail::SpamAssassin
 
 	Email prüfen
 
+&litnorm $status = $sa->check($samsg);
+&litnorm $num = $status->get_score();
+&litnorm $names = $status->get_names_of_tests_hit();
+
+&litnorm if ($status->is_spam()) {
+&litnorm1    print "SPAM ($num), Treffer: $names\\n";
+&litnorm } else {
+&litnorm1    print "HAM ($num)\\n";
+&litnorm }
+
 %page
 %charset "iso8859-1"
 %font "standard"
@@ -274,6 +290,10 @@ Mail::SpamAssassin
 Szenarios
 
 	Malware
+
+	Blacklists
+
+	Bayes
 
 %page 
 %charset "iso8859-1"
@@ -296,32 +316,129 @@ Kontrolle auf Malware
 
 Malware
 
+	Emails ausfiltern
 &litsmall $imap->select('INBOX');
-
 &litsmall @msgs = $imap->search('SUBJECT', $imap->Quote('Rechnung'));
 
+	Emails prüfen
 &litsmall for my $msgno (@msgs) {
-&litsmall    $message = $imap->message_string($msgno);
+&litsmall1    $message = $imap->message_string($msgno);
+&litsmall1    $result = $scanner->scan_scalar(\\$message);
 
-&litsmall    $result = $scanner->scan_scalar(\\$message);
-
-&litsmall    if ($result) {
-&litsmall        print "INFECTED: $result\\n";
-&litsmall        push(@badmsgs, $msgno);
-&litsmall    } else {
-&litsmall        print "OK\\n";
-&litsmall    }
+&litsmall1    if ($result) {
+&litsmall2        print "INFECTED: $result\\n";
+&litsmall2        push(@badmsgs, $msgno);
+&litsmall1    } else {
+&litsmall2        print "OK\\n";
+&litsmall1    }
 &litsmall  }
+
+%page
+%charset "iso8859-1"
+%font "standard"
+
+Malware
+
+	Emails löschen
+
+&litnorm $imap->delete_message(@badmsgs);
+&litnorm $imap->expunge();
+
+%page
+
+Blacklists
+
+	IP-Adressen,Domainnamen
+
+	Abfrage mit DNS: DNSBL, URIDNSBL
+
+%page
+
+Obfuscation 
+
+&litnorm Hi,
+
+&litnorm VI_zAGRA $3, 35
+&litnorm VA_zLIUM $1, 20
+&litnorm AM_zBIEN $2, 90
+&litnorm CI_zALIS $3, 75
+&litnorm XA_zNAX  $1, 45
+
+&litnorm http://www.tod*rx.com 
+
+&litnorm Remove "*" to make the link working!
+
+%page
+%charset "iso8859-1"
+%font "standard"
+
+De-Obfuscation
+
+&litnorm for my $uri ($status->get_uri_list()) {
+&litnorm1	my $uri_orig = $uri;
+&litnorm1	if ($uri =~ s/\\*//) {
+&litnorm2     # found obfuscated URL
+&litnorm2     $$msgref =~ s/$uri_orig/$uri/;
+&litnorm2     $changes++;
+&litnorm1	}
+&litnorm  }
+
+%page
+%charset "iso8859-1"
+%font "standard"
+
+Obfuscation reloaded
+
+&litnorm Hi,
+
+&litnorm Via_aagra $3. 35
+&litnorm Va_aalium $1. 25
+&litnorm Cia_aalis $3. 75
+&litnorm Xan_nnax
+&litnorm Som_mma
+
+&litnorm http://www. kedrx .com
+
+&litnorm Remove spaces in the above link
+
+%page
+%charset "iso8859-1"
+%font "standard"
+
+Bayes
+
+	heuristische Verfahren
+
+	Corpus
+
+	False Positives
+		
+	False Negatives
+
+%page
+%charset "iso8859-1"
+%font "standard"
+
+Bayes
+
+&litnorm $imap->select('INBOX.NOSPAM');
+
+&litnorm @msgs = $imap->search('ALL');
+
+&litnorm $sa->init_learner({wait_for_lock => 1, learn_to_journal => 1});
+
+&litnorm for $msgno (@msgs) {
+&litnorm1    $message = $imap->message_string($msgno);
+&litnorm1	$samsgref = $sa->parse($message);
+&litnorm1	$status = $sa->learn($samsgref, undef, 1);
+&litnorm }
 
 %page
 
 Abspann
 
-	Web
-		http://mydns.bboy.net/
-
 	Folien
-		http://www.linuxia.de/Presentations/MyDNS/
+		http://www.linuxia.de/talks/pws2007/
 
 	Email
 		racke@linuxia.de
