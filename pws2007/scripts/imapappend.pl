@@ -5,12 +5,13 @@ use warnings;
 
 use IO::Socket::SSL;
 use Mail::IMAPClient;
+use PWSConfig;
 
 my ($cref, $conn, $imap);
 
 $cref = PWSConfig::setup_vars (required => 'server,user,password,folder');
 
-unless ($conn = new IO::Socket::SSL("$cref->{server}:imaps") {
+unless ($conn = new IO::Socket::SSL("$cref->{server}:imaps")) {
 	die "$0: imaps connection to $cref->{server} failed: $!\n";
 }
 							
