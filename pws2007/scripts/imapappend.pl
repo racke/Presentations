@@ -38,21 +38,6 @@ for (sort(@folders)) {
 	print "$_ is a folder with ", $imap->message_count($_) || 0, " messages.\n";
 }
 
-
-use Mail::IMAPClient;
-
-my $imapclient = new Mail::IMAPClient (Server => 'localhost',
-									   User => 'racke@xxx.exp',
-									   Password => 'foobar');
-
-#$imapclient->login();
-
-unless ($imapclient) {
-	die "$0: Failed to connect\n";
-}
-
-print $imapclient->folders();
-
 my $msg = <<EOF;
 From: racke\@linuxia.de
 To: racke\@xxx.exp
@@ -61,7 +46,7 @@ Subject: Hello world
 Hello everyone.
 EOF
 
-my $uid = $imapclient->append('INBOX', $msg);
+my $uid = $imap->append('INBOX', $msg);
 
 if ($uid) {
 	print "Appended message with uid $uid\n";
