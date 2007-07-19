@@ -5,9 +5,10 @@ use warnings;
 
 use IO::Socket::SSL;
 use Mail::IMAPClient;
+use Mail::SpamAssassin;
 use PWSConfig;
 
-my ($cref, $imap);
+my ($cref, $imap, $sa);
 
 $cref = PWSConfig::setup_vars (required => 'server,user,password');
 
@@ -29,6 +30,9 @@ unless ($imap->login()) {
 	die "Error: " . $imap->LastError() . "\n";
 }
 
+# setup SA interface
+$sa = new Mail::SpamAssassin;
+
 # defaults
 $cref->{folder} ||= 'INBOX';
 $cref->{searchtype} ||= 'ALL';
@@ -42,8 +46,22 @@ unless ($imap->select($cref->{folder})) {
 my @msgs = $imap->search('HEADER', $cref->{searchtype},
 						 $imap->Quote($cref->{searchtoken}));
 
+my ($message, $samsg, $status, $num, $names);
+
 for my $msgno (@msgs) {
 	print "$msgno: " . $imap->subject($msgno) . "\n";
+	$message = $imap->message_string($msgno);
+	$samsg = $sa->parse($message);
+
+	$status = $sa->check($samsg);
+	$num = $status->get_score();
+	$names = $status->get_names_of_tests_hit();
+
+	if ($status->is_spam()) {
+		print "SPAM ($num), Treffer: $names\n";
+	} else {
+		print "HAM ($num)\n";
+	}
 }
 
 
