@@ -55,17 +55,21 @@ my ($subject, $date, $message, $result);
 # determine messages
 my (@msgs, @badmsgs);
 
-if ($cref->{subject}) {
+if ($cref->{header}) {
+	@msgs = $imap->search('HEADER', $cref->{header},
+						  $imap->Quote($cref->{searchtoken}));
+	print "Number of messages: " . scalar(@msgs) . "\n";
+} elsif ($cref->{subject}) {
 	@msgs = $imap->search('SUBJECT', $imap->Quote($cref->{subject}));
 } else {
 	@msgs = $imap->search('ALL');
 }
 
-for my $msgno (@msgs) {
+for my $msgno (reverse(@msgs)) {
 	$subject = $imap->subject($msgno) || '';
 	$date = $imap->date($msgno) || '';
 
-	print '#', $msgno, ": $date -- $subject\n";
+#	print '#', $msgno, ": $date -- $subject\n";
 
 	# retrieve message
 	$message = $imap->message_string($msgno);
@@ -73,21 +77,39 @@ for my $msgno (@msgs) {
 	$result = $clam->scan_scalar(\$message);
 
 	if ($result) {
+		print '#', $msgno, ": $date -- $subject\n";
 		print "$0: INFECTED: $result\n";
-		push (@badmsgs, $msgno);
+		print "MOVE: $cref->{move}\n";
+		
+		if ($cref->{move}) {
+			# move message immediately
+			unless ($imap->move($cref->{move}, $msgno)) {
+				warn "$0: Failed to move message: " . $imap->LastError();
+			}
+			my @results = $imap->Results();
+			print "Results for MOVE: " . join(@results);
+		} else {
+			push (@badmsgs, $msgno);
+		}
 	} else {
-		print "$0: OK\n";
+#		print "$0: OK\n";
 	}
 }
+
+$imap->expunge($cref->{folder});
+my @results = $imap->Results();
+print "Results for EXPUNGE: " . join(@results);
+
+exit 0;
 
 # delete "bad" messages
 
 if (@badmsgs) {
 	my @results;
-	
-	unless ($imap->delete_message(@badmsgs)) {
-		warn "$0: Failed to delete messages: " . $imap->LastError() . "\n";
-	}
+
+#	unless ($imap->delete_message(@badmsgs)) {
+#		warn "$0: Failed to delete messages: " . $imap->LastError() . "\n";
+#	}
 
 	@results = $imap->Results();
 	print "Results for DELETE: " . join("\n", @results) . "\n";
