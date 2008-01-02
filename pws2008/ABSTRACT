@@ -1,0 +1,4 @@
+- REST
+
+/usr/bin/rt
+http://search.cpan.org/~dmitri/RT-Client-REST-0.31/lib/RT/Client/REST.pm
