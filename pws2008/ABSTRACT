@@ -1,4 +1,16 @@
-- REST
+Request Tracker (RT) ist ein in Perl programmiertes Trouble-Ticket-System. Neben großen Organisationen wie die NASA und dem MIT wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet.
 
-/usr/bin/rt
-http://search.cpan.org/~dmitri/RT-Client-REST-0.31/lib/RT/Client/REST.pm
+Tickets können interaktiv im Browser oder durch Emails bearbeitet werden. Um typische Aufgaben automatisieren zu können, bietet RT sowohl eine Perl API und als auch eine REST-Schnittstelle an. Während für die API der größere Funktionsumfang spricht, erlaubt die REST-Schnittstelle Kommunikation mit Installationen auf anderen
+Rechnern und benötigt keine Zugriffsrechte auf die Konfigurationsdatei, die sensible Informationen wie den Datenbankbenutzer und das Datenbankpasswort enthält.
+
+Für meine Projekte (Bugtracking-System für Interchange und Zusammenfassung der Informationen von mehreren RT-Systeme meiner Kunden) habe ich den Weg über die REST-Schnittstelle gewählt.
+
+Die REST-Schnittstelle erlaubt den Zugriff auf die Tickets, deren Transaktionen und alle zugehörigen Dateien (Attachments). Neben
+dem Abruf aller Informationen zu einem Ticket und der Suche können
+verschiedene Operationen durchgeführt werden, um Tickets zu bearbeiten. Darunter fällt das Hinzufügen von Kommentaren, Zusammenfassen, Referenzierung und die Übernahme von Tickets.
+
+Der Vortrag erläutert die Grundlagen von REST, die verfügbaren Funktionen der Schnittstelle von RT und die Programmierung mit
+Hilfe von LWP (libwww-perl).
+
+
+ 
