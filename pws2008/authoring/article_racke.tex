@@ -1,0 +1,56 @@
+%% -*- mode: latex; -*-
+
+\section{Automatisierung und Integration von Request Tracker Systemen mittels REST-Schnittstelle}
+
+\subsection*{Autor}
+Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
+
+\subsection*{Kurzbiographie}
+Stefan Hornburg arbeitet seit 1998 als Open Source Consultant mit den
+Schwerpunkten Linux, Perl und Interchange. Als Captain der ICDEVGROUP leitet
+er die Entwicklergruppe von Interchange und ist als Debian Maintainer für
+verschiedene Serverpakete verantwortlich (u.a. Courier, Pure-FTPd und
+Sympa). Er betreut Mailserver für seine Kunden seit 1999.
+
+\subsection*{Einführung}
+Request Tracker (RT) ist ein in Perl programmiertes
+Trouble-Ticket-System. Neben großen Organisationen wie die NASA und dem MIT
+wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet. 
+
+Tickets können interaktiv im Browser oder durch Emails bearbeitet werden. Um
+typische Aufgaben automatisieren zu können, bietet RT sowohl eine Perl API
+und als auch eine REST-Schnittstelle an. Während für die API der größere
+Funktionsumfang spricht, erlaubt die REST-Schnittstelle Kommunikation mit
+Installationen auf anderen Rechnern und benötigt keine Zugriffsrechte auf
+die Konfigurationsdatei, die sensible Informationen wie den
+Datenbankbenutzer und das Datenbankpasswort enthält. 
+
+Für meine Projekte (Bugtracking-System für Interchange und Zusammenfassung
+der Informationen von mehreren RT-Systeme meiner Kunden) habe ich den Weg
+über die REST-Schnittstelle gewählt. 
+
+Die REST-Schnittstelle erlaubt den Zugriff auf die Tickets, deren
+Transaktionen und alle zugehörigen Dateien (Attachments). Neben 
+dem Abruf aller Informationen zu einem Ticket und der Suche können
+verschiedene Operationen durchgeführt werden, um Tickets zu
+bearbeiten. Darunter fällt das Hinzufügen von Kommentaren, Zusammenfassen,
+Referenzierung und die Übernahme von Tickets. 
+
+Der Vortrag erläutert die Grundlagen von REST, die verfügbaren Funktionen
+der Schnittstelle von RT und die Programmierung mit Hilfe von LWP (libwww-perl).
+
+\subsection{\WSIndex{REST}}
+% cut & waste from Wikipedia
+Der Begriff Representational State Transfer (REST) bezeichnet einen Softwarearchitekturstil für verteilte Hypermedia-Informationssysteme. Während die Architektur des World Wide Webs durch den URI Standard und das HTTP Protokoll beschrieben werden kann, diente der REST Architekturstil seit 1994 als Richtlinie für die Weiterentwicklung der bestehenden Standards.
+
+REST stammt aus der Dissertation von Roy Fielding, in welcher der Erfolg des
+World Wide Webs auf bestimmte Eigenschaften der verwendeten Mechanismen und
+Protokolle (z.B. HTTP) zurückgeführt wird. Roy Fielding ist einer der
+Hauptautoren der Spezifikation des Hypertext-Transfer-Protokolls (HTTP).
+% cut & waste from Wikipedia
+
+
+\begin{thebibliography}{99}
+\end{thebibliography}
+
+
