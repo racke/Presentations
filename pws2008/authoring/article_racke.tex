@@ -1,3 +1,6 @@
+% CLONE TICKETS !!
+
+
 %% -*- mode: latex; -*-
 
 \section{Automatisierung und Integration von Request Tracker Systemen mittels REST-Schnittstelle}
@@ -49,8 +52,57 @@ Protokolle (z.B. HTTP) zurückgeführt wird. Roy Fielding ist einer der
 Hauptautoren der Spezifikation des Hypertext-Transfer-Protokolls (HTTP).
 % cut & waste from Wikipedia
 
+\subsection{Funktionen der REST-Schnittstelle}
+Folgende Objekte können angesprochen werden:
+
+\begin{itemize}
+\item Tickets (ticket)
+\item Benutzer (user)
+\end{itemize}
+
+Folgende Aktionen können ausgeführt werden:
+
+\begin{itemize}
+\item show
+\end{itemize}
+
+Beispiele:
+\begin{verbatim}
+erebus:~# rt show user/racke
+URI: http://rt.icdevgroup.org/REST/1.0/show
+id: user/22
+Name: racke
+Password: ********
+EmailAddress: racke@linuxia.de
+RealName: Stefan Hornburg
+NickName: Racke
+Lang: en
+\end{verbatim}
+
+Gleichwertig ist der Befehl rt show user/32
+
+\subsection{Aufbau der URL}
+\begin{verbatim}
+http://support.linuxia.de/rt/REST/1.0/show
+\end{verbatim}
+
+\subsection{Authentifizierung}
+
+\subsection{Fehlerbehandlung}
+Fehlerhafte Eingabeparameter werden von RT im \emph{Body} der HTTP-Antwort
+quittiert:
+\begin{verbatim}
+RT/3.6.4 400 Bad Request
+ 
+No objects specified.
+\end{verbatim}
+
+% liste der möglichen Fehler
 
 \begin{thebibliography}{99}
+\bibitem{racke:restped} Representational State Transfer
+%\texttt{http://de.wikipedia.org/wiki/Representational_State_Transfer}
+\bibitem{racke:restfulws} RESTful Web Services
 \end{thebibliography}
 
 
