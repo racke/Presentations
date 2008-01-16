@@ -44,7 +44,7 @@ der Schnittstelle von RT und die Programmierung mit Hilfe von LWP (libwww-perl).
 
 \subsection{Definition von \WSIndex{REST}}
 Der Begriff Representational State Transfer (REST) wurde durch die
-Dissertation von Roy Fielding \cite{racke:fielding} geprägt. Er bezeichnet
+Dissertation von Roy Fielding \cite{racke:fielding} geprägt. REST bezeichnet
 einen Softwarearchitekturstil für verteilte
 Hypermedia-Informationssysteme wie das World Wide Web.
 
@@ -170,7 +170,11 @@ Die Implementierung der HTTP-Kommunikation wird mit dem bekannten Perlmodul
 \WSIndex{LWP::UserAgent} durchgeführt.
 
 \begin{verbatim}
-my $ua = new LWP::UserAgent(agent => "Vend::RT/1.0", env_proxy => 1);
+my ($ua, $req, $res);
+
+$ua = new LWP::UserAgent(agent => "Vend::RT/1.0", env_proxy => 1);
+$req = POST($uri, $data, Content_Type => 'form-data');
+$res = $ua->request($req);
 \end{verbatim}
 
 \subsection{Authentifizierung}
