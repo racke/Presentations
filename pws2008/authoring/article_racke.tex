@@ -13,7 +13,7 @@ Stefan Hornburg arbeitet seit 1998 als Open Source Consultant mit den
 Schwerpunkten Linux, Perl und Interchange. Als Captain der ICDEVGROUP leitet
 er die Entwicklergruppe von Interchange und ist als Debian Maintainer für
 verschiedene Serverpakete verantwortlich (u.a. Courier, Pure-FTPd und
-Sympa). Er betreut Mailserver für seine Kunden seit 1999.
+Sympa).
 
 \subsection*{Einführung}
 Request Tracker (RT) ist ein in Perl programmiertes
@@ -42,22 +42,37 @@ Referenzierung und die Übernahme von Tickets.
 Der Vortrag erläutert die Grundlagen von REST, die verfügbaren Funktionen
 der Schnittstelle von RT und die Programmierung mit Hilfe von LWP (libwww-perl).
 
-\subsection{\WSIndex{REST}}
-% cut & waste from Wikipedia
-Der Begriff Representational State Transfer (REST) bezeichnet einen Softwarearchitekturstil für verteilte Hypermedia-Informationssysteme. Während die Architektur des World Wide Webs durch den URI Standard und das HTTP Protokoll beschrieben werden kann, diente der REST Architekturstil seit 1994 als Richtlinie für die Weiterentwicklung der bestehenden Standards.
+\subsection{Definition von \WSIndex{REST}}
+Der Begriff Representational State Transfer (REST) wurde durch die
+Dissertation von Roy Fielding \cite{racke:fielding} geprägt. Er bezeichnet
+einen Softwarearchitekturstil für verteilte
+Hypermedia-Informationssysteme wie das World Wide Web.
 
-REST stammt aus der Dissertation von Roy Fielding, in welcher der Erfolg des
-World Wide Webs auf bestimmte Eigenschaften der verwendeten Mechanismen und
-Protokolle (z.B. HTTP) zurückgeführt wird. Roy Fielding ist einer der
-Hauptautoren der Spezifikation des Hypertext-Transfer-Protokolls (HTTP).
-% cut & waste from Wikipedia
+Die vier Grundprinzipien von REST sind:
 
-\subsection{Request Tracker}
+\begin{itemize}
+\item Adressierbarkeit, universelle Syntax zur Identifikation von
+  Ressourcen, jede Ressource ist eindeutig durch ihre URI addressierbar
+\item Zustandslosigkeit
+\item Menge von wohldefinierten Operationen, die auf alle Ressourcen
+  angewandt werden können (GET, POST, PUT und DELETE)
+\end{itemize}
 
-Jedes Objekt in RT hat einen Type (\verb/ticket/, \verb/queue/) und eine
-numerische ID.
+Systeme, die Fieldings Prinzipien entsprechend, werden oft as ``RESTful''
+bezeichnet.
+
+%\subsection{Request Tracker}
+%
+%Jedes Objekt in RT hat einen Type (\verb/ticket/, \verb/queue/) und eine
+%numerische ID.
 
 \subsection{REST-Schnittstelle des Request Trackers}
+Die REST-Schnittstelle wird über die URI der RT-Instanz mit der
+Pfadangabe /REST/1.0/ angesprochen, also z.B.:
+
+\begin{verbatim}
+http://support.linuxia.de/rt/REST/1.0/
+\end{verbatim}
 
 \subsubsection{Funktionen}
 Folgende Objekte können angesprochen werden:
@@ -74,6 +89,14 @@ Folgende Aktionen können ausgeführt werden:
 \item show
 \item create
 \item edit
+\end{itemize}
+
+Weitere Parameter sind:
+
+\begin{itemize}
+\item query
+\item orderby
+\item format
 \end{itemize}
 
 \subsubsection{CLI}
@@ -128,22 +151,19 @@ Password: ********
 EmailAddress: racke@linuxia.de
 \end{verbatim}
 
- Nach dem Motto RTSL (Read the Source, Luke) habe ich die
-Kommunikation und Auswertung dort abgeschaut.
-
-
+Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
+Deshalb habe ich den Aufbau der Anfragen und die Auswertung der Antworten
+nach dem Motto RTSL (Read the Source, Luke) aus dem Quellcode des
+Kommandozeilentools abgeleitet.
 
 \subsection{Kommunikation über die REST-Schnittstelle}
 \subsubsection{Aufbau der HTTP-Anfrage}
-Die URL setzt sich zusammen aus der URL der Request Tracker-Instanz, der
-Zeichenkette REST/1.0 und der gewünschten Aktion.
+An die URI der REST-Schnittstelle wird die gewünschte Funktion angehängt,
+alle weiteren Parameter werden im Body der HTTP-Anfrage übergeben.
 
 \begin{verbatim}
 http://support.linuxia.de/rt/REST/1.0/show
 \end{verbatim}
-
-Alle weiteren Parameter werden im Inhalt vom HTTP POST übermittelt. Das
-widerspricht dem Geiste von REST.
 
 \subsection{Implementierung}
 Die Implementierung der HTTP-Kommunikation wird mit dem bekannten Perlmodul
@@ -154,6 +174,7 @@ my $ua = new LWP::UserAgent(agent => "Vend::RT/1.0", env_proxy => 1);
 \end{verbatim}
 
 \subsection{Authentifizierung}
+Die REST-Schnittstelle unterstützt keine HTTP-Authentifizierung.
 
 \subsection{Fehlerbehandlung}
 Fehlerhafte Eingabeparameter werden von RT im \emph{Body} der HTTP-Antwort
@@ -167,9 +188,14 @@ No objects specified.
 % liste der möglichen Fehler
 
 \begin{thebibliography}{99}
+\bibitem{racke:fielding} Fielding, Roy Thomas. 
+\emph{Architectural Styles and Design of Network-Based Software Architectures}.
+University of California, Irvine, 2000.
 \bibitem{racke:restped} Representational State Transfer
 %\texttt{http://de.wikipedia.org/wiki/Representational_State_Transfer}
-\bibitem{racke:restfulws} RESTful Web Services
+\bibitem{racke:restfulws} Leonard Richardson und Sam Ruby.
+\emph{RESTful Web Services}.
+O'Reilly, Sebastopol, California, 2007.
 \end{thebibliography}
 
 
