@@ -52,10 +52,18 @@ Protokolle (z.B. HTTP) zurückgeführt wird. Roy Fielding ist einer der
 Hauptautoren der Spezifikation des Hypertext-Transfer-Protokolls (HTTP).
 % cut & waste from Wikipedia
 
-\subsection{Funktionen der REST-Schnittstelle}
+\subsection{Request Tracker}
+
+Jedes Objekt in RT hat einen Type (\verb/ticket/, \verb/queue/) und eine
+numerische ID.
+
+\subsection{REST-Schnittstelle des Request Trackers}
+
+\subsubsection{Funktionen}
 Folgende Objekte können angesprochen werden:
 
 \begin{itemize}
+\item Queues (queue)
 \item Tickets (ticket)
 \item Benutzer (user)
 \end{itemize}
@@ -64,9 +72,15 @@ Folgende Aktionen können ausgeführt werden:
 
 \begin{itemize}
 \item show
+\item create
+\item edit
 \end{itemize}
 
-Beispiele:
+\subsubsection{CLI}
+Das Kommandozeilentool /usr/bin/rt verwendet die
+REST-Schnittstelle. Zum Beispiel kann man sich die Informationen
+zu einem Benutzer anzeigen lassen:
+
 \begin{verbatim}
 erebus:~# rt show user/racke
 URI: http://rt.icdevgroup.org/REST/1.0/show
@@ -79,11 +93,64 @@ NickName: Racke
 Lang: en
 \end{verbatim}
 
-Gleichwertig ist der Befehl rt show user/32
+Gleichwertig ist der Befehl rt show user/22
 
-\subsection{Aufbau der URL}
+Die HTTP-Abfrage und Antwort
+kann mit der Umgebungsvariable \WSIndex{RTDEBUG} sichtbar gemacht werden:
+
+\begin{verbatim}
+racke@erebus:~$ RTDEBUG=3 rt show -t user racke
+POST http://erebus.linuxia.de/rt/REST/1.0/show
+Content-Length: 77
+Content-Type: multipart/form-data; boundary=xYzZY
+Cookie: RT_SID_rt.linuxia.de.80=78eaf4d45b0e99fa6c05ae82ddb950f4
+
+--xYzZY
+Content-Disposition: form-data; name="id"
+
+user/racke
+--xYzZY--
+HTTP/1.1 200 OK
+Connection: close
+Date: Tue, 15 Jan 2008 14:00:09 GMT
+Server: Apache/2.2.3 (Debian) PHP/5.2.0-8+etch9 mod_ssl/2.2.3 OpenSSL/0.9.8c mod_perl/2.0.2 Perl/v5.8.8
+Content-Type: text/plain; charset=utf-8
+Client-Date: Tue, 15 Jan 2008 14:00:10 GMT
+Client-Peer: 127.0.1.1:80
+Client-Response-Num: 1
+Client-Transfer-Encoding: chunked
+
+RT/3.6.4 200 Ok
+
+id: user/32
+Name: racke
+Password: ********
+EmailAddress: racke@linuxia.de
+\end{verbatim}
+
+ Nach dem Motto RTSL (Read the Source, Luke) habe ich die
+Kommunikation und Auswertung dort abgeschaut.
+
+
+
+\subsection{Kommunikation über die REST-Schnittstelle}
+\subsubsection{Aufbau der HTTP-Anfrage}
+Die URL setzt sich zusammen aus der URL der Request Tracker-Instanz, der
+Zeichenkette REST/1.0 und der gewünschten Aktion.
+
 \begin{verbatim}
 http://support.linuxia.de/rt/REST/1.0/show
+\end{verbatim}
+
+Alle weiteren Parameter werden im Inhalt vom HTTP POST übermittelt. Das
+widerspricht dem Geiste von REST.
+
+\subsection{Implementierung}
+Die Implementierung der HTTP-Kommunikation wird mit dem bekannten Perlmodul
+\WSIndex{LWP::UserAgent} durchgeführt.
+
+\begin{verbatim}
+my $ua = new LWP::UserAgent(agent => "Vend::RT/1.0", env_proxy => 1);
 \end{verbatim}
 
 \subsection{Authentifizierung}
