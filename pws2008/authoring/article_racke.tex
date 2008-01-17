@@ -101,16 +101,17 @@ der Antwort:
 
 \subsubsection{Adressierung}
 Die REST-Schnittstelle wird über die URI der RT-Instanz mit der
-Pfadangabe /REST/1.0/ angesprochen, also z.B.:
+Pfadangabe \verb%/REST/1.0/% angesprochen, also z.B.:
 
 \begin{verbatim}
 http://support.linuxia.de/rt/REST/1.0/
 \end{verbatim}
 
-An diese URI wird der Name der jeweiligen Aktion angehängt:
+Die Adresse der Ressourcen erfolgt durch Anhängen des Objekttyps,
+Objektnamens und der gewünschten Aktion.
 
 \begin{verbatim}
-http://support.linuxia.de/rt/REST/1.0/show
+http://support.linuxia.de/rt/REST/1.0/user/racke/show
 \end{verbatim}
 
 \subsubsection{Nutzung von der Kommandozeile}
@@ -201,7 +202,7 @@ published his definitions of what REST was. It wasn't well understood by
 anybody. 
 \end{quote}
 
-\subsection{Programmierung}
+\subsection{Implementierungsbeispiele}
 Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
 Deshalb habe ich den Aufbau der Anfragen und die Auswertung der Antworten
 nach dem Motto RTSL (Read the Source, Luke) aus dem Quellcode des
@@ -290,6 +291,17 @@ sub parse_object_list {
     }
     return \@list;
 }
+\end{verbatim}
+
+\subsubsection{Integration mit Interchange}
+
+Interchange stellt dem Entwickler eine einfache Erweiterung namens \WSIndex{ITL}
+zur Verfügung.
+
+\begin{verbatim}
+[rt show ticket 12]
+[loop-param Subject]
+[/rt]
 \end{verbatim}
 
 \subsection{Authentifizierung}
