@@ -186,10 +186,20 @@ RealName: Stefan Hornburg
 NickName: Racke
 \end{verbatim}
 
-Die Parameter werden also wie die Daten aus einem HTML-Formular übergeben.
+Die Parameter \verb/id/ und \verb/fields/ werden also wie die Daten aus
+einem HTML-Formular übergeben. Die Einbettung dieser Parameter in die URI
+würde dem Prinzip der Adressierbarkeit besser gerecht werden.
 Für den Parameter \verb/id/ geschieht das unnötigerweise, da die
-REST-Schnittstelle genauso die URI 
-\verb%http://support.linuxia.de/rt/REST/1.0/user/racke/show% akzeptiert.
+REST-Schnittstelle die URI 
+\verb%http://support.linuxia.de/rt/REST/1.0/user/racke/show% klaglos
+akzeptiert.
+
+Folgt man dem Benennungsschema aus \cite{racke:restfulws}, würde die URI
+so aussehen:
+
+\begin{verbatim}
+http://support.linuxia.de/rt/REST/1.0/user/racke/show/id,name,emailaddress,realname,nickname
+\end{verbatim}
 
 \subsubsection{REST-Konformität}
 
@@ -298,20 +308,9 @@ sub parse_object_list {
 }
 \end{verbatim}
 
-\subsubsection{Integration mit Interchange}
-
-Interchange stellt dem Entwickler eine einfache Erweiterung namens \WSIndex{ITL}
-zur Verfügung.
-
-\begin{verbatim}
-[rt show ticket 12]
-[loop-param Subject]
-[/rt]
-\end{verbatim}
-
 \subsection{Authentifizierung}
 Die REST-Schnittstelle unterstützt keine HTTP-Authentifizierung,
-deshalb übergeben wir Benutzername und Passwort 
+deshalb übergeben wir Benutzername und Passwort als Parameter.
 
 \subsection{Fehlerbehandlung}
 Fehlerhafte Eingabeparameter werden von RT im \emph{Body} der HTTP-Antwort
