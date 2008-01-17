@@ -195,6 +195,78 @@ $req = POST($uri, $data, Content_Type => 'form-data');
 $res = $ua->request($req);
 \end{verbatim}
 
+Bei fehlerloser HTTP-Kommunikation liefert die REST-Schnittstelle 
+die gewünschten Daten zurück. Vor dem eigentlichen Inhalt befindet
+sich eine Statuszeile, die ähnlich aufgebaut ist wie die HTTP-Statuszeile:
+
+\begin{verbatim}
+RT/3.6.1 200 Ok
+\end{verbatim}
+
+Ein einzelnes Objekt in der Antwort wird dann wie folgt geparst:
+
+\begin{verbatim}
+sub parse_object {
+    my ($text) = @_;
+    my (@lines, $count, %attr);
+    
+    @lines = split(/\n/, $text);
+
+    # skip empty lines / comments at the beginning
+    $count = @lines;
+    while ($count-- && ($lines[0] !~ /\S/ || $lines[0] =~ /^#/)) {
+        shift(@lines);
+    }
+
+    my $lastname = '';
+    
+    for my $line (@lines) {
+        next unless length($line);
+        
+        # line continuation ?
+        if ($line =~ s/^(\s+)//) {
+            $attr{$lastname} .= "\n$line";
+            next;
+        }
+        my ($name, $value) = split(/:\s*/, $line, 2);
+        $attr{$name} = $value;
+        $lastname = $name;
+    }
+
+    # break up object/id
+    if (exists $attr{id}) {
+        my @frags = split('/', $attr{id});
+
+        if (@frags == 2) {
+            delete $attr{id};
+            $attr{Object} = $frags[0];
+            $attr{ID} = $frags[1];
+        }
+    }
+
+    return \%attr;
+}
+\end{verbatim}
+
+Auflistungen enthalten mehrere Objekte.
+
+\begin{verbatim}
+sub parse_object_list {
+    my ($text) = @_;
+    my (@frags, @list);
+
+    @frags = split(/\n\n--\n\n/, $text);
+    if (@frags == 1 && $frags[0] =~ /No matching results./) {
+        # empty list
+        return [];
+    }
+    for my $frag (@frags) {
+        push (@list, parse_object($frag));
+    }
+    return \@list;
+}
+\end{verbatim}
+
 \subsection{Authentifizierung}
 Die REST-Schnittstelle unterstützt keine HTTP-Authentifizierung.
 
