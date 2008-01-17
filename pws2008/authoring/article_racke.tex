@@ -140,6 +140,44 @@ Requestors: racke@linuxia.de
 Owner: Nobody
 \end{verbatim}
 
+Die HTTP-Abfrage und Antwort 
+kann mit der Umgebungsvariable \WSIndex{RTDEBUG} sichtbar gemacht werden:
+
+\begin{verbatim}
+$ RTDEBUG=3 rt show -t user racke -f id,name,emailaddress,realname,nickname
+POST http://support.linuxia.de/rt//REST/1.0/show
+Content-Length: 175
+Content-Type: multipart/form-data; boundary=xYzZY
+Cookie: RT_SID_support.linuxia.de.80=0df6e85dc77d5ca70908c0bad8a038cd
+
+--xYzZY
+Content-Disposition: form-data; name="fields"
+
+id,name,emailaddress,realname,nickname
+--xYzZY
+Content-Disposition: form-data; name="id"
+
+user/racke
+--xYzZY--
+HTTP/1.1 200 OK
+Connection: close
+Date: Thu, 17 Jan 2008 11:02:05 GMT
+Server: Apache/2.2.3 (Debian) PHP/5.2.0-8+etch9 mod_ssl/2.2.3 OpenSSL/0.9.8c mod_perl/2.0.2 Perl/v5.8.8
+Content-Type: text/plain; charset=utf-8
+Client-Date: Thu, 17 Jan 2008 11:02:29 GMT
+Client-Peer: 85.10.244.99:80
+Client-Response-Num: 1
+Client-Transfer-Encoding: chunked
+
+RT/3.6.1 200 Ok
+
+id: user/22
+Name: racke
+EmailAddress: racke@linuxia.de
+RealName: Stefan Hornburg
+NickName: Racke
+\end{verbatim}
+
 \subsection{Programmierung}
 Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
 Deshalb habe ich den Aufbau der Anfragen und die Auswertung der Antworten
@@ -175,7 +213,7 @@ No objects specified.
 \bibitem{racke:fielding} Fielding, Roy Thomas. 
 \emph{Architectural Styles and Design of Network-Based Software Architectures}.
 University of California, Irvine, 2000.
-\bibitem{racke:restped} Representational State Transfer
+%\bibitem{racke:restped} Representational State Transfer
 %\texttt{http://de.wikipedia.org/wiki/Representational_State_Transfer}
 \bibitem{racke:restfulws} Leonard Richardson und Sam Ruby.
 \emph{RESTful Web Services}.
