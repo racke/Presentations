@@ -113,11 +113,6 @@ An diese URI wird der Name der jeweiligen Aktion angehängt:
 http://support.linuxia.de/rt/REST/1.0/show
 \end{verbatim}
 
-Damit ist die REST-Konformität aber schon am Ende. Es wird für alle
-HTTP-Anfragen die POST-Methode verwendet und weitere Parameter werden
-im Body platziert. Dies verletzt die Prinzipien der 
-Adressierbarkeit und wohldefinierter Ressourcen.
-
 \subsubsection{Nutzung von der Kommandozeile}
 Mit dem Kommandozeilentool \verb%/usr/bin/rt% kann man sich recht gut einen
 Überblick über die Funktionsweise der REST-Schnittstelle verschaffen.
@@ -189,6 +184,22 @@ EmailAddress: racke@linuxia.de
 RealName: Stefan Hornburg
 NickName: Racke
 \end{verbatim}
+
+\subsubsection{REST-Konformität}
+
+Mit der Konformität der REST-Schnittstelle von RT ist es nicht besonders
+gut bestellt. Prinzipien wie die Adressierbarkeit und wohldefinierter
+Ressourcen werden nicht eingehalten.
+
+Jesse Vincent, Erfinder von RT, kommentierte meinen diesbezüglichen Einwand
+auf der Entwickler-Mailingliste und stellte dafür Abhilfe in Aussicht mit RT 4.
+
+\begin{quote}
+In my defense, when the REST interface got designed, everyone else on
+the planet was just starting to use SOAP and Roy Fielding had barely
+published his definitions of what REST was. It wasn't well understood by
+anybody. 
+\end{quote}
 
 \subsection{Programmierung}
 Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
