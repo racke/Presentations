@@ -117,64 +117,17 @@ Adressierbarkeit und wohldefinierter Ressourcen.
 Mit dem Kommandozeilentool /usr/bin/rt kann man sich recht gut einen
 Überblick über die Funktionsweise der REST-Schnittstelle verschaffen.
 
+Queue anlegen:
+\begin{verbatim}
+$ rt create -t queue set name='Perl-Workshop'
+# Queue 4 created.
+\end{verbatim}
+
 Ticket anlegen:
 \begin{verbatim}
 $ rt create -t ticket set subject='Ausarbeitung des Vortrags' \
-  set queue='Perlworkshop' 
-\end{verbatim}
-
-Im folgenden Beispiel, 
-Benutzer anzeigen:
-
-verwendet die
-REST-Schnittstelle. Zum Beispiel kann man sich die Informationen
-zu einem Benutzer anzeigen lassen:
-
-\begin{verbatim}
-erebus:~# rt show user/racke
-URI: http://rt.icdevgroup.org/REST/1.0/show
-id: user/22
-Name: racke
-Password: ********
-EmailAddress: racke@linuxia.de
-RealName: Stefan Hornburg
-NickName: Racke
-Lang: en
-\end{verbatim}
-
-Gleichwertig ist der Befehl rt show user/22
-
-Die HTTP-Abfrage und Antwort
-kann mit der Umgebungsvariable \WSIndex{RTDEBUG} sichtbar gemacht werden:
-
-\begin{verbatim}
-racke@erebus:~$ RTDEBUG=3 rt show -t user racke
-POST http://erebus.linuxia.de/rt/REST/1.0/show
-Content-Length: 77
-Content-Type: multipart/form-data; boundary=xYzZY
-Cookie: RT_SID_rt.linuxia.de.80=78eaf4d45b0e99fa6c05ae82ddb950f4
-
---xYzZY
-Content-Disposition: form-data; name="id"
-
-user/racke
---xYzZY--
-HTTP/1.1 200 OK
-Connection: close
-Date: Tue, 15 Jan 2008 14:00:09 GMT
-Server: Apache/2.2.3 (Debian) PHP/5.2.0-8+etch9 mod_ssl/2.2.3 OpenSSL/0.9.8c mod_perl/2.0.2 Perl/v5.8.8
-Content-Type: text/plain; charset=utf-8
-Client-Date: Tue, 15 Jan 2008 14:00:10 GMT
-Client-Peer: 127.0.1.1:80
-Client-Response-Num: 1
-Client-Transfer-Encoding: chunked
-
-RT/3.6.4 200 Ok
-
-id: user/32
-Name: racke
-Password: ********
-EmailAddress: racke@linuxia.de
+  set queue='Perl-Workshop' 
+# Ticket 11 created.
 \end{verbatim}
 
 Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
