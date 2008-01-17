@@ -83,6 +83,7 @@ Jede Anfrage an die Schnittstelle beinhaltet eine Aktion:
 \item [show] Anzeige von Objekteigenschaften
 \item [create] Anlegen von Objekten
 \item [edit] Bearbeitung von Objekten
+\item [correspond,comment] Antwort oder Kommentar für ein Ticket
 \end{description}
 
 Die Suche ist zur Zeit leider nur für Tickets implementiert, bei allen
@@ -93,9 +94,9 @@ Weitere Parameter dienen zur genaueren Spezifikation der Aktion bzw.
 der Antwort:
 
 \begin{description}
-\item query
-\item orderby
-\item format
+\item [query] Auswahlkriteria in einer SQL-ähnlichen Syntax
+\item [orderby] Sortierung der Ausgabe 
+\item [format] Format der Ausgabe 
 \end{description}
 
 \subsubsection{Adressierung}
@@ -252,7 +253,9 @@ sub parse_object {
 }
 \end{verbatim}
 
-Auflistungen enthalten mehrere Objekte.
+Auflistungen enthalten mehrere Objekte, deshalb wird die Eingabe
+zunächst in die entsprechende Teile aufgespaltet und der Fall 
+einer leeren Liste behandelt.
 
 \begin{verbatim}
 sub parse_object_list {
@@ -272,7 +275,8 @@ sub parse_object_list {
 \end{verbatim}
 
 \subsection{Authentifizierung}
-Die REST-Schnittstelle unterstützt keine HTTP-Authentifizierung.
+Die REST-Schnittstelle unterstützt keine HTTP-Authentifizierung,
+deshalb übergeben wir Benutzername und Passwort 
 
 \subsection{Fehlerbehandlung}
 Fehlerhafte Eingabeparameter werden von RT im \emph{Body} der HTTP-Antwort
