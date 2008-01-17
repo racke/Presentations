@@ -130,21 +130,22 @@ $ rt create -t ticket set subject='Ausarbeitung des Vortrags' \
 # Ticket 11 created.
 \end{verbatim}
 
+Ticket anzeigen:
+\begin{verbatim}
+$ rt show ticket/11 -f id,subject,queue,requestors,owner
+id: ticket/11
+Subject: Ausarbeitung des Vortrags
+Queue: Perl-Workshop
+Requestors: racke@linuxia.de
+Owner: Nobody
+\end{verbatim}
+
+\subsection{Programmierung}
 Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
 Deshalb habe ich den Aufbau der Anfragen und die Auswertung der Antworten
 nach dem Motto RTSL (Read the Source, Luke) aus dem Quellcode des
 Kommandozeilentools abgeleitet.
 
-\subsection{Kommunikation über die REST-Schnittstelle}
-\subsubsection{Aufbau der HTTP-Anfrage}
-An die URI der REST-Schnittstelle wird die gewünschte Funktion angehängt,
-alle weiteren Parameter werden im Body der HTTP-Anfrage übergeben.
-
-\begin{verbatim}
-http://support.linuxia.de/rt/REST/1.0/show
-\end{verbatim}
-
-\subsection{Programmierung}
 Die Implementierung der HTTP-Kommunikation wird mit dem bekannten Perlmodul
 \WSIndex{LWP::UserAgent} durchgeführt.
 
