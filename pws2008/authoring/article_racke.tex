@@ -114,6 +114,12 @@ Objektnamens und der gewünschten Aktion.
 http://support.linuxia.de/rt/REST/1.0/user/racke/show
 \end{verbatim}
 
+% besser geloest fuer comment/correspond
+Damit ist die REST-Konformität aber schon am Ende. Es wird für alle
+HTTP-Anfragen die POST-Methode verwendet und weitere Parameter werden
+im Body platziert. Dies verletzt die Prinzipien der 
+Adressierbarkeit und wohldefinierter Ressourcen.
+
 \subsubsection{Nutzung von der Kommandozeile}
 Mit dem Kommandozeilentool \verb%/usr/bin/rt% kann man sich recht gut einen
 Überblick über die Funktionsweise der REST-Schnittstelle verschaffen.
