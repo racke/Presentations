@@ -1,0 +1,170 @@
+TODO: Aufteilung in Abschnitte
+TODO: Merging from different RT's
+
+Einfuehrung
+   Vorstellung (Consultant, Programmer, Sysadmin)
+   Projekte (Interchange, Courier, ...)
+   Integration (RT, ERP, ...)
+
+Kunden
+	Deutschland => ecoservice
+	Schweiz => CNS
+    Oesterreich => Embassy
+    USA => WebHostNY, Ldcomp
+	...
+
+Organisation I
+	Projekte
+    Aufgaben
+    Arbeitszeit
+
+Organisation II
+    Uebersicht
+    Billing
+    History
+
+=> wichtige Teil der Aufgaben mit RT
+
+Request Tracker
+	Trouble Ticket System
+	  + Perl
+      + Erweiterbarkeit
+      + Schnittstellen
+      DESY, CPAN, ...
+
+
+Request Tracker (Objekte)
+	Tickets
+		#125: Ausarbeitung Perlworkshop
+	Queues
+		#5: Perlworkshop
+	Benutzer:
+        #3: racke
+    Benutzergruppen:
+        #4: LinuXia
+
+Probleme I
+    USA x2
+    Embassy x1
+	Linuxia x1
+	Interchange x1
+
+Probleme II
+    Uebersicht
+    ...
+    ...
+
+Schnittstellen
+	Email
+	RT API (lokal)
+	REST (entfernt)
+
+REST (kurz)
+    Ressourcen
+	   RT-Objekte
+    Adressierung
+		http://support.linuxia.de/...
+    Zustandslosigkeit
+    Operationen
+	    GET,POST
+
+Objekte und Aktionen
+      Wiederholung Objekte
+        )Disclaimer 
+	  list
+      show
+	  create, edit
+      correspond,comment
+
+Nutzung von der Kommandozeile
+	=> s.Ausarbeitung
+
+REST-Konformitaet	
+
+Vorschau Implementierung
+		 
+    RTSL
+
+Implementierung I: Parameter
+	my (...);
+
+	$uri = 'http://support.linuxia.de/rt';
+	$username = 'racke';
+	$password = 'nevairbe';
+
+Implementierung II: LWP::UserAgent
+
+	use LWP::UserAgent;
+	
+	my (...);
+
+	$ua = new LWP::UserAgent(agent => 'Perlworkshop/9.0', env_proxy => 1);
+	
+	push @data, user => $username
+	push @data, pass => $password
+
+	$req = POST($uri, $data, Content_Type => 'form-data');
+
+	$res = $ua->request($req)
+
+Implementierung III
+
+	if ($res->is_success) {
+       $res->content
+	} else {
+	  die ...
+	}				
+
+Auswertung der Antwort I
+
+   HTTP
+    Header 
+	Body
+   RT
+    Header
+    Body
+
+Auswertung der Antwort II
+
+   401 Credentials Required
+   RT/3.6.1 200 Ok   
+
+Auswertung der Antwort III
+
+id: user/22
+Name: racke
+EmailAddress: racke@linuxia.de
+RealName: Stefan Hornburg
+NickName: Racke
+
+Auswertung der Antwort IV
+
+   Listen
+   Attachments
+
+Authentifizierung
+
+Interchange
+
+	OnlineShop
+	Template/Beschreibungssprache 
+       ITL
+
+Interchange II
+
+   [loop]...[/loop]
+
+   eigene Definition
+
+   Module    
+
+Andere Anwendungen
+
+Merge
+
+Ausblick
+	REST future in RT
+	REST for other TTS
+          	
+
+
