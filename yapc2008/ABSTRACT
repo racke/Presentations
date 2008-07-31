@@ -1,0 +1,10 @@
+Interchange is a mature open source online shop platform constantly developed since 1995. Perl as implementation language allows Interchange to be a robust, secure and very flexible application.
+
+This talk starts with an introduction on the architecture and capabilities of Interchange.
+
+It continues with a detailed description how the beauty of Perl helped
+to evolve Interchange into a software which drives high traffic
+e-commerce sites.
+ 
+Practical programming examples and an overview about new developments
+in Interchange will be at the end of the talk. 

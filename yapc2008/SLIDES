@@ -1,0 +1,64 @@
+DOCS:
+PreForkSingleFork
+
+PKG:
+Tie::ShadowHash
+
+RESEARCH:
+Fedex (pj)
+
+IDEAS:
+add quotes to presentation
+
+GOAL:
+what is the goal of the presentation?
+
+ORGANIZATION:
+* Background/Motivation
+* Architecture
+* Perl: why and how?
+* Development
+
+BACKGROUND/MOTIVATION:
+
+purpose/history:
+open source online shop implementation in Perl
+
+why Perl:
+* 1995
+* CPAN (Business modules)
+* DBI
+
+ARCHITECTURE:
+* runs as daemon (discussion: pros and cons)
+* server + catalogs (shops)
+
+architecture:
+
+daemon, pure Perl, threading issue
+mod_interchange, CGI helper, mod_perl 
+session on disk
+
+modes:
+PreFork
+demo?
+
+configuration: global/catalog
+
+modules in Interchange:
+payment gateways/shipping
+
+capabilities:
+
+beauty of Perl:
+
+flexibility (with examples):
+UserTag/CodeDef
+ActionMaps/Filter/Checks
+Modules (Vend::Picture, Vend::RT)
+
+obstacles:
+
+developments:
+UTF8
+wellwell
