@@ -62,3 +62,20 @@ obstacles:
 developments:
 UTF8
 wellwell
+
+== Product => UserTag => ... ==
+
+Example: Interchange T-Shirt
+
+sku	 IC2008
+color	 blue
+
+[order IC2008]
+
+looping tags/containers
+
+=> myorder
+
+Additional Stuff to talk about:
+* reparsing
+* jobs
