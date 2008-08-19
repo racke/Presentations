@@ -1,0 +1,16 @@
+conway: Contextual::Return, %state in Perl 5.10
+
+Apache::SizeLimit;
+Cache::FileCache
+mod_gzip (HTML/CSS/XML, not js)
+
+Regexes: Modul for Robots
+
+Unicode::BestPractices
+   >= 5.8.3
+   Downgrade binary strings
+   Unicode::Semantics
+
+Nordic Perl Workshop
+16th+17th April 2009
+
