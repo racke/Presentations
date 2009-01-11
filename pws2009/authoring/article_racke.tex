@@ -1,0 +1,369 @@
+% CLONE TICKETS !!
+% Konformität
+% Anwendung
+
+%% -*- mode: latex; -*-
+
+\section{Request Tracker 3.8}
+
+\subsection*{Autor}
+Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
+
+\subsection*{Kurzbiographie}
+Stefan Hornburg arbeitet seit 1998 als Open Source Consultant mit den
+Schwerpunkten Linux, Perl und Interchange. Als Captain der ICDEVGROUP leitet
+er die Entwicklergruppe von Interchange und ist als Debian Maintainer für
+verschiedene Serverpakete verantwortlich (u.a. Courier, Pure-FTPd und
+Sympa).
+
+\subsection*{Einführung}
+Request Tracker (RT) ist ein in Perl programmiertes
+Trouble-Ticket-System. Neben großen Organisationen wie die NASA, MIT und
+DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet. 
+
+Tickets können interaktiv im Browser oder durch Emails bearbeitet werden. Um
+typische Aufgaben automatisieren zu können, bietet RT sowohl eine Perl API
+und als auch eine REST-Schnittstelle an. Während für die API der größere
+Funktionsumfang spricht, erlaubt die REST-Schnittstelle Kommunikation mit
+Installationen auf anderen Rechnern und benötigt keine Zugriffsrechte auf
+die Konfigurationsdatei, die sensible Informationen wie den
+Datenbankbenutzer und das Datenbankpasswort enthält. 
+
+Für meine Projekte (Bugtracking-System für Interchange und Zusammenfassung
+der Informationen von mehreren RT-Systeme meiner Kunden) habe ich den Weg
+über die REST-Schnittstelle gewählt. 
+
+Die REST-Schnittstelle erlaubt den Zugriff auf die Tickets, deren
+Transaktionen und alle zugehörigen Dateien (Attachments). Neben 
+dem Abruf aller Informationen zu einem Ticket und der Suche können
+verschiedene Operationen durchgeführt werden, um Tickets zu
+bearbeiten. Darunter fällt das Hinzufügen von Kommentaren, Zusammenfassen,
+Referenzierung und die Übernahme von Tickets. 
+
+Der Vortrag erläutert die Grundlagen von REST, die verfügbaren Funktionen
+der Schnittstelle von RT und die Programmierung mit Hilfe von LWP (libwww-perl).
+
+\subsection{Neue Features}
+\subsubsection{Dashboards}
+\subsubsection{Richtext Email}
+\subsubsection{Email-Signaturen und -Verschlüsselung}
+\subsubsection{Charts of Ticket Relationships}
+\subsubsection{Emailversand und \WSIndex{Digests}}
+Für den Emailversand kann der Benutzer die folgenden Einstellungen
+wählen:
+\begin{itemize}
+\item Einzeln (Individual messages)
+\item Tägliche Zusammenfassungen (Daily digests)
+\item Wöchentliche Zusammenfassungen (Weekly digests)
+\item Deaktiviert (Suspended)
+\end{itemize}
+Der Benutzer benötigt das \WSIndex{ModifySelf}-Recht.
+
+Für den Versand der Zusammenfassungen muß ein entsprechender Cronjob
+eingerichtet sein.
+\subsubsection{Session expiration}
+\subsubsection{Plugins}
+\subsubsection{Standalone Server}
+\subsubsection{Visual Style}
+\subsubsection{Bug Fixes}
+\subsection{Installation,Upgrade und Konfiguration}
+\subsubsection{Cronjobs}
+\begin{verbatim}
+/etc/cron.daily/request-tracker3.8
+# Send daily RT emails.
+/usr/sbin/rt-email-digest -m daily
+
+/etc/cron.weekly/request-tracker3.8
+# Send weekly RT emails
+/usr/sbin/rt-email-digest -m weekly
+\end{verbatim}
+\subsection{Schnittstellen}
+
+\subsection{Definition von \WSIndex{REST}}
+Der Begriff Representational State Transfer (REST) wurde durch die
+Dissertation von Roy Fielding \cite{racke:fielding} geprägt. REST bezeichnet
+einen Softwarearchitekturstil für verteilte
+Hypermedia-Informationssysteme wie das World Wide Web.
+
+Systeme, die Fieldings Prinzipien entsprechend, werden oft als REST-konform
+(Englisch ``RESTful'') bezeichnet.
+
+%\subsection{Request Tracker}
+%
+%Jedes Objekt in RT hat einen Type (\verb/ticket/, \verb/queue/) und eine
+%numerische ID.
+
+\subsection{REST-Schnittstelle des Request Trackers}
+
+Die REST-Schnittstelle von RT erlaubt die Abfrage und Manipulation von
+verschiedenen Objekten: Queues, Benutzer, Benutzergruppen und Tickets. 
+
+Jede Anfrage an die Schnittstelle beinhaltet eine Aktion:
+
+\begin{description}
+\item [list] Auflistung/Suche von Objekten
+\item [show] Anzeige von Objekteigenschaften
+\item [create] Anlegen von Objekten
+\item [edit] Bearbeitung von Objekten
+\item [correspond,comment] Antwort oder Kommentar für ein Ticket
+\end{description}
+
+Die Suche ist zur Zeit leider nur für Tickets implementiert, bei allen
+anderen Objekttypen ist die Antwort ein \verb/Server Error/ mit der
+Erläuterung \verb/Unsupported object type/.
+
+Weitere Parameter dienen zur genaueren Spezifikation der Aktion bzw.
+der Antwort:
+
+\begin{description}
+\item [query] Auswahlkriteria in einer SQL-ähnlichen Syntax
+\item [orderby] Sortierung der Ausgabe 
+\item [format] Format der Ausgabe 
+\end{description}
+
+\subsubsection{Adressierung}
+Die REST-Schnittstelle wird über die URI der RT-Instanz mit der
+Pfadangabe \verb%/REST/1.0/% angesprochen, also z.B.:
+
+\begin{verbatim}
+http://support.linuxia.de/rt/REST/1.0/
+\end{verbatim}
+
+Die Adressierung der Ressourcen erfolgt durch Anhängen des Objekttyps,
+Objektnamens und der gewünschten Aktion.
+
+\begin{verbatim}
+http://support.linuxia.de/rt/REST/1.0/user/racke/show
+\end{verbatim}
+
+% besser geloest fuer comment/correspond
+Damit ist die REST-Konformität aber schon am Ende. Es wird für alle
+HTTP-Anfragen die POST-Methode verwendet und weitere Parameter werden
+im Body platziert. Dies verletzt die Prinzipien der 
+Adressierbarkeit und wohldefinierter Ressourcen.
+
+\subsubsection{Nutzung von der Kommandozeile}
+Mit dem Kommandozeilentool \verb%/usr/bin/rt% kann man sich recht gut einen
+Überblick über die Funktionsweise der REST-Schnittstelle verschaffen.
+
+Queue anlegen:
+\begin{verbatim}
+$ rt create -t queue set name='Perl-Workshop'
+# Queue 4 created.
+\end{verbatim}
+
+Ticket anlegen:
+\begin{verbatim}
+$ rt create -t ticket set subject='Ausarbeitung des Vortrags' \
+  set queue='Perl-Workshop' 
+# Ticket 11 created.
+\end{verbatim}
+
+Ticket anzeigen:
+\begin{verbatim}
+$ rt show ticket/11 -f id,subject,queue,requestors,owner
+id: ticket/11
+Subject: Ausarbeitung des Vortrags
+Queue: Perl-Workshop
+Requestors: racke@linuxia.de
+Owner: Nobody
+\end{verbatim}
+
+Ticket beantworten:
+\begin{verbatim}
+$ rt correspond -m 'Ausarbeitung ist fast fertig, siehe Anhang.' \
+  -a article_racke.tex ticket/11
+# Message recorded
+\end{verbatim}
+
+Die HTTP-Abfrage und Antwort 
+kann mit der Umgebungsvariable \WSIndex{RTDEBUG} sichtbar gemacht werden:
+
+\begin{verbatim}
+$ RTDEBUG=3 rt show -t user racke -f id,name,emailaddress,realname,nickname
+POST http://support.linuxia.de/rt/REST/1.0/show
+Content-Length: 175
+Content-Type: multipart/form-data; boundary=xYzZY
+Cookie: RT_SID_support.linuxia.de.80=0df6e85dc77d5ca70908c0bad8a038cd
+
+--xYzZY
+Content-Disposition: form-data; name="fields"
+
+id,name,emailaddress,realname,nickname
+--xYzZY
+Content-Disposition: form-data; name="id"
+
+user/racke
+--xYzZY--
+HTTP/1.1 200 OK
+Connection: close
+Date: Thu, 17 Jan 2008 11:02:05 GMT
+Server: Apache/2.2.3 (Debian) PHP/5.2.0-8+etch9 mod_ssl/2.2.3 OpenSSL/0.9.8c mod_perl/2.0.2 Perl/v5.8.8
+Content-Type: text/plain; charset=utf-8
+Client-Date: Thu, 17 Jan 2008 11:02:29 GMT
+Client-Peer: 85.10.244.99:80
+Client-Response-Num: 1
+Client-Transfer-Encoding: chunked
+
+RT/3.6.1 200 Ok
+
+id: user/22
+Name: racke
+EmailAddress: racke@linuxia.de
+RealName: Stefan Hornburg
+NickName: Racke
+\end{verbatim}
+
+Die Parameter \verb/id/ und \verb/fields/ werden also wie die Daten aus
+einem HTML-Formular übergeben. Die Einbettung dieser Parameter in die URI
+würde dem Prinzip der Adressierbarkeit besser gerecht werden.
+Für den Parameter \verb/id/ geschieht das unnötigerweise, da die
+REST-Schnittstelle die URI 
+\verb%http://support.linuxia.de/rt/REST/1.0/user/racke/show% klaglos
+akzeptiert.
+
+Folgt man dem Benennungsschema aus \cite{racke:restfulws}, würde die URI
+so aussehen:
+
+\begin{verbatim}
+http://support.linuxia.de/rt/REST/1.0/user/racke/show/id,name,emailaddress,realname,nickname
+\end{verbatim}
+
+\subsubsection{REST-Konformität}
+
+Mit der Konformität der REST-Schnittstelle von RT ist es nicht besonders
+gut bestellt. Prinzipien wie die Adressierbarkeit und wohldefinierter
+Ressourcen werden nicht eingehalten.
+
+Jesse Vincent, Erfinder von RT, kommentierte meinen diesbezüglichen Einwand
+auf der Entwickler-Mailingliste und stellte dafür Abhilfe in Aussicht mit RT 4.
+
+\begin{quote}
+In my defense, when the REST interface got designed, everyone else on
+the planet was just starting to use SOAP and Roy Fielding had barely
+published his definitions of what REST was. It wasn't well understood by
+anybody. 
+\end{quote}
+
+\subsection{Implementierungsbeispiele}
+Die Kommunikation mit Request Tracker ist nicht genauer spezifiziert.
+Deshalb habe ich den Aufbau der Anfragen und die Auswertung der Antworten
+nach dem Motto RTSL (Read the Source, Luke) aus dem Quellcode des
+Kommandozeilentools abgeleitet.
+
+Die Implementierung der HTTP-Kommunikation wird mit dem bekannten Perlmodul
+\WSIndex{LWP::UserAgent} durchgeführt.
+
+\begin{verbatim}
+my ($ua, $req, $res);
+
+$ua = new LWP::UserAgent(agent => "Vend::RT/1.0", env_proxy => 1);
+$req = POST($uri, $data, Content_Type => 'form-data');
+$res = $ua->request($req);
+\end{verbatim}
+
+Bei fehlerloser HTTP-Kommunikation liefert die REST-Schnittstelle 
+die gewünschten Daten zurück. Vor dem eigentlichen Inhalt befindet
+sich eine Statuszeile, die ähnlich aufgebaut ist wie die HTTP-Statuszeile:
+
+\begin{verbatim}
+RT/3.6.1 200 Ok
+\end{verbatim}
+
+Ein einzelnes Objekt in der Antwort wird dann wie folgt geparst:
+
+\begin{verbatim}
+sub parse_object {
+    my ($text) = @_;
+    my (@lines, $count, %attr);
+    
+    @lines = split(/\n/, $text);
+
+    # skip empty lines / comments at the beginning
+    $count = @lines;
+    while ($count-- && ($lines[0] !~ /\S/ || $lines[0] =~ /^#/)) {
+        shift(@lines);
+    }
+
+    my $lastname = '';
+    
+    for my $line (@lines) {
+        next unless length($line);
+        
+        # line continuation ?
+        if ($line =~ s/^(\s+)//) {
+            $attr{$lastname} .= "\n$line";
+            next;
+        }
+        my ($name, $value) = split(/:\s*/, $line, 2);
+        $attr{$name} = $value;
+        $lastname = $name;
+    }
+
+    # break up object/id
+    if (exists $attr{id}) {
+        my @frags = split('/', $attr{id});
+
+        if (@frags == 2) {
+            delete $attr{id};
+            $attr{Object} = $frags[0];
+            $attr{ID} = $frags[1];
+        }
+    }
+
+    return \%attr;
+}
+\end{verbatim}
+
+Auflistungen enthalten mehrere Objekte, deshalb wird die Eingabe
+zunächst in die entsprechende Teile aufgespaltet und der Fall 
+einer leeren Liste behandelt.
+
+\begin{verbatim}
+sub parse_object_list {
+    my ($text) = @_;
+    my (@frags, @list);
+
+    @frags = split(/\n\n--\n\n/, $text);
+    if (@frags == 1 && $frags[0] =~ /No matching results./) {
+        # empty list
+        return [];
+    }
+    for my $frag (@frags) {
+        push (@list, parse_object($frag));
+    }
+    return \@list;
+}
+\end{verbatim}
+
+\subsection{Authentifizierung}
+Die REST-Schnittstelle unterstützt keine HTTP-Authentifizierung,
+deshalb übergeben wir Benutzername und Passwort als Parameter.
+
+\subsection{Fehlerbehandlung}
+Fehlerhafte Eingabeparameter werden von RT im \emph{Body} der HTTP-Antwort
+quittiert:
+\begin{verbatim}
+RT/3.6.4 400 Bad Request
+ 
+No objects specified.
+\end{verbatim}
+
+% liste der möglichen Fehler
+
+\begin{thebibliography}{99}
+\bibitem{racke:fielding} Roy Thomas Fielding.
+\emph{Architectural Styles and Design of Network-Based Software Architectures}.
+University of California, Irvine, 2000.
+\bibitem{racke:restped} \emph{Representational State Transfer}.\\
+\texttt{http://de.wikipedia.org/wiki/Representational\_State\_Transfer}.
+\bibitem{racke:restfulws} Leonard Richardson \& Sam Ruby.
+\emph{RESTful Web Services}.
+O'Reilly, Sebastopol, California, 2007.
+\bibitem{racke:rtessentials} Jesse Vincent, Robert Spier, Dave Rolsky,
+  Darren Chamberlain \& Richard Foley.
+\emph{RT Essentials}.
+O'Reilly, Sebastopol, California, 2005.
+\end{thebibliography}
+
+

@@ -1,0 +1,8 @@
+*.dvi
+*.log
+auto
+main.aux
+main.i*
+main.pdf
+main.ps
+main.toc
