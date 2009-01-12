@@ -67,6 +67,31 @@ eingerichtet sein.
 \subsubsection{Visual Style}
 \subsubsection{Bug Fixes}
 \subsection{Installation,Upgrade und Konfiguration}
+\subsubsection{Installation}
+Zun‰chst das Tararchiv der aktuellen Version herunterladen und 
+auspacken. Dann in das Verzeichnis mit dem Archivinhalt wechseln:
+\begin{verbatim}
+wget http://download.bestpractical.com/pub/rt/release/rt.tar.gz
+tar -xzvf rt.tar.gz
+cd rt-3.8.2
+\end{verbatim}
+Anschlieﬂend empfiehlt es sich, die README-Datei zu lesen.
+
+\begin{tabular}{|l|l|l|}
+  \verb/--prefix/ & Installationsverzeichnis & \verb%/opt/rt3% \\
+  \verb/--enable-gpg/ & GPG Support & Ja\\
+  \verb/--enable-graphviz/ & GraphViz Charts & Nein
+\end{tabular}
+\begin{verbatim}
+
+./configure
+/opt/rt3
+make testdeps
+make fixdeps
+make install (as root)
+edit configuration
+/opt/rt3/etc/RT_SiteConfig.pm
+\end{verbatim}
 \subsubsection{Cronjobs}
 \begin{verbatim}
 /etc/cron.daily/request-tracker3.8
