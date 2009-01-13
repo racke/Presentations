@@ -21,27 +21,9 @@ Request Tracker (RT) ist ein in Perl programmiertes
 Trouble-Ticket-System. Neben großen Organisationen wie die NASA, MIT und
 DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet. 
 
-Tickets können interaktiv im Browser oder durch Emails bearbeitet werden. Um
-typische Aufgaben automatisieren zu können, bietet RT sowohl eine Perl API
-und als auch eine REST-Schnittstelle an. Während für die API der größere
-Funktionsumfang spricht, erlaubt die REST-Schnittstelle Kommunikation mit
-Installationen auf anderen Rechnern und benötigt keine Zugriffsrechte auf
-die Konfigurationsdatei, die sensible Informationen wie den
-Datenbankbenutzer und das Datenbankpasswort enthält. 
-
-Für meine Projekte (Bugtracking-System für Interchange und Zusammenfassung
-der Informationen von mehreren RT-Systeme meiner Kunden) habe ich den Weg
-über die REST-Schnittstelle gewählt. 
-
-Die REST-Schnittstelle erlaubt den Zugriff auf die Tickets, deren
-Transaktionen und alle zugehörigen Dateien (Attachments). Neben 
-dem Abruf aller Informationen zu einem Ticket und der Suche können
-verschiedene Operationen durchgeführt werden, um Tickets zu
-bearbeiten. Darunter fällt das Hinzufügen von Kommentaren, Zusammenfassen,
-Referenzierung und die Übernahme von Tickets. 
-
-Der Vortrag erläutert die Grundlagen von REST, die verfügbaren Funktionen
-der Schnittstelle von RT und die Programmierung mit Hilfe von LWP (libwww-perl).
+% TODO
+% add introduction
+% applies to both presentations
 
 \subsection{Neue Features}
 \subsubsection{Dashboards}
@@ -396,6 +378,7 @@ Set(@Plugins,(qw(RTx::Calendar)));
 
 Weitere Dokumentation findet sich im RT Wiki \cite{racke:wikixauth}.
 \subsection{\WSIndex{RTx::Calendar}}
+\WSIndex{Calendar}{}
 Voraussetzung für RTx::Calendar sind die folgenden Perlmodulen vom
 CPAN: \WSIndex{Date::Ical}, \WSIndex{Data::ICal}, \WSIndex{DateTime::Set}.
 
@@ -404,6 +387,22 @@ Aktiviert wird das Plugin wie bekannt in \verb/RT_SiteConfig.pm/:
 \begin{verbatim}
 Set(@Plugins,(qw(RTx::Calendar)));
 \end{verbatim}
+
+Bei den Voreinstellungen gibt es dann einen weiteren Punkt \emph{Calendar}.
+
+Um den Kalendar in ``RT auf einen Blick'' einbinden zu können, gilt es
+\verb/MyCalendar/ zu den verfügbaren Komponenten hinzuzufügen:
+
+\begin{verbatim}
+Set($HomepageComponents, [qw(QuickCreate Quicksearch MyCalendar
+     MyAdminQueues MySupportQueues MyReminders RefreshHomepage Dashboards)]);
+\end{verbatim}
+
+Dann kann der Kalendar der persönlichen Homepage hinzugefügt werden.
+
+%  To enable private searches ICal feeds, you need to give
+%  CreateSavedSearch and LoadSavedSearch rights to your users.
+
 \begin{thebibliography}{99}
 \bibitem{racke:fielding} Roy Thomas Fielding.
 \emph{Architectural Styles and Design of Network-Based Software Architectures}.
