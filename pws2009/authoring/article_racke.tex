@@ -376,12 +376,41 @@ No objects specified.
 
 % liste der möglichen Fehler
 
+\section{RT Plugins}
+% TODO
+% - Installationsverzeichnis
+Wir beschränken uns auf die Beschreibung von Plugins für RT 3.8.
+
+\subsection{Installation und Konfiguration}
+Plugins für RT sind üblicherweise als Module vom CPAN erhältlich.
+Die Installation wird also mit einem CPAN-Werkzeug durchgeführt:
+\begin{verbatim}
+cpan> install RT::Authen::ExternalAuth
+\end{verbatim}
+Nach der Installation des entsprechenden Perl-Moduls wird RT angewiesen,
+dieses auch als Plugin zu laden:
+\begin{verbatim}
+Set(@Plugins,(qw(RTx::Calendar)));
+\end{verbatim}
+\subsection{\WSIndex{RT::Authen::ExternalAuth}}
+
+Weitere Dokumentation findet sich im RT Wiki \cite{racke:wikixauth}.
+\subsection{\WSIndex{RTx::Calendar}}
+Voraussetzung für RTx::Calendar sind die folgenden Perlmodulen vom
+CPAN: \WSIndex{Date::Ical}, \WSIndex{Data::ICal}, \WSIndex{DateTime::Set}.
+
+Aktiviert wird das Plugin wie bekannt in \verb/RT_SiteConfig.pm/:
+
+\begin{verbatim}
+Set(@Plugins,(qw(RTx::Calendar)));
+\end{verbatim}
 \begin{thebibliography}{99}
 \bibitem{racke:fielding} Roy Thomas Fielding.
 \emph{Architectural Styles and Design of Network-Based Software Architectures}.
 University of California, Irvine, 2000.
-\bibitem{racke:restped} \emph{Representational State Transfer}.\\
-\texttt{http://de.wikipedia.org/wiki/Representational\_State\_Transfer}.
+\bibitem{racke:wikixauth} \emph{External Authentication and Information for
+    Request Tracker}.\\
+\texttt{http://wiki.bestpractical.com/view/ExternalAuth}.
 \bibitem{racke:restfulws} Leonard Richardson \& Sam Ruby.
 \emph{RESTful Web Services}.
 O'Reilly, Sebastopol, California, 2007.
