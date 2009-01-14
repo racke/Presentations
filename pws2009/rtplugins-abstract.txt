@@ -1,0 +1,13 @@
+Plugins sind eine Möglichkeit zur Erweiterung der Funktionalität von RT (Request Tracker).
+
+Einige Beispiele für RT-Plugins sind:
+
+RTx::Calendar erlaubt die kalendarische Darstellung von Tickets.
+
+Mit RTx::EmailCompletion werden Email-Adressen bei der Eingabe automatisch vervollständigt.
+
+Externe Quellen (LDAP, DBI) können mit RT::Authen::ExternalAuth
+für die Authentifizierung und Nachschlagen von Informationen angesprochen werden.
+
+Diese Auswahl wird kurz erläutert, inklusive Installation und Konfiguration. Praktische Beispiele bzw. Demonstration der Plugins
+erfolgen ebenso.

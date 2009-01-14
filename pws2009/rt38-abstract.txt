@@ -1,0 +1,11 @@
+Request Tracker (RT) ist ein ausgereiftes Ticketsystem basierend auf Perl und Perlmodulen aus dem CPAN zur Verwaltung von Problemen, Aufgaben und Anfragen. Eine Vielzahl von Firmen und Organisation setzt RT ein. 
+
+RT 3.8 wurde im Sommmer 2008 freigegeben. RT 3.8 bringt eine Reihe neuer Features ohne die bewährte Architektur grundlegend zu verändern: Bookmarks, Dashboards, graphische Darstellung der Beziehungen zwischen Tickets, Richtext Email, Emailsignaturen und -verschlüsselung. Außerdem wurde das Layout gründlich überarbeitet und Hunderte von Bugs behoben.
+
+Nach einem Überblick über die neuen Features wird die Installation von RT 3.8 und Upgrades von RT 3.6 erläutert. Gerade bei Upgrades kann es leicht zu Fehlern z.B. bei der Anmeldung oder der Darstellung von Attachments kommen, wenn die Upgrade-Anweisungen nicht korrekt befolgt werden.
+
+Einige Beispiele aus der Praxis zeigen die Flexibilität von RT:
+
+* Einsatz als Bugtracker für Open Source-Projekte
+* Email- und REST-Schnittstelle
+* Anpassung an spezifische Bedürfnisse durch Plugins und Overlays
