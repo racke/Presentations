@@ -24,6 +24,7 @@ DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet.
 % TODO
 % add introduction
 % applies to both presentations
+% Mason
 
 \subsection{Neue Features}
 \subsubsection{Dashboards}
@@ -52,8 +53,8 @@ eingerichtet sein.
 \subsubsection{Standalone Server}
 \subsubsection{Visual Style}
 \subsubsection{Bug Fixes}
-\subsection{Installation,Upgrade und Konfiguration}
-\subsubsection{Installation}
+\subsection{Installation}
+\subsubsection{Installation aus den Quellen}
 Zunächst das Tararchiv der aktuellen Version herunterladen und 
 auspacken. Dann in das Verzeichnis mit dem Archivinhalt wechseln:
 \begin{verbatim}
@@ -78,6 +79,10 @@ make install (as root)
 edit configuration
 /opt/rt3/etc/RT_SiteConfig.pm
 \end{verbatim}
+\subsubsection{Debian}
+Pakete für RT 3.8.2 befinden sich im experimentellen Zweig.
+\subsection{Upgrade}
+\subsection{Konfiguration}
 \subsubsection{Cronjobs}
 \begin{verbatim}
 /etc/cron.daily/request-tracker3.8
@@ -380,6 +385,16 @@ perl Makefile.PL
 make
 make install
 \end{verbatim}
+Damit die Installation des Plugins auch funktioniert, wenn RT sich nicht in
+\verb%/opt/rt3% befindet, setzt man die Umgebungsvariable
+%\WSIndex{\verb%RTHOME%}. 
+
+\begin{verbatim}
+RTHOME=/usr/share/request-tracker3.8 perl Makefile.PL
+make
+make install
+\end{verbatim}
+
 Nach der Installation des entsprechenden Perl-Moduls wird RT angewiesen,
 dieses auch als Plugin zu laden:
 \begin{verbatim}
@@ -387,7 +402,7 @@ Set(@Plugins,(qw(RTx::Calendar)));
 \end{verbatim}
 \subsection{\WSIndex{RTx::Email::Completion}}
 Das Plugin \verb/RTx::Email::Completion/ erweitert RT um eine automatische
-Vervollständigung von Emailadressen.\cite
+Vervollständigung von Emailadressen.
 \subsection{\WSIndex{RT::Authen::ExternalAuth}}
 Weitere Dokumentation findet sich im RT Wiki \cite{racke:wikixauth}.
 \subsection{\WSIndex{RTx::Calendar}}
