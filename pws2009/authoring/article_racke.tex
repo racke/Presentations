@@ -29,6 +29,10 @@ DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet.
 \subsubsection{Dashboards}
 \subsubsection{Richtext Email}
 \subsubsection{Email-Signaturen und -Verschlüsselung}
+
+This module provides support for encryption and signing of outgoing messages, 
+as well as the decryption and verification of incoming email.
+
 \subsubsection{Charts of Ticket Relationships}
 \subsubsection{Emailversand und \WSIndex{Digests}}
 Für den Emailversand kann der Benutzer die folgenden Einstellungen
@@ -369,13 +373,22 @@ Die Installation wird also mit einem CPAN-Werkzeug durchgeführt:
 \begin{verbatim}
 cpan> install RT::Authen::ExternalAuth
 \end{verbatim}
+Alternativ kann man auch die Quellen herunterladen und wie gewohnt
+installieren:
+\begin{verbatim}
+perl Makefile.PL
+make
+make install
+\end{verbatim}
 Nach der Installation des entsprechenden Perl-Moduls wird RT angewiesen,
 dieses auch als Plugin zu laden:
 \begin{verbatim}
 Set(@Plugins,(qw(RTx::Calendar)));
 \end{verbatim}
+\subsection{\WSIndex{RTx::Email::Completion}}
+Das Plugin \verb/RTx::Email::Completion/ erweitert RT um eine automatische
+Vervollständigung von Emailadressen.\cite
 \subsection{\WSIndex{RT::Authen::ExternalAuth}}
-
 Weitere Dokumentation findet sich im RT Wiki \cite{racke:wikixauth}.
 \subsection{\WSIndex{RTx::Calendar}}
 \WSIndex{Calendar}{}
