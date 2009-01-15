@@ -29,6 +29,14 @@ DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet.
 \subsection{Neue Features}
 \subsubsection{Dashboards}
 \subsubsection{Richtext Email}
+Sollte dieses Feature unerwünscht sein, kann es sowohl global als
+auch für jeden einzelnen Benutzer deaktiviert werden.
+
+Global in \verb/RT_SiteConfig.pm/:
+
+\verb/Set(\$MessageBoxRichText, 0);/.
+
+
 \subsubsection{Email-Signaturen und -Verschlüsselung}
 
 This module provides support for encryption and signing of outgoing messages, 
