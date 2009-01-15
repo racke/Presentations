@@ -4,7 +4,7 @@
 
 %% -*- mode: latex; -*-
 
-\section{Request Tracker 3.8}
+\section{Request Tracker 3.8 und Plugins}
 
 \subsection*{Autor}
 Stefan Hornburg (Racke) \verb/<racke@linuxia.de>/
@@ -21,13 +21,32 @@ Request Tracker (RT) ist ein in Perl programmiertes
 Trouble-Ticket-System. Neben großen Organisationen wie die NASA, MIT und
 DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet. 
 
+Dieser Beitrag dokumentiert zwei Vorträge, ``Request Tracker 3.8'' und
+``Request Tracker Plugins''.
+
 % TODO
 % add introduction
 % applies to both presentations
 % Mason
 
 \subsection{Neue Features}
-\subsubsection{Dashboards}
+\subsubsection{\WSIndex{Bookmarks}}
+Bookmarks (markierte Tickets) dienen zum schnellen Auffinden von Tickets.
+In der Einzelansicht eines Tickets befindet sich rechts oben ein Stern,
+mit dem dieses markiert werden kann.
+
+\subsubsection{\WSIndex{Anzeigetafeln}}
+Anzeigetafeln (\WSIndex{Dashboards}) finden sich im Menü Werkzeuge auf der 
+linken Seite.
+
+Jede Anzeigetafel ist eine Sammlung von verschiedene Dingen im
+Ticketsystem, genannt Portlets. Das können z.B. sein:
+
+\begin{itemize}
+\item Suchabfragen
+\item Graphen
+\end{itemize}
+
 \subsubsection{Richtext Email}
 Sollte dieses Feature unerwünscht sein, kann es sowohl global als
 auch für jeden einzelnen Benutzer deaktiviert werden.
@@ -36,6 +55,8 @@ Global in \verb/RT_SiteConfig.pm/:
 
 \verb/Set(\$MessageBoxRichText, 0);/.
 
+Individuell kann dieses Feature in den Einstellungen (de)aktiviert
+werden.
 
 \subsubsection{Email-Signaturen und -Verschlüsselung}
 
