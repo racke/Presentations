@@ -1,8 +1,11 @@
 *.dvi
 *.log
+*.zip
 auto
 main.aux
-main.i*
+main.idx
+main.ilg
+main.ind
 main.pdf
 main.ps
 main.toc
