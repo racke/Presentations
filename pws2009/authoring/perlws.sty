@@ -1,0 +1,54 @@
+% German Perl Workshop Styl for LaTeX
+
+\ProvidesPackage{perlws}[2004/03/06 v0.1 %
+ Support for German Perl Workshop]
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{ifthen}
+%%\usepackage{mathptmx} % incompatible
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{supertabular}
+\usepackage{tabularx}
+%\usepackage[final]{graphicx} % [final]/[draft]
+\usepackage[dvipdfm]{graphicx} % for use with dvipdfm
+\usepackage{makeidx}
+\usepackage{multirow}
+\usepackage{float}           % for restylefloat
+\usepackage{rotating}
+
+%% pp2latex
+\usepackage{epsf}
+
+\pagestyle{headings}
+\frenchspacing
+\makeindex
+\clubpenalty = 10000
+\widowpenalty = 10000 \displaywidowpenalty = 10000
+
+%% less toc depth
+%%\setcounter{tocdepth}{1}
+
+% place figures where it appear
+\restylefloat{figure}
+
+% Absätze nicht einrücken, aber bissel Abstand
+\setlength{\parindent}{0pt}
+%\setlength{\parskip}{1pt plus 2pt minus 1pt}
+
+% laxere Absatzformatierung, dafür keine Überlängen
+\sloppy
+
+%% more vertical space in arrays, e.g., tables, enumerations
+\renewcommand{\arraystretch}{1.2}
+
+%% Index macro
+\newcommand{\WSIndex}[1]{\typeout{PerlWSIndex:\thepage:#1}#1\index{#1@\texttt{#1}}}
+%% silent index, only for PerlPoint convert
+\newcommand{\WSIndexPP}[1]{\typeout{PerlWSIndex:\thepage:#1}\index{#1@\texttt{#1}}}
+
+% end of perlws.sty
