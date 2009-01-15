@@ -34,7 +34,19 @@ DESY wird RT auch für das Bugtracking von CPAN und Perl selbst verwendet.
 This module provides support for encryption and signing of outgoing messages, 
 as well as the decryption and verification of incoming email.
 
-\subsubsection{Charts of Ticket Relationships}
+\subsubsection{Beziehungsgraphen}
+Tickets können auf unterschiedliche Art und Weise verknüpft werden
+\cite{racke:wikirelations}. Der Graph zu einem Ticket wird anzeigt
+wie folgt: Ticketanzeige => Beziehungen => Graph.
+
+Die Eigenschaften des Graphen wie die Art der dargestellten Beziehungen
+können dort auch konfiguriert werden. Dabei ist zu beachten, daß kein
+Graph dargestellt wird wenn die gewünschten Eigenschaften nicht 
+zutreffen.
+
+Die Graphen können gespeichert werden und in ein Dashboard eingebunden
+werden.
+
 \subsubsection{Emailversand und \WSIndex{Digests}}
 Für den Emailversand kann der Benutzer die folgenden Einstellungen
 wählen:
@@ -437,6 +449,8 @@ Dann kann der Kalendar der persönlichen Homepage hinzugefügt werden.
 \bibitem{racke:fielding} Roy Thomas Fielding.
 \emph{Architectural Styles and Design of Network-Based Software Architectures}.
 University of California, Irvine, 2000.
+\bibitem{racke:wikirelations} \emph{Relationships}.\\
+\texttt{http://wiki.bestpractical.com/view/Relationships}.
 \bibitem{racke:wikixauth} \emph{External Authentication and Information for
     Request Tracker}.\\
 \texttt{http://wiki.bestpractical.com/view/ExternalAuth}.
