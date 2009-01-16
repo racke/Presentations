@@ -94,10 +94,10 @@ Bisher wurden Sitzungen erst bei expliziter Abmeldung oder Schließen des
 Browsers beendet. Mit einem Cronjob kann nun auch ein Timeout zur Ende
 einer Sitzung führen.
 
-\subsubsection{Plugins}
+%\subsubsection{Plugins}
 %\subsubsection{Standalone Server}
-\subsubsection{Visual Style}
-\subsubsection{Bug Fixes}
+%\subsubsection{Visual Style}
+%\subsubsection{Bug Fixes}
 
 \subsection{Installation}
 \subsubsection{Installation aus den Quellen}
@@ -110,24 +110,41 @@ cd rt-3.8.2
 \end{verbatim}
 Anschließend empfiehlt es sich, die README-Datei zu lesen.
 
+Eine Auswahl der Optionen für \verb|./configure|:
+
 \begin{tabular}{|l|l|l|}
+  \hline
+  Option & Bedeutung & Voreinstellung \\
+  \hline
   \verb/--prefix/ & Installationsverzeichnis & \verb%/opt/rt3% \\
   \verb/--enable-gpg/ & GPG Support & Ja\\
-  \verb/--enable-graphviz/ & GraphViz Charts & Nein
+  \verb/--enable-graphviz/ & GraphViz Charts & Nein\\
+  \hline
 \end{tabular}
 \begin{verbatim}
-
 ./configure
-/opt/rt3
+\end{verbatim}
+
+Nach der Konfiguration wird getestet ob alle Abhängigkeiten erfüllt sind
+bzw. Abhängigkeiten installiert.
+
+\begin{verbatim}
 make testdeps
 make fixdeps
-make install (as root)
-edit configuration
-/opt/rt3/etc/RT_SiteConfig.pm
 \end{verbatim}
+
+Dann erfolgt die eigentliche Installation und das Bearbeiten der
+Konfigurationsdatei:
+
+\begin{verbatim}
+make install
+$EDITOR /opt/rt3/etc/RT_SiteConfig.pm
+\end{verbatim}
+
 \subsubsection{Debian}
 Pakete für RT 3.8.2 befinden sich im experimentellen Zweig.
-\subsection{Upgrade}
+
+%\subsection{Upgrade}
 \subsection{Konfiguration}
 \subsubsection{Cronjobs}
 \begin{verbatim}
