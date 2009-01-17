@@ -125,6 +125,10 @@ Bisher wurden Sitzungen erst bei expliziter Abmeldung oder Schließen des
 Browsers beendet. Mit einem Cronjob kann nun auch ein Timeout zur Ende
 einer Sitzung führen.
 
+\begin{verbatim}
+rt-clean-sessions --older 1D
+\end{verbatim}
+
 %\subsubsection{Plugins}
 %\subsubsection{Standalone Server}
 %\subsubsection{Visual Style}
@@ -183,6 +187,8 @@ kann.
 %\subsection{Upgrade}
 \subsection{Konfiguration}
 \subsubsection{Cronjobs}
+Cronjobs werden benötigt für den Versand von Digests, Dashboards
+und den Timeout von Sitzungen.
 
 \begin{verbatim}
 /etc/cron.daily/request-tracker3.8
