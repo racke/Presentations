@@ -61,6 +61,23 @@ Ticketsystem, genannt \WSIndex{Portlets}. Das können z.B. sein:
 \end{itemize}
 
 \subsubsection{Richtext Email}
+Für RT 3.8 wurde die interne Aufbereitung der Emails komplett
+überarbeitet, um Benutzern eine \WSIndex{WYSIWYG}-Eingabe zur Verfügung
+zu stellen. Antworten, Kommentare und neue Tickets können damit
+eine Formatierung erhalten, z.B. fett, rot oder eine bestimmte
+Schriftart bzw. -größe. Ebenfalls wurde die Anzeige von HTML
+und Multipart-Emails gründlich überholt.
+
+Wegen seiner ausgezeichneten Cross-Plattform-Unterstützung wird dafür
+\WSIndex{FCKEditor} verwendet, der mit den RT-Quellen mitgeliefert und
+im Installationsverzeichnis unter \verb%share/html/NoAuth/RichText/%
+zu finden ist.
+
+% (It even preserves styles when you copy and paste from your word
+% processor!)
+
+Beim Versand von formatierter Email sendet RT immer eine reine Textversion
+mit.
 
 Sollte dieses Feature unerwünscht sein, kann es sowohl global als
 auch für jeden einzelnen Benutzer deaktiviert werden.
@@ -156,11 +173,17 @@ $EDITOR /opt/rt3/etc/RT_SiteConfig.pm
 \end{verbatim}
 
 \subsubsection{Debian}
-Pakete für RT 3.8.2 befinden sich im experimentellen Zweig.
+Pakete für RT 3.8.2 befinden sich im experimentellen Zweig,
+aus denen leicht ein Backport für Etch oder Lenny erstellt werden
+kann.
+
+% Missing:
+% libhtml-rewriteattributes-perl (Lenny)
 
 %\subsection{Upgrade}
 \subsection{Konfiguration}
 \subsubsection{Cronjobs}
+
 \begin{verbatim}
 /etc/cron.daily/request-tracker3.8
 # Send daily RT emails.
@@ -170,7 +193,9 @@ Pakete für RT 3.8.2 befinden sich im experimentellen Zweig.
 # Send weekly RT emails
 /usr/sbin/rt-email-digest -m weekly
 \end{verbatim}
-\subsection{Schnittstellen}
+
+
+%\subsection{Schnittstellen}
 
 
 \subsection{Plugins}
