@@ -1,0 +1,6 @@
+RTx::WorkflowBuilder is a tool that helps you configure multi-stage  
+approval workflow in rt.
+
+It is now available at http://search.cpan.org/dist/RTx-WorkflowBuilder/.
+
+examples can be found in the doc at http://search.cpan.org/dist/RTx-WorkflowBuilder/bin/rt-workflow
