@@ -1,0 +1,40 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Error qw(:try);
+use RT::Client::REST;
+
+my $rt = RT::Client::REST->new(
+           server => 'http://support.linuxia.exp/',
+           timeout => 30,
+							  );
+my $id;
+
+try {
+	$rt->login(username => 'racke', password => 'foobar21');
+	}
+	catch Exception::Class::Base with {
+		die "problem logging in: ", shift->message;
+	};
+
+try {
+	my %parms;
+	
+	$parms{queue} = 'Nordic Perl Workshop';
+	$parms{subject} = 'Test';
+	$parms{starts} = '20090417 12:00';
+		
+	$id = $rt->create(type => 'ticket',
+					  set => \%parms,
+					  text => 'Hello World');
+	} catch RT::Client::REST::UnauthorizedActionException with {
+		# does not work with create ?
+		print "You are not authorized to view ticket #10\n";
+	} catch RT::Client::REST::Exception with {
+		print "Other exception.", shift->message, "\n";
+		# something went wrong.
+	};
+
+print "Created ticket with $id.\n";
