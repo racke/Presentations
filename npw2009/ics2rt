@@ -1,0 +1,82 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Data::ICal;
+use RT::Client::REST;
+use RT::Client::REST::Ticket;
+
+unless (@ARGV == 1) {
+	die "$0: need calendar file\n";
+}
+
+my ($calfile, $calendar, $calentries, $rt);
+
+# iCal
+$calfile = shift;
+$calendar = new Data::ICal(filename => $calfile);
+
+# RT
+$rt = new RT::Client::REST (server => 'http://support.linuxia.exp/');
+$rt->login(username => 'racke', password => 'foobar21');
+							
+# EH
+
+$calentries = $calendar->entries();
+
+# always use decoded_value
+
+my ($location, $ticket);
+
+for my $entry (@$calentries) {
+	# get location
+	$location = $entry->property('location')->[0]->value();
+
+	next if $location eq '' || $location eq 'Go Open';
+	
+	# get URL to weed out NPW talks
+	my $url = $entry->property('url')->[0]->value();
+	
+	if ($url) {
+		my (%talk, $id, $date, $time);
+
+		$date = $entry->property('dtstart')->[0]->value();
+		
+		$talk{start} = substr($date, 0,4) . '-' . substr($date, 4,2) . '-' . substr($date, 6, 2) . ' ' . substr($date, 9, 2)
+			. ':' . substr($date, 11, 2);
+		
+		$talk{title} = $entry->property('summary')->[0]->decoded_value();
+		$talk{description} = $entry->property('description')->[0]->decoded_value();
+		$talk{time_estimated} = 60;
+			
+		$ticket = add_talk($rt, %talk);
+		print "Ticket " . $ticket->id() . " created for $talk{title} at $location.\n";
+	}
+}
+
+sub add_talk {
+	my ($rt, %talk) = @_;
+	my (%parms, $id, $ticket);
+
+	# pass RT/REST object
+	$parms{rt} = $rt;
+	
+	$parms{queue} = 'Nordic Perl Workshop';
+	$parms{subject} = $talk{title};
+	$parms{starts} = $talk{start};
+	$parms{time_estimated} = $talk{time_estimated};
+	
+#	$id = $rt->create(type => 'ticket',
+#					  set => \%parms,
+#					  text => $talk{description});
+
+	# create ticket object
+	$ticket = new RT::Client::REST::Ticket(%parms);
+
+	# store ticket
+	$ticket->store(text => $talk{description});
+	
+}
+
+
