@@ -4,6 +4,9 @@ use strict;
 use warnings;
 
 use Data::ICal;
+
+use DateTime::Format::ICal;
+
 use RT::Client::REST;
 use RT::Client::REST::Ticket;
 
@@ -39,16 +42,25 @@ for my $entry (@$calentries) {
 	my $url = $entry->property('url')->[0]->value();
 	
 	if ($url) {
-		my (%talk, $id, $date, $time);
+		my (%talk, $id, $dtstart, $dtend, $start, $end, $duration);
 
-		$date = $entry->property('dtstart')->[0]->value();
+		$dtstart = $entry->property('dtstart')->[0]->value();
+		$dtend = $entry->property('dtend')->[0]->value();
 		
-		$talk{start} = substr($date, 0,4) . '-' . substr($date, 4,2) . '-' . substr($date, 6, 2) . ' ' . substr($date, 9, 2)
-			. ':' . substr($date, 11, 2);
+		# make proper datetime for RT out of ICal date
+		$start = DateTime::Format::ICal->parse_datetime($dtstart);
+		$end = DateTime::Format::ICal->parse_datetime($dtend);
+
+		# start time of talk
+		$talk{start} = $start->strftime('%Y-%m-%d %H:%M');
+
+		# talk duration
+		$duration = $end->subtract_datetime($start);
+		$talk{time_estimated} = $duration->minutes;
 		
 		$talk{title} = $entry->property('summary')->[0]->decoded_value();
 		$talk{description} = $entry->property('description')->[0]->decoded_value();
-		$talk{time_estimated} = 60;
+
 			
 		$ticket = add_talk($rt, %talk);
 		print "Ticket " . $ticket->id() . " created for $talk{title} at $location.\n";
