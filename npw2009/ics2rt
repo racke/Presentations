@@ -35,33 +35,29 @@ for my $entry (@$calentries) {
 
 	next if $location eq '' || $location eq 'Go Open';
 	
-	# get URL to weed out NPW talks
-	my $url = $entry->property('url')->[0]->value();
+	my (%talk, $id, $dtstart, $dtend, $start, $end, $duration);
+
+	$dtstart = $entry->property('dtstart')->[0]->value();
+	$dtend = $entry->property('dtend')->[0]->value();
+		
+	# make proper datetime for RT out of ICal date
+	$start = DateTime::Format::ICal->parse_datetime($dtstart);
+	$end = DateTime::Format::ICal->parse_datetime($dtend);
+
+	# start time of talk
+	$talk{start} = $start->strftime('%Y-%m-%d %H:%M');
+
+	# talk duration
+	$duration = $end->subtract_datetime($start);
+	$talk{time_estimated} = $duration->minutes;
+		
+	$talk{title} = $entry->property('summary')->[0]->decoded_value();
+	$talk{description} = $entry->property('description')->[0]->decoded_value();
+	$talk{title} =~ s/\\,/,/g;
+	$talk{description} =~ s/\\,/,/g;
+	$talk{description} =~ s/\\n/\n/g;
 	
-	if ($url) {
-		my (%talk, $id, $dtstart, $dtend, $start, $end, $duration);
-
-		$dtstart = $entry->property('dtstart')->[0]->value();
-		$dtend = $entry->property('dtend')->[0]->value();
-		
-		# make proper datetime for RT out of ICal date
-		$start = DateTime::Format::ICal->parse_datetime($dtstart);
-		$end = DateTime::Format::ICal->parse_datetime($dtend);
-
-		# start time of talk
-		$talk{start} = $start->strftime('%Y-%m-%d %H:%M');
-
-		# talk duration
-		$duration = $end->subtract_datetime($start);
-		$talk{time_estimated} = $duration->minutes;
-		
-		$talk{title} = $entry->property('summary')->[0]->decoded_value();
-		$talk{description} = $entry->property('description')->[0]->decoded_value();
-
-			
-		$ticket = add_talk($rt, %talk);
-		print "Ticket " . $ticket->id() . " created for $talk{title} at $location.\n";
-	}
+	$ticket = add_talk($rt, %talk);
 }
 
 sub add_talk {
@@ -76,10 +72,6 @@ sub add_talk {
 	$parms{starts} = $talk{start};
 	$parms{time_estimated} = $talk{time_estimated};
 	
-#	$id = $rt->create(type => 'ticket',
-#					  set => \%parms,
-#					  text => $talk{description});
-
 	# create ticket object
 	$ticket = new RT::Client::REST::Ticket(%parms);
 
