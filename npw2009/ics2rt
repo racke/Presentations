@@ -21,14 +21,11 @@ $calfile = shift;
 $calendar = new Data::ICal(filename => $calfile);
 
 # RT
-$rt = new RT::Client::REST (server => 'http://support.linuxia.exp/');
-$rt->login(username => 'racke', password => 'foobar21');
+$rt = new RT::Client::REST (server => 'http://support.linuxia.de/rt/');
+$rt->login(username => 'oslo', password => 'oslo6');
 							
-# EH
-
+# list of calendar entries
 $calentries = $calendar->entries();
-
-# always use decoded_value
 
 my ($location, $ticket);
 
