@@ -1,0 +1,24 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use RT::Client::REST;
+use RT::Client::REST::Ticket;
+
+my ($rt, $ticket, $rootid, $id);
+
+$rt = new RT::Client::REST (server => 'http://support.linuxia.de/rt/');
+$rt->login(username => 'oslo', password => 'oslo6');
+
+# create ticket
+$ticket = new RT::Client::REST::Ticket(rt => $rt,
+									   queue => 'Nordic Perl Workshop',
+									   subject => 'Nordic Perl Workshop 2009',
+);
+
+# store ticket
+$ticket->store(text => 'Hello Oslo!');
+$rootid = $ticket->id();
+
+

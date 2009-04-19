@@ -1,0 +1,23 @@
+
+SSL for Windows
+RT:: doesn't depend on RT installation 
+
+Plugins:
+
+Calendar
+MyCalendar portlet: README, newer version?
+RTx::Tags
+
+Playground
+
+- aliases
+- account
+- sample tickets
+  * timetable.ics
+
+local copy: support.linuxia.exp
+
+make initdb for RT::Extension::ExtractCustomFieldValues
+
+Calendar:
+
