@@ -1,0 +1,22 @@
+Request Tracker (RT) is an enterprise-grade ticketing system which enables a group of people to intelligently and efficiently manage tasks, issues, and requests submitted by a community of users.
+
+RT is also known to be flexible and extensible, allowing for local customizations without changing the original files.
+
+The presentation focuses on customizing RT with plugins, remote access through the REST interface and a preview of RT 4.0.
+
+Extensions have now a formalized interface in 3.8 and are called plugins. They hook into in the web interface and/or the mail gateway. The talk describes the installation and configuration of plugins in general and takes a closer look on
+several existing plugins:
+
+RTx::Calendar
+RT::Authen::ExternalAuth
+RTx::Email::Completion
+RT::Extension::EmailByCommand
+RT::Extension::ExtractCustomFieldValues
+
+Other ways to cleanly customize RT are callbacks, overlays and custom fields.
+
+The recommended method for external access to the RT objects is the REST interface. It allows manipulation of tickets by using the same credentials as for the web interface.
+
+RT::Client::REST provides an easier programming interface to deal with the REST interface. As demonstration a ticket will be generated per talk in the YAPC::EU::2009 schedule during the presentation.
+
+For RT 4 the developers are doing a complete overhaul of the codebase, replacing the homegrown application framework with Jifty, adding a few major features and redesigning thinks like Scrips, and Date/Time implementation.
