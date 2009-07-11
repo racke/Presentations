@@ -1,0 +1,45 @@
+RT 4
+====
+
+Wiki: http://wiki.bestpractical.com/view/RT4
+
+Sources
+-------
+
+git clone git://github.com/bestpractical/rt.git
+git checkout origin/3.999-trunk [DIFF FROM WIKI]
+
+Intro
+-----
+
+RT4 is a major effort to update and modernize the RT codebase, making it
+easier to add new features and to customize existing features.
+
+The major new features users should expect in RT 4.0.0 are a replacement for
+the Scrips system and a new ticket lifecycle engine.
+
+Jifty
+-----
+
+apt-get install jifty on Debian squeeze/sid
+
+Lorzy
+-----
+
+???
+
+Install
+-------
+
+README: mentions ./configure
+./configure # is missing
+
+Prerequisites for installation:
+Module::Install
+
+perl Makefile.PL
+
+Package updates:
+DateTime - DateTime::Local, DateTime::Format::Strptime
+
+Lorzy & Jifty
