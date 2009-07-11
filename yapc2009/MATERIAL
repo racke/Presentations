@@ -43,3 +43,35 @@ Package updates:
 DateTime - DateTime::Local, DateTime::Format::Strptime
 
 Lorzy & Jifty
+
+UPDATE 3.8.x / DEBIAN
+ajax:~# /usr/sbin/rt-setup-database --dba root --prompt-for-dba-password --action upgrade
+In order to create or update your RT database, this script needs to connect to your  mysql instance on localhost as root
+Please specify that user's database password below. If the user has no database
+password, just press return.
+
+Password: 
+Working with:
+Type:	mysql
+Host:	localhost
+Name:	support
+User:	trackadmin
+DBA:	root
+Enter RT version you're upgrading from: 3.8.2
+
+Going to apply following upgrades:
+* 3.8.3
+* 3.8.4
+
+Enter RT version if you want to stop upgrade at some point,
+  or leave it blank if you want apply above upgrades: 
+
+IT'S VERY IMPORTANT TO BACK UP BEFORE THIS STEP
+
+Proceed [y/N]:y
+Processing 3.8.3
+Now inserting data
+Processing 3.8.4
+Now inserting data
+Done.
+
