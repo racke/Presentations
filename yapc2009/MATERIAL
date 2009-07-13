@@ -3,6 +3,7 @@ RT 4
 
 Wiki: http://wiki.bestpractical.com/view/RT4
 
+
 Sources
 -------
 
@@ -22,6 +23,16 @@ Jifty
 -----
 
 apt-get install jifty on Debian squeeze/sid
+
+Jifty homepage
+..............
+
+http://www.jifty.org/view/HomePage
+
+Jifty for RT4
+.............
+
+svn co http://svn.jifty.org/svn/jifty.org/Jifty-DBI/trunk jifty-dbi
 
 Lorzy
 -----
