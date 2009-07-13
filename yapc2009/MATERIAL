@@ -26,7 +26,14 @@ apt-get install jifty on Debian squeeze/sid
 Lorzy
 -----
 
-???
+(not yet in git)
+
+svn://svn.bestpractical.com/Lorzy/ 
+
+prereq: MooseX::ClassAttribute 
+
+cd Lorzy/trunk
+
 
 Install
 -------
