@@ -1,7 +1,11 @@
 #! /usr/bin/perl
+#
+# Copyright (C) 2009 Stefan Hornburg (Racke) <racke@linuxia.de>
 
 use strict;
 use warnings;
+
+use AppConfig qw(:argcount);
 
 use Data::ICal;
 
@@ -10,20 +14,24 @@ use DateTime::Format::ICal;
 use RT::Client::REST;
 use RT::Client::REST::Ticket;
 
-unless (@ARGV == 1) {
-	die "$0: need calendar file\n";
+unless (@ARGV == 2) {
+	die "$0: need configuration and calendar file\n";
 }
 
-my ($calfile, $calendar, $calentries, $rt);
+my ($cfgfile, $config, $calfile, $calendar, $calentries, $rt);
 
+# Read configuration file
+$cfgfile = shift;
+$config = read_config($cfgfile, {});
+	
 # iCal
 $calfile = shift;
 $calendar = new Data::ICal(filename => $calfile);
 
 # RT
-$rt = new RT::Client::REST (server => 'http://support.linuxia.de/rt/');
-$rt->login(username => 'oslo', password => 'oslo6');
-							
+$rt = new RT::Client::REST (server => $config->{url});
+$rt->login(username => $config->{username}, password => $config->{password});
+
 # list of calendar entries
 $calentries = $calendar->entries();
 
@@ -47,6 +55,9 @@ for my $entry (@$calentries) {
 	# start time of talk
 	$talk{start} = $start->strftime('%Y-%m-%d %H:%M');
 
+	# end time of talk
+	$talk{end} = $end->strftime('%Y-%m-%d %H:%M');
+	
 	# talk duration
 	$duration = $end->subtract_datetime($start);
 	$talk{time_estimated} = $duration->minutes;
@@ -56,7 +67,8 @@ for my $entry (@$calentries) {
 	$talk{title} =~ s/\\,/,/g;
 	$talk{description} =~ s/\\,/,/g;
 	$talk{description} =~ s/\\n/\n/g;
-	
+
+	$talk{url} = $entry->property('url')->[0]->value();
 	$ticket = add_talk($rt, %talk);
 }
 
@@ -70,7 +82,11 @@ sub add_talk {
 	$parms{queue} = 'Nordic Perl Workshop';
 	$parms{subject} = $talk{title};
 	$parms{starts} = $talk{start};
+	$parms{due} = $talk{end};
 	$parms{time_estimated} = $talk{time_estimated};
+
+	# custom fields
+	$parms{cf} = {talk_url => $talk{url}};
 	
 	# create ticket object
 	$ticket = new RT::Client::REST::Ticket(%parms);
@@ -80,4 +96,17 @@ sub add_talk {
 	
 }
 
+sub read_config {
+	my ($file, $confref) = @_;
+	my $ac;
+	$ac = new AppConfig({GLOBAL => {ARGCOUNT => ARGCOUNT_ONE}});
 
+	for my $var (qw{url queue username password}) {
+		$ac->define($var, {DEFAULT => $confref->{$var}});
+	}
+
+	$ac->file($file);
+	%$confref = $ac->varlist('.*');
+
+	return $confref;
+}
