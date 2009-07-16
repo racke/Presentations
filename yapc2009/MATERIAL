@@ -93,3 +93,18 @@ Processing 3.8.4
 Now inserting data
 Done.
 
+
+RT-Extension-CommandByMail
+==========================
+
+0.07: restrict by group
+
+Set(@MailPlugins, qw(Auth::MailFrom Filter::TakeAction));
+
+You will also need to add RT::Extension::CommandByMail to your
+Plugins list.
+
+Set(@Plugins,(qw(RT::Extension::CommandByMail)))
+
+There is an optional configuration option CommandByMailGroup
+Set($CommandByMailGroup, group_id);
