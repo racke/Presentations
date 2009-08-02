@@ -1,15 +1,35 @@
 #! /usr/bin/perl
+#
+# Copyright (C) 2009 Stefan Hornburg (Racke) <racke@linuxia.de>
 
 use strict;
 use warnings;
 
+use AppConfig qw(:argcount);
+
 use RT::Client::REST;
+use RT::Client::REST::Queue;
 use RT::Client::REST::Ticket;
 
-my ($rt, $ticket, $rootid, $id);
+unless (@ARGV == 1) {
+	die "$0: need configuration file.\n";
+}
 
-$rt = new RT::Client::REST (server => 'http://support.linuxia.de/rt/');
-$rt->login(username => 'oslo', password => 'oslo6');
+my ($cfgfile, $config, $rt, $queue, $ticket, $rootid, $id);
+
+# Read configuration file
+$cfgfile = shift;
+$config = read_config($cfgfile, {});
+
+# RT
+$rt = new RT::Client::REST (server => $config->{url});
+$rt->login(username => $config->{username}, password => $config->{password});
+
+# create queue
+$queue = new RT::Client::REST::Queue (rt => $rt,
+									  name => 'YAPC::EU::2009',
+									  description => 'European Perl Workshop');
+$queue->store;
 
 # create ticket
 $ticket = new RT::Client::REST::Ticket(rt => $rt,
@@ -22,3 +42,17 @@ $ticket->store(text => 'Hello Oslo!');
 $rootid = $ticket->id();
 
 
+sub read_config {
+	my ($file, $confref) = @_;
+	my $ac;
+	$ac = new AppConfig({GLOBAL => {ARGCOUNT => ARGCOUNT_ONE}});
+
+	for my $var (qw{url queue username password}) {
+		$ac->define($var, {DEFAULT => $confref->{$var}});
+	}
+
+	$ac->file($file);
+	%$confref = $ac->varlist('.*');
+
+	return $confref;
+}
