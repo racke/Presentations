@@ -1,3 +1,21 @@
+Monitor?
+
+This talk is about RT 3.8/4.0 and how to you extend/customize
+	Give the majors (Plugins/REST/..)
+
+Display custom fields (SeeCustomField)
+	Configuration => CustomFields => Tags => Group Rights/User Rights
+		=> SeeCustomField (for each)
+ModifyCustomField
+
+Start with plugins (refer to creation of the calendar)
+REST (pointer to scripts)
+Introduction what do we want to learn
+- slide about permissions
+
+* update RTx::Tags
+* REST: what you can do / what you can't do
+
 * Install HTML::TagCloud on erebus [x]
 * Install EmailCompletion on linuxia etc
 * Calendar search results
