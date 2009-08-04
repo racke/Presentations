@@ -23,7 +23,13 @@ my ($cfgfile, $config, $calfile, $calendar, $calentries, $rt);
 # Read configuration file
 $cfgfile = shift;
 $config = read_config($cfgfile, {});
-	
+
+for (qw/url username password queue/) {
+	unless ($config->{$_}) {
+		die "$0: missing configuration $_\n";
+	}
+}
+
 # iCal
 $calfile = shift;
 $calendar = new Data::ICal(filename => $calfile);
@@ -69,27 +75,30 @@ for my $entry (@$calentries) {
 	$talk{description} =~ s/\\n/\n/g;
 
 	$talk{url} = $entry->property('url')->[0]->value();
-	$ticket = add_talk($rt, %talk);
+	$ticket = add_talk($rt, $config->{queue}, %talk);
+
+	last;
 }
 
 sub add_talk {
-	my ($rt, %talk) = @_;
+	my ($rt, $queue, %talk) = @_;
 	my (%parms, $id, $ticket);
 
 	# pass RT/REST object
 	$parms{rt} = $rt;
 	
-	$parms{queue} = 'Nordic Perl Workshop';
+	$parms{queue} = $queue;
 	$parms{subject} = $talk{title};
 	$parms{starts} = $talk{start};
 	$parms{due} = $talk{end};
 	$parms{time_estimated} = $talk{time_estimated};
 
-	# custom fields
-	$parms{cf} = {talk_url => $talk{url}};
-	
 	# create ticket object
 	$ticket = new RT::Client::REST::Ticket(%parms);
+
+	# custom fields
+	$ticket->cf('talk_url', $talk{url});
+	$ticket->cf('Tags', 'foobar');				
 
 	# store ticket
 	$ticket->store(text => $talk{description});
