@@ -11,11 +11,14 @@ use Data::ICal;
 
 use DateTime::Format::ICal;
 
+use Error qw(:try);
 use RT::Client::REST;
 use RT::Client::REST::Ticket;
+use RT::Client::REST::Queue;
 
 use LWP::UserAgent;
 use HTML::LinkExtor;
+use URI;
 
 unless (@ARGV == 2) {
 	die "$0: need configuration and calendar file\n";
@@ -78,6 +81,7 @@ for my $entry (@$calentries) {
 	$talk{description} =~ s/\\n/\n/g;
 
 	$talk{url} = $entry->property('url')->[0]->value();
+
 	$ticket = add_talk($rt, $config->{queue}, %talk);
 }
 
@@ -87,13 +91,13 @@ sub add_talk {
 
 	# pass RT/REST object
 	$parms{rt} = $rt;
-	
+
 	$parms{queue} = $queue;
 	$parms{subject} = $talk{title};
 	$parms{starts} = $talk{start};
 	$parms{due} = $talk{end};
 	$parms{time_estimated} = $talk{time_estimated};
-
+	
 	# create ticket object
 	$ticket = new RT::Client::REST::Ticket(%parms);
 
@@ -101,8 +105,14 @@ sub add_talk {
 	$ticket->cf('talk_url', $talk{url});
 	$ticket->cf('Tags', join(' ', get_tags($talk{url})));				
 
+	print "Creating ticket for $talk{title}\n";
+	
 	# store ticket
-	$ticket->store(text => $talk{description});
+	try {
+		$ticket->store(text => $talk{description});
+	} catch RT::Client::REST::Exception with {
+		warn "REST error: " . shift->message . "\n";
+	};
 }
 
 sub get_tags {
@@ -123,9 +133,12 @@ sub get_tags {
 
 sub get_tags_callback {
 	my ($name, %attr) = @_;
-
+	my ($tag);
+	
 	if ($name eq 'a' && $attr{href} =~ m%talks/tag/(.+)$%) {
-		push (@tags, $1);
+		$tag = $1;
+		$tag =~ s|\%([a-fA-F0-9][a-fA-F0-9])|chr(hex($1))|eg;
+		push (@tags, $tag);
 	}
 }
 
