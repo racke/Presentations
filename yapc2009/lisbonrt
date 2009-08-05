@@ -28,7 +28,7 @@ $rt->login(username => $config->{username}, password => $config->{password});
 # create queue
 $queue = new RT::Client::REST::Queue (rt => $rt,
 									  name => 'YAPC::EU::2009',
-									  description => 'European Perl Workshop');
+									  description => 'Yet Another Perl Conference Europe');
 $queue->store;
 
 # create ticket
@@ -40,7 +40,6 @@ $ticket = new RT::Client::REST::Ticket(rt => $rt,
 # store ticket
 $ticket->store(text => 'Hello Oslo!');
 $rootid = $ticket->id();
-
 
 sub read_config {
 	my ($file, $confref) = @_;
