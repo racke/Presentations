@@ -10,12 +10,13 @@ use AppConfig qw(:argcount);
 use RT::Client::REST;
 use RT::Client::REST::Queue;
 use RT::Client::REST::Ticket;
+use RT::Client::REST::User;
 
 unless (@ARGV == 1) {
 	die "$0: need configuration file.\n";
 }
 
-my ($cfgfile, $config, $rt, $queue, $ticket, $rootid, $id);
+my ($cfgfile, $config, $rt, $queue, $user, $ticket, $rootid, $id);
 
 # Read configuration file
 $cfgfile = shift;
@@ -31,6 +32,14 @@ $queue = new RT::Client::REST::Queue (rt => $rt,
 									  description => 'Yet Another Perl Conference Europe');
 $queue->store;
 
+# create user
+$user = new RT::Client::REST::User (rt => $rt,
+									 name => 'lisbon',
+									 email_address => 'lisbon@support.linuxia.de',
+									 password => 'lisbon09');
+
+$user->store;
+
 # create ticket
 $ticket = new RT::Client::REST::Ticket(rt => $rt,
 									   queue => 'YAPC::EU::2009',
@@ -38,7 +47,7 @@ $ticket = new RT::Client::REST::Ticket(rt => $rt,
 );
 
 # store ticket
-$ticket->store(text => 'Hello Oslo!');
+$ticket->store(text => 'Hello Lisbon!');
 
 # get ticket number
 $id = $ticket->id();
