@@ -14,11 +14,14 @@ use DateTime::Format::ICal;
 use RT::Client::REST;
 use RT::Client::REST::Ticket;
 
+use LWP::UserAgent;
+use HTML::LinkExtor;
+
 unless (@ARGV == 2) {
 	die "$0: need configuration and calendar file\n";
 }
 
-my ($cfgfile, $config, $calfile, $calendar, $calentries, $rt);
+my ($cfgfile, $config, $calfile, $calendar, $calentries, @tags, $rt);
 
 # Read configuration file
 $cfgfile = shift;
@@ -76,8 +79,6 @@ for my $entry (@$calentries) {
 
 	$talk{url} = $entry->property('url')->[0]->value();
 	$ticket = add_talk($rt, $config->{queue}, %talk);
-
-	last;
 }
 
 sub add_talk {
@@ -98,11 +99,34 @@ sub add_talk {
 
 	# custom fields
 	$ticket->cf('talk_url', $talk{url});
-	$ticket->cf('Tags', 'foobar');				
+	$ticket->cf('Tags', join(' ', get_tags($talk{url})));				
 
 	# store ticket
 	$ticket->store(text => $talk{description});
+}
+
+sub get_tags {
+	my ($url) = @_;
+	my ($ua, $le, $res);
+
+	@tags = ();
 	
+	$ua = new LWP::UserAgent;
+	
+	$le = new HTML::LinkExtor(\&get_tags_callback);
+
+	$res = $ua->request(HTTP::Request->new(GET => $url),
+                      sub {$le->parse($_[0])});
+
+	return @tags;
+}
+
+sub get_tags_callback {
+	my ($name, %attr) = @_;
+
+	if ($name eq 'a' && $attr{href} =~ m%talks/tag/(.+)$%) {
+		push (@tags, $1);
+	}
 }
 
 sub read_config {
