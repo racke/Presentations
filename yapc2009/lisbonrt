@@ -33,13 +33,15 @@ $queue->store;
 
 # create ticket
 $ticket = new RT::Client::REST::Ticket(rt => $rt,
-									   queue => 'Nordic Perl Workshop',
-									   subject => 'Nordic Perl Workshop 2009',
+									   queue => 'YAPC::EU::2009',
+									   subject => 'YAPC::EU::2009'
 );
 
 # store ticket
 $ticket->store(text => 'Hello Oslo!');
-$rootid = $ticket->id();
+
+# get ticket number
+$id = $ticket->id();
 
 sub read_config {
 	my ($file, $confref) = @_;
