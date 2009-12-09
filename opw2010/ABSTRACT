@@ -1,0 +1,7 @@
+Wiki::Toolkit is a toolkit for building Wikis.
+
+Wiki::Toolkit supports multiple storage backends
+(MySQL, PostgreSQL, SQlite), multiple formatters (POD, UseMod, MarkDown, MediaWiki) and is extensible through plugins.
+
+Wiki::Toolkit is used as base for the OpenGuides
+project.
