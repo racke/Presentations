@@ -1,6 +1,5 @@
-\documentclass{beamer}
-
 \usepackage{beamerthemesplit}
+\usepackage{verbatim}
 
 \title{Wikis with Wiki::Toolkit}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
@@ -18,6 +17,10 @@
 \section{Backends}
 
 \section{Formatters}
+
+The interface for Wiki::Toolkit formatters is really simple, it consists
+of a mandatory \verb+format+ and an optional \verb+find_internal_links+.
+method.
 
 \begin{frame}{Available Formatters}
  \begin{itemize}
