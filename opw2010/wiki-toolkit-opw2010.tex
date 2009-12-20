@@ -1,5 +1,8 @@
 \usepackage{beamerthemesplit}
 \usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{language=Perl}
 
 \title{Wikis with Wiki::Toolkit}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
@@ -14,30 +17,110 @@
 \section[Outline]{}
 \frame{\tableofcontents}
 
-\section{Backends}
+\section{Composing a Wiki::Toolkit Wiki}
+
+\begin{frame}{Composing Wiki}
+ \begin{itemize}
+  \item<1-> Storage
+  \item<2-> Formatter
+  \item<3-> Search
+  \item<4-> Plugins
+ \end{itemize}
+\end{frame}
+
+\section{Nodes and Metadata}
+
+\subsection{Metadata}
+
+Arbitrary metadata can be stored alongside with the node.
+
+\begin{lstlisting}
+%metadata = {country => 'USA', 
+    state => 'Florida',
+    city => 'Orlando'};
+
+$wiki->write_node($node, $content, $checksum, \%metadata, $requires_moderation);
+\end{lstlisting}
+
+The metadata can be retrieved with the \verb+retrieve_node+ method.
+
+\begin{lstlisting}
+%node = $wiki->retrieve_node('Perl Oasis');
+
+for (keys %{$node{metadata}}) {
+    ...
+}
+\end{lstlisting}
+
+\section{Storage Backends}
+
+All storage backends are derived from \verb+Wiki::Toolkit::Store::Database+.
+
+\begin{frame}{Storage Backends}
+ \begin{itemize}
+  \item MySQL
+  \item PostgreSQL
+  \item SQLite
+ \end{itemize}
+\end{frame}
+
+\subsection{Storage Initialization}
+
+All storage backends can be easily initialized with the corresponding
+\verb+Wiki::Toolkit::Setup+ classes.
+
+\lstinputlisting{scripts/setup_mysql}
 
 \section{Formatters}
 
 The interface for Wiki::Toolkit formatters is really simple, it consists
-of a mandatory \verb+format+ and an optional \verb+find_internal_links+.
+of a mandatory \verb+format+ and an optional \verb+find_internal_links+
 method.
+
+\verb+format+ takes the text in the Wiki format and returns HTML code
+suitable for display in a web page.
+
+\verb+find_internal_links+ returns internal links in the Wiki.
+
+\subsection{Options for Formatters}
+
+% see contructor for Wiki::Toolkit:Formatter::UseMod
+
+\subsection{Internal Links}
+
+% Note: \verb+rename_node+ function uses internal_links table.
+
+\subsection{Formatters in CPAN}
 
 \begin{frame}{Available Formatters}
  \begin{itemize}
-  \item<1-> POD
+  \item<1-> MediaWiki
   \item<2-> UseMod
   \item<3-> MarkDown
-  \item<4-> MediaWiki
-  \end{itemize}
+  \item<4-> POD
+ \end{itemize}
 \end{frame}
+
+\subsection{Multiple Formatters}
 
 \begin{frame}{Multiple Formatters}
 \end{frame}
 
-\begin{frame}{Custom Formatters}
+\subsection{Writing Formatters}
+
+\begin{frame}{Writing Formatters}
+\end{frame}
+
+\section{Search}
+
+\begin{frame}{Search}
 \end{frame}
 
 \section{Plugins}
+
+\section{Related Projects}
+MojoMojo, a Catalyst \& DBIx::Class powered Wiki,
+\url{http://search.cpan.org/perldoc?MojoMojo}.
 
 \end{document}
     
