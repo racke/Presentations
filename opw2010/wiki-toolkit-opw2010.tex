@@ -64,12 +64,26 @@ All storage backends are derived from \verb+Wiki::Toolkit::Store::Database+.
  \end{itemize}
 \end{frame}
 
-\subsection{Storage Initialization}
+\subsection{Storage Setup}
+
+% notes: cleardb, leaving tables alone
+% cleardb doesn't erase tables for search backends
 
 All storage backends can be easily initialized with the corresponding
 \verb+Wiki::Toolkit::Setup+ classes.
 
 \lstinputlisting{scripts/setup_mysql}
+
+\subsection{Storage Tables}
+
+\begin{frame}{Storage Tables}
+ \begin{itemize}
+  \item content
+  \item schema\_info
+  \item metadata
+  \item internal\_links
+ \end{itemize}
+\end{frame}
 
 \section{Formatters}
 
@@ -117,6 +131,31 @@ suitable for display in a web page.
 \end{frame}
 
 \section{Plugins}
+
+\section{Wiki Syntax}
+\subsection{Markdown}
+Homepage: \url{http://daringfireball.net/projects/markdown/syntax}
+
+Wiki: \url{http://markdown.infogami.com/}
+
+\subsubsection{Emphasis}
+
+\begin{verbatim}
+*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+\end{verbatim}
+
+\subsubsection{Links}
+Internal links:
+
+\begin{verbatim}
+See my [About](/about/) page for details.
+\end{verbatim}
 
 \section{Related Projects}
 MojoMojo, a Catalyst \& DBIx::Class powered Wiki,
