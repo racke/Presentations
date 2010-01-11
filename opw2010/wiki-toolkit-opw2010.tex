@@ -132,6 +132,17 @@ suitable for display in a web page.
 
 \section{Plugins}
 
+\begin{frame}[fragile]
+\frametitle{Plugins}
+\begin{lstlisting}
+my $plugin = new Wiki::Toolkit::Plugin::Diff;
+$wiki->register_plugin(plugin => $plugin);
+%diff = $plugin->differences(node => 'FrontPage',
+    left_version => 101,
+    right_version => 105);
+\end{lstlisting}
+\end{frame}
+
 \section{Wiki Syntax}
 \subsection{Markdown}
 Homepage: \url{http://daringfireball.net/projects/markdown/syntax}
@@ -140,15 +151,12 @@ Wiki: \url{http://markdown.infogami.com/}
 
 \subsubsection{Emphasis}
 
-\begin{verbatim}
-*single asterisks*
+\begin{tabular}{ll}
+\verb|*single asterisks*| & \textit{italic} \\
+\verb|_single underscores_| & \textbf{bold} \\
+\end{tabular}
 
-_single underscores_
-
-**double asterisks**
-
-__double underscores__
-\end{verbatim}
+% TODO: double asterisks / double underscores
 
 \subsubsection{Links}
 Internal links:
@@ -156,6 +164,12 @@ Internal links:
 \begin{verbatim}
 See my [About](/about/) page for details.
 \end{verbatim}
+
+\subsection{UseMod}
+Homepage: \url{http://www.usemod.com/cgi-bin/wiki.pl}
+Syntax: \url{http://www.usemod.com/cgi-bin/wiki.pl?TextFormattingRules}
+
+\subsubsection{Emphasis}
 
 \section{Resources}
 
