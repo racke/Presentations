@@ -1,4 +1,37 @@
+pugin typo on Plugin::Ping
+
+* Section about features/functions
+
+* Introduction
+** Motivation
+** History
+
+- Functions
+list_recent_changes
+	version
+	last_modified
+    name
+	metadata	
+
+- Workflow
+
 - Formatters
 -- Available Formatters
 -- Multiple Formatters
 -- Custom Formatters
+
+- Plugins
+Base class:
+Wiki::Toolkit::Plugin (included)
+
+Register Plugins and Usage
+
+-- Available Plugins
+--- Categoriser
+Wiki::Toolkit::Plugin::Categoriser - Category management for Wiki::Toolkit
+http://search.cpan.org/perldoc?Wiki::Toolkit::Plugin::Categoriser
+--- Diff
+Wiki::Toolkit::Plugin::Diff - format differences between two Wiki::Toolkit pages
+http://search.cpan.org/perldoc?Wiki::Toolkit::Plugin::Diff
+(available as Debian package)
+-- Writing Plugins
