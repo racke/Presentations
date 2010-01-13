@@ -14,45 +14,25 @@
   \titlepage
 \end{frame}
 
-\section[Outline]{}
-\frame{\tableofcontents}
+\tableofcontents
 
-\section{Composing a Wiki::Toolkit Wiki}
+\section{Wiki Components}
 
-\begin{frame}{Composing Wiki}
+\begin{frame}{Wiki Components}
  \begin{itemize}
-  \item<1-> Storage
-  \item<2-> Formatter
-  \item<3-> Search
-  \item<4-> Plugins
+  \item<1-> Store
+  \item<2-> Formatter(s)
+  \item<3-> Plugins
+  \item<4-> Search
  \end{itemize}
 \end{frame}
 
-\section{Nodes and Metadata}
+\begin{frame}{Wiki Functions}
+\end{frame}
 
-\subsection{Metadata}
+\section{Stores}
 
-Arbitrary metadata can be stored alongside with the node.
-
-\begin{lstlisting}
-%metadata = {country => 'USA', 
-    state => 'Florida',
-    city => 'Orlando'};
-
-$wiki->write_node($node, $content, $checksum, \%metadata, $requires_moderation);
-\end{lstlisting}
-
-The metadata can be retrieved with the \verb+retrieve_node+ method.
-
-\begin{lstlisting}
-%node = $wiki->retrieve_node('Perl Oasis');
-
-for (keys %{$node{metadata}}) {
-    ...
-}
-\end{lstlisting}
-
-\section{Storage Backends}
+\subsection{Storage Backends}
 
 All storage backends are derived from \verb+Wiki::Toolkit::Store::Database+.
 
@@ -80,13 +60,45 @@ All storage backends can be easily initialized with the corresponding
 \subsection{Storage Tables}
 
 \begin{frame}{Storage Tables}
- \begin{itemize}
-  \item content
-  \item schema\_info
-  \item metadata
-  \item internal\_links
- \end{itemize}
+ \begin{description}
+  \item [content] Nodes
+  \item [schema\_info] Schema Version
+  \item [metadata] Metadata
+  \item [internal\_links] Page Links
+ \end{description}
 \end{frame}
+
+\subsection{Nodes and Metadata}
+
+\subsubsection{Metadata}
+
+% see also JSON plugin
+
+Arbitrary metadata can be stored alongside with the node.
+
+\begin{frame}[fragile]{Metadata}
+
+\begin{lstlisting}
+%metadata = {country => 'USA', 
+    state => 'Florida',
+    city => 'Orlando'};
+
+$wiki->write_node($node, $content, $checksum, \%metadata, $requires_moderation);
+\end{lstlisting}
+\end{frame}
+
+The metadata can be retrieved with the \verb+retrieve_node+ method.
+
+\begin{lstlisting}
+%node = $wiki->retrieve_node('Perl Oasis');
+
+for (keys %{$node{metadata}}) {
+    ...
+}
+\end{lstlisting}
+
+
+
 
 \section{Formatters}
 
@@ -144,6 +156,19 @@ $wiki->register_plugin(plugin => $plugin);
     left_version => 101,
     right_version => 105);
 \end{lstlisting}
+\end{frame}
+
+\subsection{Plugins in CPAN}
+
+\begin{frame}{Plugins in CPAN}
+ \begin{description}
+  \item[Diff] format differences between versions
+  \item[Categorizer] category management
+  \item[JSON] recent changes as JSON
+  \item[Locator::Grid] manage co-ordinate data
+  \item[Ping] ping various services on node updates
+  \item[RSS::Reader] retrieve feeds for node inclusion
+ \end{description}
 \end{frame}
 
 \section{Wiki Syntax}
