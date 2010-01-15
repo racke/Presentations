@@ -1,3 +1,6 @@
+% TODO
+% Wiki::Toolkit History
+
 \usepackage{beamerthemesplit}
 \usepackage{verbatim}
 \usepackage{hyperref}
@@ -116,6 +119,13 @@ suitable for display in a web page.
 
 \verb+find_internal_links+ returns internal links in the Wiki.
 
+\begin{frame}[fragile]
+\begin{lstlisting}
+my $formatter = new Wiki::Toolkit::Formatter::Default;
+
+my $html = $formatter->format($content);
+\end{lstlisting}
+\end{frame}
 \subsection{Options for Formatters}
 
 % see contructor for Wiki::Toolkit:Formatter::UseMod
@@ -141,6 +151,8 @@ suitable for display in a web page.
 \end{frame}
 
 \subsection{Writing Formatters}
+
+% HINT to Text::WikiFormat;
 
 \begin{frame}{Writing Formatters}
 \end{frame}
