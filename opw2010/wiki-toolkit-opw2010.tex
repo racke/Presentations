@@ -1,5 +1,6 @@
 % TODO
-% Wiki::Toolkit History
+% Wiki::Toolkit History, Author
+% Functions
 
 \usepackage{beamerthemesplit}
 \usepackage{verbatim}
@@ -132,9 +133,27 @@ my @links = $formatter->find_internal_links($content);
 \end{lstlisting}
 \end{frame}
 
-\subsection{Options for Formatters}
+\subsection{Constructor Options}
 
 % see contructor for Wiki::Toolkit:Formatter::UseMod
+
+\begin{frame}[fragile]{Constructor Options}
+\begin{lstlisting}
+
+my $formatter = Wiki::Toolkit::Formatter::Default->new(
+                 extended_links  => 0,
+                 implicit_links  => 1,
+                 allowed_tags    => [qw(b i)],  # defaults to none
+                 macros          => {},
+                 node_prefix     => 'wiki.cgi?node=' );
+
+\end{lstlisting}
+\end{frame}
+
+Extended links are links marked by square brackets, e.g.
+\verb+[[Page]|Link name]+.
+
+Implicit links are links from CamelCase strings.
 
 \subsection{Internal Links}
 
@@ -171,6 +190,7 @@ my @links = $formatter->find_internal_links($content);
 \section{Plugins}
 
 % Wiki::Toolkit::Feed modules
+% http://search.cpan.org/~dom/Wiki-Toolkit-0.78/lib/Wiki/Toolkit/Extending.pod
 
 \begin{frame}[fragile]
 \frametitle{Plugins}
