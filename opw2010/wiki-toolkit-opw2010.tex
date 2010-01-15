@@ -110,6 +110,8 @@ for (keys %{$node{metadata}}) {
 
 \section{Formatters}
 
+\subsection{Methods}
+
 The interface for Wiki::Toolkit formatters is really simple, it consists
 of a mandatory \verb+format+ and an optional \verb+find_internal_links+
 method.
@@ -119,13 +121,16 @@ suitable for display in a web page.
 
 \verb+find_internal_links+ returns internal links in the Wiki.
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Methods}
 \begin{lstlisting}
-my $formatter = new Wiki::Toolkit::Formatter::Default;
 
 my $html = $formatter->format($content);
+
+my @links = $formatter->find_internal_links($content);
+
 \end{lstlisting}
 \end{frame}
+
 \subsection{Options for Formatters}
 
 % see contructor for Wiki::Toolkit:Formatter::UseMod
