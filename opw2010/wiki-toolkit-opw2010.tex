@@ -6,7 +6,10 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
-\lstset{language=Perl}
+\lstset{ %
+language=Perl,
+basicstyle=\footnotesize
+}
 
 \title{Wikis with Wiki::Toolkit}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
@@ -143,7 +146,7 @@ my @links = $formatter->find_internal_links($content);
 my $formatter = Wiki::Toolkit::Formatter::Default->new(
                  extended_links  => 0,
                  implicit_links  => 1,
-                 allowed_tags    => [qw(b i)],  # defaults to none
+                 allowed_tags    => [qw(b i)],
                  macros          => {},
                  node_prefix     => 'wiki.cgi?node=' );
 
