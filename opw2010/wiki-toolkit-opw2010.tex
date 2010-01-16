@@ -124,10 +124,10 @@ for (keys %{$node{metadata}}) {
 }
 \end{lstlisting}
 
-
-
-
 \section{Formatters}
+
+Formatters are classes that providing methods for turning text in
+Wiki format into HTML code.
 
 \subsection{Methods}
 
@@ -167,12 +167,13 @@ my $formatter = Wiki::Toolkit::Formatter::Default->new(
 \end{lstlisting}
 \end{frame}
 
-Extended links are links marked by square brackets, e.g.
-\verb+[[Page]|Link name]+.
+Extended links are usually links marked by square brackets, e.g.
+\verb+[[Page]|Link name]+. The formatter class can decide about
+the exact format.
 
 Implicit links are links from CamelCase strings.
 
-\subsection{Internal Links}
+% \subsection{Internal Links}
 
 % Note: \verb+rename_node+ function uses internal_links table.
 
@@ -189,8 +190,24 @@ Implicit links are links from CamelCase strings.
 
 \subsection{Multiple Formatters}
 
-\begin{frame}{Multiple Formatters}
- 
+It is possible to use multiple formatters for one Wiki with
+the Wiki::Toolkit::Formatter::Multiple class.
+
+\begin{frame}[fragile]{Multiple Formatters}
+\begin{lstlisting}
+my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
+my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
+
+my $fmt = new Wiki::Toolkit::Formatter::Multiple (
+      usemod => $fmt_usemod,
+      mediawiki => $fmt_mediawiki,
+      _DEFAULT => $fmt_usemod,
+  );
+
+...
+
+my $output = $wiki->format($text, {formatter => 'mediawiki'});
+\end{lstlisting}
 \end{frame}
 
 \subsection{Writing Formatters}
