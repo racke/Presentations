@@ -1,11 +1,9 @@
 % TODO
-% Last slide
 % Metadata slide
 % Wiki::Toolkit History, Author
 % Functions, add more of them
 % Address for Slides
 %   pointer to Wiki.pm source code
-% Macros
 % Glue => %Storage example
 % Plugins => Diff example
 
@@ -47,8 +45,9 @@ written in Perl.
 
 We installed the MoinMoin wiki on our website two years ago. While I was
 quite pleased about it, it is still Python and unfortunately it broke 
-into pieces after a Debian upgrade. Rather than fixing MoinMoin I searched
-for a modern and easy-to-use Perl Wiki.
+into pieces after a Debian upgrade. Due to my limited knowledge about
+Python and MoinMoin I wasn't able to fix it quickly.
+That motivated me to search for a modern and easy-to-use Perl Wiki.
 
 Wiki::Toolkit isn't an instant Wiki, but it allows you to choose
 your tools of the trade. You can pick your tools for storing, formatting,
@@ -57,6 +56,9 @@ searching and other purpose, or even design your own.
 The work on the Interchange Wiki isn't yet completed, it'll take a few
 months more to get it done due to all the other projects I have to care
 for.
+
+Before we continue with the look at the archictecture of Wiki::Toolkit
+I want to mention the real world applications I found using Wiki::Toolkit,
 
 % Real World Applications
 % - OpenGuides
@@ -255,6 +257,18 @@ the exact format.
 
 Implicit links are links from CamelCase strings.
 
+\subsection{Macros}
+
+\begin{frame}[fragile]{Macros}
+\begin{lstlisting}
+macros => { qr/(^|\b)\@SEARCHBOX(\b|$)/ =>
+            qq(<form action="wiki.cgi" method="get">
+                <input type="hidden" name="action" value="search">
+                <input type="text" size="20" name="terms">
+                <input type="submit"></form>) }
+\end{lstlisting}
+\end{frame}
+
 % \subsection{Internal Links}
 
 % Note: \verb+rename_node+ function uses internal_links table.
@@ -329,9 +343,9 @@ $wiki->format($node{content}, $node{metadata});
 
 \begin{frame}{Writing Formatters}
  \begin{itemize}
-   \item<1-> Wiki::Toolkit::Formatter::Foo
-   \item<2-> format() method
-   \item<3-> Text::WikiFormat
+   \item Wiki::Toolkit::Formatter::Foo
+   \item format() method
+   \item Text::WikiFormat
  \end{itemize}
 \end{frame}
 
@@ -393,13 +407,13 @@ $wiki->register_plugin(plugin => $plugin);
 \end{frame}
 
 
-\section{Methods}
 \begin{frame}{The End}
  \begin{description}
   \item[CPAN] http://search.cpan.org/perldoc?Wiki::Toolkit
   \item[Website] http://www.wiki-toolkit.org/
-  \item[Talk] http://www.linuxia.de/talks/opw2010/wiki-toolkit-opw2010-beamer.pdf
-  \item[Questions] ???
+  \item[Talk]
+    http://www.linuxia.de/talks/opw2010/wiki-toolkit-opw2010-beamer.pdf
+   \item[Questions] ???
  \end{description}
 \end{frame}
 
