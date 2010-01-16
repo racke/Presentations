@@ -41,6 +41,23 @@
 Welcome to my presentation about Wiki::Toolkit, a toolkit for building
 Wikis with Perl.
 
+My name is Stefan Hornburg and I'm full time perl hacker, involved for
+the most part in Interchange, an Open Source E-Commerce software 
+written in Perl.
+
+We installed the MoinMoin wiki on our website two years ago. While I was
+quite pleased about it, it is still Python and unfortunately it broke 
+into pieces after a Debian upgrade. Rather than fixing MoinMoin I searched
+for a modern and easy-to-use Perl Wiki.
+
+Wiki::Toolkit isn't an instant Wiki, but it allows you to choose
+your tools of the trade. You can pick your tools for storing, formatting,
+searching and other purpose, or even design your own.
+
+The work on the Interchange Wiki isn't yet completed, it'll take a few
+months more to get it done due to all the other projects I have to care
+for.
+
 % Real World Applications
 % - OpenGuides
 % - ACT
@@ -48,7 +65,7 @@ Wikis with Perl.
 
 % Dispatch
 
-We start with taking at the architecture of a Wiki::Toolkit wiki.
+We start with taking a look at the architecture of a Wiki::Toolkit wiki.
 
 Wiki::Toolkit is written in a modern style, so all components of
 it can be exchanged and subclassed.
@@ -67,6 +84,13 @@ it can be exchanged and subclassed.
 % \end{frame}
 
 \section{Glue}
+
+Before going into detail with the different tools that Wiki::Toolkit
+provides, I show you how the glue looks like.
+
+After selecting the tools you want to use in your Wiki::Toolkit wiki,
+you create an instance of each of these tools and pass them to
+the constructor for the Wiki::Toolkit class.
 
 \subsection{Wiki::Toolkit Setup}
 
@@ -88,6 +112,17 @@ my $wiki = new Wiki::Toolkit(store => $store,
 \end{frame}
 
 \subsection{Basic Methods}
+
+A Wiki node consists of:
+
+\begin{itemize}
+  \item text
+  \item version
+  \item metadata
+  \item checksum
+\end{itemize}
+
+% handling conflicts
 
 \begin{frame}[fragile]{Basic Methods}
 \begin{lstlisting}
@@ -135,11 +170,15 @@ All storage backends can be easily initialized with the corresponding
 \begin{frame}{Storage Tables}
  \begin{description}
   \item [content] Nodes
-  \item [schema\_info] Schema Version
   \item [metadata] Metadata
   \item [internal\_links] Page Links
+  \item [schema\_info] Schema Version
  \end{description}
 \end{frame}
+
+What I miss a little bit here, is a chance to provide a table prefix,
+so these tables can happily live with tables from other applications
+in the same database.
 
 \subsection{Metadata}
 
@@ -147,26 +186,25 @@ All storage backends can be easily initialized with the corresponding
 
 Arbitrary metadata can be stored alongside with the node.
 
-\begin{frame}[fragile]{Metadata}
+The metadata can be retrieved with the \verb+retrieve_node+ method.
 
+\begin{frame}[fragile]{Metadata}
 \begin{lstlisting}
-%metadata = {country => 'USA', 
+# store metadata
+my %metadata = {country => 'USA', 
     state => 'Florida',
     city => 'Orlando'};
 
 $wiki->write_node($node, $content, $checksum, \%metadata);
-\end{lstlisting}
-\end{frame}
 
-The metadata can be retrieved with the \verb+retrieve_node+ method.
-
-\begin{lstlisting}
-%node = $wiki->retrieve_node('Perl Oasis');
+# retrieve metadata
+my %node = $wiki->retrieve_node('Perl Oasis');
 
 for (keys %{$node{metadata}}) {
-    ...
+    print "Metadata $_: $node{$metadata}->{$_}->[0]\n";
 }
 \end{lstlisting}
+\end{frame}
 
 \section{Formatters}
 
