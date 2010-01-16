@@ -2,6 +2,7 @@
 % Wiki::Toolkit History, Author
 % Functions
 % Address for Slides
+% Macros
 
 \usepackage{beamerthemesplit}
 \usepackage{verbatim}
@@ -109,7 +110,7 @@ Arbitrary metadata can be stored alongside with the node.
     state => 'Florida',
     city => 'Orlando'};
 
-$wiki->write_node($node, $content, $checksum, \%metadata, $requires_moderation);
+$wiki->write_node($node, $content, $checksum, \%metadata);
 \end{lstlisting}
 \end{frame}
 
@@ -189,6 +190,7 @@ Implicit links are links from CamelCase strings.
 \subsection{Multiple Formatters}
 
 \begin{frame}{Multiple Formatters}
+ 
 \end{frame}
 
 \subsection{Writing Formatters}
@@ -196,6 +198,11 @@ Implicit links are links from CamelCase strings.
 % HINT to Text::WikiFormat;
 
 \begin{frame}{Writing Formatters}
+ \begin{itemize}
+   \item<1-> Wiki::Toolkit::Formatter::Foo
+   \item<2-> format() method
+   \item<3-> Text::WikiFormat
+ \end{itemize}
 \end{frame}
 
 \section{Search}
