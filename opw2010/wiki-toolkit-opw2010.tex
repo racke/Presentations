@@ -1,10 +1,13 @@
 % TODO
+% Last slide
+% Metadata slide
 % Wiki::Toolkit History, Author
-% Functions
+% Functions, add more of them
 % Address for Slides
 %   pointer to Wiki.pm source code
 % Macros
-% Glue => complete initialization, %Storage example
+% Glue => %Storage example
+% Plugins => Diff example
 
 % found at http://www.mrunix.de/forums/archive/index.php/t-39599.html
 \usepackage[T1]{fontenc}
@@ -34,11 +37,9 @@
 
 \tableofcontents
 
-\section{Preface}
+% \section{Preface}
 Welcome to my presentation about Wiki::Toolkit, a toolkit for building
 Wikis with Perl.
-
- 
 
 % Real World Applications
 % - OpenGuides
@@ -64,6 +65,43 @@ it can be exchanged and subclassed.
 
 % \begin{frame}{Wiki Functions}
 % \end{frame}
+
+\section{Glue}
+
+\subsection{Wiki::Toolkit Setup}
+
+\begin{frame}[fragile]{Wiki::Toolkit Setup}
+\begin{lstlisting}
+my $store = new Wiki::Toolkit::Store::MySQL(dbname => 'wiki',
+    dbuser => 'wiki',
+    dbpass => 'wikisecret');
+
+my $formatter = new Wiki::Toolkit::Formatter::UseMod;
+
+my $search = new Wiki::Toolkit::Search::DBIxFTS(dbh => $store->dbh);
+
+my $wiki = new Wiki::Toolkit(store => $store,
+    formatter => $formatter,
+    search => $search,
+);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Basic Methods}
+
+\begin{frame}[fragile]{Basic Methods}
+\begin{lstlisting}
+# create node
+$wiki->write_node($name, $text, undef, \%metadata);
+
+# retrieve and display node
+my %node = $wiki->retrieve_node({name => $name, version => $version});
+my $output = $wiki->format($node{content}, $node{metadata});
+ 
+# update node
+$wiki->write_node($name, $text, $node{checksum}, \%metadata);
+\end{lstlisting}
+\end{frame}
 
 \section{Storage}
 
@@ -103,9 +141,7 @@ All storage backends can be easily initialized with the corresponding
  \end{description}
 \end{frame}
 
-\subsection{Nodes and Metadata}
-
-\subsubsection{Metadata}
+\subsection{Metadata}
 
 % see also JSON plugin
 
@@ -318,7 +354,7 @@ $wiki->register_plugin(plugin => $plugin);
  \end{description}
 \end{frame}
 
-\section{Glue}
+
 \subsection{Methods}
 
 
