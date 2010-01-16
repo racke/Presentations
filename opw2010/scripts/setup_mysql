@@ -7,4 +7,7 @@ my $dbuser = 'wiki';
 my $dbpass = 'wikisecret';
 my $dbhost;
 
-Wiki::Toolkit::Setup::MySQL::setup($dbname, $dbuser, $dbpass, $dbhost);
+Wiki::Toolkit::Setup::MySQL::setup($dbname,
+								   $dbuser,
+								   $dbpass,
+								   $dbhost);
