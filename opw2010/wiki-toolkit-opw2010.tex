@@ -362,12 +362,23 @@ $wiki->format($node{content}, $node{metadata});
   \item Wiki::Toolkit::Search::DBIxFTS
  \end{itemize}
 \end{frame}
+
+\subsection{Search Setup}
+
+\begin{frame}[fragile]{Search Setup}
+\lstinputlisting{scripts/setup_mysqlindex}
+\end{frame}
+
 \subsection{Search Example}
 
 % note: setup DBIx::FullTextSearch indexes
+% mention script
 
 \begin{frame}[fragile]{Search Example}
 \begin{lstlisting}
+# first time setup
+Wiki::Toolkit::Setup::DBIxFTSMySQL::setup($dbname, $dbuser, $dbpass, $dbhost);
+
 my $store = new Wiki::Toolkit::Store::MySQL(dbname => 'wiki',
     dbuser => 'wiki',
     dbpass => 'wikisecret');
