@@ -4,6 +4,7 @@
 % Address for Slides
 %   pointer to Wiki.pm source code
 % Macros
+% Glue => complete initialization, %Storage example
 
 % found at http://www.mrunix.de/forums/archive/index.php/t-39599.html
 \usepackage[T1]{fontenc}
@@ -262,7 +263,30 @@ $wiki->format($node{content}, $node{metadata});
 
 \section{Search}
 
-\begin{frame}{Search}
+\subsection{Search Backends}
+
+% Search::InvertedIndex
+% DBIx::FullTextSearch
+
+\begin{frame}{Search Backends}
+ \begin{itemize}
+  \item Wiki::Toolkit::Search::SII
+  \item Wiki::Toolkit::Search::DBIxFTS
+ \end{itemize}
+\end{frame}
+\subsection{Search Example}
+
+% note: setup DBIx::FullTextSearch indexes
+
+\begin{frame}[fragile]{Search Example}
+\begin{lstlisting}
+my $store = new Wiki::Toolkit::Store::MySQL(dbname => 'wiki',
+    dbuser => 'wiki',
+    dbpass => 'wikisecret');
+
+my $search = new Wiki::Toolkit::Search::DBIxFTS(dbh => $store->dbh);
+my %oasis_nodes = $search->search_nodes('oasis');
+\end{lstlisting}
 \end{frame}
 
 \section{Plugins}
@@ -293,6 +317,10 @@ $wiki->register_plugin(plugin => $plugin);
   \item[RSS::Reader] retrieve feeds for node inclusion
  \end{description}
 \end{frame}
+
+\section{Glue}
+\subsection{Methods}
+
 
 \section{Wiki Syntax}
 \subsection{Markdown}
