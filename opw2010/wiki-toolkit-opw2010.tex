@@ -7,7 +7,7 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
-\lstset{language=Perl,basicstyle=\footnotesize}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3}
 
 % - Introduction
 % - Motivation
@@ -29,7 +29,7 @@
 Welcome to my presentation about Wiki::Toolkit, a toolkit for building
 Wikis with Perl.
 
-
+ 
 
 % Real World Applications
 % - OpenGuides
@@ -37,6 +37,11 @@ Wikis with Perl.
 \section{Architecture}
 
 % Dispatch
+
+We start with taking at the architecture of a Wiki::Toolkit wiki.
+
+Wiki::Toolkit is written in a modern style, so all components of
+it can be exchanged and subclassed.
 
 \begin{frame}{Architecture}
  \begin{itemize}
