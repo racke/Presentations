@@ -2,8 +2,10 @@
 % Wiki::Toolkit History, Author
 % Functions
 % Address for Slides
+%   pointer to Wiki.pm source code
 % Macros
 
+% found at http://www.mrunix.de/forums/archive/index.php/t-39599.html
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
@@ -212,6 +214,37 @@ my $fmt = new Wiki::Toolkit::Formatter::Multiple (
 ...
 
 my $output = $wiki->format($text, {formatter => 'mediawiki'});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Formatters}
+\begin{lstlisting}
+my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
+my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
+
+my $fmt = new Wiki::Toolkit::Formatter::Multiple (
+      usemod => $fmt_usemod,
+      mediawiki => $fmt_mediawiki,
+      _DEFAULT => $fmt_usemod,
+  );
+
+...
+
+my $output = $wiki->format($text, {formatter => 'mediawiki'});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Formatters}
+\begin{lstlisting}
+# write node
+$metadata{formatter} = 'mediawiki';
+$wiki->write_node($name, $text, $checksum, \%metadata);
+
+# retrieve node
+%node = $wiki->retrieve_node($name);
+
+# display node
+$wiki->format($node{content}, $node{metadata});
 \end{lstlisting}
 \end{frame}
 
