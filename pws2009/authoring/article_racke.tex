@@ -241,6 +241,28 @@ Set(@Plugins,(qw(RTx::Calendar)));
 Das Plugin \verb/RTx::Email::Completion/ erweitert RT um eine automatische
 Vervollständigung von Emailadressen.
 \subsubsection{\WSIndex{RT::Authen::ExternalAuth}}
+This module provides the ability to authenticate RT users
+against one or more external data sources at once. It will
+also allow information about that user to be loaded from
+the same, or any other available, source as well as allowing
+multple redundant servers for each method.
+
+The extension currently supports authentication and 
+information from LDAP via the Net::LDAP module, and from
+any data source that an installed DBI driver is available
+for. 
+
+It is also possible to use cookies set by an alternate
+application for Single Sign-On (SSO) with that application.
+For example, you may integrate RT with your own website login
+system so that once users log in to your website, they will be
+automagically logged in to RT when they access it.
+
+Email address is needed in attr_map,
+
+Crypt is required for DBI (IRC Zordrak).
+install encrypt message (Digest::MD5) !!
+
 Weitere Dokumentation findet sich im RT Wiki \cite{racke:wikixauth}.
 \subsubsection{\WSIndex{RTx::Calendar}}
 Das Plugin \verb/RTx::Calendar/ erlaubt eine kalendarische Darstellung der
