@@ -1,0 +1,11 @@
+(09:55:20 AM) Phurl: can it parse media wiki full syntax... i can imagine the plugins will make that very complex
+(09:56:05 AM) Phurl: drlizau, http://wiki.openstreetmap.org/wiki/Kosovo_iMMAP_Import#32400-39900 they are still active on the import front.
+(09:58:24 AM) racke: I don't know about Media Wiki full syntax, that is the job of the Media Wiki formatter
+(09:59:31 AM) racke: you mean the Media Wiki plugins make this very complex?
+(10:01:32 AM) Phurl: yes
+(10:01:46 AM) Phurl: they can extend the syntax in very perverse ways
+(10:01:50 AM) Phurl: introduce keyworks
+(10:01:53 AM) Phurl: introduce keyword
+(10:02:23 AM) Phurl: http://wiki.sc-education.org/index.php/Wiki_Extension_Syntax
+(10:02:29 AM) Phurl: for example, google maps
+(10:03:21 AM) Phurl: http://studiwiki.tu-dortmund.de/wiki/plugins here are more plugins
