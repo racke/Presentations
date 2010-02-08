@@ -1,0 +1,16 @@
+Wiki::Toolkit ist ein moderner Baukasten zur Erstellung von Wikis mit Perl. Es ist besonders gut geeignet zur Einbettung eines Wikis in bestehende Projekte.
+
+Zur Zusammenstellung eines Wikis aus dem Wiki::Toolkit-Baukasten finden sich folgende Modultypen in der Wiki::Toolkit-Distribution bzw. in CPAN:
+
+* Datenspeicher (MySQL, PostgreSQL, SQLite)
+* Formatierer (MediaWiki, UseMod, MarkDown, POD)
+* Suche (SII, Plucene, DBIx::FullTextSearch)
+* Plugins (Diff, JSON, Locator::Grid, Ping)
+
+Mit Ausnahme der Formatierer gibt es für alle Modultypen Basisklassen, von denen zusätzliche Module abgeleitet werden können.
+
+Formatierer können unkompliziert erstellt werden durch die Implementierung einer format-Methode. Dabei steht das CPAN-Modul Text::WikiFormat hilfreich zur Seite.
+
+Wiki::Toolkit wurde im Rahmen des OpenGuides-Projekts entwickelt und befindet sich ebenso im Einsatz als Wiki des Act Konferenz-Baukastens.
+
+Zum Abschluß wird als praktisches Beispiel über die Einbindung von Wikis mit Hilfe von Wiki::Toolkit in die Open Source Ecommerce Software Interchange berichtet.
