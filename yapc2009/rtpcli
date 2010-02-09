@@ -3,38 +3,56 @@
 use strict;
 use warnings;
 
-use Error qw(:try);
+use AppConfig qw(:argcount);
+
 use RT::Client::REST;
+use RT::Client::REST::Queue;
+use RT::Client::REST::Ticket;
 
-my $rt = RT::Client::REST->new(
-           server => 'http://support.linuxia.exp/',
-           timeout => 30,
-							  );
-my $id;
+unless (@ARGV >= 1) {
+	die "$0: need configuration file.\n";
+}
 
-try {
-	$rt->login(username => 'racke', password => 'foobar21');
+my ($cfgfile, $config, $rt, $queue, $ticket, $rootid, $id, $sth);
+
+# Read configuration file
+$cfgfile = shift;
+$config = read_config($cfgfile, {});
+
+# RT
+$rt = new RT::Client::REST (server => $config->{url});
+$rt->login(username => $config->{username}, password => $config->{password});
+
+# Do sth
+$sth = shift;
+
+if ($sth) {
+	# display ticket
+	$id = $sth;
+
+	$ticket = new RT::Client::REST::Ticket(rt => $rt, id => $id);
+
+	if ($ticket->retrieve) {
+		my @custom_fields = $ticket->cf;
+		print "CF: @custom_fields\n";
 	}
-	catch Exception::Class::Base with {
-		die "problem logging in: ", shift->message;
-	};
+	print "Due: " . $ticket->due() . "\n";
+	print "Tags: " . $ticket->cf('Tags') . "\n";
+#	$ticket->cf('Tags', 'Random Tags');
+#	$ticket->store;
+}
 
-try {
-	my %parms;
-	
-	$parms{queue} = 'Nordic Perl Workshop';
-	$parms{subject} = 'Test';
-	$parms{starts} = '20090417 12:00';
-		
-	$id = $rt->create(type => 'ticket',
-					  set => \%parms,
-					  text => 'Hello World');
-	} catch RT::Client::REST::UnauthorizedActionException with {
-		# does not work with create ?
-		print "You are not authorized to view ticket #10\n";
-	} catch RT::Client::REST::Exception with {
-		print "Other exception.", shift->message, "\n";
-		# something went wrong.
-	};
+sub read_config {
+	my ($file, $confref) = @_;
+	my $ac;
+	$ac = new AppConfig({GLOBAL => {ARGCOUNT => ARGCOUNT_ONE}});
 
-print "Created ticket with $id.\n";
+	for my $var (qw{url queue username password}) {
+		$ac->define($var, {DEFAULT => $confref->{$var}});
+	}
+
+	$ac->file($file);
+	%$confref = $ac->varlist('.*');
+
+	return $confref;
+}
