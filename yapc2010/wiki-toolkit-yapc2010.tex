@@ -148,19 +148,26 @@ All storage backends are derived from \verb+Wiki::Toolkit::Store::Database+.
 
 \begin{frame}{Storage Backends}
  \begin{itemize}
-  \item MySQL
-  \item PostgreSQL
   \item SQLite
+  \item PostgreSQL
+  \item MySQL
+    \begin{itemize}
+      \item MediaWiki
+    \end{itemize}
  \end{itemize}
 \end{frame}
+
+\verb+Wiki::Toolkit::Store::MediaWiki+ uses a Mediawiki 1.6 database running
+in MySQL. This module is intended to be capable of running concurrently
+with a Mediawiki 1.6 installation without data corruption. 
 
 \subsection{Storage Setup}
 
 % notes: cleardb, leaving tables alone
 % cleardb doesn't erase tables for search backends
 
-All storage backends can be easily initialized with the corresponding
-\verb+Wiki::Toolkit::Setup+ classes.
+All storage backends with the exception of the MediaWiki one can be easily
+initialized with the corresponding \verb+Wiki::Toolkit::Setup+ classes.
 
 \begin{frame}[fragile]
 \frametitle{Storage Setup}
