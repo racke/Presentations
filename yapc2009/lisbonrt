@@ -30,12 +30,12 @@ $rt->login(username => $config->{username}, password => $config->{password});
 $queue = new RT::Client::REST::Queue (rt => $rt,
 									  name => 'YAPC::EU::2009',
 									  description => 'Yet Another Perl Conference Europe');
-$queue->store;
+#$queue->store;
 
 # create user
 $user = new RT::Client::REST::User (rt => $rt,
 									 name => 'lisbon',
-									 email_address => 'lisbon@support.linuxia.de',
+#									 email => 'lisbon@support.linuxia.de',
 									 password => 'lisbon09');
 
 $user->store;
