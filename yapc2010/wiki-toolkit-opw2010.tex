@@ -1,0 +1,474 @@
+% TODO
+% Metadata slide
+% Wiki::Toolkit History, Author
+% Functions, add more of them
+% Address for Slides
+%   pointer to Wiki.pm source code
+% Glue => %Storage example
+% Plugins => Diff example
+
+% found at http://www.mrunix.de/forums/archive/index.php/t-39599.html
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+
+\usepackage{beamerthemesplit}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3}
+
+% - Introduction
+% - Motivation
+% - Application
+
+\title{Wikis with Wiki::Toolkit}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date[OPW2010]{Perl Oasis, 16th January 2010}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\tableofcontents
+
+% \section{Preface}
+Welcome to my presentation about Wiki::Toolkit, a toolkit for building
+Wikis with Perl.
+
+My name is Stefan Hornburg and I'm full time perl hacker, involved for
+the most part in Interchange, an Open Source E-Commerce software 
+written in Perl.
+
+We installed the MoinMoin wiki on our website two years ago. While I was
+quite pleased about it, it is still Python and unfortunately it broke 
+into pieces after a Debian upgrade. Due to my limited knowledge about
+Python and MoinMoin I wasn't able to fix it quickly.
+That motivated me to search for a modern and easy-to-use Perl Wiki.
+
+Wiki::Toolkit isn't an instant Wiki, but it allows you to choose
+your tools of the trade. You can pick your tools for storing, formatting,
+searching and other purpose, or even design your own.
+
+The work on the Interchange Wiki isn't yet completed, it'll take a few
+months more to get it done due to all the other projects I have to care
+for.
+
+Before we continue with the look at the archictecture of Wiki::Toolkit
+I want to mention the real world applications I found using Wiki::Toolkit,
+
+% Real World Applications
+% - OpenGuides
+% - ACT
+\section{Architecture}
+
+% Dispatch
+
+We start with taking a look at the architecture of a Wiki::Toolkit wiki.
+
+Wiki::Toolkit is written in a modern style, so all components of
+it can be exchanged and subclassed.
+
+\begin{frame}{Architecture}
+ \begin{itemize}
+  \item Storage
+  \item Formatter(s)
+  \item Plugins
+  \item Search
+  \item Glue
+ \end{itemize}
+\end{frame}
+
+% \begin{frame}{Wiki Functions}
+% \end{frame}
+
+\section{Glue}
+
+Before going into detail with the different tools that Wiki::Toolkit
+provides, I show you how the glue looks like.
+
+After selecting the tools you want to use in your Wiki::Toolkit wiki,
+you create an instance of each of these tools and pass them to
+the constructor for the Wiki::Toolkit class.
+
+\subsection{Wiki::Toolkit Setup}
+
+\begin{frame}[fragile]{Wiki::Toolkit Setup}
+\begin{lstlisting}
+my $store = new Wiki::Toolkit::Store::MySQL(dbname => 'wiki',
+    dbuser => 'wiki',
+    dbpass => 'wikisecret');
+
+my $formatter = new Wiki::Toolkit::Formatter::UseMod;
+
+my $search = new Wiki::Toolkit::Search::DBIxFTS(dbh => $store->dbh);
+
+my $wiki = new Wiki::Toolkit(store => $store,
+    formatter => $formatter,
+    search => $search,
+);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Basic Methods}
+
+A Wiki node consists of:
+
+\begin{itemize}
+  \item text
+  \item version
+  \item metadata
+  \item checksum
+\end{itemize}
+
+% handling conflicts
+
+\begin{frame}[fragile]{Basic Methods}
+\begin{lstlisting}
+# create node
+$wiki->write_node($name, $text, undef, \%metadata);
+
+# retrieve and display node
+my %node = $wiki->retrieve_node({name => $name, version => $version});
+my $output = $wiki->format($node{content}, $node{metadata});
+ 
+# update node
+$wiki->write_node($name, $text, $node{checksum}, \%metadata);
+\end{lstlisting}
+\end{frame}
+
+\section{Storage}
+
+\subsection{Storage Backends}
+
+All storage backends are derived from \verb+Wiki::Toolkit::Store::Database+.
+
+\begin{frame}{Storage Backends}
+ \begin{itemize}
+  \item MySQL
+  \item PostgreSQL
+  \item SQLite
+ \end{itemize}
+\end{frame}
+
+\subsection{Storage Setup}
+
+% notes: cleardb, leaving tables alone
+% cleardb doesn't erase tables for search backends
+
+All storage backends can be easily initialized with the corresponding
+\verb+Wiki::Toolkit::Setup+ classes.
+
+\begin{frame}[fragile]
+\frametitle{Storage Setup}
+\lstinputlisting{scripts/setup_mysql}
+\end{frame}
+
+\subsection{Storage Tables}
+
+\begin{frame}{Storage Tables}
+ \begin{description}
+  \item [content] Nodes
+  \item [metadata] Metadata
+  \item [internal\_links] Page Links
+  \item [schema\_info] Schema Version
+ \end{description}
+\end{frame}
+
+What I miss a little bit here, is a chance to provide a table prefix,
+so these tables can happily live with tables from other applications
+in the same database.
+
+\subsection{Metadata}
+
+% see also JSON plugin
+
+Arbitrary metadata can be stored alongside with the node.
+
+The metadata can be retrieved with the \verb+retrieve_node+ method.
+
+\begin{frame}[fragile]{Metadata}
+\begin{lstlisting}
+# store metadata
+my %metadata = {country => 'USA', 
+    state => 'Florida',
+    city => 'Orlando'};
+
+$wiki->write_node($node, $content, $checksum, \%metadata);
+
+# retrieve metadata
+my %node = $wiki->retrieve_node('Perl Oasis');
+
+for (keys %{$node{metadata}}) {
+    print "Metadata $_: $node{$metadata}->{$_}->[0]\n";
+}
+\end{lstlisting}
+\end{frame}
+
+\section{Formatters}
+
+Formatters are classes that providing methods for turning text in
+Wiki format into HTML code.
+
+\subsection{Methods}
+
+The interface for Wiki::Toolkit formatters is really simple, it consists
+of a mandatory \verb+format+ and an optional \verb+find_internal_links+
+method.
+
+\verb+format+ takes the text in the Wiki format and returns HTML code
+suitable for display in a web page.
+
+\verb+find_internal_links+ returns internal links in the Wiki.
+
+\begin{frame}[fragile]{Methods}
+\begin{lstlisting}
+
+my $html = $formatter->format($content);
+
+my @links = $formatter->find_internal_links($content);
+
+\end{lstlisting}
+\end{frame}
+
+\subsection{Constructor Options}
+
+% see contructor for Wiki::Toolkit:Formatter::UseMod
+
+\begin{frame}[fragile]{Constructor Options}
+\begin{lstlisting}
+
+my $formatter = Wiki::Toolkit::Formatter::Default->new(
+                 extended_links  => 0,
+                 implicit_links  => 1,
+                 allowed_tags    => [qw(b i)],
+                 macros          => {},
+                 node_prefix     => 'wiki.cgi?node=' );
+
+\end{lstlisting}
+\end{frame}
+
+Extended links are usually links marked by square brackets, e.g.
+\verb+[[Page]|Link name]+. The formatter class can decide about
+the exact format.
+
+Implicit links are links from CamelCase strings.
+
+\subsection{Macros}
+
+\begin{frame}[fragile]{Macros}
+\begin{lstlisting}
+macros => { qr/(^|\b)\@SEARCHBOX(\b|$)/ =>
+            qq(<form action="wiki.cgi" method="get">
+                <input type="hidden" name="action" value="search">
+                <input type="text" size="20" name="terms">
+                <input type="submit"></form>) }
+\end{lstlisting}
+\end{frame}
+
+% \subsection{Internal Links}
+
+% Note: \verb+rename_node+ function uses internal_links table.
+
+\subsection{Formatters in CPAN}
+
+\begin{frame}{Formatters in CPAN}
+ \begin{itemize}
+  \item MediaWiki
+  \item UseMod
+  \item MarkDown
+  \item POD
+ \end{itemize}
+\end{frame}
+
+\subsection{Multiple Formatters}
+
+It is possible to use multiple formatters for one Wiki with
+the Wiki::Toolkit::Formatter::Multiple class.
+
+\begin{frame}[fragile]{Multiple Formatters}
+\begin{lstlisting}
+my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
+my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
+
+my $fmt = new Wiki::Toolkit::Formatter::Multiple (
+      usemod => $fmt_usemod,
+      mediawiki => $fmt_mediawiki,
+      _DEFAULT => $fmt_usemod,
+  );
+
+...
+
+my $output = $wiki->format($text, {formatter => 'mediawiki'});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Formatters}
+\begin{lstlisting}
+my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
+my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
+
+my $fmt = new Wiki::Toolkit::Formatter::Multiple (
+      usemod => $fmt_usemod,
+      mediawiki => $fmt_mediawiki,
+      _DEFAULT => $fmt_usemod,
+  );
+
+...
+
+my $output = $wiki->format($text, {formatter => 'mediawiki'});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Formatters}
+\begin{lstlisting}
+# write node
+$metadata{formatter} = 'mediawiki';
+$wiki->write_node($name, $text, $checksum, \%metadata);
+
+# retrieve node
+%node = $wiki->retrieve_node($name);
+
+# display node
+$wiki->format($node{content}, $node{metadata});
+\end{lstlisting}
+\end{frame}
+
+\subsection{Writing Formatters}
+
+% HINT to Text::WikiFormat;
+
+\begin{frame}{Writing Formatters}
+ \begin{itemize}
+   \item Wiki::Toolkit::Formatter::Foo
+   \item format() method
+   \item Text::WikiFormat
+ \end{itemize}
+\end{frame}
+
+\section{Search}
+
+\subsection{Search Backends}
+
+% Search::InvertedIndex
+% DBIx::FullTextSearch
+
+\begin{frame}{Search Backends}
+ \begin{itemize}
+  \item Wiki::Toolkit::Search::SII
+  \item Wiki::Toolkit::Search::DBIxFTS
+ \end{itemize}
+\end{frame}
+
+\subsection{Search Setup}
+
+\begin{frame}[fragile]{Search Setup}
+\lstinputlisting{scripts/setup_mysqlindex}
+\end{frame}
+
+\subsection{Search Example}
+
+% note: setup DBIx::FullTextSearch indexes
+% mention script
+
+\begin{frame}[fragile]{Search Example}
+\begin{lstlisting}
+# first time setup
+Wiki::Toolkit::Setup::DBIxFTSMySQL::setup($dbname, $dbuser, $dbpass, $dbhost);
+
+my $store = new Wiki::Toolkit::Store::MySQL(dbname => 'wiki',
+    dbuser => 'wiki',
+    dbpass => 'wikisecret');
+
+my $search = new Wiki::Toolkit::Search::DBIxFTS(dbh => $store->dbh);
+my %oasis_nodes = $search->search_nodes('oasis');
+\end{lstlisting}
+\end{frame}
+
+\section{Plugins}
+
+% Wiki::Toolkit::Feed modules
+% http://search.cpan.org/~dom/Wiki-Toolkit-0.78/lib/Wiki/Toolkit/Extending.pod
+
+\begin{frame}[fragile]
+\frametitle{Plugins}
+\begin{lstlisting}
+my $plugin = new Wiki::Toolkit::Plugin::Diff;
+$wiki->register_plugin(plugin => $plugin);
+%diff = $plugin->differences(node => 'FrontPage',
+    left_version => 101,
+    right_version => 105);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Plugins in CPAN}
+
+\begin{frame}{Plugins in CPAN}
+ \begin{description}
+  \item[Diff] format differences between versions
+  \item[Categorizer] category management
+  \item[JSON] recent changes as JSON
+  \item[Locator::Grid] manage co-ordinate data
+  \item[Ping] ping various services on node updates
+  \item[RSS::Reader] retrieve feeds for node inclusion
+ \end{description}
+\end{frame}
+
+
+\begin{frame}{The End}
+ \begin{description}
+  \item[CPAN] http://search.cpan.org/perldoc?Wiki::Toolkit
+  \item[Website] http://www.wiki-toolkit.org/
+  \item[Talk]
+    http://www.linuxia.de/talks/opw2010/wiki-toolkit-opw2010-beamer.pdf
+   \item[Questions] ???
+ \end{description}
+\end{frame}
+
+\section{Wiki Syntax}
+\subsection{Markdown}
+Homepage: \url{http://daringfireball.net/projects/markdown/syntax}
+
+Wiki: \url{http://markdown.infogami.com/}
+
+\subsubsection{Emphasis}
+
+\begin{tabular}{ll}
+\verb|*single asterisks*| & \textit{italic} \\
+\verb|_single underscores_| & \textbf{bold} \\
+\end{tabular}
+
+% TODO: double asterisks / double underscores
+
+\subsubsection{Links}
+Internal links:
+
+\begin{verbatim}
+See my [About](/about/) page for details.
+\end{verbatim}
+
+\subsection{UseMod}
+Homepage: \url{http://www.usemod.com/cgi-bin/wiki.pl}
+Syntax: \url{http://www.usemod.com/cgi-bin/wiki.pl?TextFormattingRules}
+
+\subsubsection{Emphasis}
+
+\section{Resources}
+
+Homepage: \url{http://www.wiki-toolkit.org/}
+
+Mailing list: \url{http://www.earth.li/cgi-bin/mailman/listinfo/cgi-wiki-dev}
+
+\subsection{Related Projects}
+MojoMojo, a Catalyst \& DBIx::Class powered Wiki,
+\url{http://search.cpan.org/perldoc?MojoMojo}.
+
+\end{document}
+    
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,20 @@
+Markdown Format: drop slash for internal links
+
+Metadata is always returned in an array ref !!!
+list_nodes_by_metadata
+
+Imports:
+
+Wiki imports
+
+Possible Formatters:
+
+Text::GooglewikiFormat
+HTML::WikiConverter
+
+perigrin = Chris Prather
+(09:06:28 PM) perigrin: racke: funny enough the wiki in ACT is Wiki::Toolkit :)
+
+DokuWiki Formatter:
+- UseMod.pm as base
+  (why ?)
