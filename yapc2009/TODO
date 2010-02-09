@@ -1,15 +1,37 @@
 Monitor?
 
+Extras for Calendar 0.07
+
+URI::Fetch
+Perlbal
+DBIx::DataModel/Data::Domain => Geneva
+	searching: ack
+
+Conclusion
+Callbacks used by Plugins
+	=> add callbacks to customization page
+
 This talk is about RT 3.8/4.0 and how to you extend/customize
 	Give the majors (Plugins/REST/..)
 
 Display custom fields (SeeCustomField)
 	Configuration => CustomFields => Tags => Group Rights/User Rights
 		=> SeeCustomField (for each)
-ModifyCustomField
+ModifyCustomField (no error message)
+
+RTx::Tags 0.21
+	config file local/plugins
+
+racke@erebus:~$ rt show -f Subject,Due,CF-tags ticket/733
+id: ticket/733
+Subject: Writing reusable code
+Due: Mon Aug 03 11:35:00 2009
+CF.{Tags}: Random Tags
+
+Aug  4 13:22:22 ajax RT: Failed command 'customfield.tags: Plugins' Error message: Command 'customfield.tags' is unknown (/usr/local/share/request-tracker3.8/plugins/RT-Extension-CommandByMail/lib/RT/Interface/Email/Filter/TakeAction.pm:684)  
 
 Start with plugins (refer to creation of the calendar)
-REST (pointer to scripts)
+REST (pointer to scripts), REST state in RT4
 Introduction what do we want to learn
 - slide about permissions
 
@@ -17,7 +39,8 @@ Introduction what do we want to learn
 * REST: what you can do / what you can't do
 
 * Install HTML::TagCloud on erebus [x]
-* Install EmailCompletion on linuxia etc
+* Install EmailCompletion on linuxia etc => SelfService
+
 * Calendar search results
 * Current version of RT-Authen
 * Setup playground
