@@ -1,0 +1,8 @@
+Report "make test" error
+
+* check: Markdown and internal links
+
+* future plans
+
+Plugins:
+http://search.cpan.org/~dom/Wiki-Toolkit-0.78/lib/Wiki/Toolkit/Extending.pod
