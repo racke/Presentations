@@ -1,3 +1,9 @@
+Table prefix:
+
+what about table prefix for wiki tables?
+
+MediaWiki plugins:
+
 (09:55:20 AM) Phurl: can it parse media wiki full syntax... i can imagine the plugins will make that very complex
 (09:56:05 AM) Phurl: drlizau, http://wiki.openstreetmap.org/wiki/Kosovo_iMMAP_Import#32400-39900 they are still active on the import front.
 (09:58:24 AM) racke: I don't know about Media Wiki full syntax, that is the job of the Media Wiki formatter
