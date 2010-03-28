@@ -1,0 +1,13 @@
+#! /usr/bin/perl
+
+use Wiki::Toolkit::Setup::MySQL;
+
+my $dbname = 'wiki';
+my $dbuser = 'wiki';
+my $dbpass = 'wikisecret';
+my $dbhost;
+
+Wiki::Toolkit::Setup::MySQL::setup($dbname,
+								   $dbuser,
+								   $dbpass,
+								   $dbhost);
