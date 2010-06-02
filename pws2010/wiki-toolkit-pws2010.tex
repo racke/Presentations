@@ -63,7 +63,7 @@ I want to mention the real world applications I found using Wiki::Toolkit,
 % Real World Applications
 % - OpenGuides
 % - ACT
-\section{Architecture}
+\section{Architektur}
 
 % Dispatch
 
@@ -72,12 +72,12 @@ We start with taking a look at the architecture of a Wiki::Toolkit wiki.
 Wiki::Toolkit is written in a modern style, so all components of
 it can be exchanged and subclassed.
 
-\begin{frame}{Architecture}
+\begin{frame}{Architektur}
  \begin{itemize}
   \item Storage
-  \item Formatter(s)
+  \item Formatierer
   \item Plugins
-  \item Search
+  \item Suche
   \item Glue
  \end{itemize}
 \end{frame}
@@ -208,12 +208,12 @@ for (keys %{$node{metadata}}) {
 \end{lstlisting}
 \end{frame}
 
-\section{Formatters}
+\section{Formatierer}
 
 Formatters are classes that providing methods for turning text in
 Wiki format into HTML code.
 
-\subsection{Methods}
+\subsection{Methoden}
 
 The interface for Wiki::Toolkit formatters is really simple, it consists
 of a mandatory \verb+format+ and an optional \verb+find_internal_links+
@@ -224,7 +224,7 @@ suitable for display in a web page.
 
 \verb+find_internal_links+ returns internal links in the Wiki.
 
-\begin{frame}[fragile]{Methods}
+\begin{frame}[fragile]{Methoden}
 \begin{lstlisting}
 
 my $html = $formatter->format($content);
@@ -234,11 +234,11 @@ my @links = $formatter->find_internal_links($content);
 \end{lstlisting}
 \end{frame}
 
-\subsection{Constructor Options}
+\subsection{Optionen für den Konstruktor}
 
 % see contructor for Wiki::Toolkit:Formatter::UseMod
 
-\begin{frame}[fragile]{Constructor Options}
+\begin{frame}[fragile]{Konstruktoroptionen}
 \begin{lstlisting}
 
 my $formatter = Wiki::Toolkit::Formatter::Default->new(
@@ -257,9 +257,9 @@ the exact format.
 
 Implicit links are links from CamelCase strings.
 
-\subsection{Macros}
+\subsection{Makros}
 
-\begin{frame}[fragile]{Macros}
+\begin{frame}[fragile]{Makros}
 \begin{lstlisting}
 macros => { qr/(^|\b)\@SEARCHBOX(\b|$)/ =>
             qq(<form action="wiki.cgi" method="get">
@@ -273,9 +273,9 @@ macros => { qr/(^|\b)\@SEARCHBOX(\b|$)/ =>
 
 % Note: \verb+rename_node+ function uses internal_links table.
 
-\subsection{Formatters in CPAN}
+\subsection{Formatierer im CPAN}
 
-\begin{frame}{Formatters in CPAN}
+\begin{frame}{Formatierer im CPAN}
  \begin{itemize}
   \item MediaWiki
   \item UseMod
@@ -284,12 +284,12 @@ macros => { qr/(^|\b)\@SEARCHBOX(\b|$)/ =>
  \end{itemize}
 \end{frame}
 
-\subsection{Multiple Formatters}
+\subsection{Formatierer kombinieren}
 
 It is possible to use multiple formatters for one Wiki with
 the Wiki::Toolkit::Formatter::Multiple class.
 
-\begin{frame}[fragile]{Multiple Formatters}
+\begin{frame}[fragile]{Formatierer kombinieren}
 \begin{lstlisting}
 my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
 my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
@@ -337,44 +337,44 @@ $wiki->format($node{content}, $node{metadata});
 \end{lstlisting}
 \end{frame}
 
-\subsection{Writing Formatters}
+\subsection{Formatierer selbst erstellen}
 
 % HINT to Text::WikiFormat;
 
-\begin{frame}{Writing Formatters}
+\begin{frame}{Formatierer selbst erstellen}
  \begin{itemize}
    \item Wiki::Toolkit::Formatter::Foo
-   \item format() method
+   \item format()-Methode
    \item Text::WikiFormat
  \end{itemize}
 \end{frame}
 
-\section{Search}
+\section{Suche}
 
-\subsection{Search Backends}
+\subsection{Backends für die Suche}
 
 % Search::InvertedIndex
 % DBIx::FullTextSearch
 
-\begin{frame}{Search Backends}
+\begin{frame}{Backends für die Suche}
  \begin{itemize}
   \item Wiki::Toolkit::Search::SII
   \item Wiki::Toolkit::Search::DBIxFTS
  \end{itemize}
 \end{frame}
 
-\subsection{Search Setup}
+\subsection{Suche Setup}
 
-\begin{frame}[fragile]{Search Setup}
+\begin{frame}[fragile]{Suche Setup}
 \lstinputlisting{scripts/setup_mysqlindex}
 \end{frame}
 
-\subsection{Search Example}
+\subsection{Beispiel für die Suche}
 
 % note: setup DBIx::FullTextSearch indexes
 % mention script
 
-\begin{frame}[fragile]{Search Example}
+\begin{frame}[fragile]{Beispiel für die Suche}
 \begin{lstlisting}
 # first time setup
 Wiki::Toolkit::Setup::DBIxFTSMySQL::setup($dbname, $dbuser, $dbpass, $dbhost);
@@ -384,7 +384,7 @@ my $store = new Wiki::Toolkit::Store::MySQL(dbname => 'wiki',
     dbpass => 'wikisecret');
 
 my $search = new Wiki::Toolkit::Search::DBIxFTS(dbh => $store->dbh);
-my %oasis_nodes = $search->search_nodes('oasis');
+my %dpw_nodes = $search->search_nodes('schorndorf');
 \end{lstlisting}
 \end{frame}
 
@@ -404,15 +404,15 @@ $wiki->register_plugin(plugin => $plugin);
 \end{lstlisting}
 \end{frame}
 
-\subsection{Plugins in CPAN}
+\subsection{Plugins im CPAN}
 
-\begin{frame}{Plugins in CPAN}
+\begin{frame}{Plugins im CPAN}
  \begin{description}
-  \item[Diff] format differences between versions
-  \item[Categorizer] category management
-  \item[JSON] recent changes as JSON
-  \item[Locator::Grid] manage co-ordinate data
-  \item[Ping] ping various services on node updates
+  \item[Diff] Anzeige der Unterschiede zwischen den Versionen
+  \item[Categorizer] Kategorieverwaltung
+  \item[JSON] letzte Änderung als JSON
+  \item[Locator::Grid] Verwaltung von Koordinaten
+  \item[Ping] verschiedene Dienste anpingen
   \item[RSS::Reader] retrieve feeds for node inclusion
  \end{description}
 \end{frame}
@@ -424,7 +424,7 @@ $wiki->register_plugin(plugin => $plugin);
   \item[Website] http://www.wiki-toolkit.org/
   \item[Talk]
     http://www.linuxia.de/talks/pws2010/wiki-toolkit-pws2010-beamer.pdf
-   \item[Questions] ???
+   \item[Fragen] ???
  \end{description}
 \end{frame}
 
