@@ -2,6 +2,10 @@ Table prefix:
 
 what about table prefix for wiki tables?
 
+CGI::Wiki modules not ported to Wiki::Toolkit:
+
+
+
 MediaWiki plugins:
 
 (09:55:20 AM) Phurl: can it parse media wiki full syntax... i can imagine the plugins will make that very complex
