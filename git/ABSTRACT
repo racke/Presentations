@@ -1,0 +1,27 @@
+Vorteile/Features
+
+* distributed (offline, mistakes, -- commit rights (RST), submit
+  changes as email) - efficient storage with full history
+* instant (easy) branching and merging
+* speed
+* flexible (sub commands)
+* optimized: large file sets, complex changes, trial branches, being very fast
+  (Randal's talk), being robust
+
+Dokumentation
+
+Git Tutorial http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html
+Git User's Manual http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+Git Cheat Sheet http://github.com/guides/git-cheat-sheet
+Git Magic http://www-cs-students.stanford.edu/~blynn/gitmagic/
+
+Ideas
+Github.com
+
+Citations:
+
+(git magic)
+Git is a version control Swiss army knife. A reliable versatile multipurpose revision control tool whose extraordinary flexibility makes it tricky to learn, let alone master.
+
+Text:
+
