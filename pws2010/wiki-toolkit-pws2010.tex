@@ -36,29 +36,29 @@
 \tableofcontents
 
 % \section{Preface}
-Welcome to my presentation about Wiki::Toolkit, a toolkit for building
-Wikis with Perl.
+Herzlich willkommen zu meinem Vortrag über Wiki::Toolkit, ein Werkzeugkasten
+zur Erstellung von Wikis mit Perl.
 
-My name is Stefan Hornburg and I'm full time perl hacker, involved for
-the most part in Interchange, an Open Source E-Commerce software 
-written in Perl.
+Meine Hauptbetätigungsfeld ist Interchange, eine Open Source E-Commerce
+Software, die in Perl geschrieben ist. Für die Interchange-Website haben
+wir vor zwei Jahren ein MoinMoin Wiki installiert, mit dem wir auch soweit
+zufrieden waren. Leider funktionierte es nach einem Upgrade
+nicht mehr und unsere Versuche, es wieder zum Laufen zu
+bringen, waren leider erfolglos.
 
-We installed the MoinMoin wiki on our website two years ago. While I was
-quite pleased about it, it is still Python and unfortunately it broke 
-into pieces after a Debian upgrade. Due to my limited knowledge about
-Python and MoinMoin I wasn't able to fix it quickly.
-That motivated me to search for a modern and easy-to-use Perl Wiki.
+Daraufhin bin ich durch CPAN gestreift auf der Suche nach einem modernen
+und gut zu programmierenden Perl Wiki. Wiki::Toolkit hat dabei durch seine
+ausgereifte Architektur und eine mögliche Integration in Interchange mein Interesse
+geweckt.
 
-Wiki::Toolkit isn't an instant Wiki, but it allows you to choose
-your tools of the trade. You can pick your tools for storing, formatting,
-searching and other purpose, or even design your own.
+Wiki::Toolkit ist kein fertiges Wiki, es ist eher dazugedacht in eine
+vorhandene Anwendung eingebettet zu werden. Dafür hat man freie Wahl
+bei der Datenspeicherung, Formatierung und Suchmaschine. Entweder es kann
+eines der vorhandenen Module eingesetzt werden oder ein eigenes Modul
+geschrieben werden.
 
-The work on the Interchange Wiki isn't yet completed, it'll take a few
-months more to get it done due to all the other projects I have to care
-for.
-
-Before we continue with the look at the archictecture of Wiki::Toolkit
-I want to mention the real world applications I found using Wiki::Toolkit,
+ACT
+OpenGuides
 
 % Real World Applications
 % - OpenGuides
@@ -113,7 +113,7 @@ my $wiki = new Wiki::Toolkit(store => $store,
 \end{lstlisting}
 \end{frame}
 
-\subsection{Basic Methods}
+\subsection{Grundlegende Methoden}
 
 A Wiki node consists of:
 
@@ -126,7 +126,7 @@ A Wiki node consists of:
 
 % handling conflicts
 
-\begin{frame}[fragile]{Basic Methods}
+\begin{frame}[fragile]{Grundlegende Methoden}
 \begin{lstlisting}
 # create node
 $wiki->write_node($name, $text, undef, \%metadata);
@@ -167,16 +167,18 @@ All storage backends can be easily initialized with the corresponding
 \lstinputlisting{scripts/setup_mysql}
 \end{frame}
 
-\subsection{Storage Tables}
+\subsection{Storage Tabellen}
 
-\begin{frame}{Storage Tables}
+\begin{frame}{Storage Tabellen}
  \begin{description}
-  \item [content] Nodes
+  \item [content] Knoten
   \item [metadata] Metadata
-  \item [internal\_links] Page Links
-  \item [schema\_info] Schema Version
+  \item [internal\_links] Links der Knoten
+  \item [schema\_info] Schema-Version
  \end{description}
 \end{frame}
+
+Tabellenpräfix fehlt.
 
 What I miss a little bit here, is a chance to provide a table prefix,
 so these tables can happily live with tables from other applications
@@ -193,14 +195,13 @@ The metadata can be retrieved with the \verb+retrieve_node+ method.
 \begin{frame}[fragile]{Metadata}
 \begin{lstlisting}
 # store metadata
-my %metadata = {country => 'USA', 
-    state => 'Florida',
-    city => 'Orlando'};
+my %metadata = {country => 'Germany', 
+    city => 'Schorndorf'};
 
 $wiki->write_node($node, $content, $checksum, \%metadata);
 
 # retrieve metadata
-my %node = $wiki->retrieve_node('Perl Oasis');
+my %node = $wiki->retrieve_node('Deutscher Perlworkshop');
 
 for (keys %{$node{metadata}}) {
     print "Metadata $_: $node{$metadata}->{$_}->[0]\n";
@@ -252,11 +253,11 @@ my $formatter = Wiki::Toolkit::Formatter::Default->new(
 \end{lstlisting}
 \end{frame}
 
-Extended links are usually links marked by square brackets, e.g.
-\verb+[[Page]|Link name]+. The formatter class can decide about
-the exact format.
+Erweiterte Links sind gekennzeichnet durch eckige Klammern und enthalten
+z.B. Linkziel und Linknamen. Der Formatierer entscheidet über das
+exakte Format.
 
-Implicit links are links from CamelCase strings.
+Implizite Links sind Links aus Wörtern im CamelCase.
 
 \subsection{Makros}
 
@@ -310,24 +311,7 @@ my $output = $wiki->format($text, {formatter => 'mediawiki'});
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Multiple Formatters}
-\begin{lstlisting}
-my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
-my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
-
-my $fmt = new Wiki::Toolkit::Formatter::Multiple (
-      usemod => $fmt_usemod,
-      mediawiki => $fmt_mediawiki,
-      _DEFAULT => $fmt_usemod,
-  );
-
-...
-
-my $output = $wiki->format($text, {formatter => 'mediawiki'});
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Multiple Formatters}
+\begin{frame}[fragile]{Formatierer kombinieren}
 \begin{lstlisting}
 # write node
 $metadata{formatter} = 'mediawiki';
