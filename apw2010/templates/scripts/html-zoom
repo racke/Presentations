@@ -1,0 +1,60 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use HTML::Zoom;
+use File::Slurp;
+use MongoDB;
+
+# zoom variables
+my ($tfile, $template, $callback, $output);
+
+# mongo variables
+my ($mgconn, $mgdb, $mgcoll, $mglist, $place);
+
+# commandline arguments
+unless (@ARGV == 1) {
+	die "$0: Please provide file with HTML template\n";
+}
+
+# slurp template file
+$tfile = shift;
+$template = read_file ($tfile);
+
+# mongo connection
+$mgconn = new MongoDB::Connection;
+
+# mongo db
+$mgdb = $mgconn->vienna;
+
+# mongo collection
+$mgcoll = $mgdb->places;
+
+# get all places
+$mglist = $mgcoll->find();
+
+#while ($place = $mglist->next) {
+#	print $place->{name}, "\n";
+#	print $place->{url}, "\n";
+#}
+
+# callback method for HTML::Zoom
+$callback = sub {
+	my $place;
+print "Calling callback.\n";	
+	if ($place = $mglist->next) {
+		return sub {$_->select('.name')->replace_content($place->name)};
+	}
+	else {
+		return;
+	}
+};
+						
+# process template
+$output = HTML::Zoom->from_html($template);
+
+$output->select('title')->replace_content('TEST');
+#$output->select('.places')->repeat($callback, {flush_before => 1});
+
+print $output->to_html();

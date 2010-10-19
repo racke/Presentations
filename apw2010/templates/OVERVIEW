@@ -1,0 +1,72 @@
+
+
+Template::Zoom Architecture
+
+	* Template (HTML, without special tags)
+	* Programming Logic (mostly database queries or objects)
+    * Specification (XML or other format)
+
+
+Specification
+
+	Lists
+
+	Params
+
+	Input
+		Input for the programming logic
+			Example: Orders for a certain customer
+
+		<input name="code" required="1"/>
+
+		Name is the name of the input and implies the database field name.
+		Required determines whether this input is required.
+
+Filters
+
+
+Flexibility
+
+	* Free format for specifications (currently only XML)
+
+	* Database backends exchange?
+
+Quality assurance
+
+	Documentation
+
+	Tests
+
+	Profiling
+
+Templates
+*********
+
+Web, Email, ....
+
+Examples
+********
+
+Complex example with JS selectors
+
+Integrating Template::Zoom
+**************************
+
+Perl Web Applications
+=====================
+
+Dancer
+Catalyst
+
+Interchange
+===========
+
+Template::Zoom and Interchange
+
+	Offline testing (without running Interchange)
+
+	Faster for big lists
+
+Template::Zoom and WellWell
+
+	Forms?

@@ -1,0 +1,8 @@
+<configuration>
+<database
+  scope="configuration"
+  dbname="wellwell"
+  dbtype="mysql"
+  dbpass="ShamaElRama"
+/>
+</configuration>

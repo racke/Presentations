@@ -1,0 +1,36 @@
+* Intro
+ 
+  Warum noch eine Template Engine  
+
+* Ziele
+
+  HTML Design von Programmierung trennen
+
+  Statisches HTML vs Dynamische Website
+	Daten
+	Formulare
+
+  Plugins
+
+  Trennung Daten / Programmierung
+
+* Template Engines
+
+  Template::Toolkit
+  HTML::Zoom HTML::Seamstress ?
+
+* Alternativen
+  - leere Listen
+  - Paging
+
+* Konfiguration
+
+* Spezifikation
+
+* Kommandozeile
+
+* Bedingungen
+  Bundesstaaten (Beispiel Passionshop)
+
+* Iterator
+  count,next,reset

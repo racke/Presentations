@@ -1,0 +1,132 @@
+
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+
+\usepackage{beamerthemesplit}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3}
+
+\title{Template::Zoom}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date[APW2010]{Österreichischer Perlworkshop 2010, 6. November 2010}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\tableofcontents
+
+\section{Einführung}
+Template::Zoom ist eine neue Templateengine, bei der im Gegensatz zu
+Template::Toolkit das eigentliche Template aus reinem HTML besteht und somit
+leicht von HTML-Designern bearbeitet werden kann.
+
+Die Verknüpfung zu Objekten, Listen und Datenbankabfragen erfolgt über eine
+Spezifikationsdatei.
+
+\subsection{Ziele}
+\begin{frame}{Ziele}
+ \begin{itemize}
+  \item Trennung von Layout, Daten und Programmierung
+  \item Handhabung
+ \end{itemize}
+\end{frame}
+
+\subsection{Bestandteile}
+\begin{frame}{Bestandteile}
+ \begin{itemize}
+  \item Daten oder Objekte
+  \item Spezifikation
+  \item Template
+ \end{itemize}
+\end{frame}
+
+\section{Erstes Beispiel}
+\subsection{Datenbanktabelle für Menüs}
+\begin{frame}[fragile]{Datenbanktabelle für Menüs}
+\begin{lstlisting}
+CREATE TABLE menus (
+  code int NOT NULL auto_increment,
+  name varchar(255) NOT NULL DEFAULT '',
+  url  varchar(255) NOT NULL DEFAULT '',
+  menu_name varchar(64) NOT NULL DEFAULT ''
+  weight int NOT NULL DEFAULT 0,
+  PRIMARY KEY(code),
+  KEY(menu_name)
+);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Spezifikation}
+\begin{frame}[fragile]{Spezifikation}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Template}
+\begin{frame}[fragile]{Template}
+\begin{lstlisting}
+<ul class="menu">
+<li><a href="" class="url"><span class="label"></span></li>
+</ul>
+\end{lstlisting}
+\end{frame}
+
+\section{Template Engines}
+\url{http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html}
+
+\subsection{Minisprachen}
+\begin{frame}[fragile]{Beispiel Minisprache}
+\begin{lstlisting}
+[% USE product(sku=bar1234) %]
+ 
+[% IF product.isbn %]
+It's a book!
+[% ELSE %]
+It's NOT a book!
+[% END %]
+
+[% FOREACH item = product.related %]
+You might also enjoy [% item.name %].
+[% END %]
+\end{lstlisting}
+\end{frame}
+
+\subsection{HTML::Zoom}
+HTML::Zoom ist eine neue Templateengine von Matt Trout, basierend
+auf CSS-Selektoren.
+
+\begin{frame}{HTML::Zoom}
+\end{frame}
+
+\section{Bedingungen}
+
+\begin{frame}{Das Ende}
+ \begin{description}
+  \item[CPAN] http://search.cpan.org/perldoc?Template::Zoom
+  \item[Website] http://www.temzoo.at/
+  \item[Talk]
+    http://www.linuxia.de/talks/apw2010/temzoo-apw2010-beamer.pdf
+   \item[Fragen] ???
+ \end{description}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

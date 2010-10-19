@@ -1,0 +1,3 @@
+Template::Zoom ist eine neue Templateengine, bei der im Gegensatz zu Template::Toolkit das eigentliche Template aus reinem HTML besteht und somit leicht von HTML-Designern bearbeitet werden kann.
+
+Die Verknüpfung zu Objekten, Listen und Datenbankabfragen erfolgt über eine Spezifikationsdatei.

@@ -1,0 +1,25 @@
+Execution models
+	Callback
+		Inline Perl (Apache::ASP)
+	
+	Pipeline
+		Mini Language (Template::Toolkit)
+
+	DOM parsing
+
+	Template systems in Perl
+		Comparison http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html
+
+		Template Toolkit
+
+
+	Problems with templating
+		Designers need to learn a syntax, still coupling with code
+
+	HTML::Zoom inspiration
+		also: http://search.cpan.org/~tbone/HTML-Seamstress-5.0h/lib/HTML/Seamstress.pod
+
+	Praktische Beispiele
+
+Escaping content
+	=> Clean templates

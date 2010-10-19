@@ -1,0 +1,8 @@
+<specification name="vienna_places" description="Specification for places in
+  Vienna">
+<list name="places" class="places" table="places">
+<param name="name"/>
+<param name="homepage"/>
+<param name="district"/>
+</list>
+</specification>
