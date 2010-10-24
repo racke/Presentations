@@ -147,11 +147,11 @@ $wiki->write_node($name, $text, $node{checksum}, \%metadata);
 All storage backends are derived from \verb+Wiki::Toolkit::Store::Database+.
 
 \begin{frame}{Storage Backends}
- \begin{itemize}
-  \item MySQL
-  \item PostgreSQL
-  \item SQLite
- \end{itemize}
+ \begin{description}
+  \item[MySQL] Wiki::Toolkit::Store::MySQL
+  \item[PostgreSQL] Wiki::Toolkit::Store::Pg
+  \item[SQLite] Wiki::Toolkit::Store::SQLite
+ \end{description}
 \end{frame}
 
 \subsection{Storage Setup}
