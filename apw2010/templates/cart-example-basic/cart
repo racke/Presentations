@@ -1,0 +1,21 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Template::Zoom;
+
+my ($cart, $iter, $xml_spec, $spec, $html_object, $zoom);
+
+$cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
+		  quantity => 1, price => 49.95},
+		 {isbn => '978-1-4302-1833-3', title => 'Pro Git',
+		  quantity => 1, price => 34.99},
+		];
+
+
+$zoom = new Template::Zoom(specification_file => 'cart.xml',
+						   template_file => 'cart.html',
+						   iterators => {cart => $cart});
+
+print $zoom->process();
