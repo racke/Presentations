@@ -1,0 +1,34 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Template::Zoom;
+use Template::Zoom::Config;
+use Template::Zoom::Database::Rose;
+
+my ($config_file, $config_vars, $db_object, $zoom);
+
+# parse configuration file
+$config_file = shift;
+$config_vars = Template::Zoom::Config::load($config_file);
+
+# database connection
+$db_object = new Template::Zoom::Database::Rose(%{$config_vars->{database}});
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						   filters => {link => \&link_filter},
+						  );
+
+print $zoom->process({name => 'main'});
+
+sub link_filter {
+	my $page = shift;
+    my $url;
+
+    $url = $page;
+	
+    return $url;
+}
