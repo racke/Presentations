@@ -47,6 +47,53 @@ Spezifikationsdatei.
  \end{itemize}
 \end{frame}
 
+\section{Beispiel: Warenkorb}
+\subsection{Warenkorb als Hash}
+\begin{frame}[fragile]{Warenkorb: Hash}
+\begin{lstlisting}
+$cart = [
+         {isbn => '978-0-2016-1622-4', 
+          title => 'The Pragmatic Programmer',
+          quantity => 1, price => 49.95},
+
+         {isbn => '978-1-4302-1833-3',
+          title => 'Pro Git',
+          quantity => 1, price => 34.99},
+		];
+\end{lstlisting}
+\end{frame}
+\subsection{Warenkorb mit ITL}
+\subsection{Warenkorb mit Template::Toolkit}
+\subsection{Warenkorb mit HTML::Zoom}
+\subsubsection{Template für Warenkorb}
+\begin{frame}[fragile]{Warenkorb: Template}
+\lstinputlisting{cart-example-basic/cart.html}
+\end{frame}
+\subsection{Warenkorb mit Template::Zoom}
+\subsubsection{Spezifikation}
+\begin{frame}[fragile]{Warenkorb: Spezifikation}
+\lstinputlisting{cart-example-basic/cart.xml}
+\end{frame}
+\subsubsection{Spezifikation}
+\begin{frame}[fragile]{Warenkorb: Spezifikation}
+\lstinputlisting{cart-example-basic/cart.xml}
+\end{frame}
+\subsubsection{Quellcode}
+\begin{frame}[fragile]{Warenkorb: Quellcode}
+\begin{lstlisting}
+use Template::Zoom;
+
+my ($cart, $zoom);
+
+$cart = ...
+
+$zoom = new Template::Zoom(specification_file => 'cart.xml',
+                           template_file => 'cart.html',
+                           iterators => {cart => $cart});
+
+print $zoom->process();
+\end{lstlisting}
+\end{frame}
 \section{Erstes Beispiel}
 \subsection{Datenbanktabelle für Menüs}
 \begin{frame}[fragile]{Datenbanktabelle für Menüs}
