@@ -112,6 +112,41 @@ auf CSS-Selektoren.
 \begin{frame}{HTML::Zoom}
 \end{frame}
 
+\section{Filter}
+\subsection{Spezifikation}
+\begin{frame}[fragile]{Filter: Spezifikation}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url" target="href" filter="link"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Filterfunktion}
+\begin{frame}[fragile]{Filter: Funktion}
+\begin{lstlisting}
+sub link_filter {
+    my $page = shift;
+    my $url;
+
+    $url = ...
+    
+    return $url;
+}
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						   filters => {link => \&link_filter},
+						  );
+\end{lstlisting}
+\end{frame}
+\section{Formulare}
+
 \section{Bedingungen}
 
 \begin{frame}{Das Ende}
