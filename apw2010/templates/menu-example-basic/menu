@@ -3,9 +3,22 @@
 use strict;
 use warnings;
 
+use Getopt::Long;
+use File::Temp qw(tempfile);
+
 use Template::Zoom;
 use Template::Zoom::Config;
 use Template::Zoom::Database::Rose;
+
+my (%opts);
+
+# commandline options
+my $whandler = $SIG{__WARN__};
+$SIG{__WARN__} = sub {print STDERR "$0: @_";};
+unless (GetOptions (\%opts, 'browser')) {
+	exit 1;
+}
+$SIG{__WARN__} = $whandler;
 
 my ($config_file, $config_vars, $db_object, $zoom);
 
@@ -22,7 +35,15 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 						   filters => {link => \&link_filter},
 						  );
 
-print $zoom->process({name => 'main'});
+if ($opts{browser}) {
+	# store zoom result in temporary file
+	my ($tmph, $tmpfile) = tempfile(undef, DIR => '.', SUFFIX => '.html');
+	print $tmph $zoom->process({name => 'main'});
+	system('x-www-browser', $tmpfile);
+}
+else {
+	print $zoom->process({name => 'main'}), "\n";
+}
 
 sub link_filter {
 	my $page = shift;
