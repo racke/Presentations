@@ -186,33 +186,6 @@ CREATE TABLE menus (
 \end{lstlisting}
 \end{frame}
 
-\section{Template Engines}
-\url{http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html}
-
-\subsection{Minisprachen}
-\begin{frame}[fragile]{Beispiel Minisprache}
-\begin{lstlisting}
-[% USE product(sku=bar1234) %]
- 
-[% IF product.isbn %]
-It's a book!
-[% ELSE %]
-It's NOT a book!
-[% END %]
-
-[% FOREACH item = product.related %]
-You might also enjoy [% item.name %].
-[% END %]
-\end{lstlisting}
-\end{frame}
-
-\subsection{HTML::Zoom}
-HTML::Zoom ist eine neue Templateengine von Matt Trout, basierend
-auf CSS-Selektoren.
-
-\begin{frame}{HTML::Zoom}
-\end{frame}
-
 \section{Filter}
 \subsection{Spezifikation}
 \begin{frame}[fragile]{Filter: Spezifikation}
@@ -246,9 +219,6 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 						  );
 \end{lstlisting}
 \end{frame}
-\section{Formulare}
-
-\section{Bedingungen}
 
 \begin{frame}{Das Ende}
  \begin{description}
