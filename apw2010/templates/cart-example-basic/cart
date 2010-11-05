@@ -33,7 +33,7 @@ $zoom = new Template::Zoom(specification_file => 'cart.xml',
 
 if ($opts{browser}) {
 	# store zoom result in temporary file
-	my ($tmph, $tmpfile) = tempfile(undef, DIR => '.', SUFFIX => '.html');
+	my ($tmph, $tmpfile) = tempfile('demoXXXX', DIR => '.', SUFFIX => '.html');
 	print $tmph $zoom->process();
 	system('x-www-browser', $tmpfile);
 }
