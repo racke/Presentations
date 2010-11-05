@@ -1,0 +1,15 @@
+<table class="cart">
+<tr class="cartheader">
+<th>Name</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>
+[item-list]
+<tr class="cartitem">
+<td class="name">[item-modifier title]</td>
+<td><input class="quantity" name="quantity" size="3" value="[item-quantity]"></td>
+<td class="price">[item-price]</td>
+</tr>
+[/item-list]
+</table>
+
