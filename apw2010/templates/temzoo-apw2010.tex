@@ -62,9 +62,22 @@ $cart = [
 		];
 \end{lstlisting}
 \end{frame}
-\subsection{Template für Warenkorb}
-\begin{frame}[fragile]{Warenkorb: Template}
-\lstinputlisting{cart-example-basic/cart.html}
+\subsection{HTML Template}
+\begin{frame}[fragile]{Warenkorb: HTML Template}
+\begin{lstlisting}
+<table class="cart">
+<tr class="cartheader">
+<th>Name</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>
+<tr class="cartitem">
+<td class="name">Perl 6</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+</table>
+\end{lstlisting}
 \end{frame}
 \subsection{Warenkorb mit ITL}
 \begin{frame}[fragile]{Warenkorb: ITL}
@@ -75,17 +88,31 @@ $cart = [
 \lstinputlisting{cart-example-basic/cart.tt}
 \end{frame}
 \subsection{Warenkorb mit HTML::Zoom}
+\begin{frame}[fragile]{Warenkorb: HTML::Zoom}
+\begin{lstlisting}
+use HTML::Zoom;
+
+$cart = ...
+$zoom = HTML::Zoom->from_file('cart.html');
+
+$zoom->select('.cartitem')->repeat_content([
+  map { my $field = $_; sub {
+    $_[0]->select('.name')->replace_content($field->{title});
+    $_[0]->select('.quantity')->replace_content($field->{quantity});
+    $_[0]->select('.price')->replace_content($field->{price});
+    };
+  } @$cart]);
+
+print $zoom->to_html();
+\end{lstlisting}
+\end{frame}
 \subsection{Warenkorb mit Template::Zoom}
 \subsubsection{Spezifikation}
-\begin{frame}[fragile]{Warenkorb: Spezifikation}
-\lstinputlisting{cart-example-basic/cart.xml}
-\end{frame}
-\subsubsection{Spezifikation}
-\begin{frame}[fragile]{Warenkorb: Spezifikation}
+\begin{frame}[fragile]{Template::Zoom Spezifikation}
 \lstinputlisting{cart-example-basic/cart.xml}
 \end{frame}
 \subsubsection{Quellcode}
-\begin{frame}[fragile]{Warenkorb: Quellcode}
+\begin{frame}[fragile]{Template::Zoom Skript}
 \begin{lstlisting}
 use Template::Zoom;
 
@@ -98,6 +125,27 @@ $zoom = new Template::Zoom(specification_file => 'cart.xml',
                            iterators => {cart => $cart});
 
 print $zoom->process();
+\end{lstlisting}
+\end{frame}
+\section{Listen}
+\subsection{Alternierende Zeilen}
+\begin{frame}[fragile]{Listen mit alternierenden Zeilen}
+\begin{lstlisting}
+<table class="cart">
+<tr class="cartheader">
+<th>Name</th><th>Quantity</th><th>Price</th>
+</tr>
+<tr class="cartitem odd">
+<td class="name">Perl 6</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+<tr class="cartitem even">
+<td class="name">Pro Git</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+</table>
 \end{lstlisting}
 \end{frame}
 \section{Beispiel: Menüs}
