@@ -165,7 +165,7 @@ CREATE TABLE menus (
 \end{frame}
 
 \subsection{Spezifikation}
-\begin{frame}[fragile]{Spezifikation}
+\begin{frame}[fragile]{Menüs: Spezifikation}
 \begin{lstlisting}
 <specification name="menu" description="Menu">
 <list name="menu" class="menu" table="menus">
@@ -178,11 +178,28 @@ CREATE TABLE menus (
 \end{frame}
 
 \subsection{Template}
-\begin{frame}[fragile]{Template}
+\begin{frame}[fragile]{Menüs: Template}
 \begin{lstlisting}
 <ul class="menu">
 <li><a href="" class="url"><span class="label"></span></li>
 </ul>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Skript}
+\begin{frame}[fragile]{Menüs: Skript}
+\begin{lstlisting}
+use Template::Zoom;
+use Template::Zoom::Database::Rose;
+
+$db_object = new Template::Zoom::Database::Rose(dbname => 'temzoo',
+    dbtype => 'Pg',
+);
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						  );
 \end{lstlisting}
 \end{frame}
 
@@ -222,8 +239,9 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 
 \begin{frame}{Das Ende}
  \begin{description}
-  \item[CPAN] http://search.cpan.org/perldoc?Template::Zoom
-  \item[Website] http://www.temzoo.at/
+  \item[Git] http://git.linuxia.de/?p=temzoo.git;a=summary
+  \item[CPAN] -
+  \item[Website] -
   \item[Talk]
     http://www.linuxia.de/talks/apw2010/temzoo-apw2010-beamer.pdf
    \item[Fragen] ???
