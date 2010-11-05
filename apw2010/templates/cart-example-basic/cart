@@ -18,6 +18,15 @@ unless (GetOptions (\%opts, 'browser')) {
 }
 $SIG{__WARN__} = $whandler;
 
+# commandline parameters
+my ($template_file);
+
+$template_file = 'cart.html';
+
+if (@ARGV == 1) {
+	$template_file = shift;
+}
+
 my ($cart, $iter, $xml_spec, $spec, $html_object, $zoom);
 
 $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
@@ -28,7 +37,7 @@ $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
 
 
 $zoom = new Template::Zoom(specification_file => 'cart.xml',
-						   template_file => 'cart.html',
+						   template_file => $template_file,
 						   iterators => {cart => $cart});
 
 if ($opts{browser}) {
