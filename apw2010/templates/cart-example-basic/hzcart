@@ -1,0 +1,28 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use HTML::Zoom;
+
+my ($cart, $iter, $xml_spec, $spec, $html_object, $zoom);
+
+$cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
+		  quantity => 1, price => 49.95},
+		 {isbn => '978-1-4302-1833-3', title => 'Pro Git',
+		  quantity => 1, price => 34.99},
+		];
+
+$zoom = HTML::Zoom->from_file('cart.html');
+
+$zoom->select('.cartitem')->repeat_content([
+    map { my $field = $_;
+		  my $sub = sub {
+			  $_[0]->select('.name')->replace_content($field->{title});
+  			  $_[0]->select('.quantity')->replace_content($field->{quantity});
+			  $_[0]->select('.price')->replace_content($field->{price});
+		  };
+		  $sub;
+	  } @$cart]);
+
+print $zoom->to_html();
