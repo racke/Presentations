@@ -214,8 +214,8 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
-\section{Filter}
-\subsection{Spezifikation}
+\section{Filter und Sortierung}
+\subsection{Spezifikation mit Filter}
 \begin{frame}[fragile]{Filter: Spezifikation}
 \begin{lstlisting}
 <specification name="menu" description="Menu">
@@ -245,6 +245,23 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 						   database => $db_object,
 						   filters => {link => \&link_filter},
 						  );
+\end{lstlisting}
+\end{frame}
+
+\subsection{Spezifikation mit Sortierung}
+\begin{frame}[fragile]{Sortierung: Spezifikation}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<sort name="default">
+<field name="weight" direction="desc"/>
+<field name="code" direction="asc"/>
+</sort>
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url" target="href" filter="link"/>
+</list>
+</specification>
 \end{lstlisting}
 \end{frame}
 
