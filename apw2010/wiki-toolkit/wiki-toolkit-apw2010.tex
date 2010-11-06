@@ -17,7 +17,7 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
-\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
 
 % - Introduction
 % - Motivation
@@ -171,9 +171,9 @@ All storage backends can be easily initialized with the corresponding
 
 \begin{frame}{Storage Tabellen}
  \begin{description}
-  \item [content] Knoten
+  \item [content] alle Versionen der Knoten
   \item [metadata] Metadata
-  \item [node]  
+  \item [node] aktuelle Knoten
   \item [internal\_links] Links der Knoten
   \item [schema\_info] Schema-Version
  \end{description}
@@ -209,6 +209,8 @@ for (keys %{$node{metadata}}) {
 }
 \end{lstlisting}
 \end{frame}
+
+\subsection{Übersicht Methoden}
 
 \section{Formatierer}
 
@@ -405,12 +407,12 @@ $wiki->register_plugin(plugin => $plugin);
   \item[JSON] letzte Änderung als JSON
   \item[Locator::Grid] Verwaltung von Koordinaten
   \item[Ping] verschiedene Dienste anpingen
-  \item[RSS::Reader] retrieve feeds for node inclusion
+  \item[RSS::Reader] Einbindung von RSS Feeds
  \end{description}
 \end{frame}
 
 
-\begin{frame}{The End}
+\begin{frame}{Das Ende}
  \begin{description}
   \item[CPAN] http://search.cpan.org/perldoc?Wiki::Toolkit
   \item[Website] http://www.wiki-toolkit.org/
