@@ -280,7 +280,7 @@ macros => { qr/(^|\b)\@SEARCHBOX(\b|$)/ =>
 
 \begin{frame}{Formatters in CPAN}
  \begin{itemize}
-  \item MediaWiki
+  \item Mediawiki
   \item UseMod
   \item MarkDown
   \item POD
@@ -295,7 +295,7 @@ the Wiki::Toolkit::Formatter::Multiple class.
 \begin{frame}[fragile]{Multiple Formatters}
 \begin{lstlisting}
 my $fmt_usemod = new Wiki::Toolkit::Formatter::UseMod;
-my $fmt_mediawiki = new Wiki::Toolkit::Formatter::MediaWiki;
+my $fmt_mediawiki = new Wiki::Toolkit::Formatter::Mediawiki;
 
 my $fmt = new Wiki::Toolkit::Formatter::Multiple (
       usemod => $fmt_usemod,
