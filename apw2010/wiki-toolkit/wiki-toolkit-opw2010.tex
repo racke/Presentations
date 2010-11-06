@@ -17,7 +17,7 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
-\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
 
 % - Introduction
 % - Motivation
@@ -25,7 +25,7 @@
 
 \title{Wikis with Wiki::Toolkit}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
-\date[OPW2010]{Perl Oasis, 16th January 2010}
+\date[OPW2010]{Austrian Perl Workshop, 6th November 2010}
 
 \begin{document}
 
@@ -171,7 +171,8 @@ All storage backends can be easily initialized with the corresponding
 
 \begin{frame}{Storage Tables}
  \begin{description}
-  \item [content] Nodes
+  \item[node] Nodes
+  \item [content] Node history
   \item [metadata] Metadata
   \item [internal\_links] Page Links
   \item [schema\_info] Schema Version
