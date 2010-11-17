@@ -1,0 +1,7 @@
+<specification name="cart" description="Cart">
+<list name="cart" class="cartitem" iterator="cart">
+<param name="name" field="title"/>
+<param name="quantity"/>
+<param name="price"/>
+</list>
+</specification>

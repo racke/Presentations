@@ -1,0 +1,52 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use File::Temp qw(tempfile);
+
+use Template::Zoom;
+
+my (%opts);
+
+# commandline options
+my $whandler = $SIG{__WARN__};
+$SIG{__WARN__} = sub {print STDERR "$0: @_";};
+unless (GetOptions (\%opts, 'browser')) {
+	exit 1;
+}
+$SIG{__WARN__} = $whandler;
+
+# commandline parameters
+my ($template_file);
+
+$template_file = 'cart.html';
+
+if (@ARGV == 1) {
+	$template_file = shift;
+}
+
+my ($cart, $iter, $xml_spec, $spec, $html_object, $zoom);
+
+$cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
+		  quantity => 1, price => 49.95},
+		 {isbn => '978-1-4302-1833-3', title => 'Pro Git',
+		  quantity => 1, price => 34.99},
+		];
+
+
+$zoom = new Template::Zoom(specification_file => 'cart.xml',
+						   template_file => $template_file,
+						   iterators => {cart => $cart});
+
+if ($opts{browser}) {
+	# store zoom result in temporary file
+	my ($tmph, $tmpfile) = tempfile('demoXXXX', DIR => '.', SUFFIX => '.html');
+	print $tmph $zoom->process();
+	system('x-www-browser', $tmpfile);
+}
+else {
+	print $zoom->process(), "\n";
+}
+
