@@ -1,0 +1,310 @@
+
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+
+\usepackage{beamerthemesplit}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
+
+\title{Template::Zoom}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date[APW2010]{Perl Oasis 2011, 15th January 2011}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\tableofcontents
+
+\section{Templates}
+Template::Zoom ist eine neue Templateengine, bei der im Gegensatz zu
+Template::Toolkit das eigentliche Template aus reinem HTML besteht und somit
+leicht von HTML-Designern bearbeitet werden kann.
+
+Die Verknüpfung zu Objekten, Listen und Datenbankabfragen erfolgt über eine
+Spezifikationsdatei.
+
+\subsection{Why}
+\begin{frame}{Why Templates? Why Template::Zoom?}
+
+ \begin{itemize}  
+  \item Consistency of layout
+  \item Reusability (components)
+  \item Separation of layout and application logic
+  \item Division of labor
+
+%  \item Einarbeitungszeit für Designer reduzieren
+%  \item Grenzfälle, Fehler und Bedingungen (dynamische Seiten)
+ \end{itemize}
+
+\url{http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html}
+\end{frame}
+
+\section{Example: Cart}
+\subsection{Cart as Hash}
+\begin{frame}[fragile]{Cart: Hash}
+\begin{lstlisting}
+$cart = [
+         {isbn => '978-0-2016-1622-4', 
+          title => 'The Pragmatic Programmer',
+          quantity => 1, price => 49.95},
+
+         {isbn => '978-1-4302-1833-3',
+          title => 'Pro Git',
+          quantity => 1, price => 34.99},
+		];
+\end{lstlisting}
+\end{frame}
+\subsection{HTML Template}
+\begin{frame}[fragile]{Cart: HTML Template}
+\begin{lstlisting}
+<table class="cart">
+<tr class="cartheader">
+<th>Name</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>
+<tr class="cartitem">
+<td class="name">Perl 6</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+</table>
+\end{lstlisting}
+\end{frame}
+\subsection{Cart with ITL}
+\begin{frame}[fragile]{Cart: ITL}
+\lstinputlisting{cart-example-basic/cart.itl}
+\end{frame}
+\subsection{Cart with Template::Toolkit}
+\begin{frame}[fragile]{Cart: Template::Toolkit}
+\lstinputlisting{cart-example-basic/cart.tt}
+\end{frame}
+\subsection{Cart with HTML::Zoom}
+\begin{frame}[fragile]{Cart: HTML::Zoom}
+\begin{lstlisting}
+use HTML::Zoom;
+
+$cart = ...
+$zoom = HTML::Zoom->from_file('cart.html');
+
+$zoom->select('.cartitem')->repeat_content([
+  map { my $field = $_; sub {
+    $_[0]->select('.name')->replace_content($field->{title});
+    $_[0]->select('.quantity')->replace_content($field->{quantity});
+    $_[0]->select('.price')->replace_content($field->{price});
+    };
+  } @$cart]);
+
+print $zoom->to_html();
+\end{lstlisting}
+\end{frame}
+\subsection{Template Problems}
+\begin{frame}{Template Problems}
+ \begin{itemize}
+  \item Mini language in HTML template
+  \item Dynamic pages (border cases, errors, ...)
+ \end{itemize}
+\end{frame}
+\subsection{Cart with Template::Zoom}
+\begin{frame}{Template::Zoom Concept}
+ \begin{itemize}
+  \item Specification
+  \item Template
+  \item Data or objects (iterator)
+ \end{itemize}
+\end{frame}
+\subsubsection{Specification}
+\begin{frame}[fragile]{Template::Zoom Specification}
+\lstinputlisting{cart-example-basic/cart.xml}
+\end{frame}
+\subsubsection{Quellcode}
+\begin{frame}[fragile]{Template::Zoom Script}
+\begin{lstlisting}
+use Template::Zoom;
+
+my ($cart, $zoom);
+
+$cart = ...
+
+$zoom = new Template::Zoom(specification_file => 'cart.xml',
+                           template_file => 'cart.html',
+                           iterators => {cart => $cart});
+
+print $zoom->process();
+\end{lstlisting}
+\end{frame}
+
+\section{Lists}
+\subsection{Iterators}
+\begin{frame}{Iterators}
+\begin{itemize}
+  \item next method
+  \item count method
+  \item hash as return value
+  \item Template::Zoom::Iterator
+ \end{itemize}
+\end{frame}
+\subsection{Alternating rows}
+\begin{frame}[fragile]{Lists with alternating rows}
+\begin{lstlisting}
+<table class="cart">
+<tr class="cartheader">
+<th>Name</th><th>Quantity</th><th>Price</th>
+</tr>
+<tr class="cartitem odd">
+<td class="name">Perl 6</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+<tr class="cartitem even">
+<td class="name">Pro Git</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+</table>
+\end{lstlisting}
+\end{frame}
+\section{Example: Menus}
+\subsection{Database table for menus}
+\begin{frame}[fragile]{Menus: Database table}
+\begin{lstlisting}
+CREATE TABLE menus (
+  code int NOT NULL auto_increment,
+  name varchar(255) NOT NULL DEFAULT '',
+  url  varchar(255) NOT NULL DEFAULT '',
+  menu_name varchar(64) NOT NULL DEFAULT ''
+  weight int NOT NULL DEFAULT 0,
+  PRIMARY KEY(code),
+  KEY(menu_name)
+);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Specification}
+\begin{frame}[fragile]{Menus: Specification}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Template}
+\begin{frame}[fragile]{Menus: Template}
+\begin{lstlisting}
+<ul class="menu">
+<li><a href="" class="url"><span class="label"></span></li>
+</ul>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Script}
+\begin{frame}[fragile]{Menus: Script}
+\begin{lstlisting}
+use Template::Zoom;
+use Template::Zoom::Database::Rose;
+
+$db_object = new Template::Zoom::Database::Rose(dbname => 'temzoo',
+    dbtype => 'Pg',
+);
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						  );
+\end{lstlisting}
+\end{frame}
+
+\section{Filter and Sort}
+\subsection{Specification with Filter}
+\begin{frame}[fragile]{Filter: Specification}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url" target="href" filter="link"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Filter function}
+\begin{frame}[fragile]{Filter: Function}
+\begin{lstlisting}
+sub link_filter {
+    my $page = shift;
+    my $url;
+
+    $url = ...
+    
+    return $url;
+}
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						   filters => {link => \&link_filter},
+						  );
+\end{lstlisting}
+\end{frame}
+
+\subsection{Specification with sort}
+\begin{frame}[fragile]{Sort: Specification}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<sort name="default">
+<field name="weight" direction="desc"/>
+<field name="code" direction="asc"/>
+</sort>
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url" target="href" filter="link"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\section{Roadmap}
+\begin{frame}{Roadmap}
+ \begin{itemize}
+   \item Conditions
+   \item empty lists
+   \item Selected items
+   \item Paging
+   \item Forms
+   \item Trees 
+   \item i18n
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{The End}
+ \begin{description}
+  \item[Git] http://git.linuxia.de/?p=temzoo.git;a=summary
+  \item[CPAN] -
+  \item[Website] -
+  \item[Release] Christmas 2010
+  \item[Talk]
+    http://www.linuxia.de/talks/apw2010/temzoo-apw2010-beamer.pdf
+   \item[Questions] ???
+ \end{description}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

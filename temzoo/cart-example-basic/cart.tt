@@ -1,0 +1,14 @@
+<table class="cart">
+<tr class="cartheader">
+<th>Name</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>
+[% FOREACH cart %]
+<tr class="cartitem">
+<td class="name">[% title %]</td>
+<td><input class="quantity" name="quantity" size="3" value="[% quantity %]"></td>
+<td class="price">[% price %]</td>
+</tr>
+[% END %]
+</table>
