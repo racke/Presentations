@@ -282,6 +282,17 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
+\section{Forms}
+\begin{frame}[fragile]{Forms: Specification}
+\begin{lstlisting}
+<specification name='search' description=''>
+<form name='search'>
+<field name='searchterm'/>
+<field name='searchsubmit'/>
+</form>
+</specification>
+\end{lstlisting}
+\end{frame}
 \section{Roadmap}
 \begin{frame}{Roadmap}
  \begin{itemize}
@@ -289,7 +300,6 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
    \item empty lists
    \item Selected items
    \item Paging
-   \item Forms
    \item Trees 
    \item i18n
  \end{itemize}
