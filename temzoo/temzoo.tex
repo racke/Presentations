@@ -228,6 +228,8 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 						   template_file => 'menu.html',
 						   database => $db_object,
 						  );
+
+$zoom->process({name => main});
 \end{lstlisting}
 \end{frame}
 
