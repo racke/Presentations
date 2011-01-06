@@ -1,0 +1,18 @@
+ul {
+  font-size: 4em;
+  font-weight: normal;
+  list-style: none;
+}
+
+ul li a {
+border-left: 2px solid white;
+border-right: 2px solid white;
+border-top: 1px solid white;
+background-color: #7594F0;
+color: white;
+float: left;
+padding-left: 25px;
+padding-right: 25px;
+padding-top: 3px;
+text-decoration: none;
+}
