@@ -38,7 +38,9 @@ $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
 
 $zoom = new Template::Zoom(specification_file => 'cart.xml',
 						   template_file => $template_file,
-						   iterators => {cart => $cart});
+						   iterators => {cart => $cart},
+						   values => {cost => '84.94'},
+);
 
 if ($opts{browser}) {
 	# store zoom result in temporary file

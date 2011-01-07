@@ -3,5 +3,6 @@
 <param name="name" field="title"/>
 <param name="quantity"/>
 <param name="price"/>
+<value name="cost"/>
 </list>
 </specification>
