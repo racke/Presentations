@@ -1,0 +1,11 @@
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<sort name="default">
+<field name="weight" direction="desc"/>
+<field name="code" direction="asc"/>
+</sort>
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url" target="href" filter="link"/>
+</list>
+</specification>
