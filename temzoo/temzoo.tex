@@ -186,7 +186,8 @@ CREATE TABLE menus (
   code int NOT NULL auto_increment,
   name varchar(255) NOT NULL DEFAULT '',
   url  varchar(255) NOT NULL DEFAULT '',
-  menu_name varchar(64) NOT NULL DEFAULT ''
+  menu_name varchar(64) NOT NULL DEFAULT '',
+  permission varchar(64) NOT NULL DEFAULT '',
   weight int NOT NULL DEFAULT 0,
   PRIMARY KEY(code),
   KEY(menu_name)
@@ -208,6 +209,9 @@ CREATE TABLE menus (
 \end{frame}
 
 \subsection{Template}
+The HTML template for the menu is really simple, because the
+styling can be done completely with CSS.
+
 \begin{frame}[fragile]{Menus: Template}
 \begin{lstlisting}
 <ul class="menu">
@@ -236,7 +240,13 @@ $zoom->process({name => main});
 \end{frame}
 
 \section{Filter and Sort}
-\subsection{Specification with Filter}
+There are two types of filters for lists: global filters and
+parameter filters. Global filters are applied to the complete
+record of a list element and can be used to skip list items.
+Parameter filters are applied to a single value in a list
+element record.
+
+\subsection{Parameter Filter}
 \begin{frame}[fragile]{Filter: Specification}
 \begin{lstlisting}
 <specification name="menu" description="Menu">
@@ -266,6 +276,20 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 						   database => $db_object,
 						   filters => {link => \&link_filter},
 						  );
+\end{lstlisting}
+\end{frame}
+
+\subsection{Global Filter}
+\begin{frame}[fragile]{Global Filter}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<filter name="acl" field="permission"/>
+<list name="menu" class="menu" table="menus">
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url" target="href" filter="link"/>
+</list>
+</specification>
 \end{lstlisting}
 \end{frame}
 
