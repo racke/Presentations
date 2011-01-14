@@ -23,15 +23,22 @@
 
 \tableofcontents
 
-\section{Templates}
-Template::Zoom ist eine neue Templateengine, bei der im Gegensatz zu
-Template::Toolkit das eigentliche Template aus reinem HTML besteht und somit
-leicht von HTML-Designern bearbeitet werden kann.
+\section{Template::Zoom}
+Template::Zoom enables you to completely separate web design and programming
+tasks for dynamic web applications. 
 
-Die Verknüpfung zu Objekten, Listen und Datenbankabfragen erfolgt über eine
-Spezifikationsdatei.
+Templates are plain HTML files without inline code or mini language, thus
+making it easy to maintain them for web designers and to preview them with
+a browser.
 
-\subsection{Why}
+The CSS selectors in the template are tied to your data structures or
+objects by a specification, which relieves the programmer from changing
+his code for mere changes of class names.
+
+In addition to HTML output, Template::Zoom also supports generation of
+PDF files on-the-fly based on the same template and specification.
+
+\subsection{Why and Where}
 \begin{frame}{Why Templates? Why Template::Zoom?}
 
  \begin{itemize}  
