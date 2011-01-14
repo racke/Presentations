@@ -371,8 +371,52 @@ to manipulate the output of forms in the resulting HTML:
 \end{frame}
 
 \section{PDF}
+PDF generation starts just the same way as HTML template
+processing. In fact, it might make sense to use the same template
+for display in the browser and for producing the PDF document.
+
+The conversion is running through 3 passes. First the position
+and sizes of the boxes are calculated. Second the boxes are
+partitioned throughout the pages in the PDF document.
+
+\begin{frame}{HTML to PDF}
+  \begin{itemize}
+  \item HTML template processing
+  \item PDF conversion (PDF::API2)
+    \begin{enumerate}
+    \item calculate
+    \item partition
+    \item render
+    \end{enumerate}
+  \item Inline CSS 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{PDF: Code}
+\begin{lstlisting}
+$zoom = new Template::Zoom (specification_file => 'pdf.xml',
+                            template_file => 'pdf.html',
+                            values => \%values);
+$zoom->process();
+
+$pdf = new Template::Zoom::PDF (template => $zoom->template(),
+                                file => 'invoice.pdf');
+$pdf->process();
+\end{lstlisting}
+\end{frame}
 
 \subsection{Import}
+\begin{frame}[fragile]{PDF: Import}
+\begin{lstlisting}
+$import{file} = 'shippinglabel.pdf';
+$import{scale} = 0.8;
+$import{margin} = {left => '3mm', top => '6mm'};
+
+$pdf = new Template::Zoom::PDF (template => $zoom->template(),
+                                file => 'invoice.pdf',
+                                import => \%import);
+\end{lstlisting}
+\end{frame}
 
 \subsection{Restrictions}
 
