@@ -47,8 +47,8 @@ Spezifikationsdatei.
 \url{http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html}
 \end{frame}
 
-\section{Example: Cart}
-\subsection{Cart as Hash}
+\subsection{Cart Example}
+\subsubsection{Cart as Hash}
 \begin{frame}[fragile]{Cart: Hash}
 \begin{lstlisting}
 $cart = [
@@ -62,7 +62,7 @@ $cart = [
 		];
 \end{lstlisting}
 \end{frame}
-\subsection{HTML Template}
+\subsubsection{HTML Template}
 \begin{frame}[fragile]{Cart: HTML Template}
 \begin{lstlisting}
 <table class="cart">
@@ -81,15 +81,15 @@ $cart = [
 </table>
 \end{lstlisting}
 \end{frame}
-\subsection{Cart with ITL}
+\subsubsection{Cart with ITL}
 \begin{frame}[fragile]{Cart: ITL}
 \lstinputlisting{cart-example-basic/cart.itl}
 \end{frame}
-\subsection{Cart with Template::Toolkit}
+\subsubsection{Cart with Template::Toolkit}
 \begin{frame}[fragile]{Cart: Template::Toolkit}
 \lstinputlisting{cart-example-basic/cart.tt}
 \end{frame}
-\subsection{Cart with HTML::Zoom}
+\subsubsection{Cart with HTML::Zoom}
 \begin{frame}[fragile]{Cart: HTML::Zoom}
 \begin{lstlisting}
 use HTML::Zoom;
@@ -108,14 +108,14 @@ $zoom->select('.cartitem')->repeat_content([
 print $zoom->to_html();
 \end{lstlisting}
 \end{frame}
-\subsection{Template Problems}
+\subsubsection{Template Problems}
 \begin{frame}{Template Problems}
  \begin{itemize}
   \item Mini language in HTML template
   \item Dynamic pages (border cases, errors, ...)
  \end{itemize}
 \end{frame}
-\subsection{Cart with Template::Zoom}
+\subsubsection{Cart with Template::Zoom}
 \begin{frame}{Template::Zoom Concept}
  \begin{itemize}
   \item Specification
@@ -124,8 +124,11 @@ print $zoom->to_html();
  \end{itemize}
 \end{frame}
 \subsubsection{Specification}
-\begin{frame}[fragile]{Template::Zoom Specification}
+\begin{frame}[fragile]{Template::Zoom Specification (XML)}
 \lstinputlisting{cart-example-basic/cart.xml}
+\end{frame}
+\begin{frame}[fragile]{Template::Zoom Specification (Config::Scoped)}
+\lstinputlisting{cart-example-basic/cart.conf}
 \end{frame}
 \subsubsection{Quellcode}
 \begin{frame}[fragile]{Template::Zoom Script}
@@ -141,6 +144,67 @@ $zoom = new Template::Zoom(specification_file => 'cart.xml',
                            iterators => {cart => $cart});
 
 print $zoom->process();
+\end{lstlisting}
+\end{frame}
+
+\subsection{Menu Example}
+\subsubsection{Database table for menus}
+\begin{frame}[fragile]{Menus: Database table}
+\begin{lstlisting}
+CREATE TABLE menus (
+  code int NOT NULL auto_increment,
+  name varchar(255) NOT NULL DEFAULT '',
+  url  varchar(255) NOT NULL DEFAULT '',
+  menu_name varchar(64) NOT NULL DEFAULT '',
+  permission varchar(64) NOT NULL DEFAULT '',
+  weight int NOT NULL DEFAULT 0,
+  PRIMARY KEY(code),
+  KEY(menu_name)
+);
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Specification}
+\begin{frame}[fragile]{Menus: Specification}
+\begin{lstlisting}
+<specification name="menu" description="Menu">
+<list name="menu" class="menu" table="menus">
+<input name="name" required="1" field="menu_name"/>
+<param name="label" field="name"/>
+<param name="url"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Template}
+The HTML template for the menu is really simple, because the
+styling can be done completely with CSS.
+
+\begin{frame}[fragile]{Menus: Template}
+\begin{lstlisting}
+<ul class="menu">
+<li><a href="" class="url"><span class="label"></span></li>
+</ul>
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Script}
+\begin{frame}[fragile]{Menus: Script}
+\begin{lstlisting}
+use Template::Zoom;
+use Template::Zoom::Database::Rose;
+
+$db_object = new Template::Zoom::Database::Rose(dbname => 'temzoo',
+    dbtype => 'Pg',
+);
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						  );
+
+$zoom->process({name => main});
 \end{lstlisting}
 \end{frame}
 
@@ -179,66 +243,6 @@ very easily.
 <td class="price">$$$</td>
 </tr>
 </table>
-\end{lstlisting}
-\end{frame}
-\section{Example: Menus}
-\subsection{Database table for menus}
-\begin{frame}[fragile]{Menus: Database table}
-\begin{lstlisting}
-CREATE TABLE menus (
-  code int NOT NULL auto_increment,
-  name varchar(255) NOT NULL DEFAULT '',
-  url  varchar(255) NOT NULL DEFAULT '',
-  menu_name varchar(64) NOT NULL DEFAULT '',
-  permission varchar(64) NOT NULL DEFAULT '',
-  weight int NOT NULL DEFAULT 0,
-  PRIMARY KEY(code),
-  KEY(menu_name)
-);
-\end{lstlisting}
-\end{frame}
-
-\subsection{Specification}
-\begin{frame}[fragile]{Menus: Specification}
-\begin{lstlisting}
-<specification name="menu" description="Menu">
-<list name="menu" class="menu" table="menus">
-<input name="name" required="1" field="menu_name"/>
-<param name="label" field="name"/>
-<param name="url"/>
-</list>
-</specification>
-\end{lstlisting}
-\end{frame}
-
-\subsection{Template}
-The HTML template for the menu is really simple, because the
-styling can be done completely with CSS.
-
-\begin{frame}[fragile]{Menus: Template}
-\begin{lstlisting}
-<ul class="menu">
-<li><a href="" class="url"><span class="label"></span></li>
-</ul>
-\end{lstlisting}
-\end{frame}
-
-\subsection{Script}
-\begin{frame}[fragile]{Menus: Script}
-\begin{lstlisting}
-use Template::Zoom;
-use Template::Zoom::Database::Rose;
-
-$db_object = new Template::Zoom::Database::Rose(dbname => 'temzoo',
-    dbtype => 'Pg',
-);
-
-$zoom = new Template::Zoom(specification_file => 'menu.xml',
-						   template_file => 'menu.html',
-						   database => $db_object,
-						  );
-
-$zoom->process({name => main});
 \end{lstlisting}
 \end{frame}
 
@@ -379,6 +383,7 @@ The conversion is running through 3 passes. First the position
 and sizes of the boxes are calculated. Second the boxes are
 partitioned throughout the pages in the PDF document.
 
+\subsection{HTML to PDF}
 \begin{frame}{HTML to PDF}
   \begin{itemize}
   \item HTML template processing
