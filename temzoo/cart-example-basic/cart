@@ -40,7 +40,8 @@ $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
 		];
 
 
-$zoom = new Template::Zoom(specification_file => 'cart.xml',
+$zoom = new Template::Zoom(specification_file => 'cart.conf',
+						   specification_parser => 'Scoped',
 						   template_file => $template_file,
 						   iterators => {cart => $cart},
 						   values => {cost => '84.94'},
