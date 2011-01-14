@@ -170,6 +170,9 @@ print $zoom->process();
 \end{lstlisting}
 \end{frame}
 
+You are probably missing the \$ sign in the HTML output, we see
+to that later.
+
 \subsection{Menu Example}
 \subsubsection{Database table for menus}
 \begin{frame}[fragile]{Menus: Database table}
@@ -446,11 +449,27 @@ $pdf = new Template::Zoom::PDF (template => $zoom->template(),
 \end{lstlisting}
 \end{frame}
 
-\subsection{Restrictions}
+% \subsection{Restrictions}
+\section{Conclusion}
+\subsection{Use Cases}
+\begin{frame}{Current and Future Use Cases}
+  \begin{itemize}
+  \item Very Large Product Lists
+  \item Shop Backend
+    \begin{itemize}
+    \item Product Editor
+    \item Product Search \& Replace
+    \end{itemize}
+  \item PDF Invoices
+  \item Template Engine for Interchange
+ \end{itemize}
+\end{frame}
 
-\section{Roadmap}
+\subsection{Roadmap}
 \begin{frame}{Roadmap}
  \begin{itemize}
+   \item Documentation
+   \item Tests
    \item Conditions
    \item Empty lists, number of results
    \item Selected items
@@ -459,6 +478,7 @@ $pdf = new Template::Zoom::PDF (template => $zoom->template(),
  \end{itemize}
 \end{frame}
 
+\subsection{The End}
 \begin{frame}{The End}
  \begin{description}
   \item[Git] http://git.linuxia.de/?p=temzoo.git;a=summary
