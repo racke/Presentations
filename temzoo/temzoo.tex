@@ -147,8 +147,11 @@ print $zoom->process();
 \section{Lists}
 \subsection{Iterators}
 Template::Zoom uses iterators to retrieve list elements and insert them into
-the document tree.
-
+the document tree. This abstraction relieves us from worrying about where
+the data actually comes from. We basically just need an array of hash
+references and an iterator class with a next and a count method. For your
+convenience you can create an iterator from Template::Zoom::Iterator
+very easily.
 
 \begin{frame}{Iterators}
 \begin{itemize}
@@ -330,18 +333,24 @@ to manipulate the output of forms in the resulting HTML:
   \begin{description}
   \item[set\_action] Changing form action
   \item[set\_method] Changing form method (GET, POST)
+  \item[fill] Fill form fields
   \end{description}
 \end{frame}
+
+\section{PDF}
+
+\subsection{Import}
+
+\subsection{Restrictions}
 
 \section{Roadmap}
 \begin{frame}{Roadmap}
  \begin{itemize}
    \item Conditions
-   \item empty lists
+   \item Empty lists, number of results
    \item Selected items
    \item Paging
    \item Trees 
-   \item i18n
  \end{itemize}
 \end{frame}
 
@@ -350,7 +359,7 @@ to manipulate the output of forms in the resulting HTML:
   \item[Git] http://git.linuxia.de/?p=temzoo.git;a=summary
   \item[CPAN] -
   \item[Website] -
-  \item[Release] Christmas 2010
+  \item[Release] !!!
   \item[Talk]
     http://www.linuxia.de/talks/opw2011/temzoo-opw2011-beamer.pdf
    \item[Questions] ???
