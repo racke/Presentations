@@ -5,6 +5,7 @@ use warnings;
 
 use Getopt::Long;
 use File::Temp qw(tempfile);
+use FindBin;
 
 use Template::Zoom;
 
@@ -28,6 +29,9 @@ if (@ARGV == 1) {
 }
 
 my ($cart, $iter, $xml_spec, $spec, $html_object, $zoom);
+
+# change directory
+chdir($FindBin::RealBin);
 
 $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
 		  quantity => 1, price => 49.95},
