@@ -1,8 +1,6 @@
 <table class="cart">
 <tr class="cartheader">
-<th>Name</th>
-<th>Quantity</th>
-<th>Price</th>
+<th>Name</th><th>Quantity</th><th>Price</th>
 </tr>
 [item-list]
 <tr class="cartitem">
@@ -11,5 +9,10 @@
 <td class="price">[item-price]</td>
 </tr>
 [/item-list]
+<tr class="cartheader">
+<th colspan="2"></th><th>Total</th></tr>
+<tr>
+<td colspan="2"></td><td class="cost">[total-cost]</td>
+</tr>
 </table>
 
