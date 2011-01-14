@@ -131,17 +131,20 @@ print $zoom->to_html();
 \lstinputlisting{cart-example-basic/cart.conf}
 \end{frame}
 \subsubsection{Quellcode}
-\begin{frame}[fragile]{Template::Zoom Script}
+\begin{frame}[fragile]{Template::Zoom Script (XML)}
 \begin{lstlisting}
 use Template::Zoom;
 
-my ($cart, $zoom);
+my ($cart, $zoom, %values);
 
 $cart = ...
+$values{cost} = ...
 
 $zoom = new Template::Zoom(specification_file => 'cart.xml',
                            template_file => 'cart.html',
-                           iterators => {cart => $cart});
+                           iterators => {cart => $cart},
+                           values => \%values,
+);
 
 print $zoom->process();
 \end{lstlisting}
