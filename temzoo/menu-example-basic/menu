@@ -33,7 +33,8 @@ $config_vars = Template::Zoom::Config::load($config_file);
 # database connection
 $db_object = new Template::Zoom::Database::Rose(%{$config_vars->{database}});
 
-$zoom = new Template::Zoom(specification_file => 'menu.xml',
+$zoom = new Template::Zoom(specification_file => 'menu.conf',
+						   specification_parser => 'Scoped',
 						   template_file => 'menu.html',
 						   database => $db_object,
 						   filters => {link => \&link_filter},
