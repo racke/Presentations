@@ -313,6 +313,39 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
+\section{I18N}
+I18N support is very basic right now. You write a function for
+translating text inside the HTML template and instantiate an
+Template::Zoom::I18N with a reference to this function. 
+\begin{frame}[fragile]{I18N}
+\begin{lstlisting}
+sub translate {
+    my $text = shift;
+
+    ...
+
+    return $text;
+}
+
+$i18n = new Template::Zoom::I18N (\&translate);
+
+$zoom = new Template::Zoom(specification_file => 'menu.xml',
+						   template_file => 'menu.html',
+						   database => $db_object,
+						   i18n => $i18n,
+						  );
+\end{lstlisting}
+\end{frame}
+
+\subsection{I18N: Lookup Keys}
+You can override the text in the HTML template passed to the
+translation function with a lookup key in the specification.
+\begin{frame}[fragile]{I18N: Lookup Keys}
+\begin{lstlisting}
+<i18n name="returnurl" key="RETURN_URL"/>
+\end{lstlisting}
+\end{frame}
+
 \section{Forms}
 \begin{frame}[fragile]{Forms: Specification}
 \begin{lstlisting}
