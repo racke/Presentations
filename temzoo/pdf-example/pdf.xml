@@ -1,0 +1,4 @@
+<specification name="invoice" description="Demo Invoice">
+<value name="fname"/>
+<value name="lname"/>
+</specification>

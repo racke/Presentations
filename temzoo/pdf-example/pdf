@@ -1,0 +1,59 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use File::Temp qw(tempfile);
+use FindBin;
+
+use Template::Zoom;
+use Template::Zoom::PDF;
+
+my (%opts);
+
+# commandline options
+my $whandler = $SIG{__WARN__};
+$SIG{__WARN__} = sub {print STDERR "$0: @_";};
+unless (GetOptions (\%opts, 'browser', 'pdf')) {
+	exit 1;
+}
+$SIG{__WARN__} = $whandler;
+
+my ($zoom, %values);
+
+%values = (fname => 'Stefan',
+		  lname => 'Hornburg',
+		  email => 'racke@linuxia.de',
+		  );
+
+# change directory
+chdir($FindBin::RealBin);
+
+$zoom = new Template::Zoom (specification_file => 'pdf.xml',
+							template_file => 'pdf.html',
+							values => \%values);
+
+if ($opts{browser}) {
+	# store zoom result in temporary file
+	my ($tmph, $tmpfile) = tempfile('demoXXXX', DIR => '.', SUFFIX => '.html');
+	print $tmph $zoom->process();
+	system('x-www-browser', $tmpfile);
+}
+elsif ($opts{pdf}) {
+	my $pdf;
+	
+	$zoom->process();
+	$pdf = new Template::Zoom::PDF (template => $zoom->template(),
+									file => 'invoice.pdf');
+	$pdf->process();
+}	
+else {
+	print $zoom->process(), "\n";
+}
+
+
+
+
+							
+							
