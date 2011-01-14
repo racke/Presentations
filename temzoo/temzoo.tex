@@ -150,6 +150,26 @@ print $zoom->process();
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Template::Zoom Script (Config::Scoped)}
+\begin{lstlisting}
+use Template::Zoom;
+
+my ($cart, $zoom, %values);
+
+$cart = ...
+$values{cost} = ...
+
+$zoom = new Template::Zoom(specification_file => 'cart.conf',
+                           specification_parser => 'Scoped',
+                           template_file => 'cart.html',
+                           iterators => {cart => $cart},
+                           values => \%values,
+);
+
+print $zoom->process();
+\end{lstlisting}
+\end{frame}
+
 \subsection{Menu Example}
 \subsubsection{Database table for menus}
 \begin{frame}[fragile]{Menus: Database table}
