@@ -1,0 +1,10 @@
+#! /bin/bash
+
+BASE="$HOME/talks/temzoo"
+
+alias carthtml="x-www-browser $BASE/cart-example-basic/cart.html"
+alias cartbasic="$BASE/cart-example-basic/cart --browser"
+alias menuhtml="x-www-browser $BASE/menu-example-basic/menu.html"
+alias menubasic="$BASE/menu-example-basic/menu --browser $HOME/temzoo.xml"
+alias pdfbrowser="$BASE/pdf-example/pdf --browser"
+alias pdfdoc="$BASE/pdf-example/pdf --pdf >/dev/null && xpdf $BASE/pdf-example/invoice.pdf &"
