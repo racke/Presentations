@@ -39,20 +39,35 @@ In addition to HTML output, Template::Zoom also supports generation of
 PDF files on-the-fly based on the same template and specification.
 
 \subsection{Why and Where}
-\begin{frame}{Why Templates? Why Template::Zoom?}
-
- \begin{itemize}  
-  \item Consistency of layout
-  \item Reusability (components)
-  \item Separation of layout and application logic
-  \item Division of labor
-
+\begin{frame}{Why}
+  \begin{itemize}
+  \item Separation of web design and programming
+  \item How available template engines violate this principle
+    \begin{itemize}
+    \item Mini language (Template::Toolkit)
+    \item Inline code
+    \item CSS selectors (HTML::Zoom)
+    \end{itemize}
+  \item Solutions by Template::Zoom
+    \begin{itemize}
+      \item Static HTML file
+      \item Specification file
+      \item Tweaks through tree manipulations
+    \end{itemize}
+  \item Further Goals
+    \begin{itemize}
+      \item Static HTML file
+      \item Specification file
+      \item Tweaks through tree manipulations
+    \end{itemize}
+  \end{itemize}
 %  \item Einarbeitungszeit für Designer reduzieren
 %  \item Grenzfälle, Fehler und Bedingungen (dynamische Seiten)
- \end{itemize}
-
-\url{http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html}
+%\url{http://perl.apache.org/docs/tutorials/tmpl/comparison/comparison.html}
 \end{frame}
+
+% \begin{frame}{Where}
+% \end{frame}
 
 \subsection{Cart Example}
 \subsubsection{Cart as Hash}
