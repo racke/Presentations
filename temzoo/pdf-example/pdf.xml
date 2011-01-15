@@ -1,4 +1,23 @@
 <specification name="invoice" description="Demo Invoice">
 <value name="fname"/>
 <value name="lname"/>
+<value name="order_number"/>
+<value name="order_date"/>
+<value name="total_cost"/>
+<value name="product_cost" filter="currency"/>
+<value name="shipping"/>
+<value name="salestax"/>
+<value name="discount" op="toggle" args="decimal" filter="currency"/>
+<value name="discountlabel" op="toggle" args="static"/>
+<value name="email"/>
+<value name="account_id" class="salestaxid"/>
+<value name="fname"/>
+<value name="lname"/>
+<value name="city"/>
+<value name="zip"/>
+<value name="country"/>
+<value name="address1"/>
+<value name="address2"/>
+<value name="extra_service"/>
+<i18n name="returnurl" key="RETURN_URL"/>
 </specification>

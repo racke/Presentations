@@ -7,6 +7,8 @@ use Getopt::Long;
 use File::Temp qw(tempfile);
 use FindBin;
 
+use DateTime;
+
 use Template::Zoom;
 use Template::Zoom::PDF;
 
@@ -23,9 +25,13 @@ $SIG{__WARN__} = $whandler;
 my ($zoom, %values);
 
 %values = (fname => 'Stefan',
-		  lname => 'Hornburg',
-		  email => 'racke@linuxia.de',
+		   lname => 'Hornburg',
+		   email => 'racke@linuxia.de',
+		   city => 'Wedemark',
+		   zip => 30900
 		  );
+
+$values{order_date} = DateTime->now->strftime('%m/%d/%y');
 
 # change directory
 chdir($FindBin::RealBin);
