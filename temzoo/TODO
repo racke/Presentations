@@ -1,0 +1,15 @@
+* Why & Where + Startup story
+	- why separation
+* Hooks
+* Template::Toolkit, HTML::Zoom: total cost
+* Expand on PDF example (use "real" invoice", 
+  Style and add stuff to menu example, show scoped file
+* Show the steps in processing, internals (XML::Twig)
+* Value/Scopes/Increments
+* Make clear that this is a fresh project, hint on Git rep?
+* HTML::Streamstress ?
+* $ filter in cart example
+* More code!!
+* Credits - LaTex Beamer
+* Full template
+* Roadmap: PDF
