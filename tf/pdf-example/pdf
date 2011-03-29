@@ -9,8 +9,8 @@ use FindBin;
 
 use DateTime;
 
-use Template::Zoom;
-use Template::Zoom::PDF;
+use Template::Flute;
+use Template::Flute::PDF;
 
 my (%opts);
 
@@ -22,7 +22,7 @@ unless (GetOptions (\%opts, 'browser', 'pdf')) {
 }
 $SIG{__WARN__} = $whandler;
 
-my ($zoom, %values);
+my ($flute, %values);
 
 %values = (fname => 'Stefan',
 		   lname => 'Hornburg',
@@ -36,26 +36,26 @@ $values{order_date} = DateTime->now->strftime('%m/%d/%y');
 # change directory
 chdir($FindBin::RealBin);
 
-$zoom = new Template::Zoom (specification_file => 'pdf.xml',
+$flute = new Template::Flute (specification_file => 'pdf.xml',
 							template_file => 'pdf.html',
 							values => \%values);
 
 if ($opts{browser}) {
-	# store zoom result in temporary file
+	# store flute result in temporary file
 	my ($tmph, $tmpfile) = tempfile('demoXXXX', DIR => '.', SUFFIX => '.html');
-	print $tmph $zoom->process();
+	print $tmph $flute->process();
 	system('x-www-browser', $tmpfile);
 }
 elsif ($opts{pdf}) {
 	my $pdf;
 	
-	$zoom->process();
-	$pdf = new Template::Zoom::PDF (template => $zoom->template(),
+	$flute->process();
+	$pdf = new Template::Flute::PDF (template => $flute->template(),
 									file => 'invoice.pdf');
 	$pdf->process();
 }	
 else {
-	print $zoom->process(), "\n";
+	print $flute->process(), "\n";
 }
 
 

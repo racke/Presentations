@@ -1,6 +1,6 @@
-Template::Zoom - Modern HTML and PDF Engine
+Template::Flute - Modern HTML and PDF Engine
 
-Template::Zoom enables you to completely separate web design and programming
+Template::Flute enables you to completely separate web design and programming
 tasks for dynamic web applications. 
 
 Templates are plain HTML files without inline code or mini language, thus
@@ -11,7 +11,7 @@ The CSS selectors in the template are tied to your data structures or
 objects by a specification, which relieves the programmer from changing
 his code for mere changes of class names.
 
-In addition to HTML output, Template::Zoom also supports generation of
+In addition to HTML output, Template::Flute also supports generation of
 PDF files on-the-fly based on the same template and specification.
 
 

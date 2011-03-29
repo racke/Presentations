@@ -1,6 +1,6 @@
 #! /bin/bash
 
-BASE="$HOME/talks/temzoo"
+BASE="$HOME/talks/tf"
 
 alias carthtml="x-www-browser $BASE/cart-example-basic/cart.html"
 alias cartbasic="$BASE/cart-example-basic/cart --browser"

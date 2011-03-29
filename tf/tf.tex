@@ -10,7 +10,7 @@
 \usepackage{listings}
 \lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
 
-\title{Template::Zoom - Modern HTML and PDF Engine}
+\title{Template::Flute - Modern HTML and PDF Engine}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
 \date[FOSDEM2011]{FOSDEM 2011, 6th February 2011}
 
@@ -23,8 +23,8 @@
 
 \tableofcontents
 
-\section{Template::Zoom}
-Template::Zoom enables you to completely separate web design and programming
+\section{Template::Flute}
+Template::Flute enables you to completely separate web design and programming
 tasks for dynamic web applications. 
 
 Templates are plain HTML files without inline code or mini language, thus
@@ -35,7 +35,7 @@ The CSS selectors in the template are tied to your data structures or
 objects by a specification, which relieves the programmer from changing
 his code for mere changes of class names.
 
-In addition to HTML output, Template::Zoom also supports generation of
+In addition to HTML output, Template::Flute also supports generation of
 PDF files on-the-fly based on the same template and specification.
 
 \subsection{Why and Where}
@@ -48,7 +48,7 @@ PDF files on-the-fly based on the same template and specification.
     \item Inline code
     \item CSS selectors (HTML::Zoom)
     \end{itemize}
-  \item Solutions by Template::Zoom
+  \item Solutions by Template::Flute
     \begin{itemize}
       \item Static HTML file
       \item Specification file
@@ -135,8 +135,8 @@ print $zoom->to_html();
   \item Dynamic pages (border cases, errors, ...)
  \end{itemize}
 \end{frame}
-\subsubsection{Cart with Template::Zoom}
-\begin{frame}{Template::Zoom Concept}
+\subsubsection{Cart with Template::Flute}
+\begin{frame}{Template::Flute Concept}
  \begin{itemize}
   \item Specification
   \item Template
@@ -144,49 +144,49 @@ print $zoom->to_html();
  \end{itemize}
 \end{frame}
 \subsubsection{Specification}
-\begin{frame}[fragile]{Template::Zoom Specification (XML)}
+\begin{frame}[fragile]{Template::Flute Specification (XML)}
 \lstinputlisting{cart-example-basic/cart.xml}
 \end{frame}
-\begin{frame}[fragile]{Template::Zoom Specification (Config::Scoped)}
+\begin{frame}[fragile]{Template::Flute Specification (Config::Scoped)}
 \lstinputlisting{cart-example-basic/cart.conf}
 \end{frame}
 \subsubsection{Quellcode}
-\begin{frame}[fragile]{Template::Zoom Script (XML)}
+\begin{frame}[fragile]{Template::Flute Script (XML)}
 \begin{lstlisting}
-use Template::Zoom;
+use Template::Flute;
 
-my ($cart, $zoom, %values);
+my ($cart, $flute, %values);
 
 $cart = ...
 $values{cost} = ...
 
-$zoom = new Template::Zoom(specification_file => 'cart.xml',
+$flute = new Template::Flute(specification_file => 'cart.xml',
                            template_file => 'cart.html',
                            iterators => {cart => $cart},
                            values => \%values,
 );
 
-print $zoom->process();
+print $flute->process();
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Template::Zoom Script (Config::Scoped)}
+\begin{frame}[fragile]{Template::Flute Script (Config::Scoped)}
 \begin{lstlisting}
-use Template::Zoom;
+use Template::Flute;
 
-my ($cart, $zoom, %values);
+my ($cart, $flute, %values);
 
 $cart = ...
 $values{cost} = ...
 
-$zoom = new Template::Zoom(specification_file => 'cart.conf',
+$flute = new Template::Flute(specification_file => 'cart.conf',
                            specification_parser => 'Scoped',
                            template_file => 'cart.html',
                            iterators => {cart => $cart},
                            values => \%values,
 );
 
-print $zoom->process();
+print $flute->process();
 \end{lstlisting}
 \end{frame}
 
@@ -238,29 +238,29 @@ styling can be done completely with CSS.
 \subsubsection{Script}
 \begin{frame}[fragile]{Menus: Script}
 \begin{lstlisting}
-use Template::Zoom;
-use Template::Zoom::Database::Rose;
+use Template::Flute;
+use Template::Flute::Database::Rose;
 
-$db_object = new Template::Zoom::Database::Rose(dbname => 'temzoo',
+$db_object = new Template::Flute::Database::Rose(dbname => 'temzoo',
     dbtype => 'Pg',
 );
 
-$zoom = new Template::Zoom(specification_file => 'menu.xml',
+$flute = new Template::Flute(specification_file => 'menu.xml',
 						   template_file => 'menu.html',
 						   database => $db_object,
 						  );
 
-$zoom->process({name => main});
+$flute->process({name => main});
 \end{lstlisting}
 \end{frame}
 
 \section{Lists}
 \subsection{Iterators}
-Template::Zoom uses iterators to retrieve list elements and insert them into
+Template::Flute uses iterators to retrieve list elements and insert them into
 the document tree. This abstraction relieves us from worrying about where
 the data actually comes from. We basically just need an array of hash
 references and an iterator class with a next and a count method. For your
-convenience you can create an iterator from Template::Zoom::Iterator
+convenience you can create an iterator from Template::Flute::Iterator
 very easily.
 
 \begin{frame}{Iterators}
@@ -268,7 +268,7 @@ very easily.
   \item next method
   \item count method
   \item hash as return value
-  \item Template::Zoom::Iterator
+  \item Template::Flute::Iterator
  \end{itemize}
 \end{frame}
 \subsection{Alternating rows}
@@ -324,7 +324,7 @@ sub link_filter {
     return $url;
 }
 
-$zoom = new Template::Zoom(specification_file => 'menu.xml',
+$flute = new Template::Flute(specification_file => 'menu.xml',
 						   template_file => 'menu.html',
 						   database => $db_object,
 						   filters => {link => \&link_filter},
@@ -366,7 +366,7 @@ $zoom = new Template::Zoom(specification_file => 'menu.xml',
 \section{I18N}
 I18N support is very basic right now. You write a function for
 translating text inside the HTML template and instantiate an
-Template::Zoom::I18N with a reference to this function. 
+Template::Flute::I18N with a reference to this function. 
 \begin{frame}[fragile]{I18N}
 \begin{lstlisting}
 sub translate {
@@ -377,9 +377,9 @@ sub translate {
     return $text;
 }
 
-$i18n = new Template::Zoom::I18N (\&translate);
+$i18n = new Template::Flute::I18N (\&translate);
 
-$zoom = new Template::Zoom(specification_file => 'menu.xml',
+$flute = new Template::Flute(specification_file => 'menu.xml',
 						   template_file => 'menu.html',
 						   database => $db_object,
 						   i18n => $i18n,
@@ -409,7 +409,7 @@ translation function with a lookup key in the specification.
 \end{frame}
 
 \subsection{Manipulating Forms}
-The Template::Zoom::Form class provides a number of methods
+The Template::Flute::Form class provides a number of methods
 to manipulate the output of forms in the resulting HTML:
 
 \begin{frame}{Forms: Manipulating}
@@ -445,12 +445,12 @@ partitioned throughout the pages in the PDF document.
 
 \begin{frame}[fragile]{PDF: Code}
 \begin{lstlisting}
-$zoom = new Template::Zoom (specification_file => 'pdf.xml',
+$flute = new Template::Flute (specification_file => 'pdf.xml',
                             template_file => 'pdf.html',
                             values => \%values);
-$zoom->process();
+$flute->process();
 
-$pdf = new Template::Zoom::PDF (template => $zoom->template(),
+$pdf = new Template::Flute::PDF (template => $flute->template(),
                                 file => 'invoice.pdf');
 $pdf->process();
 \end{lstlisting}
@@ -463,7 +463,7 @@ $import{file} = 'shippinglabel.pdf';
 $import{scale} = 0.8;
 $import{margin} = {left => '3mm', top => '6mm'};
 
-$pdf = new Template::Zoom::PDF (template => $zoom->template(),
+$pdf = new Template::Flute::PDF (template => $flute->template(),
                                 file => 'invoice.pdf',
                                 import => \%import);
 \end{lstlisting}

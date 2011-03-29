@@ -7,7 +7,7 @@ use Getopt::Long;
 use File::Temp qw(tempfile);
 use FindBin;
 
-use Template::Zoom;
+use Template::Flute;
 
 my (%opts);
 
@@ -28,7 +28,7 @@ if (@ARGV == 1) {
 	$template_file = shift;
 }
 
-my ($cart, $iter, $xml_spec, $spec, $html_object, $zoom);
+my ($cart, $iter, $xml_spec, $spec, $html_object, $flute);
 
 # change directory
 chdir($FindBin::RealBin);
@@ -40,7 +40,7 @@ $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
 		];
 
 
-$zoom = new Template::Zoom(specification_file => 'cart.conf',
+$flute = new Template::Flute(specification_file => 'cart.conf',
 						   specification_parser => 'Scoped',
 						   template_file => $template_file,
 						   iterators => {cart => $cart},
@@ -48,12 +48,12 @@ $zoom = new Template::Zoom(specification_file => 'cart.conf',
 );
 
 if ($opts{browser}) {
-	# store zoom result in temporary file
+	# store flute result in temporary file
 	my ($tmph, $tmpfile) = tempfile('demoXXXX', DIR => '.', SUFFIX => '.html');
-	print $tmph $zoom->process();
+	print $tmph $flute->process();
 	system('x-www-browser', $tmpfile);
 }
 else {
-	print $zoom->process(), "\n";
+	print $flute->process(), "\n";
 }
 

@@ -7,9 +7,9 @@ use Getopt::Long;
 use File::Temp qw(tempfile);
 use FindBin;
 
-use Template::Zoom;
-use Template::Zoom::Config;
-use Template::Zoom::Database::Rose;
+use Template::Flute;
+use Template::Flute::Config;
+use Template::Flute::Database::Rose;
 
 my (%opts);
 
@@ -21,19 +21,19 @@ unless (GetOptions (\%opts, 'browser')) {
 }
 $SIG{__WARN__} = $whandler;
 
-my ($config_file, $config_vars, $db_object, $zoom);
+my ($config_file, $config_vars, $db_object, $flute);
 
 # change directory
 chdir($FindBin::RealBin);
 
 # parse configuration file
 $config_file = shift;
-$config_vars = Template::Zoom::Config::load($config_file);
+$config_vars = Template::Flute::Config::load($config_file);
 
 # database connection
-$db_object = new Template::Zoom::Database::Rose(%{$config_vars->{database}});
+$db_object = new Template::Flute::Database::Rose(%{$config_vars->{database}});
 
-$zoom = new Template::Zoom(specification_file => 'menu.conf',
+$flute = new Template::Flute(specification_file => 'menu.conf',
 						   specification_parser => 'Scoped',
 						   template_file => 'menu.html',
 						   database => $db_object,
@@ -41,13 +41,13 @@ $zoom = new Template::Zoom(specification_file => 'menu.conf',
 						  );
 
 if ($opts{browser}) {
-	# store zoom result in temporary file
+	# store flute result in temporary file
 	my ($tmph, $tmpfile) = tempfile('demoXXXX', DIR => '.', SUFFIX => '.html');
-	print $tmph $zoom->process({name => 'main'});
+	print $tmph $flute->process({name => 'main'});
 	system('x-www-browser', $tmpfile);
 }
 else {
-	print $zoom->process({name => 'main'}), "\n";
+	print $flute->process({name => 'main'}), "\n";
 }
 
 sub link_filter {
