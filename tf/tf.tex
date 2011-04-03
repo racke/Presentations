@@ -254,8 +254,7 @@ $flute->process({name => main});
 \end{lstlisting}
 \end{frame}
 
-\section{Lists}
-\subsection{Iterators}
+\section{Iterators}
 Template::Flute uses iterators to retrieve list elements and insert them into
 the document tree. This abstraction relieves us from worrying about where
 the data actually comes from. We basically just need an array of hash
@@ -267,10 +266,34 @@ very easily.
 \begin{itemize}
   \item next method
   \item count method
-  \item hash as return value
-  \item Template::Flute::Iterator
+  \item hash reference as return value
  \end{itemize}
 \end{frame}
+
+\subsection{Template::Flute::Iterator}
+\begin{frame}[fragile]{Template::Flute::Iterator}
+\begin{lstlisting}
+use Template::Flute::Iterator;
+
+Template::Flute::Iterator->new($cart);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Subclassing Template::Flute::Iterator}
+\begin{frame}[fragile]{Subclassing Template::Flute::Iterator}
+\begin{lstlisting}
+package MyApp::Iterator;
+
+use base 'Template::Flute::Iterator';
+
+sub new {
+    ...
+    $self->seed([...]);
+    return $self;
+}
+\end{lstlisting}
+\end{frame}
+
 \subsection{Alternating rows}
 \begin{frame}[fragile]{Lists with alternating rows}
 \begin{lstlisting}
