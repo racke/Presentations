@@ -15,7 +15,7 @@ $cart = [{isbn => '978-0-2016-1622-4', title => 'The Pragmatic Programmer',
 
 $zoom = HTML::Zoom->from_file('cart.html');
 
-$zoom->select('.cartitem')->repeat_content([
+$zoom = $zoom->select('.cartitem')->repeat_content([
     map { my $field = $_;
 		  my $sub = sub {
 			  $_[0]->select('.name')->replace_content($field->{title});
@@ -24,5 +24,7 @@ $zoom->select('.cartitem')->repeat_content([
 		  };
 		  $sub;
 	  } @$cart]);
+
+$zoom = $zoom->select('.cost')->replace_content(49.95 + 34.99);
 
 print $zoom->to_html();
