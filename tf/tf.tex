@@ -125,6 +125,8 @@ $zoom = $zoom->select('.cartitem')->repeat_content([
     };
   } @$cart]);
 
+$zoom = $zoom->select('.cost')->replace_content(49.95 + 34.99);
+
 print $zoom->to_html();
 \end{lstlisting}
 \end{frame}
