@@ -315,7 +315,18 @@ sub new {
 \end{lstlisting}
 \end{frame}
 
-\section{Filter and Sort}
+\section{Elements}
+\begin{frame}{Elements}
+\begin{itemize}
+\item value
+\item list
+\item param
+\item container
+\item form
+\end{itemize}
+\end{frame}
+
+\subsection{Filter and Sort}
 There are two types of filters for lists: global filters and
 parameter filters. Global filters are applied to the complete
 record of a list element and can be used to skip list items.
@@ -355,7 +366,7 @@ $flute = new Template::Flute(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
-\subsection{Global Filter}
+\subsubsection{Global Filter}
 \begin{frame}[fragile]{Global Filter}
 \begin{lstlisting}
 <specification name="menu" description="Menu">
@@ -369,7 +380,7 @@ $flute = new Template::Flute(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
-\subsection{Specification with sort}
+\subsubsection{Specification with sort}
 \begin{frame}[fragile]{Sort: Specification}
 \begin{lstlisting}
 <specification name="menu" description="Menu">
@@ -386,7 +397,7 @@ $flute = new Template::Flute(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
-\section{I18N}
+\subsection{I18N}
 I18N support is very basic right now. You write a function for
 translating text inside the HTML template and instantiate an
 Template::Flute::I18N with a reference to this function. 
@@ -410,7 +421,7 @@ $flute = new Template::Flute(specification_file => 'menu.xml',
 \end{lstlisting}
 \end{frame}
 
-\subsection{I18N: Lookup Keys}
+\subsubsection{I18N: Lookup Keys}
 You can override the text in the HTML template passed to the
 translation function with a lookup key in the specification.
 \begin{frame}[fragile]{I18N: Lookup Keys}
@@ -419,7 +430,7 @@ translation function with a lookup key in the specification.
 \end{lstlisting}
 \end{frame}
 
-\section{Forms}
+\subsection{Forms}
 \begin{frame}[fragile]{Forms: Specification}
 \begin{lstlisting}
 <specification name='search' description=''>
@@ -431,7 +442,7 @@ translation function with a lookup key in the specification.
 \end{lstlisting}
 \end{frame}
 
-\subsection{Manipulating Forms}
+\subsubsection{Manipulating Forms}
 The Template::Flute::Form class provides a number of methods
 to manipulate the output of forms in the resulting HTML:
 
