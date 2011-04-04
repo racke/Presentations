@@ -492,6 +492,57 @@ $pdf = new Template::Flute::PDF (template => $flute->template(),
 \end{lstlisting}
 \end{frame}
 
+\section{Dancer}
+\begin{frame}[fragile]{Dancer Example}
+\begin{lstlisting}
+use Dancer;
+
+get '/' => sub {
+    return 'Hello world';
+};
+
+dance;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Fruits Demo}
+\begin{frame}[fragile]{Fruits Demo}
+\begin{lstlisting}
+dancer -a Fruits
+$EDITOR Fruits/lib/Fruits.pm
+\end{lstlisting}
+
+(see next slide)
+
+\begin{lstlisting}
+Fruits/bin/app.pl
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Fruits Demo}
+\begin{lstlisting}
+package Fruits;
+
+prefix '/fruits';
+
+# route for image files
+get '/*.jpg' => sub {
+    my ($name) = splat;
+
+    send_file "images/$name.jpg";
+};
+
+# route for fruits page
+get qr{/?(?<page>.*)}  => sub {
+    template 'fruits';
+};
+\end{lstlisting}
+\end{frame}
+
+%\subsection{Dancer and Template::Flute}
+%\begin{frame}[fragile]{Foo}
+%\end{frame}
+
 % \subsection{Restrictions}
 \section{Conclusion}
 \subsection{Use Cases}
