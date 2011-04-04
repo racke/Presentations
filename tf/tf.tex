@@ -539,9 +539,19 @@ get qr{/?(?<page>.*)}  => sub {
 \end{lstlisting}
 \end{frame}
 
-%\subsection{Dancer and Template::Flute}
-%\begin{frame}[fragile]{Foo}
-%\end{frame}
+\subsection{Dancer \& Template::Flute}
+\begin{frame}[fragile]{Dancer \& Template::Flute}
+\begin{lstlisting}
+template: "template_flute"
+
+engines:
+  template_flute:
+    iterators:
+      fruits:
+        class: JSON
+        file: fruits.json
+\end{lstlisting}
+\end{frame}
 
 % \subsection{Restrictions}
 \section{Conclusion}
