@@ -117,7 +117,7 @@ use HTML::Zoom;
 $cart = ...
 $zoom = HTML::Zoom->from_file('cart.html');
 
-$zoom->select('.cartitem')->repeat_content([
+$zoom = $zoom->select('.cartitem')->repeat_content([
   map { my $field = $_; sub {
     $_[0]->select('.name')->replace_content($field->{title});
     $_[0]->select('.quantity')->replace_content($field->{quantity});
