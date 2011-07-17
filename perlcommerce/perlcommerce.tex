@@ -1,0 +1,92 @@
+
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+
+\usepackage{beamerthemesplit}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
+
+\title{Modern PerlCommerce}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date[]{YAPC::Europe 2011, Riga, 17th August 2011}}
+
+\begin{document}
+\maketitle{}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\tableofcontents
+
+\section{Modern PerlCommerce}
+
+\subsection{How easy can it be?}
+\begin{frame}[fragile]{How easy can it be?}
+\begin{lstlisting}
+#!/usr/bin/env perl
+
+use Dancer;
+use Dancer::Plugin::Interchange;
+
+sell;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Real World}
+Running and maintaining an online shop is a challenging business
+and requires constant change to stay on top of your competitors.
+
+\begin{frame}{Real World}
+\begin{itemize}
+\item Marketing, SEO
+\item Legal stuff
+\item Interfaces
+\item Design
+\end{itemize}
+\end{frame}
+
+\subsection{SF²}
+\begin{frame}{SF²}
+\begin{itemize}
+\item simple
+\item flexible
+\item fast
+\item solid
+\end{itemize}
+\end{frame}
+
+\section{Interchange Modules}
+\subsection{Interchange::Cart}
+\begin{frame}{Interchange::Cart}
+\begin{itemize}
+\item SKU, Name, Quantity, Price
+\item Price > 0
+\item Combines automatically
+\item Multiple carts
+\item Storage everywhere
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Interchange::Cart Functions}
+\begin{lstlisting}
+$cart = Interchange::Cart->new;
+
+$cart->add(sku => 'POM253', name => 'Pomelo',
+    price => 3.00, quantity => 10);
+
+$cart->count();
+
+$cart->clear();
+\end{lstlisting}
+\end{frame}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
