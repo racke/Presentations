@@ -36,8 +36,8 @@ $values{order_date} = DateTime->now->strftime('%m/%d/%y');
 # change directory
 chdir($FindBin::RealBin);
 
-$flute = new Template::Flute (specification_file => 'pdf.xml',
-							template_file => 'pdf.html',
+$flute = new Template::Flute (specification => '<specification></specification>',
+							template_file => 'new.html',
 							values => \%values);
 
 if ($opts{browser}) {
