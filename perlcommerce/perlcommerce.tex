@@ -12,7 +12,7 @@
 
 \title{Modern PerlCommerce}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
-\date[]{YAPC::Europe 2011, Riga, 17th August 2011}}
+\date[]{YAPC::Europe 2011, Riga, 17th August 2011}
 
 \begin{document}
 \maketitle{}
@@ -60,9 +60,9 @@ and requires constant change to stay on top of your competitors.
 \end{itemize}
 \end{frame}
 
-\section{Interchange Modules}
-\subsection{Interchange::Cart}
-\begin{frame}{Interchange::Cart}
+\section{API}
+\subsection{Cart}
+\begin{frame}{Cart}
 \begin{itemize}
 \item SKU, Name, Quantity, Price
 \item Price > 0
@@ -72,7 +72,7 @@ and requires constant change to stay on top of your competitors.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Interchange::Cart Functions}
+\begin{frame}[fragile]{Interchange::Cart Functions}
 \begin{lstlisting}
 $cart = Interchange::Cart->new;
 
@@ -82,6 +82,100 @@ $cart->add(sku => 'POM253', name => 'Pomelo',
 $cart->count();
 
 $cart->clear();
+
+$cart->total();
+
+$cart->subtotal();
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Inventory Checks}
+Inventory checks are pretty much limited in Interchange right now.
+They are controlled by the configuration directives MinQuantityField
+and MaxQuantityField:
+\begin{frame}[fragile]{Inventory Check}
+\begin{lstlisting}
+MinQuantityField min_quantity
+MaxQuantityField inventory:quantity 
+\end{lstlisting}
+\end{frame}
+Also they are part of the standard code instead of loaded through
+hooks.
+
+\subsection{Payment}
+\begin{frame}{Payment}
+\begin{itemize}
+\item Business::OnlinePayment
+\end{itemize}
+\end{frame}
+
+\subsection{Shipping}
+\begin{frame}{Shipping}
+\begin{itemize}
+\item Simple Shipping
+\item Crazy Shipping
+\item Shipping API
+\end{itemize}
+\end{frame}
+
+\subsection{ACL}
+\begin{frame}{Access Control}
+\begin{itemize}
+\item Customer Service
+\item Menus
+\item Backend
+\end{itemize}
+\end{frame}
+
+\subsection{Forms}
+\begin{frame}{Forms}
+\begin{itemize}
+\item Display
+\item Validation
+\item Storage
+\end{itemize}
+\end{frame}
+
+\subsection{Backend}
+\begin{frame}{Shipping}
+\end{frame}
+
+\section{Integration \& Deployment}
+\subsection{Dancer}
+\subsubsection{Routes}
+\begin{frame}{Routes}
+\begin{itemize}
+\item Categories
+\item Products
+\item Cart
+\item Checkout
+\item Customer Service
+\end{itemize}
+\end{frame}
+
+\subsubsection{Default Route}
+Categories and products can be handled through the default route
+(see
+\url{http://search.cpan.org/~sukria/Dancer/lib/Dancer/Cookbook.pod#Default_route})
+as alternative to defining explicit routes.
+
+\begin{frame}[fragile]{Default Route}
+\begin{lstlisting}
+get qr{/(.*)} => sub {
+    my ($sku) = splat;
+    my $product;
+
+    # check for existing product
+    if ($product = database->quick_select('products', {sku => $sku})) {
+        # display flypage
+        template 'flypage', $product;
+    }
+    else {
+        # display not found page
+        status 'not_found';
+        forward '404';
+    }
+};
 \end{lstlisting}
 \end{frame}
 \end{document}
