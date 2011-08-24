@@ -1,0 +1,10 @@
+Title: Tanz!
+Tags: dancer perlbal plugin psgi starman web
+
+Komm und tanz! mit Dancer, es ist einfach zu erlernen, effizient zu programmieren und 
+trotzdem ausdrucksstark genug für mittlere und größere Projekte.
+
+In unserer Tanzschule üben wir die wichtigsten Elemente (Routes, Plugins, Templates, Sessions, Konfiguration).
+
+Die abschließende Tanzkür zeigt exemplarisch die Einrichtung einer Produktionsumgebung mit Perlbal, Starman 
+und einem Startskript für die Dancer-Anwendung.
