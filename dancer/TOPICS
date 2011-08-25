@@ -1,0 +1,6 @@
+* Aufteilung des Codes mithilfe von prefix
+* Hooks
+* Plugins: Übersicht, wie schreibt man ein Plugin
+* Deployment mit Perlbal und Starman
+* Streaming
+* Session / Logging (Konfigurationtips etc)
