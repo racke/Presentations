@@ -3,4 +3,5 @@
 * Plugins: Übersicht, wie schreibt man ein Plugin
 * Deployment mit Perlbal und Starman
 * Streaming
-* Session / Logging (Konfigurationtips etc)
+* Session / Logging (Konfigurationtips etc), Log rotation
+* Captures
