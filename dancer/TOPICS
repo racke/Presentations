@@ -1,7 +1,12 @@
-* Aufteilung des Codes mithilfe von prefix
-* Hooks
-* Plugins: Übersicht, wie schreibt man ein Plugin
-* Deployment mit Perlbal und Starman
+* Aufteilung des Codes mithilfe von prefix 
+* Hooks §
+* Plugins: Übersicht, wie schreibt man ein Plugin §
+* Deployment mit Perlbal und Starman §
 * Streaming
 * Session / Logging (Konfigurationtips etc), Log rotation
-* Captures
+* Captures §
+* Dancer::Object
+* Clean URLs
+* return redirect, return template etc.
+
+§ => reflected as slide(s)
