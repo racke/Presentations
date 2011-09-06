@@ -6,7 +6,17 @@
 * Session / Logging (Konfigurationtips etc), Log rotation
 * Captures §
 * Dancer::Object
+* Dancer qw(:script)
 * Clean URLs
 * return redirect, return template etc.
+* Contributing
+* Typical errors
+  missing ; after sub
+  before => sub
+  redirect without return
 
 § => reflected as slide(s)
+
+before sub {
+        var foo => 42;
+    };
