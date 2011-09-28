@@ -148,12 +148,14 @@ and requires constant change to stay on top of your competitors.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Interchange::Cart Functions}
+\begin{frame}[fragile]{Nitesi::Cart Functions}
 \begin{lstlisting}
-$cart = Interchange::Cart->new;
+$cart = Nitesi::Cart->new;
 
 $cart->add(sku => 'POM253', name => 'Pomelo',
     price => 3.00, quantity => 10);
+
+$cart->remove(sku => 'POM253');
 
 $cart->count();
 
@@ -170,7 +172,15 @@ $cart->subtotal();
 \begin{itemize}
 \item Saved Carts
 \item Wishlists
-\item Sets
+\item Collections
+\end{itemize}
+\end{frame}
+
+\subsubsection{Cart Backends}
+\begin{frame}{Everything is a Cart}
+\begin{itemize}
+\item Session
+\item DBI
 \end{itemize}
 \end{frame}
 
