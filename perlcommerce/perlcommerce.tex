@@ -59,6 +59,7 @@ but I want to point the things important to us.
 \item Best Practices
 \item Tests
 \item Separation (Modules, Plugins, Hooks, Templates)
+\item PSGI/Plack
 \end{itemize}
 \end{frame}
 
@@ -191,7 +192,7 @@ $cart->subtotal();
 \end{frame}
 
 \subsubsection{Cart Backends}
-\begin{frame}{Everything is a Cart}
+\begin{frame}{Cart Backends}
 \begin{itemize}
 \item Session
 \item DBI
@@ -216,6 +217,19 @@ hooks.
 \begin{itemize}
 \item Business::OnlinePayment
 \end{itemize}
+\end{frame}
+
+\subsection{Taxes}
+Tax on top of the product cost can be applied in different varieties.
+
+Germany has 19\% salestax, 7.5\% reduced salestax for books and some
+items are tax free. You have to show the breakdown of different taxes
+on the receipt.
+
+Orders for businesses between different countries of the EU are exempt
+of salestax if the buying party has a salestaxid.
+
+\begin{frame}{Taxes}
 \end{frame}
 
 \subsection{Shipping}
