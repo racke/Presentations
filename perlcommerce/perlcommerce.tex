@@ -229,6 +229,31 @@ hook 'before_cart_add' => sub {
 \end{lstlisting}
 \end{frame}
 
+\subsubsection{Cart Hooks}
+We just seen an example for before_cart_add hook.
+
+The most common usage for after_cart_add is to update the cart
+in the backend storage, for example storing the new item in the tables 
+used by the DBI backend and update the modification date of the cart.
+
+\begin{frame}{Cart Hooks}
+\begin{itemize}
+\item before\_cart\_add
+\item after\_cart\_add
+\end{itemize}
+\end{frame}
+
+after_cart_remove is used in a similar way as after_cart_add 
+for removing the item in the tables used by the DBI backend
+and update the modification date of the cart.
+
+\begin{frame}{Cart Hooks}
+\begin{itemize}
+\item before\_cart\_remove
+\item after\_cart\_remove
+\end{itemize}
+\end{frame}
+
 \subsection{Payment}
 \begin{frame}{Payment}
 \begin{itemize}
