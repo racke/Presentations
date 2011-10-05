@@ -212,6 +212,23 @@ MaxQuantityField inventory:quantity
 Also they are part of the standard code instead of loaded through
 hooks.
 
+\begin{frame}[fragile]{Inventory Check Hook}
+\begin{lstlisting}
+hook 'before_cart_add' => sub {
+    my ($cart, $item) = @_;
+    my ($inventory);
+
+    $inventory = query->select_field(table => 'products',
+                                     field => 'inventory',
+                                     where => {sku => $item->{sku}});
+				     
+    if ($item->{quantity} > $inventory) {
+        $item->{error} = 'Out of stock';
+    }
+};
+\end{lstlisting}
+\end{frame}
+
 \subsection{Payment}
 \begin{frame}{Payment}
 \begin{itemize}
