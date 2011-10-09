@@ -24,10 +24,18 @@
 \tableofcontents
 
 \section{Modern PerlCommerce}
-The theme of this conference is ``Modern Perl''.
+In this presentation I'm going to introduce you to our new project
+called Nitesi. It's the successor of Interchange, which is a Ecommerce
+open source software in Perl being around for a long time.
+
+\begin{frame}{Nitesi}
+  \includegraphics{nitesi.png}
+\end{frame}
+
+Why did we start this new project?
 
 \subsection{Perl Buzzwords}
-There is a lot of talk about marketing Perl, modern Perl
+There is a recently lot of talk about marketing Perl, modern Perl
 and even postmodern Perl.
 
 \begin{frame}{Perl Buzzwords}
@@ -43,7 +51,7 @@ projects?
 
 \subsection{Modern Perl}
 There isn't really a set definition what Modern Perl is about,
-but I want to point the things important to us.
+so I want to point the things important to us.
 
 \begin{frame}{Modern Perl}
 \begin{itemize}
@@ -119,24 +127,102 @@ Perl.
 \begin{frame}{References}
 \begin{itemize}
 \item Backcountry \url{http://www.backcountry.com/}
-\item Fragnance \url{http://www.fragrancenet.com/}
-\item DoS \url{https://vsc.state.gov/}
+\item FragnanceNet \url{http://www.fragrancenet.com/}
 \end{itemize}
 \end{frame}
+
+While there are still a lot of sites with Interchange around,
+there are basically no new projects done with Interchange.
 
 \subsection{Future}
 \begin{frame}{Future}
   \includegraphics{ants.jpg}
 \end{frame}
 
-\subsubsection{Outsourcing}
-First of all we are outsourcing tasks handled by a web
-framework and Plack/PSGI and gain more flexibility in
+\subsubsection{Principles}
+Examples for being agnostic:
+
+The Cart class doesn't make assumptions where the items are
+stored, they could be in the session or in the database.
+
+The Account Manager class allows multiple authentication
+methods through account providers.
+
+We don't have a fixed templating system like in Interchange.
+
+We are not tied to a certain framework.
+
+\begin{frame}{Principles}
+\begin{itemize}
+\item KISS
+\item Components
+\item Agnostic
+\item Expressive
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Agnostic}
+Cart
+\begin{itemize}
+\item Session
+\item DBI
+\item Webservice *
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Agnostic}
+Account Manager
+\begin{itemize}
+\item DBI
+\item LDAP *
+\item OpenID *
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Agnostic}
+Templating Engine
+\begin{itemize}
+\item Template::Toolkit
+\item Template::Flute
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Agnostic}
+Web framework
+\begin{itemize}
+\item Catalyst
+\item Mojo
+\item Dancer
+\end{itemize}
+\end{frame}
+
+To have these choices is good for developers and experienced users, 
+but many users want to exactly know what they are getting.
+
+Dancer fits our preferences the best.
+
+Template::Flute allows us to use pure HTML templates.
+
+DBI is the common storage method for Ecommerce products.
+
+\begin{frame}{Preferences}
+\begin{itemize}
+\item Dancer
+\item Template::Flute
+\item DBI
+\end{itemize}
+\end{frame}
+
+\subsubsection{Framework}
+By using an existing web framework which is Plack/PSGI compatible
+we get relieved of the following
+tasks and gain more flexibility in
 addition.
  
-\begin{frame}{Outsourcing}
+\begin{frame}{Framework}
 \begin{itemize}
 \item Dispatching requests
+\item Parameter parsing
 \item Session handling
 \item Template engine
 \item I18N
@@ -196,25 +282,26 @@ addition.
 \item Combines automatically
 \item Multiple carts
 \item Storage everywhere
+\item Price caching
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Nitesi::Cart Methods}
 \begin{lstlisting}
-$cart = Nitesi::Cart->new;
+use Dancer::Plugin::Nitesi;
 
-$cart->add(sku => 'POM253', name => 'Pomelo',
+cart->add(sku => 'POM253', name => 'Pomelo',
     price => 3.00, quantity => 10);
 
-$cart->remove(sku => 'POM253');
+cart->remove(sku => 'POM253');
 
-$cart->count();
+cart->count();
 
-$cart->clear();
+cart->clear();
 
-$cart->total();
+cart->total();
 
-$cart->subtotal();
+cart->subtotal();
 \end{lstlisting}
 \end{frame}
 
@@ -225,6 +312,14 @@ $cart->subtotal();
 \item Wishlists
 \item Collections
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Carts}
+\begin{lstlisting}
+cart('wishlist')->add(sku => 'ORA322', name => 'Orange',
+     price => 2.00, quantity => 5);
+
+\end{lstlisting}
 \end{frame}
 
 \subsubsection{Cart Backends}
@@ -290,14 +385,25 @@ and update the modification date of the cart.
 \end{itemize}
 \end{frame}
 
-\subsection{Payment}
+\subsection{Checkout}
+
+\begin{frame}{Checkout}
+\begin{itemize}
+\item Taxes
+\item Shipping
+\item Payment
+\item Invoice
+\end{itemize}
+\end{frame}
+
+\subsubsection{Payment}
 \begin{frame}{Payment}
 \begin{itemize}
 \item Business::OnlinePayment
 \end{itemize}
 \end{frame}
 
-\subsection{Taxes}
+\subsubsection{Taxes}
 Tax on top of the product cost can be applied in different varieties.
 
 Germany has 19\% salestax, 7.5\% reduced salestax for books and some
@@ -306,9 +412,6 @@ on the receipt.
 
 Orders for businesses between different countries of the EU are exempt
 of salestax if the buying party has a salestaxid.
-
-\begin{frame}{Taxes}
-\end{frame}
 
 Business::Tax::VAT doesn't account for reduced rates.
 
@@ -321,7 +424,7 @@ Business::Tax::VAT doesn't account for reduced rates.
 \end{itemize}
 \end{frame}
 
-\subsection{Shipping}
+\subsubsection{Shipping}
 \begin{frame}{Shipping}
 \begin{itemize}
 \item Simple Shipping
@@ -330,25 +433,75 @@ Business::Tax::VAT doesn't account for reduced rates.
 \end{itemize}
 \end{frame}
 
-\subsection{Account Management}
-\begin{frame}{Account Management}
+\subsubsection{Costs}
+\begin{frame}[fragile]{Costs}
+\begin{lstlisting}
+$cart->apply_cost(amount => 5);
+
+$cart->apply_cost(amount => 0.19, relative => 1);
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{PDF Invoices}
+\begin{frame}{PDF Invoices}
 \begin{itemize}
-\item Customer Service
-\item Menus
-\item Backend
+\item HTML template
+\item Template::Flute::PDF
 \end{itemize}
 \end{frame}
 
+\subsection{Accounts and Access Control}
+
+\begin{frame}[fragile]{Accounts}
+\begin{lstlisting}
+post '/login' => sub {
+    if (account->login(username => params('body')->{username},
+                       password => params('body')->{password})) {
+        redirect '/customerservice';
+    }
+    else {
+        redirect '/login';
+    }
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Accounts}
+\begin{lstlisting}
+get '/checkout' => sub {
+    if (account->acl(check => 'submit_orders')) {
+        return template 'checkout';
+    }
+    
+    redirect '/access_denied';
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Account Manager}
 \begin{frame}{Account manager}
 \begin{itemize}
 \item Account Providers
 \item Login/Logout
-\item Login status
 \item Account Information
+\item Login status
+\item Forgot password
+\item Registration
 \end{itemize}
-
 \end{frame}
-\subsection{Access Control}
+
+\subsubsection{Account Provider}
+\begin{frame}{Account Provider}
+\begin{itemize}
+\item DBI 
+\item LDAP *
+\item Htpasswd * 
+\item OpenID *
+\item OAuth *
+\end{itemize}
+\end{frame}
+
+\subsubsection{Access Control}
 \begin{frame}{Access Control}
 \begin{itemize}
 \item User
@@ -366,19 +519,7 @@ Business::Tax::VAT doesn't account for reduced rates.
 \end{itemize}
 \end{frame}
 
-\subsection{PDF Invoices}
-\begin{frame}{PDF Invoices}
-\begin{itemize}
-\item HTML template
-\item Template::Flute::PDF
-\end{itemize}
-\end{frame}
-
-\subsection{Backend}
-\begin{frame}{Shipping}
-\end{frame}
-
-\section{Integration \& Deployment}
+\section{Development \& Deployment}
 \subsection{Dancer}
 \subsubsection{Routes}
 \begin{frame}{Routes}
@@ -387,6 +528,7 @@ Business::Tax::VAT doesn't account for reduced rates.
 \item Products
 \item Cart
 \item Checkout
+\item Login/Logout
 \item Customer Service
 \end{itemize}
 \end{frame}
@@ -415,6 +557,30 @@ get qr{/(.*)} => sub {
     }
 };
 \end{lstlisting}
+\end{frame}
+
+\subsection{Contribution}
+\subsubsection{Nitesi @ CPAN/GitHub}
+\begin{frame}{CPAN/GitHub}
+\begin{itemize}
+\item \url{http://search.cpan.org/dist/Nitesi/}
+\item \url{http://search.cpan.org/dist/Nitesi-DBI/}
+\item \url{http://search.cpan.org/dist/Dancer-Plugin-Nitesi/}
+\end{itemize}
+\begin{itemize}
+\item \url{https://github.com/racke/Nitesi}
+\item \url{https://github.com/racke/Nitesi-DBI}
+\item \url{https://github.com/racke/Dancer-Plugin-Nitesi}
+\end{itemize}
+\end{frame}
+
+\subsection{The End}
+\begin{frame}{The End}
+Slides:
+\url{http://www.linuxia.de/talks/perlcommerce/perlcommerce-beamer.pdf}
+
+Project:
+\url{https://vsc.state.gov/}
 \end{frame}
 \end{document}
 

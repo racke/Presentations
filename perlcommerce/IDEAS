@@ -1,13 +1,42 @@
+Future / Roadmap
+       How do you arrive there?
+       	   * Dancer/Plack/PSGI
+	   * Data and display agnostic
+	     Local database - ERP - Cloud/APIs
+	   * Bundles / Plugins / Hooks
+	     
+       What included ?
+       	    Navigation
+	    Cart
+	    Payment
+	    Taxes
+	    Shipping
+	    Checkout
+	    Invoice
+	    Account
+
+       Timeline
+
+       Status & Contributions
+
+==================================
+
+* Plack Middleware
+
 * Products
 
 * Cart
   session / database / sharing
+  Nitesi::Plugin::InventoryCheck
 
 * Availability status of the item
-
-* Access control
-
+  
 * Taxes
+  Business:Tax::VAT (NY !)
+
+  * consider shipping
+  * break down by percentages
+  * Canada/Australia
 
 * Plugins
   => Units: 3kg etc
@@ -19,6 +48,19 @@
 * Backend
   => ERP
 
+* Coupons, Reviews
+
+* Charge => Funds
 
 ====================================
+
+Experience
+Backcountry + Fragrance + DOS
+
+Knowhow to Perl Community + CPAN
+
+Cart / Wishlists
+
+Refactoring
+
 
