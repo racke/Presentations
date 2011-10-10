@@ -73,6 +73,15 @@ leichtgewichtig und schnell zu halten.
 \end{itemize}
 \end{frame}
 
+\subsection{Plugins und Hooks}
+\begin{frame}[fragile]{Plugins und Hooks}
+\begin{lstlisting}
+Dancer::Factory::Hook
+        ->instance
+        ->install_hooks('before_cart_add');
+\end{lstlisting}
+\end{frame}
+
 \section{Scripts}
 \begin{frame}[fragile]{Scripts}
 \begin{lstlisting}
