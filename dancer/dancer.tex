@@ -36,6 +36,20 @@
 \end{frame}
 
 \subsubsection{Splat}
+\begin{frame}[fragile]{Splat}
+\begin{lstlisting}
+get '/images/covers/*.jpg' => sub {
+    my ($isbn) = splat;
+
+    if (-f "public/images/covers/$isbn.jpg") {
+        return send_file "images/covers/$isbn.jpg";
+    }
+
+    status 'not_found';
+    forward 404;
+}
+\end{lstlisting}
+\end{frame}
 
 \subsubsection{Megasplat}
 
