@@ -33,6 +33,20 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Captures}
+\begin{lstlisting}
+any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
+    my ($capts, $user, $file);
+
+    $capts = captures;
+    $file = $capts->{file};
+    $user = $capts->{user};
+
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
 \section{Hooks}
 \begin{frame}{Hooks}
 \end{frame}
