@@ -35,6 +35,23 @@
 \end{itemize}
 \end{frame}
 
+\subsubsection{Splat}
+
+\subsubsection{Megasplat}
+
+\begin{frame}[fragile]{Megasplat}
+\begin{lstlisting}
+get '/lostpwd/**' => sub {
+    my ($email, $hash) = splat;
+
+    form->fill(email => $email,
+               hash => $hash);
+    
+    template('lostpwd_confirm', form => $form);
+}
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Captures}
 \begin{lstlisting}
 any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
