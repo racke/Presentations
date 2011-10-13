@@ -23,7 +23,9 @@
 
 \tableofcontents
 
-\section{Routes}
+\section{Routes, Filters and Hooks}
+\subsection{Routes}
+
 \begin{frame}{Routes}
 \begin{itemize}
 \item Splat
@@ -47,7 +49,31 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \end{lstlisting}
 \end{frame}
 
-\section{Hooks}
+\subsection{Filters}
+\begin{frame}[fragile]{Filters}
+\begin{lstlisting}
+before sub {
+};
+
+after sub {
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{before}
+\begin{lstlisting}
+before sub {
+    unless (session('user')
+        || request->path eq '/login'
+        || request->path =~ m%^/lostpwd%
+        ) {
+        redirect '/login';
+    }
+};
+\end{lstlisting}
+\end{frame}
+
+\subsection{Hooks}
 \begin{frame}{Hooks}
 \end{frame}
 
