@@ -214,7 +214,22 @@ set logger_format => '%m';
 \end{frame}
 
 \section{Deployment}
-\begin{frame}{Deployment}
+\subsection{Sessions}
+YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht.
+Alternativen sind u.a.:
+\begin{itemize} 
+\item Storable
+\item Cookie
+\item Memcached
+\item MongoDB
+\end{itemize}
+
+\begin{frame}[fragile]{Sessions}
+\begin{itemize} 
+\item Engine
+\item Ablauffrist \\
+\verb|session_expires: 8 hours|
+\end{itemize} 
 \end{frame}
 
 \subsection{Perlbal}
