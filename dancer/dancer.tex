@@ -215,6 +215,10 @@ set logger_format => '%m';
 
 \section{Deployment}
 \subsection{Sessions}
+Die Session-Engine wird mit \verb|session| konfiguriert,
+ansonsten werden keine Sessions verwendet. Cookies sind
+Voraussetzung für Sessions mit Dancer.
+
 YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht.
 Alternativen sind u.a.:
 \begin{itemize} 
@@ -226,7 +230,8 @@ Alternativen sind u.a.:
 
 \begin{frame}[fragile]{Sessions}
 \begin{itemize} 
-\item Engine
+\item Engine \\
+\verb|session: Storable|
 \item Ablauffrist \\
 \verb|session_expires: 8 hours|
 \end{itemize} 
