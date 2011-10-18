@@ -178,9 +178,38 @@ leichtgewichtig und schnell zu halten.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Dancer::Plugin::LibraryThing}
-
+\begin{frame}[fragile]{Dancer::Plugin::LibraryThing Konfiguration}
+\begin{lstlisting}
+plugins:
+    LibraryThing:
+        api_key: d231aa37c9b4f5d304a60a3d0ad1dad4
+        directory: public/images/covers
+        size: large
+\end{lstlisting}
 \end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::LibraryThing Code}
+\begin{lstlisting}
+use Dancer::Plugin::LibraryThing;
+
+get '/images/covers/*.jpg' => sub {
+    my ($isbn, @ret);
+
+    $isbn = splat;
+
+    unless (-f "public/images/covers/$isbn.jpg") {
+        @ret = librarything_cover($isbn);
+
+        if (@ret < 3) {
+            status 'not_found';
+            forward 404;
+        }
+    }
+
+    return send_file "images/covers/$isbn.jpg";
+}
+\end{lstlisting}
+\end{frame}
 
 % thin wrapper around CPAN module
 % add keywords (avoid overlaps)
