@@ -251,6 +251,13 @@ Alternativen sind u.a.:
 \item MongoDB
 \end{itemize}
 
+Eine gute Idee ist es die Session Engine für den Produktionsbetrieb
+in \verb|config.yml| zu konfigurieren und für die Entwicklung in
+\verb|environments/development.yml| zu überschreiben.
+
+Im Produktionsbetrieb ist es empfehlenswert die Ablauffrist für
+Sessions zu setzen, sonst ist eine Session für immer gültig.
+
 \begin{frame}[fragile]{Sessions}
 \begin{itemize} 
 \item Engine \\
