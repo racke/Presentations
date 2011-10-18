@@ -235,23 +235,14 @@ Dancer::Factory::Hook
 \end{lstlisting}
 \end{frame}
 
-\section{Scripts}
-\begin{frame}[fragile]{Scripts}
-\begin{lstlisting}
-use Dancer ':script';
-
-set logger => 'console';
-set logger_format => '%m';
-\end{lstlisting}
-\end{frame}
-
-\section{Deployment}
+\section{Deployment und Entwicklung}
 \subsection{Sessions}
 Die Session-Engine wird mit \verb|session| konfiguriert,
 ansonsten werden keine Sessions verwendet. Cookies sind
 Voraussetzung für Sessions mit Dancer.
 
-YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht.
+YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht
+
 Alternativen sind u.a.:
 \begin{itemize} 
 \item Storable
@@ -279,7 +270,22 @@ Alternativen sind u.a.:
 \begin{frame}{Starman}
 \end{frame}
 
-\section{Dancer 2}
+
+\subsection{Skripts}
+\begin{frame}[fragile]{Skripts}
+Dancer-Skripts sollten innerhalb der Dancer-Applikation
+liegen, gut geeignet ist das bin/-Verzeichnis. Ein symbolischer
+Link is ausreichend. Ansonsten wird die Konfiguration nicht gefunden.
+
+\begin{lstlisting}
+use Dancer ':script';
+
+set logger => 'console';
+set logger_format => '%m';
+\end{lstlisting}
+\end{frame}
+
+\subsection{Dancer 2}
 \begin{frame}{Dancer2}
 
 \begin{itemize} 
