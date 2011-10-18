@@ -324,7 +324,16 @@ HEADER vsc_ssl_selector INSERT X-Forwarded-Proto: HTTPS
 \end{frame}
 
 \subsection{Starman}
-\begin{frame}{Starman}
+\begin{frame}[fragile]{Starman}
+\begin{lstlisting}
+plackup -E production 
+        -s Starman \ 
+        --workers=5 \
+        --pid /home/racke/Dropbox/run/Dropbox.pid \
+        -p 5000 \ 
+        -a bin/app.pl \
+        -D
+\end{lstlisting}
 \end{frame}
 
 
