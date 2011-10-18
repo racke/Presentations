@@ -164,17 +164,19 @@ Die folgenden Hooks existieren in Dancer:
 Der after\_file\_render-Hook wird ausgelöst, nachdem eine statische
 Datei (Bild oder CSS-Datei) gesendet wurde.
 
-\section{Exceptions}
-Exceptions in Dancer sind nicht objektorientiert, um sie
-leichtgewichtig und schnell zu halten.
-\begin{frame}{Exceptions}
-\end{frame}
+% \section{Exceptions}
+% Exceptions in Dancer sind nicht objektorientiert, um sie
+% leichtgewichtig und schnell zu halten.
+% \begin{frame}{Exceptions}
+% \end{frame}
 
 \section{Plugins}
 \begin{frame}{Plugins}
 \begin{itemize}
+\item Konfiguration
 \item Funktionalität
-\item Schlüsselwort 
+\item Schlüsselwort
+\item Route 
 \end{itemize}
 \end{frame}
 
@@ -215,6 +217,7 @@ get '/images/covers/*.jpg' => sub {
 % add keywords (avoid overlaps)
 % add configuration
 
+\subsection{Writing Plugins}
 \begin{frame}{Writing Plugins}
 \begin{itemize}
 \item register
