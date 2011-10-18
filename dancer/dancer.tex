@@ -270,7 +270,57 @@ Sessions zu setzen, sonst ist eine Session für immer gültig.
 \end{frame}
 
 \subsection{Perlbal}
-\begin{frame}{Perlbal}
+\begin{frame}[fragile]{Perlbal}
+\begin{lstlisting}
+LOAD vpaths
+XS enable headers
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Perlbal: Starman}
+\begin{lstlisting}
+CREATE POOL prod_starman_dosqua
+ POOL prod_starman_dosqua ADD 127.0.0.1:5000
+
+CREATE POOL prod_starman_vsc
+ POOL prod_starman_vsc ADD 127.0.0.1:5001
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Perlbal: Reverse Proxy}
+\begin{lstlisting}
+CREATE SERVICE vsc_prod
+ SET role                 = reverse_proxy
+ SET pool                 = prod_starman_vsc
+ SET buffer_uploads       = on
+ENABLE vsc_prod
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Perlbal: Selector}
+\begin{lstlisting}
+CREATE SERVICE vsc_selector
+ SET listen              = 86.59.13.238:80
+ SET role                = selector
+ SET plugins             = vpaths
+ VPATH .*                = vsc_prod
+ENABLE vsc_selector
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Perlbal: SSL Selector}
+\begin{lstlisting}
+CREATE SERVICE vsc_ssl_selector
+ SET listen              = 86.59.13.238:443
+ SET role                = selector
+ SET plugins             = vpaths
+ SET enable_ssl          = on
+ SET ssl_key_file        = /etc/ssl/private/vsc.state.gov.key
+ SET ssl_cert_file       = /etc/ssl/certs/vsc.state.gov.pem
+ VPATH .*                = vsc_prod
+ENABLE vsc_ssl_selector
+HEADER vsc_ssl_selector INSERT X-Forwarded-Proto: HTTPS
+\end{lstlisting}
 \end{frame}
 
 \subsection{Starman}
