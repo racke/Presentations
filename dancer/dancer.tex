@@ -129,9 +129,17 @@ get '/images/covers/*.jpg' => sub {
 \end{frame}
 
 \subsubsection{Megasplat}
+Die einfache Wildcard matcht nur auf einen Teil des Pfads,
+d.h. bis zum nächsten Schrägstrich (Slash).
+
+Mit der doppelten Wildcard (Megasplat) wird einfach der 
+Rest des Pfades gematcht und die \verb|splat|-Funktion
+gibt eine Liste zurück.
 
 \begin{frame}[fragile]{Megasplat}
 \begin{lstlisting}
+http://vsc.state.gov/lostpwd/biz@linuxia.de/e642bd543b9907bd2c06aa485261cb1a849a9f23fc7324bff45ebd35f4efe2cb
+
 get '/lostpwd/**' => sub {
     my ($email, $hash) = splat;
 
