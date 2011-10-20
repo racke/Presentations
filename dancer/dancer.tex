@@ -73,6 +73,28 @@ entwickelt.
 \section{Routes, Filter und Hooks}
 \subsection{Routes}
 
+Für eine Route benötigen wir
+
+\begin{itemize}
+\item HTTP-Methode
+\item Pfad
+\item Subroutine
+\end{itemize}
+
+\begin{frame}[fragile]{Rezept für Routes}
+\begin{lstlisting}
+#! /usr/bin/env perl
+
+use Dancer;
+
+get '/' => sub {
+    template 'index';
+};
+
+dance;
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Routes}
 \begin{itemize}
 \item Splat
