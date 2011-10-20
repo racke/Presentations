@@ -203,7 +203,22 @@ before sub {
 \end{frame}
 
 \subsection{Hooks}
-\begin{frame}{Hooks}
+\begin{frame}[fragile]{Hooks}
+\begin{lstlisting}
+hook before_template_render => sub {
+    my $tokens = shift;
+    my $menu;
+
+    if (session('user')) {
+        $menu = [{name => 'Logout', url => '/logout'}];
+    }
+    else {
+        $menu = [{name => 'Login', url => '/login'}];
+    }
+
+    $tokens->{menu} = $menu;
+};
+\end{lstlisting}
 \end{frame}
 
 Die folgenden Hooks existieren in Dancer:
