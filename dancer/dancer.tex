@@ -280,6 +280,32 @@ Sessions zu setzen, sonst ist eine Session für immer gültig.
 \end{itemize} 
 \end{frame}
 
+\subsection{Logs}
+Die Logger-Engine wird mit \verb|logger| konfiguriert,
+ansonsten werden Logs erzeugt.
+
+Das Format für die Logs wird mit \verb|logger_format| definiert, siehe
+\url{http://search.cpan.org/perldoc?Dancer::Logger::Abstract#logger_format}.
+
+Verfügbare Engines sind u.a.:
+\begin{itemize} 
+\item console
+\item file
+\item syslog *
+\item log4perl *
+\end{itemize}
+
+\begin{frame}[fragile]{Logs}
+\begin{itemize} 
+\item Engine \\
+\verb|logger: file|
+\item Verzeichnis \\
+\verb|log_path: log|
+\item Format \\
+\verb|logger_format: "%t [%P] %L @%D> %m in %f l. %l"|
+\end{itemize} 
+\end{frame}
+
 \subsection{Perlbal}
 \begin{frame}[fragile]{Perlbal}
 \begin{lstlisting}
