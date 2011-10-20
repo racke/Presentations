@@ -285,12 +285,10 @@ use Dancer::Plugin::LibraryThing;
 
 get '/images/covers/*.jpg' => sub {
     my ($isbn, @ret);
-
     $isbn = splat;
 
     unless (-f "public/images/covers/$isbn.jpg") {
         @ret = librarything_cover($isbn);
-
         if (@ret < 3) {
             status 'not_found';
             forward 404;
