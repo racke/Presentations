@@ -166,6 +166,8 @@ get '/lostpwd/**' => sub {
 
 \begin{frame}[fragile]{Captures}
 \begin{lstlisting}
+https://dropbox.nite.si/~racke/talks/dancer-beamer.pdf
+
 any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
     my ($capts, $user, $file);
 
