@@ -322,7 +322,7 @@ Dancer::Factory::Hook
 \end{lstlisting}
 \end{frame}
 
-\section{Deployment und Entwicklung}
+\section{Deployment}
 \subsection{Sessions}
 Die Session-Engine wird mit \verb|session| konfiguriert,
 ansonsten werden keine Sessions verwendet. Cookies sind
@@ -371,6 +371,9 @@ Verfügbare Engines sind u.a.:
 \item log4perl *
 \end{itemize}
 
+Die Rotation der Logs für dateibasierte Engines darf nicht vergessen
+werden im Produktionsbetrieb.
+
 \begin{frame}[fragile]{Logs}
 \begin{itemize} 
 \item Engine \\
@@ -383,6 +386,13 @@ Verfügbare Engines sind u.a.:
 \end{frame}
 
 \subsection{Perlbal}
+Am Anfang der Konfigurationsdatei laden wir das ``vpaths''
+Plugin.
+
+Dann binden wir für bessere Performache
+\verb|http://search.cpan.org/perldoc?Perlbal::XS::HTTPHeaders|
+ein.
+
 \begin{frame}[fragile]{Perlbal}
 \begin{lstlisting}
 LOAD vpaths
@@ -390,7 +400,10 @@ XS enable headers
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Perlbal: Starman}
+\subsubsection{Pools}
+Für unsere beiden Projekte erzeugen wir zunächst Pools:
+
+\begin{frame}[fragile]{Perlbal: Pools}
 \begin{lstlisting}
 CREATE POOL prod_starman_dosqua
  POOL prod_starman_dosqua ADD 127.0.0.1:5000
@@ -451,11 +464,11 @@ plackup -E production
 
 
 \subsection{Skripts}
-\begin{frame}[fragile]{Skripts}
 Dancer-Skripts sollten innerhalb der Dancer-Applikation
 liegen, gut geeignet ist das bin/-Verzeichnis. Ein symbolischer
 Link is ausreichend. Ansonsten wird die Konfiguration nicht gefunden.
 
+\begin{frame}[fragile]{Skripts}
 \begin{lstlisting}
 use Dancer ':script';
 
@@ -463,6 +476,8 @@ set logger => 'console';
 set logger_format => '%m';
 \end{lstlisting}
 \end{frame}
+
+\section{Ausblick}
 
 \subsection{Dancer 2}
 \begin{frame}{Dancer2}
@@ -476,4 +491,19 @@ set logger_format => '%m';
 
 \end{frame}
 
+\subsection{Community}
+\begin{frame}[fragile]{Community}
+Web: \url{http://perldancer.org/}
+
+Github: \url{git://github.com/sukria/Dancer.git}
+
+IRC: \#dancer @ irc.perl.org
+
+Mitarbeit: Dancer::Development
+\end{frame}
+
+\begin{frame}{The End}
+Slides, Handout, Skript:
+\url{http://www.linuxia.de/talks/pws2011/}
+\end{frame}
 \end{document}
