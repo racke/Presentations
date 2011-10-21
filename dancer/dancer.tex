@@ -385,6 +385,47 @@ werden im Produktionsbetrieb.
 \end{itemize} 
 \end{frame}
 
+\subsection{Szenarien}
+Die möglichen Szenarien für ein Deployment von Dancer findet man
+in der Dancer-Dokumentation:
+\url{http://search.cpan.org/perldoc?Dancer::Deployment}.
+
+\begin{frame}[fragile]{Szenarien}
+\begin{itemize} 
+\item Standalone \\
+  \verb|./bin/app.pl|
+\item CGI, FastCGI
+\item plackup
+\begin{itemize}
+\item Starman
+\item Twiggy
+\item Corona
+\end{itemize}
+\item Reverse Proxy
+\end{itemize} 
+\end{frame}
+
+\begin{frame}[fragile]{Szenarien: Reverse Proxy}
+\begin{itemize} 
+\item Apache
+\item nginx
+\item Perlbal
+\end{itemize} 
+\end{frame}
+
+\subsection{Starman}
+\begin{frame}[fragile]{Starman}
+\begin{lstlisting}
+plackup -E production 
+        -s Starman \ 
+        --workers=5 \
+        --pid /home/racke/Dropbox/run/Dropbox.pid \
+        -p 5000 \ 
+        -a bin/app.pl \
+        -D
+\end{lstlisting}
+\end{frame}
+
 \subsection{Perlbal}
 Am Anfang der Konfigurationsdatei laden wir das ``vpaths''
 Plugin.
@@ -448,20 +489,6 @@ ENABLE vsc_ssl_selector
 HEADER vsc_ssl_selector INSERT X-Forwarded-Proto: HTTPS
 \end{lstlisting}
 \end{frame}
-
-\subsection{Starman}
-\begin{frame}[fragile]{Starman}
-\begin{lstlisting}
-plackup -E production 
-        -s Starman \ 
-        --workers=5 \
-        --pid /home/racke/Dropbox/run/Dropbox.pid \
-        -p 5000 \ 
-        -a bin/app.pl \
-        -D
-\end{lstlisting}
-\end{frame}
-
 
 \subsection{Skripts}
 Dancer-Skripts sollten innerhalb der Dancer-Applikation
