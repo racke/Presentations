@@ -468,6 +468,9 @@ Dancer-Skripts sollten innerhalb der Dancer-Applikation
 liegen, gut geeignet ist das bin/-Verzeichnis. Ein symbolischer
 Link is ausreichend. Ansonsten wird die Konfiguration nicht gefunden.
 
+Eine Ausgabe von Meldungen auf der Konsole ist wünschenswert, mit
+\verb|%m| wird lediglich die reine Meldung ausgegeben.
+ 
 \begin{frame}[fragile]{Skripts}
 \begin{lstlisting}
 use Dancer ':script';
@@ -493,7 +496,7 @@ set logger_format => '%m';
 
 \subsection{Community}
 \begin{frame}[fragile]{Community}
-Web: \url{http://perldancer.org/}
+Web: \url{http://perldancer.org/} 
 
 Github: \url{git://github.com/sukria/Dancer.git}
 
