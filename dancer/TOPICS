@@ -1,22 +1,80 @@
+Hintergründe und Projekte
+
+History
+Dancer Motivations
+
+* Dancer talk *
+:name in route
+upload
+login example
+after/before Filter 
+before template
+cookies
+forward
+sessions (config example missing)
+
+compression?
+
+templates
+
+plack middleware,panels
+
+DSL Domain-specific language
+
+forward with different HTTP method
+
+simple explanation of routes
+
+glance at templating engines
+
+* Practice
+http://github.com/bigpresh/Dancer-Plugin-DevelNYTProf
+time requests
+
 * Aufteilung des Codes mithilfe von prefix 
+  - Routes modules (VSC)
 * Hooks §
-* Plugins: Übersicht, wie schreibt man ein Plugin §
 * Deployment mit Perlbal und Starman §
+  shared stuff (variables, handles)
 * Streaming
 * Session / Logging (Konfigurationtips etc), Log rotation
-* Captures §
+
 * Dancer::Object
 * Dancer qw(:script)
+  which enviroment?
 * Clean URLs
 * return redirect, return template etc.
 * Contributing
+* Exceptions
 * Typical errors
+debug + undef
   missing ; after sub
   before => sub
   redirect without return
+get '/images/covers/*.jpg' => {
+(missing sub)syntax error at /home/racke/iro/lib/VSC/Covers.pm line 9, near "unless"
 
 § => reflected as slide(s)
 
 before sub {
         var foo => 42;
     };
+
+var and vars
+--snip--
+require Exporter;
+@ISA = qw(Exporter);
+@EXPORT_OK = qw(missing_covers);
+--snap--
+
+Before Dancer ':syntax';
+
+YAML errors
+     YAML_PARSE_ERR_NO_FINAL_NEWLINE
+
+Fix conflicts with load method
+
+== real world examples ==
+DoSqua before sub for forcing login
+before_template in DoSqua
+captures: route for accessing dropbox files
