@@ -531,44 +531,45 @@ get '/checkout' => sub {
 \end{itemize}
 \end{frame}
 
-\section{Development \& Deployment}
-\subsection{Dancer}
-\subsubsection{Routes}
-\begin{frame}{Routes}
-\begin{itemize}
-\item Categories
-\item Products
-\item Cart
-\item Checkout
-\item Login/Logout
-\item Customer Service
-\end{itemize}
+\section{Development}
+\subsection{Projects}
+\subsubsection{Vienna Shopping Cart}
+\begin{frame}{Vienna Shopping Cart}
+\url{https://vsc.state.gov/}
 \end{frame}
 
-\subsubsection{Default Route}
-Categories and products can be handled through the default route
-(see
-\url{http://search.cpan.org/~sukria/Dancer/lib/Dancer/Cookbook.pod#Default_route})
-as alternative to defining explicit routes.
+\subsubsection{Payment Gateway}
+\begin{frame}{Payment Gateway}
+  \begin{itemize}
+  \item charge keyword
+  \item Business::OnlinePayment
+  \item ACI payment system
+  \end{itemize}
+\end{frame}
 
-\begin{frame}[fragile]{Default Route}
-\begin{lstlisting}
-get qr{/(.*)} => sub {
-    my ($sku) = splat;
-    my $product;
+\subsubsection{OpenERP Interface}
+\begin{frame}{OpenERP Interface} 
+  \begin{itemize}
+  \item XML-RPC
+  \end{itemize}
+\end{frame}
 
-    # check for existing product
-    if ($product = database->quick_select('products', {sku => $sku})) {
-        # display flypage
-        template 'flypage', $product;
-    }
-    else {
-        # display not found page
-        status 'not_found';
-        forward '404';
-    }
-};
-\end{lstlisting}
+\subsubsection{Backend/CRM}
+\begin{frame}{Backend/CRM} 
+  \begin{itemize}
+  \item Backend
+  \item CRM
+  \end{itemize}
+\end{frame}
+
+\subsubsection{Demo Shop}
+\begin{frame}{Demo Shop} 
+  \begin{itemize}
+  \item Templates
+  \item Navigation
+  \item Database
+  \item Payment Tests
+  \end{itemize}
 \end{frame}
 
 \subsection{Contribution}
@@ -591,8 +592,8 @@ get qr{/(.*)} => sub {
 Slides:
 \url{http://www.linuxia.de/talks/perlcommerce/perlcommerce-beamer.pdf}
 
-Project:
-\url{https://vsc.state.gov/}
+Email:
+racke@linuxia.de
 \end{frame}
 \end{document}
 
