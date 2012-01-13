@@ -10,6 +10,8 @@
 \usepackage{listings}
 \lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
 
+\setbeamerfont{single}{size=\huge}
+
 \title{Modern PerlCommerce}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
 \date[]{Perl Oasis, 14th January 2012}
@@ -23,56 +25,101 @@
 
 \tableofcontents
 
-\section{Modern PerlCommerce}
-In this presentation I'm going to introduce you to our new project
-called Nitesi. It's the successor of Interchange, which is a Ecommerce
-open source software in Perl being around for a long time.
+\section{Interchange}
 
-\begin{frame}{Nitesi}
-  \includegraphics{nitesi.png}
-\end{frame}
-
-Why did we start this new project?
-
-\subsection{Modern Perl}
-There isn't really a set definition what Modern Perl is about,
-so I want to point the things important to us.
-
-\begin{frame}{Modern Perl - OO}
+\begin{frame}{Interchange}
 \begin{itemize}
-\item Moose
-\item Mouse
-\item Moo
+\item Around since 1995.
+\item Fast and stable.
+\item Flexible and extensible.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Modern Perl - Web Frameworks}
+\begin{frame}{Showcases}
 \begin{itemize}
-\item Catalyst
-\item Dancer
-\item Mojolicious
+\item Backcountry \url{http://www.backcountry.com/}
+\item FragnanceNet \url{http://www.fragrancenet.com/}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Modern Perl - ORM}
+As a single person, I'm involved in about 20 Interchange
+projects in 6 countries. 80\% of my income comes from
+these projects.
+
+\begin{frame}{My projects}
 \begin{itemize}
-\item DBIx::Class
-\item Rose::DB
+\item 20 projects
+\item 6 countries
+\item 80\% income
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Modern Perl - Ecommerce}
-  \includegraphics{nitesi.png}
+\begin{frame}{Interchange}
+\usebeamerfont{single}
+\only{Sounds wonderful!}
+\only<2>{}
+\only<2>{Really?}
 \end{frame}
 
-\subsection{PerlCommerce Choices}
+% Interchange sites
+% materialboerse.de (DE)
+% passionshop.com (US)
+% tj + cd (NL, FR)
+% VSC, Training (AT)
+% vinson/Webhostny (US)
+% 2 * ulisses (DE)
+% Linuxia, ICDEVGROUP (DE, US)
+% SI 
+
+\subsection{Caveats}
+
+\begin{frame}{Community}
+\begin{itemize}
+\item Small group
+\item Little activity
+\item Same people
+\item Not part of CPAN
+\end{itemize}
+\end{frame}
+
+Interchange is around since CGI.
+
+\begin{frame}{Developer}
+\begin{itemize}
+\item Monolithic
+\item Same codebase
+\item Hard to find things
+\end{itemize}
+\end{frame}
+
+\begin{frame}{User}
+\begin{itemize}
+\item Obscure templating
+\item Missing extensions
+\item Bad demo
+\end{itemize}
+\end{frame}
+
+So I can still live with my current projects and even get
+new projects through my existing customers, but it's next
+to impossible to compete with other companies to get
+new customers which don't know much about me.
+
+This guy is solid, fast, but intimidating and
+doesn't leave room for innovations.
+
+\begin{frame}{Past}
+  \includegraphics{rhino.jpg}
+\end{frame}
+
+\subsection{Alternatives}
 Surprisingly there are not many choices for OpenSource PerlCommerce
 software. Searching for ``cart'', ``ecommerce'' or ``shop'' on CPAN
 gives you only a few results, which aren't actually very helpful.
 
 Let's look at the possible choices for OpenSource PerlCommerce software:
 
-\begin{frame}{PerlCommerce Choices}
+\begin{frame}{Alternatives to Interchange}
 \begin{itemize}
 \item Interchange
 \item Handel
@@ -80,8 +127,6 @@ Let's look at the possible choices for OpenSource PerlCommerce software:
 \item Business::Cart::Generic
 \end{itemize}
 \end{frame}
-
-Interchange is around since 1995, but not in CPAN.
 
 Handel is a framework which support AxKit, Template Toolkit 
 and Catalyst.
@@ -94,52 +139,138 @@ Business::Cart::Generic claims to be a basic shopping cart,
 the synopsis says Convert parts of osCommerce and PrestaShop into
 Perl.
 
-\section{Past and Future}
+\section{Future}
+\subsection{We need a plan!}
 
-\subsection{Past}
-\begin{frame}{Past}
+\begin{frame}{Future}
+\usebeamerfont{single}
 \begin{itemize}
-\item 1995 CGI
-\item 1995 MiniVend
-\item 1998 \url{http://www.materialboerse.de/}
-\item 2001 Interchange
+\item{Problem with Existing Codebase}
+\item<2-3>{Missing alternatives}
+\item<3>{Strong competitors}
 \end{itemize}
 \end{frame}
 
-\subsubsection{Interchange Development}
+\begin{frame}{Future}
+\usebeamerfont{single}
+We need a plan!
+\end{frame}
 
-\begin{frame}{Interchange Development}
+\begin{frame}{Future}
+\usebeamerfont{single}
 \begin{itemize}
-\item Lot of things
-\item Small community
-\item Same codebase
+\item Rewrite from scratch ?
+\item<2-3> Too much work ?
+\item<3> Modern Perl to the rescue!
 \end{itemize}
 \end{frame}
 
-% solid +
-% fast +
-% archaic -
-% monolithic -
+\subsection{Modern Perl}
 
-\begin{frame}{Status quo}
-  \includegraphics{rhino.jpg}
-\end{frame}
-
-\subsubsection{References}
-\begin{frame}{References}
+\begin{frame}{Modern Perl}
 \begin{itemize}
-\item Backcountry \url{http://www.backcountry.com/}
-\item FragnanceNet \url{http://www.fragrancenet.com/}
+\item Plack/PSGI
+\item OO
+  \begin{itemize}
+  \item Moose
+  \item Moo
+  \end{itemize}
+\item Web Frameworks
+ \begin{itemize}
+  \item Dancer
+  \item Catalyst
+  \item Mojolicious
+  \end{itemize}
 \end{itemize}
 \end{frame}
 
-While there are still a lot of sites with Interchange around,
-there are basically no new projects done with Interchange.
+\subsubsection{Delegated Tasks}
+By using an existing web framework which is Plack/PSGI compatible
+we get relieved of the following
+tasks and gain more flexibility in
+addition.
+ 
+\begin{frame}{Delegated Tasks}
+\begin{itemize}
+\item Dispatching requests
+\item Parameter parsing
+\item Session handling
+\item Template engine
+\end{itemize}
+\end{frame}
 
-\subsection{Future}
+\subsubsection{Extensions}
+\begin{frame}{Extensions}
+\begin{itemize}
+\item Bundles
+\item Plugins
+\item Hooks
+\end{itemize}
+\end{frame}
+
+\subsection{Policy}
+
+\begin{frame}{Principles}
+\begin{itemize}
+\item KISS
+\item Components
+\item Assumptions
+\item Expressive
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Future}
   \includegraphics{ants.jpg}
 \end{frame}
+
+% \subsection{Modern Perl}
+% There isn't really a set definition what Modern Perl is about,
+% so I want to point the things important to us.
+
+% \begin{frame}{Modern Perl - OO}
+% \begin{itemize}
+% \item Moose
+% \item Mouse
+% \item Moo
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Modern Perl - Web Frameworks}
+% \begin{itemize}
+% \item Catalyst
+% \item Dancer
+% \item Mojolicious
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Modern Perl - ORM}
+% \begin{itemize}
+% \item DBIx::Class
+% \item Rose::DB
+% \end{itemize}
+% \end{frame}
+
+% \section{Past and Future}
+
+% \subsection{Past}
+% \begin{frame}{Past}
+% \begin{itemize}
+% \item 1995 CGI
+% \item 1995 MiniVend
+% \item 1998 \url{http://www.materialboerse.de/}
+% \item 2001 Interchange
+% \end{itemize}
+% \end{frame}
+
+
+% % solid +
+% % fast +
+% % archaic -
+% % monolithic -
+
+
+While there are still a lot of sites with Interchange around,
+there are basically no new projects done with Interchange.
 
 \subsubsection{Principles}
 Examples for being agnostic:
@@ -154,16 +285,7 @@ We don't have a fixed templating system like in Interchange.
 
 We are not tied to a certain framework.
 
-\begin{frame}{Principles}
-\begin{itemize}
-\item KISS
-\item Components
-\item Independent
-\item Expressive
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Independent}
+\begin{frame}{Assumptions}
 Cart
 \begin{itemize}
 \item Session
@@ -172,7 +294,7 @@ Cart
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Independent}
+\begin{frame}{Assumptions}
 Account Manager
 \begin{itemize}
 \item DBI
@@ -181,7 +303,7 @@ Account Manager
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Independent}
+\begin{frame}{Assumptions}
 Templating Engine
 \begin{itemize}
 \item Template::Toolkit
@@ -189,7 +311,7 @@ Templating Engine
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Indepedent}
+\begin{frame}{Assumptions}
 Web framework
 \begin{itemize}
 \item Catalyst
@@ -212,31 +334,6 @@ DBI is the common storage method for Ecommerce products.
 \item Dancer
 \item Template::Flute
 \item DBI
-\end{itemize}
-\end{frame}
-
-\subsubsection{Framework}
-By using an existing web framework which is Plack/PSGI compatible
-we get relieved of the following
-tasks and gain more flexibility in
-addition.
- 
-\begin{frame}{Framework}
-\begin{itemize}
-\item Dispatching requests
-\item Parameter parsing
-\item Session handling
-\item Template engine
-\item I18N
-\end{itemize}
-\end{frame}
-
-\subsubsection{Extensions}
-\begin{frame}{Extensions}
-\begin{itemize}
-\item Bundles
-\item Plugins
-\item Hooks
 \end{itemize}
 \end{frame}
 
@@ -532,6 +629,11 @@ get '/checkout' => sub {
 \end{frame}
 
 \section{Development}
+
+\begin{frame}{Nitesi}
+  \includegraphics{nitesi.png}
+\end{frame}
+
 \subsection{Projects}
 \subsubsection{Vienna Shopping Cart}
 \begin{frame}{Vienna Shopping Cart}
