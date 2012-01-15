@@ -75,7 +75,7 @@ these projects.
 
 \begin{frame}{Community}
 \begin{itemize}
-\item Small group
+\item Small group of developers
 \item Little activity
 \item Same people
 \item Not part of CPAN
@@ -121,7 +121,6 @@ Let's look at the possible choices for OpenSource PerlCommerce software:
 
 \begin{frame}{Alternatives to Interchange}
 \begin{itemize}
-\item Interchange
 \item Handel
 \item Agora
 \item Business::Cart::Generic
@@ -210,7 +209,7 @@ addition.
 
 \subsection{Policy}
 
-\begin{frame}{Principles}
+\begin{frame}{Policy}
 \begin{itemize}
 \item KISS
 \item Components
@@ -568,12 +567,16 @@ post '/login' => sub {
 
 \begin{frame}[fragile]{Accounts}
 \begin{lstlisting}
-get '/checkout' => sub {
-    if (account->acl(check => 'submit_orders')) {
-        return template 'checkout';
+get '/mywishlist' => sub {
+    if (account->acl(check => 'create_wishlists')) {
+        return template 'mywishlist';
     }
-    
-    redirect '/access_denied';
+
+    account->status(login_info => 'Please login to view wishlist.',
+                    login_continue => 'mywishlist',
+                   )
+
+    redirect '/login';
 };
 \end{lstlisting}
 \end{frame}
