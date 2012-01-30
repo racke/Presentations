@@ -530,11 +530,38 @@ Business::Tax::VAT doesn't account for reduced rates.
 \end{frame}
 
 \subsubsection{Costs}
-\begin{frame}[fragile]{Costs}
-\begin{lstlisting}
-$cart->apply_cost(amount => 5);
+\begin{frame}{Costs}
+\begin{itemize}
+\item Tax
+\item Shipping
+\item Coupons
+\end{itemize}
+\end{frame}
 
-$cart->apply_cost(amount => 0.19, relative => 1);
+\begin{frame}[fragile]{Absolute Costs}
+\begin{lstlisting}
+$cart->apply_cost(amount => 5, 
+                  name => 'shipping', 
+                  label => 'Shipping');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Relative Costs}
+\begin{lstlisting}
+$cart->apply_cost(amount => 0.19, 
+                  relative => 1, 
+                  name => 'tax', 
+                  label => 'Salestax');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Inclusive Costs}
+\begin{lstlisting}
+$cart->apply_cost(amount => 0.19, 
+                  relative => 1, 
+                  inclusive => 1, 
+                  name => 'tax', 
+                  label => 'Salestax');
 \end{lstlisting}
 \end{frame}
 
