@@ -1,3 +1,59 @@
+FOSDEM Changes:
+
+* count method
+* contributions !!!
+* show cart !!!
+* justify preferences
+* plugin example
+* dynamic costs
+* PDF Converter on the fly
+
+Storyline:
+
+1. Interchange praise
+   - advantages
+   - references
+   - personal
+   - trust
+
+  Sounds good?
+
+2. What's wrong with that?
+   - not Modern Perl
+   - misses standard features
+   - too many places
+
+
+Too many places
+
+Determine attributes
+
+Port stuff into Nitesi
+    Reviews, Stock alerts, ...
+        * storage support
+        * email support (verp, spam)
+        * email typos
+        * html email, plain text version
+can of worms
+
+Introduction
+    - What about ModernPerl Commerce
+      inspiration
+
+    * Presentation of problem
+      - status = successful sites
+      - list of problems
+        * small community
+        * lack of modern
+
+      - smilies
+ 
+      This could be the end of the talk
+
+    * Story of solving the problem
+
+    * Conclusion / Call for help
+
 Future / Roadmap
        How do you arrive there?
        	   * Dancer/Plack/PSGI
@@ -18,6 +74,12 @@ Future / Roadmap
        Timeline
 
        Status & Contributions
+
+==================================
+
+* Introduction
+
+* Modern Perl
 
 ==================================
 
@@ -51,6 +113,8 @@ Future / Roadmap
 * Coupons, Reviews
 
 * Charge => Funds
+
+* Deployment section
 
 ====================================
 
