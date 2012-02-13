@@ -6,5 +6,6 @@
 *.snm
 *.toc
 *.vrb
+*.pdf
 auto
 demo*.html
