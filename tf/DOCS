@@ -1,0 +1,13 @@
+
+TF documentation
+   toggle
+
+TPDF support:
+    img + borders
+    hr
+    br
+    line_height (CSS)
+
+not supported:
+    tables
+
