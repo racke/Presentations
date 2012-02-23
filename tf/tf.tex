@@ -331,27 +331,46 @@ sub new {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Filter and Sort}
+\subsection{Filters}
 There are two types of filters for lists: global filters and
 parameter filters. Global filters are applied to the complete
 record of a list element and can be used to skip list items.
 Parameter filters are applied to a single value in a list
 element record.
 
-\subsection{Parameter Filter}
-\begin{frame}[fragile]{Filter: Specification}
+\begin{frame}[fragile]{Filters}
+Values
 \begin{lstlisting}
-<specification name="menu" description="Menu">
-<list name="menu" class="menu" table="menus">
-<input name="name" required="1" field="menu_name"/>
-<param name="label" field="name"/>
-<param name="url" target="href" filter="link"/>
-</list>
-</specification>
+<value name="total_cost" filter="currency"/>
 \end{lstlisting}
+Lists
+\begin{lstlisting}
+<param name="price" filter="currency"/>
+\end{lstlisting}
+
 \end{frame}
 
-\subsection{Filter function}
+\begin{frame}{Filter types}
+\begin{itemize}
+\item{Built-in filters}
+\item{Custom filter classes}
+\item{Custom filter functions}
+\end{itemize}
+\end{frame}
+
+\subsubsection{Builtin filters}
+\begin{frame}{Builtin filters}
+\begin{itemize}
+\item date
+\item currency
+\item upper
+\item eol
+\end{itemize}
+\end{frame}
+
+\subsubsection{Custom filter classes}
+
+\subsubsection{Custom filter functions}
 \begin{frame}[fragile]{Filter: Function}
 \begin{lstlisting}
 sub link_filter {
@@ -377,23 +396,6 @@ $flute = new Template::Flute(specification_file => 'menu.xml',
 <specification name="menu" description="Menu">
 <filter name="acl" field="permission"/>
 <list name="menu" class="menu" table="menus">
-<input name="name" required="1" field="menu_name"/>
-<param name="label" field="name"/>
-<param name="url" target="href" filter="link"/>
-</list>
-</specification>
-\end{lstlisting}
-\end{frame}
-
-\subsubsection{Specification with sort}
-\begin{frame}[fragile]{Sort: Specification}
-\begin{lstlisting}
-<specification name="menu" description="Menu">
-<list name="menu" class="menu" table="menus">
-<sort name="default">
-<field name="weight" direction="desc"/>
-<field name="code" direction="asc"/>
-</sort>
 <input name="name" required="1" field="menu_name"/>
 <param name="label" field="name"/>
 <param name="url" target="href" filter="link"/>
