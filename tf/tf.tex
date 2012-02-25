@@ -368,10 +368,23 @@ Lists
 \end{itemize}
 \end{frame}
 
-\subsubsection{Custom filter classes}
+\subsubsection{Custom filter class}
+\begin{frame}[fragile]{Custom filter class}
+\begin{lstlisting}
+package MyApp::Filter;
 
-\subsubsection{Custom filter functions}
-\begin{frame}[fragile]{Filter: Function}
+sub filter {
+    my ($self, $value) = @_;
+
+    return $value;
+}
+
+1;
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Custom filter function}
+\begin{frame}[fragile]{Custom filter function}
 \begin{lstlisting}
 sub link_filter {
     my $page = shift;
@@ -384,7 +397,6 @@ sub link_filter {
 
 $flute = new Template::Flute(specification_file => 'menu.xml',
 						   template_file => 'menu.html',
-						   database => $db_object,
 						   filters => {link => \&link_filter},
 						  );
 \end{lstlisting}
