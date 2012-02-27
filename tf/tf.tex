@@ -116,35 +116,12 @@ PDF files on-the-fly based on the same template and specification.
 </table>
 \end{lstlisting}
 \end{frame}
-\subsubsection{Cart with ITL}
-\begin{frame}[fragile]{Cart: ITL}
-\lstinputlisting{cart-example-basic/cart.itl}
-\end{frame}
+
 \subsubsection{Cart with Template::Toolkit}
 \begin{frame}[fragile]{Cart: Template::Toolkit}
 \lstinputlisting{cart-example-basic/cart.tt}
 \end{frame}
-\subsubsection{Cart with HTML::Zoom}
-\begin{frame}[fragile]{Cart: HTML::Zoom}
-\begin{lstlisting}
-use HTML::Zoom;
 
-$cart = ...
-$zoom = HTML::Zoom->from_file('cart.html');
-
-$zoom = $zoom->select('.cartitem')->repeat_content([
-  map { my $field = $_; sub {
-    $_[0]->select('.name')->replace_content($field->{title});
-    $_[0]->select('.quantity')->replace_content($field->{quantity});
-    $_[0]->select('.price')->replace_content($field->{price});
-    };
-  } @$cart]);
-
-$zoom = $zoom->select('.cost')->replace_content(49.95 + 34.99);
-
-print $zoom->to_html();
-\end{lstlisting}
-\end{frame}
 \subsubsection{Template Problems}
 \begin{frame}{Template Problems}
  \begin{itemize}
