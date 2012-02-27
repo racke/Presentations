@@ -256,8 +256,8 @@ $flute->process({name => main});
 \end{lstlisting}
 \end{frame}
 
-\section{Templates}
-\begin{frame}{Templates}
+\section{Basic Elements}
+\begin{frame}{Basic Elements}
 \begin{itemize}
 \item Variables
 \item Conditions
@@ -265,7 +265,7 @@ $flute->process({name => main});
 \end{itemize}
 \end{frame}
 
-\section{Variables}
+\subsection{Variables}
 \begin{frame}[fragile]{Variables}
 HTML
 \begin{lstlisting}
@@ -304,7 +304,7 @@ Output
 \end{lstlisting}
 \end{frame}
 
-\section{Conditions}
+\subsection{Conditions}
 \begin{frame}[fragile]{Conditions}
 HTML
 \begin{lstlisting}
@@ -326,9 +326,9 @@ Output
 \end{lstlisting}
 \end{frame}
 
-\section{Lists}
+\subsection{Lists}
 
-\subsection{Iterators}
+\subsubsection{Iterators}
 Template::Flute uses iterators to retrieve list elements and insert them into
 the document tree. This abstraction relieves us from worrying about where
 the data actually comes from. We basically just need an array of hash
@@ -368,7 +368,7 @@ sub new {
 \end{lstlisting}
 \end{frame}
 
-\subsection{List with alternating rows}
+\subsubsection{List with alternating rows}
 \begin{frame}[fragile]{Lists with alternating rows}
 \begin{lstlisting}
 <table class="cart">
@@ -389,6 +389,7 @@ sub new {
 \end{lstlisting}
 \end{frame}
 
+\section{More Elements}
 \subsection{Filters}
 There are two types of filters for lists: global filters and
 parameter filters. Global filters are applied to the complete
