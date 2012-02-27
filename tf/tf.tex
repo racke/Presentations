@@ -122,131 +122,102 @@ PDF files on-the-fly based on the same template and specification.
 \lstinputlisting{cart-example-basic/cart.tt}
 \end{frame}
 
-\subsubsection{Template Problems}
-\begin{frame}{Template Problems}
+\subsection{Common Problems}
+\begin{frame}{Common Problems}
  \begin{itemize}
   \item Mini language in HTML template
   \item Dynamic pages (border cases, errors, ...)
  \end{itemize}
 \end{frame}
-\subsubsection{Cart with Template::Flute}
-\begin{frame}{Template::Flute Concept}
+
+\subsection{Concept}
+\begin{frame}{Concept}
  \begin{itemize}
+  \item HTML Template
   \item Specification
-  \item Template
   \item Data or objects (iterator)
  \end{itemize}
 \end{frame}
-\subsubsection{Specification}
-\begin{frame}[fragile]{Template::Flute Specification (XML)}
-\lstinputlisting{cart-example-basic/cart.xml}
-\end{frame}
-\begin{frame}[fragile]{Template::Flute Specification (Config::Scoped)}
-\lstinputlisting{cart-example-basic/cart.conf}
-\end{frame}
-\subsubsection{Quellcode}
-\begin{frame}[fragile]{Template::Flute Script (XML)}
-\begin{lstlisting}
-use Template::Flute;
+% \subsubsection{Specification}
+% \begin{frame}[fragile]{Template::Flute Specification (XML)}
+% \lstinputlisting{cart-example-basic/cart.xml}
+% \end{frame}
+% \begin{frame}[fragile]{Template::Flute Specification (Config::Scoped)}
+% \lstinputlisting{cart-example-basic/cart.conf}
+% \end{frame}
+% \subsubsection{Quellcode}
+% \begin{frame}[fragile]{Template::Flute Script (XML)}
+% \begin{lstlisting}
+% use Template::Flute;
 
-my ($cart, $flute, %values);
+% my ($cart, $flute, %values);
 
-$cart = ...
-$values{cost} = ...
+% $cart = ...
+% $values{cost} = ...
 
-$flute = new Template::Flute(specification_file => 'cart.xml',
-                           template_file => 'cart.html',
-                           iterators => {cart => $cart},
-                           values => \%values,
-);
+% $flute = new Template::Flute(specification_file => 'cart.xml',
+%                            template_file => 'cart.html',
+%                            iterators => {cart => $cart},
+%                            values => \%values,
+% );
 
-print $flute->process();
-\end{lstlisting}
-\end{frame}
+% print $flute->process();
+% \end{lstlisting}
+% \end{frame}
 
-\begin{frame}[fragile]{Template::Flute Script (Config::Scoped)}
-\begin{lstlisting}
-use Template::Flute;
+% \begin{frame}[fragile]{Template::Flute Script (Config::Scoped)}
+% \begin{lstlisting}
+% use Template::Flute;
 
-my ($cart, $flute, %values);
+% my ($cart, $flute, %values);
 
-$cart = ...
-$values{cost} = ...
+% $cart = ...
+% $values{cost} = ...
 
-$flute = new Template::Flute(specification_file => 'cart.conf',
-                           specification_parser => 'Scoped',
-                           template_file => 'cart.html',
-                           iterators => {cart => $cart},
-                           values => \%values,
-);
+% $flute = new Template::Flute(specification_file => 'cart.conf',
+%                            specification_parser => 'Scoped',
+%                            template_file => 'cart.html',
+%                            iterators => {cart => $cart},
+%                            values => \%values,
+% );
 
-print $flute->process();
-\end{lstlisting}
-\end{frame}
+% print $flute->process();
+% \end{lstlisting}
+% \end{frame}
 
 You are probably missing the \$ sign in the HTML output, we see
 to that later.
-
-\subsection{Menu Example}
-\subsubsection{Database table for menus}
-\begin{frame}[fragile]{Menus: Database table}
-\begin{lstlisting}
-CREATE TABLE menus (
-  code int NOT NULL auto_increment,
-  name varchar(255) NOT NULL DEFAULT '',
-  url  varchar(255) NOT NULL DEFAULT '',
-  menu_name varchar(64) NOT NULL DEFAULT '',
-  permission varchar(64) NOT NULL DEFAULT '',
-  weight int NOT NULL DEFAULT 0,
-  PRIMARY KEY(code),
-  KEY(menu_name)
-);
-\end{lstlisting}
-\end{frame}
-
-\subsubsection{Specification}
-\begin{frame}[fragile]{Menus: Specification}
-\begin{lstlisting}
-<specification name="menu" description="Menu">
-<list name="menu" class="menu" table="menus">
-<input name="name" required="1" field="menu_name"/>
-<param name="label" field="name"/>
-<param name="url"/>
-</list>
-</specification>
-\end{lstlisting}
-\end{frame}
 
 \subsubsection{Template}
 The HTML template for the menu is really simple, because the
 styling can be done completely with CSS.
 
-\begin{frame}[fragile]{Menus: Template}
-\begin{lstlisting}
-<ul class="menu">
-<li><a href="" class="url"><span class="label"></span></li>
-</ul>
-\end{lstlisting}
-\end{frame}
+% \begin{frame}[fragile]{Menus: Template}
+% \begin{lstlisting}
+% <ul class="menu">
+% <li><a href="" class="url"><span class="label"></span></li>
+% </ul>
+% \end{lstlisting}
+% \end{frame}
 
-\subsubsection{Script}
-\begin{frame}[fragile]{Menus: Script}
-\begin{lstlisting}
-use Template::Flute;
-use Template::Flute::Database::Rose;
+% \subsubsection{Script}
+% \begin{frame}[fragile]{Menus: Script}
+% \begin{lstlisting}
+% use Template::Flute;
+% use Template::Flute::Database::Rose;
 
-$db_object = new Template::Flute::Database::Rose(dbname => 'temzoo',
-    dbtype => 'Pg',
-);
+% $db_object = new Template::Flute::Database::Rose(dbname => 'temzoo',
+%     dbtype => 'Pg',
+% );
 
-$flute = new Template::Flute(specification_file => 'menu.xml',
-						   template_file => 'menu.html',
-						   database => $db_object,
-						  );
+% $flute = new Template::Flute(specification_file => 'menu.xml',
+% 						   template_file => 'menu.html',
+% 						   database => $db_object,
+% 						  );
 
-$flute->process({name => main});
-\end{lstlisting}
-\end{frame}
+% $flute->process({name => main});
+% \end{lstlisting}
+% \end{frame}
 
 \section{Basic Elements}
 \begin{frame}{Basic Elements}
