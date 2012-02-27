@@ -265,7 +265,7 @@ $flute->process({name => main});
 \end{itemize}
 \end{frame}
 
-\subsection{Variables}
+\section{Variables}
 \begin{frame}[fragile]{Variables}
 HTML
 \begin{lstlisting}
@@ -305,6 +305,26 @@ Output
 \end{frame}
 
 \section{Conditions}
+\begin{frame}[fragile]{Conditions}
+HTML
+\begin{lstlisting}
+<div class="warnings">What's up?</div>
+\end{lstlisting}
+Specification
+\begin{lstlisting}
+<container name="warnings" class="warnings" value="message">
+<value name="message" class="warnings"/>
+</container>
+\end{lstlisting}
+Code
+\begin{lstlisting}
+$flute->process(values => {message => 'No coffee available'});
+\end{lstlisting}
+Output
+\begin{lstlisting}
+<div class="warnings">No coffee available</div>
+\end{lstlisting}
+\end{frame}
 
 \section{Lists}
 
@@ -346,20 +366,6 @@ sub new {
     return $self;
 }
 \end{lstlisting}
-\end{frame}
-
-\section{Elements}
-\begin{frame}{Elements}
-\begin{itemize}
-\item value
-\item list
-\item param
-\item input
-\item container
-\item form
-\item i18n
-\item sort
-\end{itemize}
 \end{frame}
 
 \subsection{List with alternating rows}
