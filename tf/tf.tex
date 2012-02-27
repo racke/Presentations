@@ -256,7 +256,59 @@ $flute->process({name => main});
 \end{lstlisting}
 \end{frame}
 
-\section{Iterators}
+\section{Templates}
+\begin{frame}{Templates}
+\begin{itemize}
+\item Variables
+\item Conditions
+\item Loops
+\end{itemize}
+\end{frame}
+
+\subsection{Variables}
+\begin{frame}[fragile]{Variables}
+HTML
+\begin{lstlisting}
+<span class="email">foo@bar.com</span>
+\end{lstlisting}
+Specification
+\begin{lstlisting}
+<value name="email" class="email"/>
+\end{lstlisting}
+Code
+\begin{lstlisting}
+$flute->process(values => {email => 'racke@linuxia.de'});
+\end{lstlisting}
+Output
+\begin{lstlisting}
+<span class="email">racke@linuxia.de</span>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Variables}
+HTML
+\begin{lstlisting}
+<span id="email">foo@bar.com</span>
+\end{lstlisting}
+Specification
+\begin{lstlisting}
+<value name="email" id="email"/>
+\end{lstlisting}
+Code
+\begin{lstlisting}
+$flute->process(values => {email => 'racke@linuxia.de'});
+\end{lstlisting}
+Output
+\begin{lstlisting}
+<span class="email">racke@linuxia.de</span>
+\end{lstlisting}
+\end{frame}
+
+\section{Conditions}
+
+\section{Lists}
+
+\subsection{Iterators}
 Template::Flute uses iterators to retrieve list elements and insert them into
 the document tree. This abstraction relieves us from worrying about where
 the data actually comes from. We basically just need an array of hash
@@ -272,7 +324,7 @@ very easily.
  \end{itemize}
 \end{frame}
 
-\subsection{Template::Flute::Iterator}
+\subsubsection{Template::Flute::Iterator}
 \begin{frame}[fragile]{Template::Flute::Iterator}
 \begin{lstlisting}
 use Template::Flute::Iterator;
@@ -281,7 +333,7 @@ Template::Flute::Iterator->new($cart);
 \end{lstlisting}
 \end{frame}
 
-\subsection{Subclassing Template::Flute::Iterator}
+\subsubsection{Subclassing Template::Flute::Iterator}
 \begin{frame}[fragile]{Subclassing Template::Flute::Iterator}
 \begin{lstlisting}
 package MyApp::Iterator;
