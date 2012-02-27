@@ -67,9 +67,17 @@ PDF files on-the-fly based on the same template and specification.
 % \begin{frame}{Where}
 % \end{frame}
 
-\subsection{Cart Example}
-\subsubsection{Cart as Hash}
-\begin{frame}[fragile]{Cart: Hash}
+\subsection{Template Example}
+\begin{frame}{Template Example}
+\begin{tabular}[t]{rrrr}
+\hfill Name & Quantity & Price \\
+\hfill & & \\
+\hfill & Total & \\
+\hfill & & \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Template Example: Data}
 \begin{lstlisting}
 $cart = [
          {isbn => '978-0-2016-1622-4', 
@@ -82,6 +90,18 @@ $cart = [
 		];
 \end{lstlisting}
 \end{frame}
+
+\begin{frame}{Template Example: Output}
+\begin{tabular}[t]{rrrr}
+\hfill Name & Quantity & Price \\
+\hfill & & \\
+\hfill The Pragmatic Programmer & 1 & \$ 49.95 \\
+\hfill Pro Git & 1 & \$ 34.99 \\
+\hfill & & \\
+\hfill & Total & \$ 100
+\end{tabular}
+\end{frame}
+
 \subsubsection{HTML Template}
 \begin{frame}[fragile]{Cart: HTML Template}
 \begin{lstlisting}
