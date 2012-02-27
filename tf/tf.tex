@@ -290,6 +290,36 @@ Output
 \end{frame}
 
 \subsection{Lists}
+\subsubsection{Example}
+\begin{frame}[fragile]{List Example}
+HTML
+\begin{lstlisting}
+<tr class="cartitem">
+<td class="name">Perl 6</td>
+<td><input class="quantity" name="quantity" size="3" value="10"></td>
+<td class="price">$$$</td>
+</tr>
+\end{lstlisting}
+Spezifikation
+\begin{lstlisting}
+<list name="cart" class="cartitem" iterator="cart">
+<param name="name" field="title"/>
+<param name="quantity"/>
+<param name="price"/>
+</list>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{List Example}
+Code
+\begin{lstlisting}
+$flute = Template::Flute->new(template => $template,
+                              specification => $specification,
+                              iterators => {cart => \@cart});
+
+$output = $flute->process;
+\end{lstlisting}
+\end{frame}
 
 \subsubsection{Iterators}
 Template::Flute uses iterators to retrieve list elements and insert them into
