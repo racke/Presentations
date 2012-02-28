@@ -382,6 +382,64 @@ sub new {
 \end{lstlisting}
 \end{frame}
 
+\section{Hints}
+Because the specification is separate from the template itself,
+Template::Flute relies on hints to insert and replace text
+inside of HTML attributes.
+
+\begin{frame}{Hints}
+\begin{itemize}
+\item Targets
+\item Expressions
+\item Operators
+\end{itemize}
+\end{frame}
+
+\subsection{Targets}
+\begin{frame}[fragile]{Explicit and implicit targets}
+Link (Template::Toolkit)
+\begin{lstlisting}
+<a href="[% login_url %]" class="url">Login</li>
+\end{lstlisting}
+Link (Template::Flute Specification)
+\begin{lstlisting}
+<value name="url" target="href"/>
+\end{lstlisting}
+Hidden form field (Template::Toolkit)
+\begin{lstlisting}
+<input type="hidden" name="sku" class="sku" value="[% sku %]">
+\end{lstlisting}
+Hidden form field (Template::Flute Specification)
+\begin{lstlisting}
+<value name="sku" class="sku"/>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Expressions}
+\begin{frame}[fragile]{Expressions}
+\begin{lstlisting}
+<container name="summary" value="wishlist_name&&!wishlist_page">
+<value name="wishlist-name" field="wishlist_name"/>
+<value name="total" class="wishlist-sum-total" filter="currency"/>
+<list name="cart_collections" class="wishlist-collections-line" iterator="cart_collections">
+<param name="sku" class="btn-remove" target="value"/>
+<param name="name" class="wishlist-title"/>
+<param name="quantity" class="wishlist-qty"/>
+<param name="wishlist-title" field="sku" target="href" op="append"/>
+</list>
+</container>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Operators}
+\begin{frame}{Operators}
+\begin{itemize}
+\item append
+\item toggle
+\item hook
+\end{itemize}
+\end{frame}
+
 \section{More Elements}
 \subsection{Filters}
 There are two types of filters for lists: global filters and
