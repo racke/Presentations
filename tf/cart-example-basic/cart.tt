@@ -1,9 +1,6 @@
 <table class="cart">
 <tr class="cartheader">
-<th>Name</th>
-<th>Quantity</th>
-<th>Price</th>
-</tr>
+<th>Name</th><th>Quantity</th><th>Price</th></tr>
 [% FOREACH cart %]
 <tr class="cartitem">
 <td class="name">[% title %]</td>
@@ -11,4 +8,8 @@
 <td class="price">[% price %]</td>
 </tr>
 [% END %]
+<<tr class="cartheader"><th colspan="2"></th><th>Total</th></tr>
+<tr>
+<td colspan="2"></td><td class="cost">[% total %]</td>
+</tr>
 </table>
