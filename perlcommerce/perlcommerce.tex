@@ -499,6 +499,23 @@ and update the modification date of the cart.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{charge Keyword}
+\begin{lstlisting}
+$tx = charge(gateway => 'Braintree',
+             amount => cart->total,
+             card_number => $values->{cc_number},
+             expiration => $expiration,
+             cvc => $values->{cvc_number});
+
+if ($tx->is_success()) {
+    ...
+}
+else {
+    ...
+}
+\end{lstlisting}
+\end{frame}
+
 \subsubsection{Taxes}
 Tax on top of the product cost can be applied in different varieties.
 
