@@ -573,6 +573,59 @@ $cart->apply_cost(amount => 0.19,
 \end{itemize}
 \end{frame}
 
+\subsection{Products}
+\begin{frame}[fragile]{Product Class}
+\begin{lstlisting}
+package Nitesi::Product;
+
+use Moo;
+
+has sku => (is => 'rw');
+has name => (is => 'rw');
+has description => (is => 'rw'); 
+has price => (is => 'rw');
+has weight => (is => 'rw');
+has priority => (is => 'rw');
+has inactive => (is => 'rw');
+
+1;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Product Subclass}
+\begin{lstlisting}
+package MyShop::Product;
+
+use Moo;
+use base 'Nitesi::Product';
+
+has inventory (is => 'rw');
+
+1;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Product Backend}
+\begin{lstlisting}
+package Nitesi::Product::Backend::DBI;
+use Moo;
+
+has dbh => (is => 'rw');
+
+has query => (
+    is => 'ro',
+    lazy => 1,
+    default => sub {Nitesi::Query::DBI->new(dbh => shift->dbh);}
+    );
+
+sub load { ... };
+
+sub save { ... };
+
+1;
+\end{lstlisting}
+\end{frame}
+
 \subsection{Accounts and Access Control}
 
 \begin{frame}[fragile]{Accounts}
