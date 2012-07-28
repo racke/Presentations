@@ -1,0 +1,54 @@
+PDFKit
+
+* wkhtmltopdf Debian package
+
+http://code.google.com/p/wkhtmltopdf/
+
+Images
+
+==============================================
+
+* different Perl modules
+
+The key benefit of PDF::API2 is the ability to load an existing PDF file and use this as the basis for a new document.
+
+http://search.cpan.org/perldoc?Catalyst::View::PDF::API2
+
+After much time, effort, and with well received results, Alfred Reibenschuh is abandoning PDF::API2. see http://tech.groups.yahoo.com/group/perl-text-pdf-modules/message/3615.
+
+Tutorial: http://rick.measham.id.au/pdf-api2/
+
+http://search.cpan.org/~areibens/PDF-API2-0.73/lib/PDF/API2/HOWTO.pod
+
+http://search.cpan.org/perldoc?PDF::TextBlock
+
+http://search.cpan.org/perldoc?PDF::Report
+
+Resources
+=========
+
+Description of the various boxes in PDF:
+
+http://www.prepressure.com/pdf/basics/page_boxes
+
+
+Remarks:
+	* Font is required (use default) ???
+	before calling advancewidth => no font default
+
+
+Presentation
+============
+
+Importing PDF
+
+Text cursor: 
+	moving it with $text->translate
+
+Links
+=====
+
+http://pdfapi2.sourceforge.net/pdfapi2_for_fun_and_profit_APW2005.pdf
+
+
+PDF::FromHTML => transforms HTML to PDF

@@ -1,0 +1,18 @@
+* The easy way => PDFKit
+* The hard way => ...
+
+* Modules
+  CAM::PDF
+  PDF::Reuse
+
+* Traps
+  Fonts
+  Background color
+
+* Practice
+  Importing PDF
+  Unit conversion
+  Rotation
+  Crossing lines
+
+* Usecases
