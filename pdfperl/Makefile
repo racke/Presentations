@@ -1,7 +1,7 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
 
 TEXFILE=pdfperl-beamer
-INPUT=pdfperl.tex
+INPUTS=pdfperl.tex
 
 all: $(TEXFILE).pdf; make clean
 
