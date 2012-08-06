@@ -57,7 +57,7 @@ $pdf->saveas('hallo_welt.pdf');
 \end{frame}
 
 \begin{frame}{Hallo Welt}
-\includegraphics[page=1,width=.6\textwidth]{hallo_welt.pdf}
+\includegraphics[page=1,width=.6\textwidth]{hallo_welt_1.pdf}
 \end{frame}
 
 % Koordinatensystem
@@ -70,15 +70,15 @@ $pdf->saveas('hallo_welt.pdf');
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Text}
+\subsection{Text und Fonts}
+
+\begin{frame}{Fonts}
 \begin{itemize}
-\item Fonttyp
-\item Fontgröße
-\item Farbe
+\item Schriftart
+\item Schriftgröße
+\item Schriftfarbe
 \end{itemize}
 \end{frame}
-
-\subsection{Fonts}
 
 Die folgenden Fonts werden von PDF::API2
 unterstützt:
@@ -130,6 +130,60 @@ $font = $pdf->ttfont('/usr/share/fonts/truetype/gentium/GenAI102.ttf');
 \item Einbetten des Fonts bei jedem Aufruf
 \item Große PDF-Dateien
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Text mit Hintergrundfarbe}
+\begin{lstlisting}
+$pdf = PDF::API2->new;
+
+$font = $pdf->corefont('Verdana');
+$text = $page->text;
+$gfx = $page->gfx;
+
+$text->font($font, 50);
+$text->translate(150, 105);
+
+$gfx->fillcolor('lightgreen');
+$gfx->rect(20, 95, 265, 60);
+$gfx->fill;
+
+$gfx->fillcolor('black');
+
+$text->text_center('Hallo Welt');
+
+$pdf->saveas('hallo_welt.pdf');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Hallo Welt II}
+\includegraphics[page=1,width=.6\textwidth]{hallo_welt_2.pdf}
+\end{frame}
+
+\begin{frame}[fragile]{Text mit Hintergrundfarbe}
+\begin{lstlisting}
+$pdf = PDF::API2->new;
+
+$font = $pdf->corefont('Verdana');
+$gfx = $page->gfx;
+$text = $page->text;
+
+$text->font($font, 50);
+$text->translate(150, 105);
+
+$gfx->fillcolor('lightgreen');
+$gfx->rect(20, 95, 265, 60);
+$gfx->fill;
+
+$gfx->fillcolor('black');
+
+$text->text_center('Hallo Welt');
+
+$pdf->saveas('hallo_welt.pdf');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Hallo Welt III}
+\includegraphics[page=1,width=.6\textwidth]{hallo_welt_3.pdf}
 \end{frame}
 
 \begin{frame}{Bilder}
