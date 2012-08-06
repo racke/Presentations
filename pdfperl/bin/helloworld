@@ -1,0 +1,99 @@
+#! /usr/bin/env perl
+#
+# Copyright 2012 Stefan Hornburg (Racke) <racke@linuxia.de>.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of either: the GNU General Public License as published
+# by the Free Software Foundation; or the Artistic License.
+#
+# See http://dev.perl.org/licenses/ for more information.
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use PDF::API2;
+
+my (%opts, $pdf, $font, $page, $gfx, $text);
+
+# first example: plain text
+$pdf = PDF::API2->new;
+
+# DOESN'T WORK A7 => not in list
+$pdf->mediabox(210, 298);
+
+$font = $pdf->corefont('Verdana');
+
+$page = $pdf->page;
+$page->mediabox(298, 210);
+
+$text = $page->text;
+
+$text->font($font, 50);
+$text->translate(150, 105);
+
+#$gfx = $page->gfx;
+
+$text->text_center('Hallo Welt');
+#$gfx->textlabel(50, 750, $font, 20, 'Hallo Welt');
+
+$pdf->saveas('hallo_welt_1.pdf');
+
+# second example: text with background (wrong order)
+$pdf = PDF::API2->new;
+
+# DOESN'T WORK A7 => not in list
+$pdf->mediabox(210, 298);
+
+$font = $pdf->corefont('Verdana');
+
+$page = $pdf->page;
+$page->mediabox(298, 210);
+
+$text = $page->text;
+$gfx = $page->gfx;
+
+$text->font($font, 50);
+$text->translate(150, 105);
+
+$gfx->fillcolor('lightgreen');
+$gfx->rect(20, 95, 265, 60);
+$gfx->fill;
+
+#$gfx = $page->gfx;
+
+$gfx->fillcolor('black');
+$text->text_center('Hallo Welt');
+#$gfx->textlabel(50, 750, $font, 20, 'Hallo Welt');
+
+$pdf->saveas('hallo_welt_2.pdf');
+
+# third example: text with background (correct order)
+
+$pdf = PDF::API2->new;
+
+# DOESN'T WORK A7 => not in list
+$pdf->mediabox(210, 298);
+
+$font = $pdf->corefont('Verdana');
+
+$page = $pdf->page;
+$page->mediabox(298, 210);
+
+$gfx = $page->gfx;
+$text = $page->text;
+
+$text->font($font, 50);
+$text->translate(150, 105);
+
+$gfx->fillcolor('lightgreen');
+$gfx->rect(20, 95, 265, 60);
+$gfx->fill;
+
+#$gfx = $page->gfx;
+
+$gfx->fillcolor('black');
+$text->text_center('Hallo Welt');
+#$gfx->textlabel(50, 750, $font, 20, 'Hallo Welt');
+
+$pdf->saveas('hallo_welt_3.pdf');
