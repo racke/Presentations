@@ -192,6 +192,19 @@ $pdf->saveas('hallo_welt.pdf');
 \includegraphics[page=1,width=.6\textwidth]{hallo_welt_3.pdf}
 \end{frame}
 
+\begin{frame}[fragile]{Textlänge bestimmen}
+\begin{lstlisting}
+$pdf = PDF::API2->new;
+
+$font = $pdf->corefont('Verdana');
+$text = $page->text;
+
+$length = $text->advancewidth($text, 
+                 font => $font,
+                 fontsize => 50);
+\end{lstlisting}
+\end{frame}
+
 \subsection{Bilder}
 \begin{frame}{Bilder}
 \begin{itemize}
