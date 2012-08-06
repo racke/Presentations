@@ -27,6 +27,8 @@
 
 \section{PDF::API2}
 
+\subsection{Einführung}
+
 Beim Thema PDF mit Perl stößt man meistens auf PDF::API2,
 entweder weil es direkt eingesetzt wird oder als Abhängigkeit
 des verwendeten Moduls auftaucht.
@@ -122,7 +124,7 @@ $font = $pdf->ttfont('/usr/share/fonts/truetype/gentium/GenAI102.ttf');
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Caching fonts}
+\begin{frame}[fragile]{Fonts zwischenspeichern}
 \begin{itemize}
 \item \begin{verbatim}$pdf->corefont, $pdf->ttfont, ... \end{verbatim} 
 \item Einbetten des Fonts bei jedem Aufruf
