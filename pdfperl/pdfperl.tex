@@ -296,9 +296,25 @@ $gfx->fill;
 \subsection{CAM::PDF}
 \begin{frame}{CAM::PDF}
   \begin{itemize}
+  \item PDF-Struktur
   \item PDF-Bearbeitung
+  \item Imports
   \item Tests
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Import mit CAM::PDF}
+\begin{lstlisting}
+$cam = CAM::PDF->new($output);
+    
+for my $file (@$input_list) {
+    $cam_import = CAM::PDF->new($file);
+    $cam->appendPDF($cam_import);
+}
+
+$cam->deletePage(1);
+$cam->cleanoutput($output);
+\end{lstlisting}
 \end{frame}
 
 \subsection{PDF::WebKit}
