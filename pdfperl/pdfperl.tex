@@ -187,6 +187,7 @@ $pdf->saveas('hallo_welt.pdf');
 \includegraphics[page=1,width=.6\textwidth]{hallo_welt_3.pdf}
 \end{frame}
 
+\subsection{Bilder}
 \begin{frame}{Bilder}
 \begin{itemize}
 \item PNG
@@ -222,32 +223,56 @@ $pdf->saveas('nitesi.pdf');
 \includegraphics[page=1,width=.6\textwidth]{nitesi.pdf}
 \end{frame}
 
+\subsection{Figuren}
 \begin{frame}{Auswahl Figuren}
 \begin{itemize}
-\item Linie
-\item Rechteck
+\item Linien
+\item Kurven
+\item Rechtecke
+\item Kreise
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Farbiges Rechteck}
+\begin{frame}[fragile]{Rechteck}
 \begin{lstlisting}
 $pdf = PDF::API2->new;
 $page = $pdf->page;
 $gfx = $page->gfx;
 
 $gfx->fillcolor('lightgreen');
-$gfx->rect(20, 100, 60, 40);
+$gfx->rect(20, 95, 265, 60);
 $gfx->fill;
 \end{lstlisting}
 \end{frame}
 
 \begin{frame}{Beispiel Rechteck}
-\includegraphics[page=1,width=.6\textwidth]{rechteck.pdf}
+\includegraphics[page=1,width=.6\textwidth]{rechteck_1.pdf}
 \end{frame}
 
-\subsection{Farben}
+\begin{frame}[fragile]{Rechteck mit Kreisen}
+\begin{lstlisting}
+$pdf = PDF::API2->new;
+$page = $pdf->page;
+$gfx = $page->gfx;
 
-\subsection{Import}
+$gfx->fillcolor('lightgreen');
+$gfx->rect(20, 95, 265, 60);
+$gfx->fill;
+
+$gfx->fillcolor('blue');
+$gfx->circle(30, 95, 20);
+$gfx->circle(275, 95, 20);
+$gfx->fill;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Beispiel Rechteck mit Kreisen}
+\includegraphics[page=1,width=.6\textwidth]{rechteck_2.pdf}
+\end{frame}
+
+% \subsection{Farben}
+
+% \subsection{Import}
 
 
 % \subsection{Specials}
