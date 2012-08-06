@@ -1,0 +1,58 @@
+#! /usr/bin/env perl
+#
+# Copyright 2012 Stefan Hornburg (Racke) <racke@linuxia.de>.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of either: the GNU General Public License as published
+# by the Free Software Foundation; or the Artistic License.
+#
+# See http://dev.perl.org/licenses/ for more information.
+
+use strict;
+use warnings;
+
+use PDF::API2;
+
+my ($pdf, $page, $gfx);
+
+$pdf = init_pdf();
+$page = $pdf->page;
+$gfx = $page->gfx;
+
+rectangle($gfx);
+
+$pdf->saveas('rechteck_1.pdf');
+
+$pdf = init_pdf();
+$page = $pdf->page;
+$gfx = $page->gfx;
+
+rectangle($gfx);
+circles($gfx);
+
+$pdf->saveas('rechteck_2.pdf');
+
+sub init_pdf {
+    my $object;
+
+    $object = PDF::API2->new;
+    $object->mediabox(298, 210);
+    return $object;
+}
+
+sub rectangle {
+    my $gfx = shift;
+
+    $gfx->fillcolor('lightgreen');
+    $gfx->rect(20, 95, 265, 60);
+    $gfx->fill;
+}
+
+sub circles {
+    my $gfx = shift;
+
+    $gfx->fillcolor('blue');
+    $gfx->circle(30, 95, 20);
+    $gfx->circle(275, 95, 20);
+    $gfx->fill;
+}
