@@ -204,7 +204,8 @@ after sub {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{before}
+\begin{frame}[fragile]{Example for before hook}
+Login protected site
 \begin{lstlisting}
 hook 'before' => sub {
     unless (session('user')
@@ -215,6 +216,7 @@ hook 'before' => sub {
     }
 };
 \end{lstlisting}
+Doesn't protect files in public!
 \end{frame}
 
 \subsection{Hooks}
