@@ -206,7 +206,7 @@ after sub {
 
 \begin{frame}[fragile]{before}
 \begin{lstlisting}
-before sub {
+hook 'before' => sub {
     unless (session('user')
         || request->path eq '/login'
         || request->path =~ m%^/lostpwd%
