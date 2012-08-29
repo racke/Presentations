@@ -267,15 +267,15 @@ Datei (Bild oder CSS-Datei) gesendet wurde.
 \section{Plugins}
 \begin{frame}{Plugins}
 \begin{itemize}
-\item Funktionalität
-\item Schlüsselwort
-\item Route 
-\item Konfiguration
+\item Features
+\item Keyword(s)
+\item Route(s) 
+\item Configuration
 \end{itemize}
 \end{frame}
 
-\subsection{Plugins auf CPAN}
-\begin{frame}[fragile]{Plugins auf CPAN}
+\subsection{Plugins on CPAN}
+\begin{frame}[fragile]{Plugins on CPAN}
 \begin{itemize}
 \item Dancer::Plugin::Database \\
 \verb|database|
@@ -286,7 +286,7 @@ Datei (Bild oder CSS-Datei) gesendet wurde.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Dancer::Plugin::LibraryThing Konfiguration}
+\begin{frame}[fragile]{Dancer::Plugin::LibraryThing Configuration}
 \begin{lstlisting}
 plugins:
     LibraryThing:
@@ -330,8 +330,8 @@ get '/images/covers/*.jpg' => sub {
 \end{itemize}
 \end{frame}
 
-\subsection{Plugins und Hooks}
-\begin{frame}[fragile]{Plugins und Hooks}
+\subsection{Plugins and Hooks}
+\begin{frame}[fragile]{Plugins and Hooks}
 \begin{lstlisting}
 Dancer::Factory::Hook
         ->instance
