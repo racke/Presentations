@@ -333,9 +333,9 @@ get '/images/covers/*.jpg' => sub {
 \subsection{Plugins and Hooks}
 \begin{frame}[fragile]{Plugins and Hooks}
 \begin{lstlisting}
-Dancer::Factory::Hook
-        ->instance
-        ->install_hooks('before_cart_add');
+register_hook('before_cart_add');
+
+execute_hook('before_cart_add', ...);
 \end{lstlisting}
 \end{frame}
 
