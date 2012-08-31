@@ -82,8 +82,7 @@ durch Dancer.
 \url{https://vsc.state.gov/}
 \end{frame}
 
-\section{Routes, Filter und Hooks}
-\subsection{Routes}
+\section{Routes}
 
 Für eine Route benötigen wir
 
@@ -124,7 +123,7 @@ Weisen angegeben werden.
 \end{itemize}
 \end{frame}
 
-\subsubsection{Splat}
+\subsection{Splat}
 \begin{frame}[fragile]{Splat}
 \begin{lstlisting}
 get '/images/covers/*.jpg' => sub {
@@ -140,7 +139,7 @@ get '/images/covers/*.jpg' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsubsection{Megasplat}
+\subsection{Megasplat}
 Die einfache Wildcard matcht nur auf einen Teil des Pfads,
 d.h. bis zum nächsten Schrägstrich (Slash).
 
@@ -179,7 +178,7 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsubsection{Präfix}
+\subsection{Präfix}
 \begin{frame}[fragile]{Präfix}
 \begin{lstlisting}
 prefix '/wiki';
@@ -193,16 +192,7 @@ get qr{/?(?<page>.*)} => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Filters}
-\begin{frame}[fragile]{Filters}
-\begin{lstlisting}
-before sub {
-};
-
-after sub {
-};
-\end{lstlisting}
-\end{frame}
+\section{Hooks}
 
 \begin{frame}[fragile]{Example for before hook}
 Login protected site
@@ -219,7 +209,6 @@ hook 'before' => sub {
 Doesn't protect files in public!
 \end{frame}
 
-\subsection{Hooks}
 \begin{frame}[fragile]{Hooks}
 \begin{lstlisting}
 hook before_template_render => sub {
