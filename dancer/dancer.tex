@@ -513,6 +513,15 @@ set logger_format => '%m';
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Tests}
+\begin{lstlisting}
+use Test::More tests => 42;
+use Dancer::Test;
+
+use Dancer ':tests';
+\end{lstlisting}
+\end{frame}
+
 \section{Ausblick}
 
 \subsection{Dancer 2}
