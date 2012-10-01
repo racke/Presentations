@@ -1,4 +1,8 @@
+https://github.com/andrewsolomon/training.dancer.lpw.2011
+
 Testing with Dancer::Test
+   use Dancer ':tests';
+   => Dancer::Plugin::Nitesi cart test
 
 Hintergründe und Projekte
 
