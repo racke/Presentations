@@ -1,3 +1,13 @@
+WHOAMI / WHYDOUSE as starter
+
+http://www.linuxia.de/blog/Status-400-Before-Hook-With-Dancer
+
+http://search.cpan.org/dist/Dancer/lib/Dancer/Introduction.pod#CONDITIONAL_MATCHING
+
+auto_page
+
+any [qw/get post/] => '/error' => sub {
+
 https://github.com/andrewsolomon/training.dancer.lpw.2011
 
 Testing with Dancer::Test
@@ -33,6 +43,14 @@ simple explanation of routes
 
 glance at templating engines
 
+hook 'on_handler_exception' => sub {
+    warning "Handler exception: ", shift;
+};
+
+hook 'on_route_exception' => sub {
+    warning "Route exception.", shift;
+};
+
 * Practice
 http://github.com/bigpresh/Dancer-Plugin-DevelNYTProf
 time requests
@@ -48,8 +66,10 @@ time requests
 * Dancer::Object
 * Dancer qw(:script)
   which enviroment?
+  --environment doesn't work
 * Clean URLs
 * return redirect, return template etc.
+  redirect for clean URLs (301!), post => get forms
 * Contributing
 * Exceptions
 * Typical errors
