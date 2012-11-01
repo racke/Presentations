@@ -212,6 +212,20 @@ get qr{/?(?<page>.*)} => sub {
 \end{lstlisting}
 \end{frame}
 
+\section{Upload}
+\begin{frame}[fragile]{Upload Form}
+\begin{lstlisting}
+<div class="upload">
+<h2>Upload file</h2>
+<form name="upload" id="upload_form" action="" method="post"
+enctype="multipart/form-data">
+<input type="file" name="upload_file"><br>
+<input type="submit" value="OK">
+</form>
+</div>
+\end{lstlisting}
+\end{frame}
+
 \section{Cookies and Sessions}
 \begin{frame}{Cookies and Sessions}
 \end{frame}
