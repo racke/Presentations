@@ -22,4 +22,29 @@
 
 \tableofcontents
 
+\section{Plugins}
+\begin{frame}[fragile]{Dancer 1}
+\begin{lstlisting}
+register foo => sub {
+    my (@args) = @_;
+
+    ...
+};
+
+register_plugin;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer 2}
+\begin{lstlisting}
+register foo => sub {
+
+my ($self, @args) = plugin_args(@_);
+...
+};
+
+register_plugin for_versions => [1, 2] ;
+\end{lstlisting}
+\end{frame}
+
 \end{document}
