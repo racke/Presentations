@@ -213,7 +213,7 @@ get qr{/?(?<page>.*)} => sub {
 \end{frame}
 
 \section{Upload}
-\begin{frame}[fragile]{Upload Form}
+\begin{frame}[fragile]{Upload HTML-Formular}
 \begin{lstlisting}
 <div class="upload">
 <h2>Upload file</h2>
@@ -225,6 +225,23 @@ enctype="multipart/form-data">
 </div>
 \end{lstlisting}
 \end{frame}
+
+Mit dem upload-Schlüsselwort erhalten wir ein
+Dancer::Request::Upload-Objekt.
+
+\begin{frame}[fragile]{Upload Tanz}
+\begin{lstlisting}
+if ($upload_file = upload('upload_file')) {
+	# upload file to directory
+	my $target_file = "$homedir/dropbox/$file/" . $upload_file->{filename};
+		
+	unless ($upload_file->copy_to($target_file)) {
+			# error !!!
+		}
+	}
+\end{lstlisting}
+\end{frame}
+
 
 \section{Cookies and Sessions}
 \begin{frame}{Cookies and Sessions}
