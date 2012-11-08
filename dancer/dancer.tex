@@ -213,6 +213,7 @@ get qr{/?(?<page>.*)} => sub {
 \end{frame}
 
 \section{Upload}
+\subsection{HTML-Formular}
 \begin{frame}[fragile]{Upload HTML-Formular}
 \begin{lstlisting}
 <div class="upload">
@@ -229,6 +230,7 @@ enctype="multipart/form-data">
 Mit dem upload-Schlüsselwort erhalten wir ein
 Dancer::Request::Upload-Objekt.
 
+\subsection{Upload Tanz}
 \begin{frame}[fragile]{Upload Tanz}
 \begin{lstlisting}
 if ($upload_file = upload('upload_file')) {
@@ -242,6 +244,13 @@ if ($upload_file = upload('upload_file')) {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Redirect/Forward}
+\begin{frame}[fragile]{Redirect/Forward}
+\begin{lstlisting}
+redirect "~$user->{username}/";
+
+\end{lstlisting}
+\end{frame}
 
 \section{Cookies and Sessions}
 \begin{frame}{Cookies and Sessions}
