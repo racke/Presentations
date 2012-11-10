@@ -95,6 +95,37 @@ durch Dancer.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Programm}
+\begin{lstlisting}
+#!/usr/bin/env perl
+use Dancer;
+use Locker;
+dance;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Modul}
+\begin{lstlisting}
+package Locker;
+use Dancer ':syntax';
+
+our $VERSION = '0.1';
+
+get '/' => sub {
+    template 'index';
+};
+
+true;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Template}
+\begin{lstlisting}
+views/index.tt
+views/layouts/main.tt
+\end{lstlisting}
+\end{frame}
+
 \section{Filebrowser}
 
 \section{Routes}
