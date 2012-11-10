@@ -127,6 +127,29 @@ views/layouts/main.tt
 \end{frame}
 
 \section{Filebrowser}
+\begin{frame}{Filebrowser}
+\begin{itemize}
+\item Liste der Dateien
+\item Route
+\item Template
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Template}
+\lstinputlisting{views/filebrowser.tt}
+\end{frame}
+
+\begin{frame}[fragile]{Konfiguration}
+config.yml:
+\begin{lstlisting}
+# template engine
+# simple: default and very basic template engine
+template: "simple"
+\end{lstlisting}
+\begin{lstlisting}
+template: "template_toolkit"
+\end{lstlisting}
+\end{frame}
 
 \section{Routes}
 
