@@ -233,6 +233,14 @@ get '/lostpwd/**' => sub {
 
 \subsection{Regulärer Ausdruck}
 
+\begin{frame}[fragile]{Catchall}
+\begin{lstlisting}
+any qr{.*} => sub {
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Regulärer Ausdruck mit Captures}
 \begin{lstlisting}
 https://dropbox.nite.si/~racke/talks/dancer-beamer.pdf
