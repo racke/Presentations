@@ -379,6 +379,30 @@ Datei (Bild oder CSS-Datei) gesendet wurde.
 % \begin{frame}{Exceptions}
 % \end{frame}
 
+\section{Fehlerbehandlung}
+\subsection{404}
+\begin{frame}[fragile]{404}
+\begin{itemize}
+\item public/404.html
+\item 
+\begin{lstlisting}
+any qr{.*} => sub {
+    status 'not_found';
+    template 'my_404', { path => request->path };
+};
+\end{lstlisting}
+\item XSS vermeiden
+\end{itemize}
+\end{frame}
+
+\subsection{500}
+\begin{frame}[fragile]{500}
+\begin{itemize}
+\item public/500.html
+\item error\_template
+\end{itemize}
+\end{frame}
+
 \section{Plugins}
 \begin{frame}{Plugins}
 \begin{itemize}
