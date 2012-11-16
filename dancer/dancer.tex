@@ -315,7 +315,7 @@ get '/home/**' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{HTML-Formular}
+\subsection{Upload HTML-Formular}
 \begin{frame}[fragile]{Upload HTML-Formular}
 \begin{lstlisting}
 <div class="upload">
@@ -332,17 +332,25 @@ enctype="multipart/form-data">
 Mit dem upload-Schlüsselwort erhalten wir ein
 Dancer::Request::Upload-Objekt.
 
-\subsection{Upload Tanz}
-\begin{frame}[fragile]{Upload Tanz}
+\subsection{Upload Route}
+\begin{frame}[fragile]{Upload Routes}
 \begin{lstlisting}
-if ($upload_file = upload('upload_file')) {
-	# upload file to directory
-	my $target_file = "$homedir/dropbox/$file/" . $upload_file->{filename};
+post '/home/**' => sub {
+    my ($parts) = splat;
+    my $path_relative = join('/', @$parts);
+    my $path = autoindex_file_path($path_relative);
+
+    if ($upload_file = upload('upload_file')) {
+        # upload file to directory
+        my $target_file = join('/', $path, $upload_file->{filename});
 		
-	unless ($upload_file->copy_to($target_file)) {
-			# error !!!
-		}
-	}
+	    unless ($upload_file->copy_to($target_file)) {
+            die 'Upload failed';
+        }
+    }
+
+    redirect "/home/$path_relative";
+};
 \end{lstlisting}
 \end{frame}
 
@@ -356,7 +364,10 @@ redirect "~$user->{username}/";
 
 \section{Hooks}
 
-\begin{frame}[fragile]{Example for before hook}
+The before hook is called after a request has been accepted
+and before routes are matched.
+
+\begin{frame}[fragile]{before}
 Login protected site
 \begin{lstlisting}
 hook 'before' => sub {
@@ -371,7 +382,7 @@ hook 'before' => sub {
 Doesn't protect files in public!
 \end{frame}
 
-\begin{frame}[fragile]{Hooks}
+\begin{frame}[fragile]{before\_template\_render}
 \begin{lstlisting}
 hook before_template_render => sub {
     my $tokens = shift;
