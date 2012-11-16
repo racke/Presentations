@@ -295,7 +295,26 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \end{lstlisting}
 \end{frame}
 
-\section{Upload}
+\section{Download/Upload}
+\subsection{Download}
+\begin{frame}[fragile]{File Download}
+\begin{lstlisting}
+get '/home/**' => sub {
+    my ($parts) = splat;
+    my $path_relative = join('/', @$parts);
+    my $path = autoindex_file_path($path_relative);
+
+    if (-f $path) {
+        return send_file $path, system_path => 1;
+    }
+    elsif (-d $path) {
+        return template 'filebrowser', {directory => pop(@$parts),
+                               files => autoindex($path_relative)};
+    }
+};
+\end{lstlisting}
+\end{frame}
+
 \subsection{HTML-Formular}
 \begin{frame}[fragile]{Upload HTML-Formular}
 \begin{lstlisting}
