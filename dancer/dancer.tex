@@ -290,20 +290,6 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Präfix}
-\begin{frame}[fragile]{Präfix}
-\begin{lstlisting}
-prefix '/wiki';
-
-get qr{/?(?<page>.*)} => sub {
-    my $capts = captures;
-
-    template 'wiki', {content => wiki($capts->{page}),
-                      page => $capts->{page}};
-};
-\end{lstlisting}
-\end{frame}
-
 \section{Upload}
 \subsection{HTML-Formular}
 \begin{frame}[fragile]{Upload HTML-Formular}
