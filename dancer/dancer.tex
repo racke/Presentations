@@ -130,22 +130,43 @@ views/layouts/main.tt
 \begin{frame}{Filebrowser}
 \begin{itemize}
 \item Liste der Dateien
-\item Route
 \item Template
+\item Route
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Liste der Dateien}
+\begin{lstlisting}
+use Dancer::Plugin::Autoindex;
+
+$files = autoindex('/');
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{Template}
 \lstinputlisting{views/filebrowser.tt}
 \end{frame}
 
+\begin{frame}[fragile]{Route}
+\begin{lstlisting}
+get '/home' => sub {
+    my $files = autoindex('/');
+
+    template 'filebrowser', {directory => 'Home',
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Konfiguration}
-config.yml:
+Standard config.yml:
 \begin{lstlisting}
 # template engine
 # simple: default and very basic template engine
 template: "simple"
 \end{lstlisting}
+Locker config.yml:
 \begin{lstlisting}
 template: "template_toolkit"
 \end{lstlisting}
@@ -176,6 +197,32 @@ Weisen angegeben werden.
 \item Regulärer Ausdruck
 \item Regulärer Ausdruck mit Captures
 \end{itemize}
+\end{frame}
+
+\subsection{String}
+\begin{frame}[fragile]{String}
+\begin{lstlisting}
+get '/home' => sub {
+    my $files = autoindex('/');
+
+    template 'filebrowser', {directory => 'Home',
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\subsection{String mit benannten Parametern}
+\begin{frame}[fragile]{String mit benannten Parametern}
+\begin{lstlisting}
+get '/home/:file' => sub {
+    my $files = autoindex(param('file'));
+
+    template 'filebrowser', {directory => param('file'),
+                             files => $files,
+                            };
+};
+\end{lstlisting}
 \end{frame}
 
 \subsection{Splat}
