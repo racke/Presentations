@@ -352,7 +352,7 @@ Mit dem upload-Schlüsselwort erhalten wir ein
 Dancer::Request::Upload-Objekt.
 
 \subsection{Upload Route}
-\begin{frame}[fragile]{Upload Routes}
+\begin{frame}[fragile]{Upload Route}
 \begin{lstlisting}
 post '/home/**' => sub {
     my ($parts) = splat;
@@ -363,7 +363,7 @@ post '/home/**' => sub {
         # upload file to directory
         my $target_file = join('/', $path, $upload_file->{filename});
 		
-	    unless ($upload_file->copy_to($target_file)) {
+        unless ($upload_file->copy_to($target_file)) {
             die 'Upload failed';
         }
     }
@@ -679,7 +679,9 @@ in der Dancer-Dokumentation:
 \end{frame}
 
 \subsection{Starman}
-\begin{frame}[fragile]{Starman}
+\begin{frame}[fragile]{plackup und Starman}
+\begin{itemize} 
+\item Kommandozeile
 \begin{lstlisting}
 plackup -E production 
         -s Starman \ 
@@ -689,6 +691,11 @@ plackup -E production
         -a bin/app.pl \
         -D
 \end{lstlisting}
+\item Initscript
+\begin{itemize} 
+\item \verb|Daemon::Control|
+\end{itemize} 
+\end{itemize} 
 \end{frame}
 
 \subsection{Perlbal}
