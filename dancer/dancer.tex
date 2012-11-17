@@ -367,7 +367,7 @@ redirect "~$user->{username}/";
 The before hook is called after a request has been accepted
 and before routes are matched.
 
-\begin{frame}[fragile]{before}
+\begin{frame}[fragile]{before Hook}
 Passwort geschützte Website:
 \begin{lstlisting}
 hook 'before' => sub {
@@ -382,7 +382,7 @@ hook 'before' => sub {
 Dateien in public sind nicht geschützt!
 \end{frame}
 
-\begin{frame}[fragile]{before\_template\_render}
+\begin{frame}[fragile]{before\_template\_render Hook}
 \begin{lstlisting}
 hook before_template_render => sub {
     my $tokens = shift;
@@ -427,10 +427,19 @@ Datei (Bild oder CSS-Datei) gesendet wurde.
 % \end{frame}
 
 \section{Fehlerbehandlung}
-\subsection{404}
-\begin{frame}[fragile]{404}
+\subsection{500}
+\begin{frame}[fragile]{Fehlerbehandlung: 500}
 \begin{itemize}
-\item public/404.html
+\item Datei: \verb|public/500.html|
+\item Template: \verb|error_template|
+\item Stacktrace: \verb|show_errors|
+\end{itemize}
+\end{frame}
+
+\subsection{404}
+\begin{frame}[fragile]{Fehlerbehandlung: 404}
+\begin{itemize}
+\item \verb|public/404.html|
 \item 
 \begin{lstlisting}
 any qr{.*} => sub {
@@ -439,15 +448,6 @@ any qr{.*} => sub {
 };
 \end{lstlisting}
 \item XSS vermeiden
-\end{itemize}
-\end{frame}
-
-\subsection{500}
-\begin{frame}[fragile]{500}
-\begin{itemize}
-\item Datei: \verb|public/500.html|
-\item Template: \verb|error_template|
-\item Stacktrace: \verb|show_errors|
 \end{itemize}
 \end{frame}
 
