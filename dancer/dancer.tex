@@ -368,7 +368,7 @@ The before hook is called after a request has been accepted
 and before routes are matched.
 
 \begin{frame}[fragile]{before}
-Login protected site
+Passwort geschützte Website:
 \begin{lstlisting}
 hook 'before' => sub {
     unless (session('user')
@@ -379,7 +379,7 @@ hook 'before' => sub {
     }
 };
 \end{lstlisting}
-Doesn't protect files in public!
+Dateien in public sind nicht geschützt!
 \end{frame}
 
 \begin{frame}[fragile]{before\_template\_render}
