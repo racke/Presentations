@@ -22,9 +22,9 @@
 
 \tableofcontents
 
-\section{Hintergrund und Projekte}
+%\section{Hintergrund und Projekte}
 
-\subsection{Tanzflur}
+%\subsection{Tanzflur}
 \begin{frame}{Tanzflur}
 \begin{itemize}
 \item einfach
@@ -34,53 +34,53 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Projekte}
-\begin{itemize}
-\item Dropbox-Klon
-\item LDAP Benutzerverwaltung
-\item Procurement für American Corners
-\end{itemize}
-\end{frame}
+% \begin{frame}{Projekte}
+% \begin{itemize}
+% \item Dropbox-Klon
+% \item LDAP Benutzerverwaltung
+% \item Procurement für American Corners
+% \end{itemize}
+% \end{frame}
 
-\subsection{Dropbox}
-Für die Firma Caithness in New York habe ich einen Dropbox-Klon
-entwickelt.
+% \subsection{Dropbox}
+% Für die Firma Caithness in New York habe ich einen Dropbox-Klon
+% entwickelt.
 
-Dropbox demonstriert die automatische Erkennung des MIME-Typs
-durch Dancer.
+% Dropbox demonstriert die automatische Erkennung des MIME-Typs
+% durch Dancer.
 
-\begin{frame}{Dropbox}
-\begin{itemize}
-\item Autoindex
-\item Upload/Download
-\item Benutzerverwaltung
-\end{itemize}
-\end{frame}
+% \begin{frame}{Dropbox}
+% \begin{itemize}
+% \item Autoindex
+% \item Upload/Download
+% \item Benutzerverwaltung
+% \end{itemize}
+% \end{frame}
 
-\subsection{LDAP Benutzerverwaltung}
-\begin{frame}{LDAP Benutzerverwaltung}
-\begin{itemize}
-\item LDAP-Verzeichnis
-\item Benutzerverwaltung
-\begin{itemize}
-\item Adminstrator
-\item Referrer
-\item Patron
-\end{itemize}
-\end{itemize}
-\end{frame}
+% \subsection{LDAP Benutzerverwaltung}
+% \begin{frame}{LDAP Benutzerverwaltung}
+% \begin{itemize}
+% \item LDAP-Verzeichnis
+% \item Benutzerverwaltung
+% \begin{itemize}
+% \item Adminstrator
+% \item Referrer
+% \item Patron
+% \end{itemize}
+% \end{itemize}
+% \end{frame}
 
-\subsection{Procurement für American Spaces}
-\begin{frame}{Procurement für American Spaces}
-\begin{itemize}
-\item Warenkorb/Wunschliste
-\item Genehmigungsprozesse
-\item LibraryThing
-\item ISBNDB
-\end{itemize}
+% \subsection{Procurement für American Spaces}
+% \begin{frame}{Procurement für American Spaces}
+% \begin{itemize}
+% \item Warenkorb/Wunschliste
+% \item Genehmigungsprozesse
+% \item LibraryThing
+% \item ISBNDB
+% \end{itemize}
 
-\url{https://eshop.state.gov/}
-\end{frame}
+% \url{https://eshop.state.gov/}
+% \end{frame}
 
 \section{Quickstart}
 
@@ -354,13 +354,13 @@ post '/home/**' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Redirect/Forward}
-\begin{frame}[fragile]{Redirect/Forward}
-\begin{lstlisting}
-redirect "~$user->{username}/";
+% \subsection{Redirect/Forward}
+% \begin{frame}[fragile]{Redirect/Forward}
+% \begin{lstlisting}
+% redirect "~$user->{username}/";
 
-\end{lstlisting}
-\end{frame}
+% \end{lstlisting}
+% \end{frame}
 
 \section{Hooks}
 
@@ -455,76 +455,113 @@ any qr{.*} => sub {
 \begin{frame}{Plugins}
 \begin{itemize}
 \item Features
-\item Keyword(s)
-\item Route(s) 
-\item Configuration
+\item Schlüsselwörter
+\item Routes 
+\item Konfiguration
 \end{itemize}
 \end{frame}
 
-\subsection{Plugins on CPAN}
-\begin{frame}[fragile]{Plugins on CPAN}
+\subsection{Plugins auf CPAN}
+\begin{frame}[fragile]{Plugins auf CPAN}
+\begin{itemize}
+\item Anzahl: mehr als 100
+\item Übersicht
+\url{https://metacpan.org/module/Dancer::Plugins}
+\item Suche
+\url{https://metacpan.org/search?q=dancer+plugin}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Plugins auf CPAN}
 \begin{itemize}
 \item Dancer::Plugin::Database \\
 \verb|database|
 \item Dancer::Plugin::Email \\
 \verb|email|
-\item Dancer::Plugin::Ajax \\
-\verb|ajax|
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Dancer::Plugin::LibraryThing Configuration}
+\begin{frame}[fragile]{Dancer::Plugin::Database Beispiel}
 \begin{lstlisting}
-plugins:
-    LibraryThing:
-        api_key: d231aa37c9b4f5d304a60a3d0ad1dad4
-        directory: public/images/covers
-        size: large
+my $user = database->quick_select('users',
+    {username => params->{'username'}});
+
+if ($user) {
+    session user => params->{'username'};
+}
 \end{lstlisting}
 \end{frame} 
 
-\begin{frame}[fragile]{Dancer::Plugin::LibraryThing Code}
+\begin{frame}[fragile]{Dancer::Plugin::Database Konfiguration}
 \begin{lstlisting}
-use Dancer::Plugin::LibraryThing;
-
-get '/images/covers/*.jpg' => sub {
-    my ($isbn, @ret);
-    $isbn = splat;
-
-    unless (-f "public/images/covers/$isbn.jpg") {
-        @ret = librarything_cover($isbn);
-        if (@ret < 3) {
-            status 'not_found';
-            forward 404;
-        }
-    }
-
-    return send_file "images/covers/$isbn.jpg";
-}
+plugins:
+  Database: 
+    driver: Pg
+    database: dropbox
+    username: vienna
+    password: nevairbe
 \end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{Weitere SQL Plugins}
+\begin{itemize}
+\item Dancer::Plugin::DBIC
+\item Dancer::Plugin::SimpleCRUD
+\item ...
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Email Beispiel}
+\begin{lstlisting}
+$message = template('lostpwd_email', 
+       {password => $password, url => $url},
+       {layout => undef});
+	
+email ({type => 'html',
+        from => 'service@linuxia.de',
+        to => param('email'),
+        subject => 'Forgot password',
+        message => $message});
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Email Redirect}
+\begin{itemize}
+\item Modul:
+
+\verb|Email::Sender::Transport::Redirect|
+\item Konfiguration:
+\begin{lstlisting}
+plugins:
+  Email:
+    transport:
+      Sendmail:
+        redirect_address: biz@icdev.de
+\end{lstlisting}
+\end{itemize}
 \end{frame}
 
 % thin wrapper around CPAN module
 % add keywords (avoid overlaps)
 % add configuration
 
-\subsection{Writing Plugins}
-\begin{frame}{Writing Plugins}
-\begin{itemize}
-\item register
-\item register\_plugin
-\item plugin\_setting
-\end{itemize}
-\end{frame}
+% \subsection{Writing Plugins}
+% \begin{frame}{Writing Plugins}
+% \begin{itemize}
+% \item register
+% \item register\_plugin
+% \item plugin\_setting
+% \end{itemize}
+% \end{frame}
 
-\subsection{Plugins and Hooks}
-\begin{frame}[fragile]{Plugins and Hooks}
-\begin{lstlisting}
-register_hook('before_cart_add');
+% \subsection{Plugins and Hooks}
+% \begin{frame}[fragile]{Plugins and Hooks}
+% \begin{lstlisting}
+% register_hook('before_cart_add');
 
-execute_hook('before_cart_add', ...);
-\end{lstlisting}
-\end{frame}
+% execute_hook('before_cart_add', ...);
+% \end{lstlisting}
+% \end{frame}
 
 \section{Deployment}
 \subsection{Sessions}
@@ -711,16 +748,16 @@ set logger_format => '%m';
 \end{lstlisting}
 \end{frame}
 
-\subsection{Tests}
+% \subsection{Tests}
 
-\begin{frame}[fragile]{Tests}
-\begin{lstlisting}
-use Test::More tests => 42;
-use Dancer::Test;
+% \begin{frame}[fragile]{Tests}
+% \begin{lstlisting}
+% use Test::More tests => 42;
+% use Dancer::Test;
 
-use Dancer ':tests';
-\end{lstlisting}
-\end{frame}
+% use Dancer ':tests';
+% \end{lstlisting}
+% \end{frame}
 
 \section{Ausblick}
 
