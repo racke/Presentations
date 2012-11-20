@@ -1,0 +1,9 @@
+<h1><% directory %></h1>
+<table>
+<tr><th>Name</th><th>Type</th><th>Modified</th></tr>
+<% FOREACH file IN files %>
+<tr><td><% file.name %></td>
+    <td><% file.type %></td>
+    <td><% file.modified %></td></tr>
+<% END %>
+</table>
