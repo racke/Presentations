@@ -1,0 +1,17 @@
+* Intro
+  Was sind American Spaces?
+
+* Anwendungen
+  - elibrary/vlib
+  - eshop
+  - dashboard/sso
+
+* Warum Dancer?
+
+* Features
+  - LDAP
+  - SSO
+  - Template::Flute
+
+* Job offers
+
