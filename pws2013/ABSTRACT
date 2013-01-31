@@ -1,0 +1,7 @@
+Wir tanzen um die Welt!
+
+Wir entwickeln Anwendungen für das Bureau of International Information Programs (IIP). Zielgruppe dieser Anwendungen sind die American Spaces, von denen es mehr als 850 weltweit gibt. Als Plattform wird seit zwei Jahren Dancer eingesetzt, sowohl für neue Anwendungen als auch für Relaunches von alten Anwendungen.
+
+Diese Anwendungen basieren auf einer PostgreSQL-Datenbank und einem LDAP-Verzeichnis und verbinden sich zu einer Reihe von Online-Datenbanken (LibraryThing, ISBNDB, weitere kommerzielle Anbieter). Die Authentifizierung für alle Anwendungen erfolgt über einen eigenen SSO-Server.
+
+Der Vortrag beschreibt die verwendeten Techniken und stellt die Vorteile von Dancer in diesem Umfeld heraus.
