@@ -7,11 +7,29 @@
   - dashboard/sso
 
 * Warum Dancer?
+  - Plugins
 
 * Features
   - LDAP
+    * local setup
   - SSO
+    * Password policy
   - Template::Flute
+  - Email / VERP
+
+* Deployment
+  - Nginx
 
 * Job offers
+
+== Flow ==
+
+* Dashboard
+
+Apps:
+
+* Elib
+* DosQua
+* eShop
+
 
