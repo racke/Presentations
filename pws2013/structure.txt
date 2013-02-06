@@ -12,10 +12,15 @@
 * Features
   - LDAP
     * local setup
+    * import, System::Command
   - SSO
+    * Shared cookies / iframes
     * Password policy
+    * Brute force
   - Template::Flute
   - Email / VERP
+    * VERP
+    * Redirect on development
 
 * Deployment
   - Nginx
