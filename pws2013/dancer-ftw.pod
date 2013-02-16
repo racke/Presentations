@@ -1,0 +1,56 @@
+=encoding utf8
+
+=head1 Wir tanzen um die Welt
+
+=head2 American Spaces
+
+Die "American Spaces" fördern das Verständnis für die Kultur, Politik, Lifestyle
+der USA weltweit.
+
+Wir unterstützen die "American Spaces" bei der Beschaffung von Materialien
+(Bücher, DVD) und stellen die Infrastruktur für den Zugriff auf öffentlichen
+und kommerziellen Datenbanken zur Recherche bereit.
+
+=head2 Vorteile von Dancer
+
+=over 4
+
+=item Einfach
+
+=item Plugins
+
+=item Hooks
+
+=back
+
+=head2 Deployment
+
+Wir betreiben Nginx als "Reverse Proxy" und benutzen Starman als
+Plack-Backend.
+
+Hier die entsprechende Konfiguration (vereinfacht) für einen virtuellen
+Host:
+
+    server {
+        listen 80;
+        server_name elibraryusa.state.gov;
+        root /home/dancer/Elib/public;
+
+        location / location / {
+            try_files $uri @proxy;
+            access_log off;
+            expires max;
+        }
+
+        location @proxy {
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass       http://localhost:5001;
+        }
+    }
+
+=cut
+
+
