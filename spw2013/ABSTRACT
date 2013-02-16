@@ -1,0 +1,20 @@
+Dancer Academy - From Zero to Hero
+
+Dancer, one of the web frameworks written in Perl, became quite
+popular despite it's relatively young age. It is simple to start 
+with, yet powerful enough to run larger web applications.
+
+Aside from being easy and straightforward, Dancer is really
+flexible. The plugin ecosystem provides features for your
+web application without further ado. Hooks allow you to
+extend existing functionality without changing someone's else
+code. On top of that you can pick your session, template and logging
+engine from a number of alternatives.
+
+This presentation teaches you first the basic steps of dancing
+like adding routes, building your templates and using plugins.
+To make you more sure-footed on the dance-floor, the next
+topics are hooks, error handling, logging and Dancer scripts.
+Finally, typical Dancer deployments and a sneak preview about
+Dancer 2 finish up our Dancer Academy.
+
