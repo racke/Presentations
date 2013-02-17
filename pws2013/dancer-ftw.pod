@@ -23,6 +23,30 @@ und kommerziellen Datenbanken zur Recherche bereit.
 
 =back
 
+=head2 Anwendungen
+
+=head3 eShop
+
+=head3 eLibraryUSA
+
+ezProxy
+    
+=head3 Dashboard
+
+=head3 Adminstration
+
+=head2 LDAP
+
+Unser LDAP-Verzeichnis beinhaltet die Hierarchie der American Spaces
+(Region, Land, Ort) und die Benutzer für unseren Anwendungen.
+Es dient ebenso zur Authentifizierung mittels Single Sign-On.
+    
+Als Plugin verwenden wir Dancer::Plugin::LDAP.
+
+=head2 Single Sign-On (SSO)
+
+=head2 PostgreSQL
+
 =head2 Deployment
 
 Wir betreiben Nginx als "Reverse Proxy" und benutzen Starman als
