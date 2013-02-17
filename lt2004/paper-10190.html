@@ -1,0 +1,334 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Courier-Mailserver</title><meta name="generator" content="DocBook XSL Stylesheets V1.76.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" title="Courier-Mailserver"><div class="titlepage"><div><div><h2 class="title"><a name="paper-10190"></a>Courier-Mailserver</h2></div><div><div class="author"><h3 class="author"><span class="firstname">Stefan</span> <span class="surname">Hornburg</span></h3></div></div><div><p class="copyright">Copyright © 2004 Stefan Hornburg</p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#idp52846752">Courier-Mailserver</a></span></dt><dt><span class="section"><a href="#idp52875136">Pro und Contra</a></span></dt><dt><span class="section"><a href="#idp52878112">Komponenten im Überblick</a></span></dt><dt><span class="section"><a href="#maildir">Maildir++</a></span></dt><dd><dl><dt><span class="section"><a href="#idp52892080">Quotas</a></span></dt><dt><span class="section"><a href="#idp52898816">Interne Struktur</a></span></dt></dl></dd><dt><span class="section"><a href="#auth">Authentifizierung</a></span></dt><dd><dl><dt><span class="section"><a href="#idp52929904">Optionen für Postfächer</a></span></dt></dl></dd><dt><span class="section"><a href="#sharedfolders">Gemeinsame Ordner</a></span></dt><dt><span class="section"><a href="#idp52944544">SMTP-Server (Courier)</a></span></dt><dd><dl><dt><span class="section"><a href="#idp52959152">Lokale Domains</a></span></dt><dt><span class="section"><a href="#idp52965216">Aliase</a></span></dt><dt><span class="section"><a href="#idp52967456">MIME-Konformität</a></span></dt><dt><span class="section"><a href="#idp52970272">Mailfilter</a></span></dt></dl></dd><dt><span class="section"><a href="#idp52973248">IMAP-Server (Courier-IMAP)</a></span></dt><dd><dl><dt><span class="section"><a href="#idp52978192">Namespaces</a></span></dt><dt><span class="section"><a href="#idp52982704">Typische Probleme</a></span></dt><dt><span class="section"><a href="#idp52986368">Konfiguration</a></span></dt></dl></dd><dt><span class="section"><a href="#idp52998864">Maildrop</a></span></dt><dt><span class="section"><a href="#idp53003248">SqWebMail</a></span></dt><dd><dl><dt><span class="section"><a href="#idp53005936">Kalender</a></span></dt></dl></dd><dt><span class="section"><a href="#idp53008624">couriermlm</a></span></dt><dt><span class="section"><a href="#ssl">SSL/TLS</a></span></dt><dt><span class="section"><a href="#idp53013536">Installation</a></span></dt><dt><span class="section"><a href="#idp53017376">Weitere Informationen</a></span></dt><dd><dl><dt><span class="section"><a href="#idp53028288">RFCs</a></span></dt></dl></dd></dl></div><div class="section" title="Courier-Mailserver"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp52846752"></a>Courier-Mailserver</h2></div></div></div><p>
+	  Der Courier-Mailserver ist eine integrierte und zugleich
+	  modulare Mail- und Groupwarelösung, die sich zunehmender
+	  Beliebtheit erfreut.
+    </p><p><a name="framework"></a>
+	  Das Courier-Framework stellt den einzelnen Komponenten die folgenden
+	  Funktionalitäten zur Verfügung:
+    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Postfächer im <a class="link" href="#maildir" title="Maildir++">Maildir++-Format</a></p></li><li class="listitem"><p>virtuelle Postfächer</p></li><li class="listitem"><p><a class="link" href="#sharedfolders" title="Gemeinsame Ordner">gemeinsame Ordner</a></p></li><li class="listitem"><p><a class="link" href="#auth" title="Authentifizierung">Authentifizierung</a> mittels eines speziellen
+	  Dienstes</p></li><li class="listitem"><p><a class="link" href="#ssl" title="SSL/TLS">SSL/TLS</a></p></li><li class="listitem"><p>Unterstützung von IPv6</p></li></ul></div><p>
+	  Courier entstand aus verschiedenen Projekten von Sam Varshavchik,
+	  der auch heute noch den größten Anteil an der Weiterentwicklung
+	  dieser Software hat.
+	</p></div><div class="section" title="Pro und Contra"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp52875136"></a>Pro und Contra</h2></div></div></div><p>
+	  Courier zeichnet sich dadurch aus, das es sowohl als umfassendes
+	  Paket aus Maildiensten verwendet werden kann als auch
+	  in Kombinationen von verschiedenen Softwarepaketen, z.B.
+	  mit Exim oder Postfix als SMTP-Server.
+	</p><p>
+	  Ein weiterer wichtiger Pluspunkt ist die kontinuierliche
+	  Weiterentwicklung und der umfangreiche Support auf den
+	  Mailinglisten vom Autor und anderen Interessierten.
+	</p><p>
+	  Für den Einsatz von Courier ist eine gewisse Einarbeitung erforderlich,
+	  zumal die Standardkonfiguration nicht für den typischen Kundenkreis
+	  eines ISP geeignet ist. Dazu sind einige Einstellungen wie die maximale
+	  Anzahl der Verbindungen pro IP beim IMAP-Server und der Umgang mit nicht
+	  MIME-konformer Email zu konservativ.
+	</p></div><div class="section" title="Komponenten im Überblick"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp52878112"></a>Komponenten im Überblick</h2></div></div></div><p>
+	  Der Courier-Mailserver setzt sich aus den folgenden Komponenten zusammen:
+	</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>SMTP-Server (Courier)</p></li><li class="listitem"><p>IMAP-Server (Courier-IMAP)</p></li><li class="listitem"><p>POP3-Server (Courier-POP)</p></li><li class="listitem"><p>Webmail (SqWebMail)</p></li><li class="listitem"><p>Mailinglisten-Server (couriermlm)</p></li><li class="listitem"><p>MDA mit Filterfähigkeiten (Maildrop)</p></li><li class="listitem"><p>Webadministration (courierwebadmin)</p></li></ul></div><p>
+	  Neben dem kompletten Quellpaket sind auch ausgewählte Komponenten
+	  als gesonderte Distributionen erhältlich. Dies sind Courier-IMAP,
+	  SqWebMail und Maildrop. Allerdings bestehen mitunter subtile Unterschiede
+	  zwischen den aus dem Gesamtpaket erstellten Kompilaten und den
+	  Einzelpaketen.
+	</p></div><div class="section" title="Maildir++"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="maildir"></a>Maildir++</h2></div></div></div><p>Courier benutzt das sogenannte Maildir++-Format zur Speicherung und
+	  zum Zugriff auf Emails. Dabei werden die einzelnen Emails in einer
+	  Hierarchie von Verzeichnisse abgelegt. Die Vorteile dieses Verfahrens
+	  gegenüber Mailboxdateien sind geringerer Resourcenbedarf, keine
+	  Lockingprobleme (auch wenn sich die Postfächer auf einem NFS-Dateisystem
+	  befinden) und gleichzeitiger 
+	  Lese- und Schreibzugriff durch mehrere Mailclients.
+	</p><p>
+	  Maildir++ erweitert das durch qmail eingeführten
+	  <a class="ulink" href="http://www.qmail.org/man/man5/maildir.html" target="_top">Maildir-Format</a>
+	  um Ordner und 
+	  Platzbeschränkungen (Quota) unabhängig vom Dateisystem.
+	</p><p>
+	  Mailboxdateien werden zwar z.T. unterstützt,
+	  z.B. für die Auslieferung von Emails durch Maildrop, empfehlenswert ist
+	  jedoch nur der Einsatz der Maildir-Formate.
+	</p><p>
+	  Andere SMTP-Server wie Exim beherrschen die Auslieferung in Maildirs
+	  entweder von Haus aus oder es existieren entsprechende Patches. Ist
+	  beides nicht möglich, kann zur lokalen Auslieferung von Emails entweder
+	  <code class="literal">maildrop</code> oder <code class="literal">deliverquota</code>
+	  verwendet werden.
+	</p><p>
+	  Für das Anlegen von Maildirs wird das Courier-Programm
+	  <code class="literal">maildirmake</code> empfohlen, 
+	</p><pre class="programlisting">
+maildirmake /home/racke/Maildir
+	</pre><div class="section" title="Quotas"><div class="titlepage"><div><div><h3 class="title"><a name="idp52892080"></a>Quotas</h3></div></div></div><p>Die bevorzugte Methode, um Platzbeschränkungen (Quotas) auf
+		Benutzerpostfächer zu erzwingen, sind 
+		Quotas pro Benutzer, basierend auf dem Dateisystem 
+		(<a class="ulink" href="http://www.tldp.org/HOWTO/Quota.html" target="_top">http://www.tldp.org/HOWTO/Quota.html</a>). 
+	  </p><p>Diese Lösung ist
+		offensichtlich ungeeignet für virtuelle Postfächer, wo viele
+		Postfächer die gleiche Benutzerkennung verwenden. Für diesen Fall
+		kann der Speicherplatz in Maildir++-Postfächer durch sogenannte
+		freiwillige Quotas eingeschränkt werden. Diese funktionieren
+		jedoch nur, wenn alle  Anwendungen, die Emails in
+		diese Postfächer ausliefern, sich an diese Konvention halten.
+		Außerdem dürfen die Benutzer keinen direkten Zugriff auf das
+		Dateisystem haben, ansonsten können sie die Beschränkungen einfach
+		umgehen.
+	  </p><p>
+		Beim Anlegen eines Maildir++-Postfachs kann die Quota mit 
+		der Kommandozeilenoption <code class="literal">-q</code> des
+		<code class="literal">maildirmake</code>-Kommandos eingerichtet werden:
+	  </p><pre class="programlisting">
+maildirmake -q 1000000S /var/local/mail/linuxia.de/racke
+	  </pre><p>
+		In diesem Beispiel wurde auf dem Postfach ein Quota von ungefähr 10
+		Megabyte gesetzt.
+	  </p><p>
+		Gelöschte Email und der Inhalt des Trash-Ordners werden bei der
+		Berechnung des verbrauchten Speicherplatz nicht berücksichtigt,
+		außer Courier wurde mit der Option <code class="literal">--with-trashquota</code>
+		kompiliert.
+	  </p></div><div class="section" title="Interne Struktur"><div class="titlepage"><div><div><h3 class="title"><a name="idp52898816"></a>Interne Struktur</h3></div></div></div><p>Ist für ein Postfach Quota gesetzt, wird diese in der Datei
+	  <code class="filename">maildirsize</code> verwaltet.
+	</p><p>Das Verzeichnis <code class="filename">courierimapkeywords</code> enthält die
+	  Schlagwörter für die Emails in einem Maildir++-Ordner. Diese können
+	  mit <code class="literal">maildirkw -L .</code> angezeigt werden.
+	</p></div></div><div class="section" title="Authentifizierung"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="auth"></a>Authentifizierung</h2></div></div></div><p>
+	  Die Authentifizierung für die einzelnen Komponenten wird durch 
+	  Authentifizierungsmodule realisiert. Dabei wird die Authentifizierung 
+	  durch die folgenden beiden Aufgaben charakterisiert:
+	</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Zu einer Emailadresse das lokale Benutzerkonto mit
+		  Heimatverzeichnis, Benutzerkennung (UID) und Gruppenkennung (GID)
+		  bestimmen.</p></li><li class="listitem"><p>Zu einem Benutzername und einem Passwort das 
+		  lokale Benutzerkonto mit
+		  Heimatverzeichnis, Benutzerkennung (UID) und Gruppenkennung (GID)
+		  bestimmen
+		</p></li></ol></div><p>
+	  In den Konfigurationsdateien der einzelnen Dienste können die
+	  gewünschten Authentifizierungsmodule angegeben werden. Dabei
+	  werden die Module nacheinander durchlaufen. Signalisiert eines
+	  der Module eine erfolgreiche Authentifizierung, steht der Dienst
+	  dem Benutzer zur Verfügung. Dieses Daisy-Chaining erlaubt z.B.
+	  PAM-Authentifizierung für Systembenutzer und Authentifizierung
+	  gegen eine MySQL-Datenbank für virtuelle Mailkonten ohne
+	  Systembenutzer.
+	</p><p>
+	  Die wichtigsten Authentifizierungsmodule neben dem 
+	  Authentifizierungsdämon (authdaemon) sind:
+	</p><div class="variablelist"><dl><dt><span class="term">authpam</span></dt><dd><p>PAM-Authentifizierung</p></dd><dt><span class="term">authuserdb</span></dt><dd><p>Authentifizierung anhand einer Unix-Datenbank (GDBM
+			oder DB)</p></dd><dt><span class="term">authmysql</span></dt><dd><p>Authentifizierung anhand einer MySQL-Datenbank</p></dd><dt><span class="term">authpgsql</span></dt><dd><p>Authentifizierung anhand einer PostgreSQL-Datenbank</p></dd><dt><span class="term">authldap</span></dt><dd><p>Authentifizierung anhand eines LDAP-Verzeichnisses</p></dd><dt><span class="term">authvchkpw</span></dt><dd><p>Authentifizierung anhand von virtuelle Domains von vpopmail</p></dd></dl></div><p>Der Authentifizierungsdämon ist ein als Dämon laufender Proxy, der
+	  dauerhafte Verbindungen zu der Authentifizierungsdatenbank herstellt
+	  und dadurch eine deutliche schneller Authentifizierung ermöglicht, 
+	  als mit den oben genannten Authentifizierungsmodulen. authdaemon
+	  kann ebenfalls mehrere Authentifizierungsmodule nacheinander befragen.
+	</p><p>Normale Module sind in dem Standardprogramm
+	  <code class="filename">authdaemond.plain</code> für den
+	  Authentifizierungsdämon enthalten. Module, die externe Bibliotheken
+	  erfordern wie <code class="literal">authmysql</code>, <code class="literal">authpgsql</code>
+	  und <code class="literal">authldap</code> benötigen angepaßte Programme für den 
+	  Authentifizierungsdämon (<code class="filename">authdaemond.mysql</code>) etc.
+	</p><p>Die Konfiguration für den Authentifizierungsdämon befindet sich der
+	  Datei <code class="filename">authdaemonrc</code>, die wichtigsten Variablen sind: 
+	  </p><div class="table"><a name="idp52920272"></a><p class="title"><b>Table 1. Konfiguration Authentifizierungsdämon</b></p><div class="table-contents"><table summary="Konfiguration Authentifizierungsdämon" border="1"><colgroup><col><col></colgroup><thead><tr><th>Variable</th><th>Beschreibung</th><th>Standardwert</th></tr></thead><tbody><tr><td><code class="literal">authmodulelist</code></td><td>Liste der Authentifizierungsmodule</td><td>-</td></tr><tr><td><code class="literal">daemons</code></td><td>Anzahl der zu startenden Dämonen</td><td>5</td></tr><tr><td><code class="literal">version</code></td><td>Programm für den Authentifizierungsdämon</td><td>-</td></tr></tbody></table></div></div><br class="table-break"><div class="section" title="Optionen für Postfächer"><div class="titlepage"><div><div><h3 class="title"><a name="idp52929904"></a>Optionen für Postfächer</h3></div></div></div><p>Bei den für virtuelle Postfächer geeigneten
+		Authentifizierungsmethoden (userdb, LDAP, MySQL, PostgreSQL) können
+		Optionen in einem bestimmten Feld als kommaseparierte Schlüssel- und
+		Wertpaare gespeichert werden. Damit ist es
+		u.a. möglich, einem Benutzer nur einen Teil der Dienste
+		zur Verfügung zu stellen. Das folgende Beispiel erlaubt lediglich
+		Zugriff via Webmail auf das entsprechende Postfach:
+	  </p><pre class="programlisting">
+disableimap=1,disablepop=1
+	  </pre><div class="table"><a name="idp52932064"></a><p class="title"><b>Table 2. Optionen für Postfächer</b></p><div class="table-contents"><table summary="Optionen für Postfächer" border="1"><colgroup><col><col></colgroup><tbody><tr><td><code class="literal">disableimap</code></td><td>kein IMAP-Zugriff, wenn auf 1 gesetzt</td></tr><tr><td><code class="literal">disablepop3</code></td><td>kein POP3-Zugriff, wenn auf 1 gesetzt</td></tr><tr><td><code class="literal">disablewebmail</code></td><td>kein Webmail-Zugriff, wenn auf 1 gesetzt</td></tr><tr><td><code class="literal">sharedgroup</code></td><td>hängt den Wert an den Namen der Indexdatei für gemeinsame
+				Ordner an und beschränkt damit den Zugriff auf gemeinsame
+				Ordner für dieses Postfach</td></tr></tbody></table></div></div><br class="table-break"></div></div><div class="section" title="Gemeinsame Ordner"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sharedfolders"></a>Gemeinsame Ordner</h2></div></div></div><p>Courier-IMAP und SqWebMail können zwei Typen von gemeinsamen Ordner
+	  (shared folders) verwenden: 
+	</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Basierend auf Dateizugriffsrechten, für Systeme mit
+		  traditionellen Shellbenutzerkonten</p></li><li class="listitem"><p>Virtuelle gemeinsame Ordner, für geschlossene Systeme mit
+		  gemeinsamen Benutzer- und Gruppenkennungen</p></li></ol></div><p>
+	  Virtuelle gemeinsame Ordner basieren auf Zugangskontrollisten (ACL),
+	  die nicht dem gleichnamigen Dateisystem-ACL verwechselt werden sollten.
+	  Jeder Benutzer kann einem anderen Benutzer oder einer anderen
+	  Benutzergruppen den Zugriff auf einen Ordner gewähren. Durch die
+	  Zugangskontrollisten ist ein fein abgestufte Kontrolle der Zugriffsrechte
+	  möglich.
+	</p></div><div class="section" title="SMTP-Server (Courier)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp52944544"></a>SMTP-Server (Courier)</h2></div></div></div><p>
+	  Die Konfiguration des SMTP-Servers erfolgt über eine Anzahl von
+	  Konfigurationsdateien, die sich im Konfigurationsverzeichnis von
+	  Courier befinden. Der genaue Ort dieses Verzeichnisse wird während
+	  der Kompilierung von Courier festgelegt.
+	  Im folgenden wählen wir als Konfigurationsverzeichnis, 
+	  auch für die anderen
+	  Komponenten, <code class="filename">/etc/courier</code>.
+	</p><p>
+	  Einige Konfigurationsdateien können anstatt als einfache Textdatei 
+	  auch als Sammlung von Textdateien in einem Unterverzeichnis von
+	  <code class="filename">/etc/courier</code> zur Verfügung gestellt werden.
+	  Dies ist sogar erforderlich, wenn man das Web-Administrationsfrontend
+	  verwenden möchte.
+	</p><p>
+	  Damit Änderungen an der Konfiguration wirksam werden, ist in vielen
+	  Fällen ein Kommando aufzurufen, wie z.B. das auch von
+	  <code class="literal">sendmail</code> bekannte <code class="literal">makealiases</code>.
+	  Diese Kommandos sind in der folgenden Tabelle zusammengefaßt:
+	</p><div class="table"><a name="idp52949840"></a><p class="title"><b>Table 3. Konfigurationskommandos SMTP-Server</b></p><div class="table-contents"><table summary="Konfigurationskommandos SMTP-Server" border="1"><colgroup><col><col></colgroup><thead><tr><th>Datei</th><th>Kommando</th></tr></thead><tbody><tr><td><code class="literal">aliases</code></td><td><code class="literal">makealiases</code></td></tr><tr><td><code class="literal">esmtpacceptmailfor</code></td><td><code class="literal">makeacceptmailfor</code></td></tr><tr><td><code class="literal">hosteddomains</code></td><td><code class="literal">makehosteddomains</code></td></tr><tr><td><code class="literal">smtpaccess</code></td><td><code class="literal">makesmtpaccess</code></td></tr></tbody></table></div></div><br class="table-break"><div class="section" title="Lokale Domains"><div class="titlepage"><div><div><h3 class="title"><a name="idp52959152"></a>Lokale Domains</h3></div></div></div><p>
+		Lokale Domains sind in <code class="literal">locals</code> und
+		<code class="literal">hosteddomains</code> konfiguriert. Der einzige Unterschied
+		zwischen Domains in <code class="literal">locals</code> und
+		<code class="literal">hosteddomains</code> ist die Methode zum Auffinden der
+		lokalen Postfächern. Bei Domains in <code class="literal">locals</code> wird dazu
+		die Domain aus der Emailadresse entfernt (aus
+		<code class="literal">racke@linuxia.de</code> wird <code class="literal">racke</code>), 
+		bei <code class="literal">hosteddomains</code> nicht.		
+	  </p><p>
+		Weitere Domains, für die Courier Emails via ESMTP annimmt, können
+		in der Datei <code class="literal">esmtpacceptmailfor</code> angegeben werden.
+	  </p></div><div class="section" title="Aliase"><div class="titlepage"><div><div><h3 class="title"><a name="idp52965216"></a>Aliase</h3></div></div></div><p>
+	  Systemaliase können z.B. in
+	  <code class="filename">/etc/courier/aliases/system</code> 
+	  abgelegt werden:
+	</p><pre class="programlisting">
+root: postmaster
+mailer-daemon: postmaster
+MAILER-DAEMON: postmaster
+postmaster: racke
+	</pre></div><div class="section" title="MIME-Konformität"><div class="titlepage"><div><div><h3 class="title"><a name="idp52967456"></a>MIME-Konformität</h3></div></div></div><p>
+		Emails, die nicht den MIME-Konventionen entsprechen, können vom
+		Courier-Mailserver akzeptiert, als nicht auslieferbar zurückgeschickt
+		werden oder als Attachment an den Empfänger weitergeleitet werden.
+		Diese Emails nicht zu akzeptieren ist bei der minderen Qualität vieler
+		Emailclients oft problematisch. Die Prüfung kann in der Datei
+		<code class="filename">/etc/courier/bofh</code> deaktiviert werden:
+	  </p><pre class="programlisting">
+opt BOFHBADMIME=accept		 
+		</pre></div><div class="section" title="Mailfilter"><div class="titlepage"><div><div><h3 class="title"><a name="idp52970272"></a>Mailfilter</h3></div></div></div><p>
+	  Courier stellt zwei verschiedene Mechanismem zur Filterung von Emails zur
+	  Verfügung, globale und lokale Mailfilter.
+	  </p><p>
+		Globale Mailfilter sind im Hintergrund laufende Dämonen, die jede
+		eingehende Email filtern. Sie können nicht die Email selbst
+		verändern. </p><p>
+		Lokale Mailfilter filtern Emails an lokale Benutzer, die eigene
+		Filterregeln verwenden können. Dies wird gewöhnlich von Maildrop
+		erledigt.
+		</p></div></div><div class="section" title="IMAP-Server (Courier-IMAP)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp52973248"></a>IMAP-Server (Courier-IMAP)</h2></div></div></div><p>
+	  Neben den Features, die sich durch das 
+	  <a class="link" href="#framework">Courier-Framework</a> ergeben,
+	  zeichnet sich Courier-IMAP u.a. durch geringen Speicherverbrauch,
+	  und Unterstützung verschiedener IMAP-Erweiterungen aus:
+	</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>NAMESPACE (<a class="ulink" href="http://www.rfc-editor.org/rfc/rfc2342.txt" target="_top">RFC 2342</a>)</p></li><li class="listitem"><p>serverseitiges Sortieren und Threading</p></li><li class="listitem"><p>IMAP Schlagwörter</p></li></ul></div><div class="section" title="Namespaces"><div class="titlepage"><div><div><h3 class="title"><a name="idp52978192"></a>Namespaces</h3></div></div></div><p>
+		Namespaces sind die Anordnung der Ordner auf dem Server. Courier-IMAP
+		verwendet <code class="literal">INBOX.</code> als Namespace für private Ordner
+		und <code class="literal">shared.</code> bzw. <code class="literal">#shared.</code> als
+		Namespace für gemeinsame Ordner. 
+		Die von Courier-IMAP unterstützte NAMESPACE IMAP-Erweiterung erlaubt es
+		IMAP-Clients diese NAMESPACE-Konfiguration abzufragen:
+	  </p><pre class="programlisting">
+racke#~ &gt; telnet localhost 143
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+* OK [CAPABILITY IMAP4rev1 UIDPLUS CHILDREN NAMESPACE THREAD=ORDEREDSUBJECT THREAD=REFERENCES SORT QUOTA IDLE ACL ACL2=UNION STARTTLS] Courier-IMAP ready. Copyright 1998-2004 Double Precision, Inc.  See COPYING for distribution information.
+a login racke@linuxia.de secret
+a OK LOGIN Ok.
+b namespace
+* NAMESPACE (("INBOX." ".")) NIL (("#shared." ".")("shared." "."))
+b OK NAMESPACE completed.
+	  </pre><p>
+		Die Antwort ist übrigens in den Versionen 3.0.0 bis 3.0.4 von Courier
+		IMAP fehlerhaft.
+	  </p></div><div class="section" title="Typische Probleme"><div class="titlepage"><div><div><h3 class="title"><a name="idp52982704"></a>Typische Probleme</h3></div></div></div><p>Einige moderne IMAP-Clients öffnen für
+		jeden Ordner eine Verbindung zum IMAP-Server. Bei einer konservativen
+		Einstellung für <code class="literal">MAXPERIP</code> wie die Voreinstellung 4
+		stehen schnell zu wenig Verbindungen zur Verfügung. Das kann z.B. dazu
+		führen, daß der IMAP-Client einen leeren Ordner anzeigt. Sicherlich ist
+		das als Bug des Clients zu werten, führt beim Anwender doch zu
+		erheblicher Verwirrung.
+	  </p><p>Die automatische Konfiguration des Namespace gemäß RFC 2342
+		funktioniert bei einigen IMAP-Clients nicht. Für den Anwender erscheint
+		es dann so, als ob er nur Unterordner von <code class="literal">INBOX</code>
+		anlegen kann.
+	  </p></div><div class="section" title="Konfiguration"><div class="titlepage"><div><div><h3 class="title"><a name="idp52986368"></a>Konfiguration</h3></div></div></div><p>Ausgewählte Konfigurationsvariablen aus
+		<code class="filename">/etc/courier/imapd</code>:
+	  </p><div class="table"><a name="idp52987968"></a><p class="title"><b>Table 4. IMAP-Konfiguration</b></p><div class="table-contents"><table summary="IMAP-Konfiguration" border="1"><colgroup><col><col></colgroup><thead><tr><th>Variable</th><th>Beschreibung</th><th>Standardwert</th></tr></thead><tbody><tr><td>MAXDAEMONS</td><td>maximale Anzahl der IMAP-Server</td><td>40</td></tr><tr><td>MAXPERIP</td><td>maximale Anzahl der von einer IP-Adresse
+				ausgehenden Verbindungen 
+				  (u.U. mehrere pro IMAP-Client !)</td><td>4</td></tr><tr><td>IMAP_KEYWORDS</td><td>IMAP-Schlagworte</td><td>1</td></tr><tr><td>IMAP_ULIMITD</td><td>maximale Größe des Datensegments des
+				Serverprozesses (Schutzmaßnahme gegen Speicherlecks)</td><td>65536</td></tr></tbody></table></div></div><br class="table-break"></div></div><div class="section" title="Maildrop"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp52998864"></a>Maildrop</h2></div></div></div><p>
+	  Maildrop wird zur Filterung und lokalen Auslieferung von Emails
+	  verwendet.
+	</p><p>
+	  Die Filterung kann anhand von Mailheadern und dem Inhalt dem Email
+	  erfolgen.
+	</p><p>
+	  Maildrop ist nicht MIME-fähig und aus diesem Grunde trifft die folgende
+	  Regel auf alle MIME-Emails zu:
+	</p><pre class="programlisting">
+if (( /Type/:b )){ 
+	  to $FOLDER 
+} 
+	</pre><p>
+	  Folgendes einfache Beispiel illustriert die Filterung mit einem
+	  externen Programm:
+	</p><pre class="programlisting">
+import VDIR
+
+# Send everything smaller than 256 KB to Spamassassin
+if ($SIZE &lt; 262144)
+{
+	xfilter "/usr/bin/spamc -U /var/run/spamd.sock"
+
+	if (/^X-Spam-Status: Yes/:h)
+	{
+    	exception {
+	       to "$VDIR/.SPAM/."
+    	}
+	}	
+}
+
+to "$VDIR/."	  
+	</pre></div><div class="section" title="SqWebMail"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp53003248"></a>SqWebMail</h2></div></div></div><p>
+	  Die Webmailvariante aus dem Courierpaket nennt sich SqWebMail und besteht
+	  aus einem minimalen CGI-Programm und einem Dämon für die Auslieferung der
+	  eigentlichen HTML-Seiten.
+	</p><p>
+	</p><p>
+	  Im Gegensatz zu vielen anderen Webmailer arbeitet SqWebMail auf der
+	  Dateisystemebene und verbindet sich nicht mit einem vorhandenen POP-
+	  bzw. IMAP-Server. Häufig wird SqWebMail aber durch eine solche Lösung
+	  ersetzt.
+	</p><div class="section" title="Kalender"><div class="titlepage"><div><div><h3 class="title"><a name="idp53005936"></a>Kalender</h3></div></div></div><p>Die Kalenderfunktionen werden in der Konfigurationsdatei 
+		<code class="filename">calendarmode</code> festgelegt. 
+		Diese sind aktiviert, wenn die Datei die Werte <code class="literal">local</code>
+		(lokaler Modus) oder <code class="literal">net</code> (Groupware-Modus) enthält.
+	  </p></div></div><div class="section" title="couriermlm"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp53008624"></a>couriermlm</h2></div></div></div><p>
+	  Auf den Mailinglistenserver aus dem Courierpaket möchte ich an dieser
+	  Stelle nicht weiter eingehen, da er eher geringe Verbreitung erfahren
+	  hat. Statt couriermlm können Alternativen wie Sympa oder Mailman
+	  eingesetzt werden.
+	</p></div><div class="section" title="SSL/TLS"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ssl"></a>SSL/TLS</h2></div></div></div><p>
+	  Alle relevanten Komponenten des Courier-Mailservers erlauben die
+	  Abwicklung über mit SSL/TLS geschützten Verbindungen. Dies geschieht
+	  entweder über direkt über einen speziellen Port (465 für SMTP,
+	  993 für IMAP und 995 für POP3) oder über die STARTTLS-Erweiterung
+	  der jeweiligen Protokolle.
+	</p><p>
+	  Durch Einsatz eines speziellen SSL/TLS-Wrappers
+	  (<code class="literal">couriertls</code>) werden keine gesonderten Programme
+	  benötigt, sondern es können dieselben wie für ungeschützte Verbindungen
+	  verwendet werden.
+	</p></div><div class="section" title="Installation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp53013536"></a>Installation</h2></div></div></div><p>
+	  Die Installation von Courier kann direkt aus den Sourcen erfolgen
+	  oder es können Debian- bzw. RPM-Pakete verwendet werden.
+	</p><p>
+	  Die Installation aus den Sourcen wird umfangreich im
+	  <code class="filename">INSTALL</code>-Dokument beschrieben, daß im
+	  Quellarchive vorhanden ist bzw. online verfügbar ist.
+	 </p><p>
+	  Zusätzlich zu den typischen Befehlen zur Kompilierung und Installation
+	  eines Open-Source-Pakets werden im letzten Schritt die
+	  Konfigurationsdateien installiert bzw. aktualisiert:
+	</p><pre class="programlisting">
+./configure
+make
+make install
+make install-configure
+	  </pre></div><div class="section" title="Weitere Informationen"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp53017376"></a>Weitere Informationen</h2></div></div></div><div class="variablelist"><dl><dt><span class="term"><a class="ulink" href="http://www.courier-mta.org/" target="_top">http://www.courier-mta.org/</a></span></dt><dd><p>Courier Homepage</p></dd><dt><span class="term"><a class="ulink" href="http://www.courier-mta.org/FAQ.html" target="_top">http://www.courier-mta.org/FAQ.html</a></span></dt><dd><p>Courier FAQ</p></dd><dt><span class="term"><a class="ulink" href="http://lists.sourceforge.net/mailman/listinfo/courier-announce" target="_top">courier-announce</a></span></dt><dd><p>Ankündigungen zum Courier-Mailserver</p></dd><dt><span class="term"><a class="ulink" href="http://lists.sourceforge.net/mailman/listinfo/courier-users" target="_top">courier-users</a></span></dt><dd><p>Mailingliste für Courier-Mailserver</p></dd><dt><span class="term"><a class="ulink" href="http://lists.sourceforge.net/mailman/listinfo/courier-imap" target="_top">courier-imap</a></span></dt><dd><p>Mailingliste für Courier-IMAP</p></dd><dt><span class="term"><a class="ulink" href="http://lists.sourceforge.net/mailman/listinfo/courier-maildrop" target="_top">maildrop</a></span></dt><dd><p>Mailingliste für Maildrop</p></dd></dl></div><div class="section" title="RFCs"><div class="titlepage"><div><div><h3 class="title"><a name="idp53028288"></a>RFCs</h3></div></div></div><div class="table"><a name="idp53028960"></a><p class="title"><b>Table 5. RFCs</b></p><div class="table-contents"><table summary="RFCs" border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>2095</td><td>Authentication</td><td>CRAM-MD5</td></tr><tr><td>2342</td><td>IMAP</td><td>NAMESPACE</td></tr><tr><td>2595</td><td>SSL/TLS</td><td>STARTTLS</td></tr></tbody></table></div></div><br class="table-break"></div></div></div></body></html>
