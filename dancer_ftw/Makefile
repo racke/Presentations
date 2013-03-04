@@ -1,14 +1,15 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
 
+PODFILE=dancer-for-the-world
 TEXFILE=dancer-for-the-world-beamer
 INPUTS=dancer-for-the-world.tex
 
-all: $(TEXFILE).html; $(TEXFILE).pdf; make clean
+all: $(PODFILE).html $(TEXFILE).pdf clean
 
 .PHONY: all clean
 
-$(TEXFILE).html: $(TEXFILE).pod
-	pod2html $(TEXFILE).pod
+$(PODFILE).html: $(PODFILE).pod
+	./pod2xhtml $(PODFILE).pod > $(PODFILE).html
 
 $(TEXFILE).pdf: $(TEXFILE).tex $(INPUTS)
 # initial run
