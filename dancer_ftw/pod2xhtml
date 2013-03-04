@@ -1,0 +1,15 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Pod::Simple::XHTML;
+
+my $psx = Pod::Simple::XHTML->new;
+my $html;
+
+$psx->index(1);
+$psx->output_string(\$html);
+$psx->parse_file('dancer-for-the-world.pod');
+
+print $html;
