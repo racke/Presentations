@@ -23,6 +23,228 @@
 
 \tableofcontents
 
+\section{American Spaces}
+
+Die über 850 "American Spaces" weltweit fördern das Verständnis für die Kultur, Politik und den Lifestyle der USA. 
+
+Wir unterstützen die "American Spaces" bei der Beschaffung von Materialien
+(Bücher, DVD) und stellen die Infrastruktur für den Zugriff auf öffentlichen
+und kommerziellen Datenbanken zur Recherche bereit.
+
+\section{Anwendungen}
+    
+Die im folgenden vorgestellten Anwendungen sind alle mit Dancer realisiert.
+Dancer unterstützt dabei die einfache und schnelle Entwicklung und bietet mit
+seinem umfangreichen Ökosystem (Plugins, Hooks, Engines) eine hohe
+Flexibilität. Außerdem ist die Dancer-Community sehr aktiv und
+hilfsbereit.
+
+Die Daten befinden sich in einem LDAP-Verzeichnis und in
+mehreren PostgreSQL-Datenbanken.
+
+\begin{frame}{Anwendungen}
+\begin{itemize}
+\item Dashboard
+\item eShop
+\item eLibraryUSA
+\item Training
+\end{itemize}
+\end{frame}
+
+\subsection{Dashboard}
+
+Startpunkt für alle Anwendungen, stellt Single Sign-On zur Verfügung.
+
+\url{http://americanspaces.state.gov/}
+    
+\subsection{eShop}
+
+Der Onlineshop für die "American Spaces" dient zur Beschaffung von
+diversen Materialien wie Bücher, DVD, CD, Publikationen.
+
+Daten und Bilder werden teilweise von externen Quellen eingebunden,
+wie z.B. ISBNdb.com und LibraryThing.
+
+Die shopspezifischen Daten werden in einer PostgreSQL-Datenbank
+verwaltet.
+
+\url{https://eshop.state.gov/}
+    
+\subsection{eLibraryUSA}
+
+eLibraryUSA gibt Besuchern der American Spaces Zugriff
+auf Informationen, die Amerikaner in öffentlichen
+Bibliotheken finden können.
+    
+Die nicht öffentlichen Resourcen werden durch ezProxy zur
+Verfügung gestellt. ezProxy greift zur Authentifizierung
+der Benutzer auf Single Sign-On mittels HTTPS-Request zu.
+    
+\url{http://elibraryusa.state.gov/}
+
+\subsection{Training}
+
+Support für Training (Registrierung, Hotel, Material, Kalender)
+inklusive Räumlichkeiten in Wien.
+
+\url{https://americanspaces.state.gov/training}
+    
+\subsection{Administration}
+
+Die Daten zu den American Spaces und den Benutzern werden
+mit einer einfachen Administrationsoberfläche bearbeitet.
+Die Verantwortlichen vor Ort können für ihren
+jeweiligen American Space Benutzer anlegen und pflegen
+als auch Informationen über den Space aktualisieren.
+
+\section{LDAP}
+
+Unser LDAP-Verzeichnis beinhaltet die Hierarchie der American Spaces
+(Region, Land, Ort) und die Benutzer für unseren Anwendungen.
+Außerdem speichern wir Zusatzinformationen zu den American Spaces,
+wie z.B. Typ, Homepage, Jahr der Eröffnung, geographische Länge und Breite.
+    
+Es dient ebenso zur Authentifizierung mittels Single Sign-On, dabei
+wird die Emailadresse als eindeutiger Benutzername verwendet.
+    
+Der Zugriff auf das LDAP-Verzeichnis erfolgt mittels
+Dancer::Plugin::LDAP. Dieses Plugin stellt einfache
+Methoden bereit, um Einträge zu erstellen, bearbeiten
+und umzubenennen.
+
+\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{lstlisting}
+ldap->quick_insert("uid=racke@linuxia.de,ou=people," 
+                   . ldap->base(),
+                   {givenName => 'Stefan',
+                    lastName => 'Hornburg',
+                    dosInstitute => 'IRC Berlin',
+                    dosRole => 'Administrator',
+                    c => 'Germany',
+                    l => 'Berlin',
+                   });
+\end{lstlisting}
+\end{frame}
+
+Dancer::Plugin::LDAP kümmert sich um die korrekte Behandlung
+von UTF-8 und wandelt automatische Attribute ohne Wert in eine
+Arrayreferenz mit 0 Elementen um. Da kaum ein LDAP-Attribute einen
+leeren String als Wert akzeptiert, würde sonst ein Fehler
+ausgelöst.
+
+\section{Single Sign-On (SSO)}
+
+Das Dashboard hat einen SSO-Server integriert und erledigt An- und
+Abmeldung sowie das Anlegen und Löschen von Benutzerkontos.
+
+\subsection{Cookies}
+
+Wir verwenden TLD-Cookies. Diese können wie folgt mit Dancer
+gesetzt werden:
+
+\begin{frame}[fragile]{Cookies}
+\begin{lstlisting}
+
+    cookie 'sso.username' => 'racke@linuxia.de',
+           domain => '.state.gov',
+           expires => config->{session_expires};
+
+\end{lstlisting}
+\end{frame}
+
+Zusätzlich wird ein verschlüsseltes Token vom SSO-Server
+erzeugt und mitgeschickt.                       
+                       
+\subsection{Passwort Policy}
+
+Um die Sicherheit der verwendeten Passwörter zu erhöhen, wird
+folgende Policy eingesetzt:
+
+Ein Passwort besteht aus mindestens 8 Zeichen, in denen
+ein Klein- und ein Großbuchstabe, eine Ziffer und ein
+anderes Zeichen vorkommen muß.
+
+Außerdem wird das Passwort auf typische Muster (1234, qwertz),
+Wiederholungen und "Leet" (4tw, m3h, ph34r) geprüft.
+
+Data::Transpose::PasswordPolicy
+
+\subsection{Email-Validierung}
+
+Beim Anlegen der Benutzerkonto wird die Emailadresse
+mit Email::Valid überprüft. Dabei wird außer auf
+syntaktischen Fehlern in der Emailadresse (racke.linuxia.de)
+auch überprüft, ob für die Domain ein DNS-Eintrag (A oder MX)
+existiert.                       
+
+\section{Entwicklung}
+
+\subsection{Lokale OpenLDAP-Instanz}
+
+Dazu erstellen wir zunächst eine lokale \verb|slapd.conf|. Dann legen
+wir das \verb|db|-Verzeichnis an und kopieren \verb|DB_CONFIG| aus dem
+Verzeichnis \verb|/usr/share/slapd>| hinein.
+
+Jetzt importieren wir eine LDIF-Datei mit den Livedaten:
+
+    /usr/sbin/slapadd -f slapd.conf live.ldif
+
+Und starten unsere lokale Instanz:
+
+    /usr/sbin/slapd -u 1000 -g 1000 -h ldap://127.0.0.1:9009 -f slapd.conf
+
+\subsection{Email Redirect}
+
+Um nicht versehentlich Emails an echte Benutzer zu versenden,
+werden diese zum jeweiligen Entwicker umgeleitet mit
+Email::Sender::Transport::Redirect und folgender
+Dancer-Konfiguration:
+
+\begin{frame}[fragile]{Email Redirect}
+\begin{lstlisting}
+
+    plugins:
+      Email:
+        transport:
+          Sendmail:
+            redirect_address: racke@linuxia.de
+
+\end{lstlisting}
+\end{frame}
+    
+\section{Deployment}
+
+Wir betreiben Nginx als "Reverse Proxy" und benutzen Starman als
+Plack-Backend.
+
+Hier die entsprechende Konfiguration (vereinfacht) für einen virtuellen
+Host:
+
+\begin{frame}[fragile]{Nginx-Konfiguration}
+\begin{lstlisting}
+    server {
+        listen 80;
+        server_name elibraryusa.state.gov;
+        root /home/dancer/Elib/public;
+
+        location / location / {
+            try_files $uri @proxy;
+            access_log off;
+            expires max;
+        }
+
+        location @proxy {
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass       http://localhost:5001;
+        }
+    }
+
+\end{lstlisting}
+\end{frame}
+
 \end{document}
 
 %%% Local Variables: 
