@@ -284,6 +284,29 @@ server {
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Nginx-Konfiguration SSL}
+\begin{lstlisting}
+server {
+   listen 213.129.249.66:443;
+   server_name eshop.state.gov;
+   root /home/interch/eShop/public;
+
+   ssl on;
+   ssl_certificate_key  /etc/ssl/private/eshop.state.gov.key;
+   ssl_certificate    /etc/ssl/certs/eshop.state.gov.pem;
+
+   location @proxy {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_pass       http://localhost:5001;
+    }
+}
+\end{lstlisting}
+\end{frame}
+
 \end{document}
 
 %%% Local Variables: 
