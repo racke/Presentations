@@ -215,7 +215,9 @@ anderes Zeichen vorkommen muß.
 Außerdem wird das Passwort auf typische Muster (1234, qwertz),
 Wiederholungen und "Leet" (4tw, m3h, ph34r) geprüft.
 
+\begin{frame}{Passwort Policy}
 Data::Transpose::PasswordPolicy
+\end{frame}
 
 \subsection{Email-Validierung}
 
@@ -223,7 +225,17 @@ Beim Anlegen der Benutzerkonto wird die Emailadresse
 mit Email::Valid überprüft. Dabei wird außer auf
 syntaktischen Fehlern in der Emailadresse (racke.linuxia.de)
 auch überprüft, ob für die Domain ein DNS-Eintrag (A oder MX)
-existiert.                       
+existiert.    
+                   
+\begin{frame}{Email-Validierung}
+\begin{itemize}
+\item Email::Valid
+\item mxcheck
+\end{itemize}
+\begin{itemize}
+\item VERP
+\end{itemize}
+\end{frame}
 
 \section{Entwicklung \& Deployment}
 
