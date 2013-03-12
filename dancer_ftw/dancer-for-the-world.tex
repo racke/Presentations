@@ -232,6 +232,17 @@ Und starten unsere lokale Instanz:
 
     /usr/sbin/slapd -u 1000 -g 1000 -h ldap://127.0.0.1:9009 -f slapd.conf
 
+\begin{frame}[fragile]{Lokale OpenLDAP-Instanz}
+\begin{lstlisting}
+% rm -rf ldap/db
+% mkdir ldap/db
+% cp /usr/share/slapd/DB_CONFIG ldap/db
+% /usr/sbin/slapadd -f slapd.conf live.ldif
+% /usr/sbin/slapd -u 1000 -g 1000 \
+      -h ldap://127.0.0.1:9009 -f slapd.conf
+\end{lstlisting}
+\end{frame}
+
 \subsection{Email Redirect}
 
 Um nicht versehentlich Emails an echte Benutzer zu versenden,
