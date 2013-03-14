@@ -117,6 +117,17 @@ verwaltet.
 \end{itemize}
 \end{frame}
     
+\begin{frame}[fragile]{eShop - PDF::WebKit}
+\begin{lstlisting}
+content_type 'application/pdf';
+$html = template('invoice', { ... }, {layout => undef});
+$img_url = uri_for('/images/');
+$html =~ s%/images/%$img_url%g;
+$kit = PDF::WebKit->new(\$html, page_size => 'Letter');
+return $kit->to_pdf;
+\end{lstlisting}
+\end{frame}
+
 \subsection{eLibraryUSA}
 
 eLibraryUSA gibt Besuchern der American Spaces Zugriff
