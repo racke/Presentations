@@ -165,12 +165,50 @@ als auch Informationen über den Space aktualisieren.
 
 \begin{frame}{Administration}
 \begin{description}
-\item[Spaces] Region, Land, Stadt, GeoIP, ...
+\item[Zugang] Superuser, Referrer, Patrons
+\item[Spaces] Region, Land, Stadt, Homepage, GeoIP, ...
 \item[Benutzer] Space, Rolle, Email, ...
 \end{description}
 \end{frame}
 
-\section{LDAP}
+\section{Dancer}
+\subsection{Warum Dancer?}
+\begin{frame}{Warum Dancer?}
+\begin{description}
+\item[Einfach] 
+\item[Flexibel]
+\item[Community]
+\end{description}
+\end{frame}
+
+\subsection{Plugins}
+\begin{frame}{Plugins}
+\begin{description}
+\item[Dancer::Plugin::Database]
+\item[Dancer::Plugin::Email]
+\item
+\item[Dancer::Plugin::LDAP]
+\item[Dancer::Plugin::LibraryThing]
+\item 
+\item[Dancer::Plugin::SSO]
+\end{description}
+\end{frame}
+
+\subsection{Hooks}
+\begin{frame}{Hooks}
+\begin{description}
+\item[before]
+\item[before\_template\_render]
+\item 
+\item[database\_connection\_failed]
+\item[database\_connection\_lost]
+\item
+\item[sso\_login]
+\item[sso\_failure]
+\end{description}
+\end{frame}
+
+% \section{LDAP}
 
 Unser LDAP-Verzeichnis beinhaltet die Hierarchie der American Spaces
 (Region, Land, Ort) und die Benutzer für unseren Anwendungen.
