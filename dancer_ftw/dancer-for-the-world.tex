@@ -26,11 +26,24 @@
 
 \section{American Spaces}
 
+% Seit 2003 Zusammenarbeit mit Wien, eine Unterabteilung von DoS 
+% Department of State
+
 Die über 850 "American Spaces" weltweit fördern das Verständnis für die Kultur, Politik und den Lifestyle der USA. 
 
 Wir unterstützen die "American Spaces" bei der Beschaffung von Materialien
 (Bücher, DVD) und stellen die Infrastruktur für den Zugriff auf öffentlichen
 und kommerziellen Datenbanken zur Recherche bereit.
+
+\begin{frame}{American Spaces}
+\begin{itemize}
+\item 850 American Spaces
+\item American Corners
+\item Information Resource Center
+\item Binational Center
+
+\end{itemize}
+\end{frame}
 
 \begin{frame}{American Spaces}
 \begin{description}
@@ -78,9 +91,9 @@ Startpunkt für alle Anwendungen, stellt Single Sign-On zur Verfügung.
 
 \begin{frame}{Dashboard}
 \begin{itemize}
+\item \url{https://americanspaces.state.gov/}
 \item Homepage intern/extern
 \item Single Sign-On (SSO)
-\item \url{https://americanspaces.state.gov/}
 \end{itemize}
 \end{frame}
     
@@ -148,7 +161,7 @@ der Benutzer auf Single Sign-On mittels HTTPS-Request zu.
 \end{itemize}
 \end{frame}
 
-\subsection{Training}
+% \subsection{Training}
 
 Support für Training (Registrierung, Hotel, Material, Kalender)
 inklusive Räumlichkeiten in Wien.
@@ -170,6 +183,136 @@ als auch Informationen über den Space aktualisieren.
 \item[Benutzer] Space, Rolle, Email, ...
 \end{description}
 \end{frame}
+
+% \section{LDAP}
+
+Unser LDAP-Verzeichnis beinhaltet die Hierarchie der American Spaces
+(Region, Land, Ort) und die Benutzer für unseren Anwendungen.
+Außerdem speichern wir Zusatzinformationen zu den American Spaces,
+wie z.B. Typ, Homepage, Jahr der Eröffnung, geographische Länge und Breite.
+    
+Es dient ebenso zur Authentifizierung mittels Single Sign-On, dabei
+wird die Emailadresse als eindeutiger Benutzername verwendet.
+    
+Der Zugriff auf das LDAP-Verzeichnis erfolgt mittels
+Dancer::Plugin::LDAP. Dieses Plugin stellt einfache
+Methoden bereit, um Einträge zu erstellen, bearbeiten
+und umzubenennen.
+
+% \begin{frame}[fragile]{Dancer::Plugin::LDAP}
+% \begin{lstlisting}
+% ldap->quick_insert("uid=racke@linuxia.de,ou=people," 
+%                    . ldap->base(),
+%                    {givenName => 'Stefan',
+%                     lastName => 'Hornburg',
+%                     dosInstitute => 'IRC Berlin',
+%                     dosRole => 'Administrator',
+%                     c => 'Germany',
+%                     l => 'Berlin',
+%                    });
+% \end{lstlisting}
+\end{frame}
+
+Dancer::Plugin::LDAP kümmert sich um die korrekte Behandlung
+von UTF-8 und wandelt automatische Attribute ohne Wert in eine
+Arrayreferenz mit 0 Elementen um. Da kaum ein LDAP-Attribute einen
+leeren String als Wert akzeptiert, würde sonst ein Fehler
+ausgelöst.
+
+\section{Single Sign-On (SSO)}
+
+Das Dashboard hat einen SSO-Server integriert und erledigt An- und
+Abmeldung sowie das Anlegen und Löschen von Benutzerkontos.
+
+\begin{frame}{Single Sign-On}
+\begin{itemize}
+\item Anmelden
+\item Abmelden
+\item Passwort zurücksetzen
+\item Passwort ändern
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Single Sign-On}
+\begin{itemize}
+\item Überprüfung Anmeldestatus
+\item Erzeugung eines Tokens
+\item Anmeldeformular
+\item Benutzerdaten laden
+\end{itemize}
+\end{frame}
+
+\subsection{Cookies}
+
+Wir verwenden TLD-Cookies. Diese können wie folgt mit Dancer
+gesetzt werden:
+
+\begin{frame}[fragile]{Cookies}
+\begin{lstlisting}
+
+    cookie 'sso.username' => 'racke@linuxia.de',
+           domain => '.state.gov',
+           expires => config->{session_expires};
+
+\end{lstlisting}
+\end{frame}
+
+Zusätzlich wird ein verschlüsseltes Token vom SSO-Server
+erzeugt und mitgeschickt.                       
+                       
+\subsection{Passwort Policy}
+
+Um die Sicherheit der verwendeten Passwörter zu erhöhen, wird
+folgende Policy eingesetzt:
+
+Ein Passwort besteht aus mindestens 8 Zeichen, in denen
+ein Klein- und ein Großbuchstabe, eine Ziffer und ein
+anderes Zeichen vorkommen muß.
+
+Außerdem wird das Passwort auf typische Muster (1234, qwertz),
+Wiederholungen und "Leet" (4tw, m3h, ph34r) geprüft.
+
+\begin{frame}[fragile]{Passwort Policy}
+\begin{itemize}
+\item mindestens 8 Zeichen
+\item Kleinbuchstabe
+\item Muster \verb|qwertz|
+\item Leet \verb|ph34r|
+\item Data::Transpose::PasswordPolicy
+\end{itemize}
+\end{frame}
+
+\subsection{Email-Validierung}
+
+Beim Anlegen der Benutzerkonto wird die Emailadresse
+mit Email::Valid überprüft. Dabei wird außer auf
+syntaktischen Fehlern in der Emailadresse (racke.linuxia.de)
+auch überprüft, ob für die Domain ein DNS-Eintrag (A oder MX)
+existiert.    
+                   
+\begin{frame}{Email::Valid}
+\begin{itemize}
+\item rfc822
+info@icdev.de; racke@linuxia.de
+racke.linuxia.de
+\item tld
+\item mxcheck
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{VERP}
+\begin{itemize}
+\item Variable Envelope Return Path
+\end{itemize}
+\begin{lstlisting}
+<< bounces@interchange.at
+>> racke@linuxia.de
+
+<< bounces-racke=linuxia.de@interchange.at
+>> racke@linuxia.de
+\end{lstlisting}
+\end{frame}
+
 
 \section{Dancer}
 \subsection{Warum Dancer?}
@@ -208,105 +351,22 @@ als auch Informationen über den Space aktualisieren.
 \end{description}
 \end{frame}
 
-% \section{LDAP}
-
-Unser LDAP-Verzeichnis beinhaltet die Hierarchie der American Spaces
-(Region, Land, Ort) und die Benutzer für unseren Anwendungen.
-Außerdem speichern wir Zusatzinformationen zu den American Spaces,
-wie z.B. Typ, Homepage, Jahr der Eröffnung, geographische Länge und Breite.
-    
-Es dient ebenso zur Authentifizierung mittels Single Sign-On, dabei
-wird die Emailadresse als eindeutiger Benutzername verwendet.
-    
-Der Zugriff auf das LDAP-Verzeichnis erfolgt mittels
-Dancer::Plugin::LDAP. Dieses Plugin stellt einfache
-Methoden bereit, um Einträge zu erstellen, bearbeiten
-und umzubenennen.
-
-\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{frame}[fragile]{eShop SSO hooks}
 \begin{lstlisting}
-ldap->quick_insert("uid=racke@linuxia.de,ou=people," 
-                   . ldap->base(),
-                   {givenName => 'Stefan',
-                    lastName => 'Hornburg',
-                    dosInstitute => 'IRC Berlin',
-                    dosRole => 'Administrator',
-                    c => 'Germany',
-                    l => 'Berlin',
-                   });
+hook sso_login => sub {
+    my $account = shift;
+
+    if (! (account->become($account->username))) {
+        debug "Account not approved for eShop: ", 
+              $account->username;
+        vars->{account_missing} = 1;
+    }
+};
+
+hook sso_failure => sub {
+    account->logout;
+};
 \end{lstlisting}
-\end{frame}
-
-Dancer::Plugin::LDAP kümmert sich um die korrekte Behandlung
-von UTF-8 und wandelt automatische Attribute ohne Wert in eine
-Arrayreferenz mit 0 Elementen um. Da kaum ein LDAP-Attribute einen
-leeren String als Wert akzeptiert, würde sonst ein Fehler
-ausgelöst.
-
-\section{Single Sign-On (SSO)}
-
-Das Dashboard hat einen SSO-Server integriert und erledigt An- und
-Abmeldung sowie das Anlegen und Löschen von Benutzerkontos.
-
-\begin{frame}{Single Sign-On}
-\begin{itemize}
-\item Anmelden
-\item Abmelden
-\item Passwort zurücksetzen
-\item Passwort ändern
-\end{itemize}
-\end{frame}
-
-\subsection{Cookies}
-
-Wir verwenden TLD-Cookies. Diese können wie folgt mit Dancer
-gesetzt werden:
-
-\begin{frame}[fragile]{Cookies}
-\begin{lstlisting}
-
-    cookie 'sso.username' => 'racke@linuxia.de',
-           domain => '.state.gov',
-           expires => config->{session_expires};
-
-\end{lstlisting}
-\end{frame}
-
-Zusätzlich wird ein verschlüsseltes Token vom SSO-Server
-erzeugt und mitgeschickt.                       
-                       
-\subsection{Passwort Policy}
-
-Um die Sicherheit der verwendeten Passwörter zu erhöhen, wird
-folgende Policy eingesetzt:
-
-Ein Passwort besteht aus mindestens 8 Zeichen, in denen
-ein Klein- und ein Großbuchstabe, eine Ziffer und ein
-anderes Zeichen vorkommen muß.
-
-Außerdem wird das Passwort auf typische Muster (1234, qwertz),
-Wiederholungen und "Leet" (4tw, m3h, ph34r) geprüft.
-
-\begin{frame}{Passwort Policy}
-Data::Transpose::PasswordPolicy
-\end{frame}
-
-\subsection{Email-Validierung}
-
-Beim Anlegen der Benutzerkonto wird die Emailadresse
-mit Email::Valid überprüft. Dabei wird außer auf
-syntaktischen Fehlern in der Emailadresse (racke.linuxia.de)
-auch überprüft, ob für die Domain ein DNS-Eintrag (A oder MX)
-existiert.    
-                   
-\begin{frame}{Email-Validierung}
-\begin{itemize}
-\item Email::Valid
-\item mxcheck
-\end{itemize}
-\begin{itemize}
-\item VERP
-\end{itemize}
 \end{frame}
 
 \section{Entwicklung \& Deployment}
@@ -438,6 +498,11 @@ server {
     }
 }
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Tanzpause}
+Slides:
+\url{http://www.linuxia.de/talks/pws2013/dancer-for-the-world-beamer.pdf}
 \end{frame}
 
 \end{document}
