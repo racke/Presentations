@@ -2,16 +2,20 @@
 \usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
-
+\usepackage{ulem}
 \usepackage{beamerthemesplit}
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
 \lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
 
-\title{Dancer 2}
+\newcommand{\BigframeS}{\fontsize{30pt}{25}\selectfont}
+\newcommand{\BigframeA}{\fontsize{30pt}{0}\selectfont}
+\newcommand{\Bigframe}{\fontsize{33pt}{0}\selectfont}
+
+\title{Dancer2}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
-\date{Österreichischer Perlworkshop 2012, Wien}
+\date{15. Deutscher Perl-Workshop, Berlin, 14. März 2013}
 
 \begin{document}
 \maketitle{}
@@ -22,29 +26,93 @@
 
 \tableofcontents
 
-\section{Plugins}
-\begin{frame}[fragile]{Dancer 1}
-\begin{lstlisting}
-register foo => sub {
-    my (@args) = @_;
+\section{Moo}
 
-    ...
-};
-
-register_plugin;
-\end{lstlisting}
+\begin{frame}{More OO}
+\BigframeA
+More object orientation ...
 \end{frame}
 
-\begin{frame}[fragile]{Dancer 2}
-\begin{lstlisting}
-register foo => sub {
-
-my ($self, @args) = plugin_args(@_);
-...
-};
-
-register_plugin for_versions => [1, 2] ;
-\end{lstlisting}
+\begin{frame}{Moo}
+  \Bigframe
+... Moo
 \end{frame}
+
+\begin{frame}{Moo}
+  \Bigframe
+Dancer 2 is pure OO
+\end{frame}
+
+\subsection{Roles}
+\begin{frame}{Roles}
+\begin{itemize}
+\item Config
+\item Template
+\item Session
+\item Logger
+\item DSL
+\item ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Globals}
+\begin{itemize}
+\item \sout{Singletons}
+\item Strict ``app'' scoping
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Config::Any}
+\Bigframe
+YAML => Config::Any
+\end{frame}
+
+\section{Dancer 1 to Dancer 2}
+\begin{frame}
+\BigframeS
+Dancer 1.311
+
+Dancer 2.001
+\end{frame}
+
+\begin{frame}
+\BigframeS
+Dancer 1.311
+
+Dancer2 0.03
+\end{frame}
+
+\section{Resources}
+\begin{frame}{Resources}
+\begin{itemize}
+\item http://advent.perldancer.org/2012/4
+\item \#dancer
+\end{itemize}
+\end{frame}
+
+% \section{Plugins}
+% \begin{frame}[fragile]{Dancer 1}
+% \begin{lstlisting}
+% register foo => sub {
+%     my (@args) = @_;
+
+%     ...
+% };
+
+% register_plugin;
+% \end{lstlisting}
+% \end{frame}
+
+% \begin{frame}[fragile]{Dancer 2}
+% \begin{lstlisting}
+% register foo => sub {
+
+% my ($self, @args) = plugin_args(@_);
+% ...
+% };
+
+% register_plugin for_versions => [1, 2] ;
+% \end{lstlisting}
+% \end{frame}
 
 \end{document}
