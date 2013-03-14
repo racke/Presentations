@@ -9,7 +9,7 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
-\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
+\lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
 \title{Wir tanzen um die Welt!}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
@@ -364,6 +364,16 @@ server {
    ssl on;
    ssl_certificate_key  /etc/ssl/private/eshop.state.gov.key;
    ssl_certificate    /etc/ssl/certs/eshop.state.gov.pem;
+
+   ...
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nginx-Konfiguration SSL}
+\begin{lstlisting}
+server {
+   ...
 
    location @proxy {
         proxy_set_header Host $http_host;
