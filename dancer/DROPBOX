@@ -1,0 +1,63 @@
+Questions:
+    FTP
+
+1. Installation / Setup / Prinzip "Route"
+   Ziel: Hello world
+
+2. Templates / Layout
+   Ziel: Verzeichnisansicht
+   liste - route - template
+   Configuration: template engine
+
+3. Routes
+   Ziel: Upload / Download / Delete
+     404
+     check for illegal filenames
+
+4. Plugins
+   Database
+   Email
+
+5. User management / Session
+   Ziel: Login
+
+6. Plugin selbst schreiben
+
+7. Deployment / *Tests*
+
+8. Community
+
+9. More
+   REST API for Dropbox
+
+Others:
+   configuration
+
+Justification:
+http://aclindsay.com/blog/2011/06/the-sorry-state-of-open-source-dropbox-clones/
+also give more options (file tree view, .. directory up link, explode archives)
+
+Missing:
+Synchronisation
+http://torheim.wikia.com/wiki/HOWTO_build_your_own_open_source_Dropbox_clone
+
+API:
+http://search.cpan.org/dist/Net-Dropbox-API/lib/Net/Dropbox/API.pm
+
+* routes
+* login
+* database
+* templates
+* sessions
+* uploads
+* perms
+* plugins (email!!)
+* ajax - upload
+
+
+* Routes / Templates
+* Download / Upload
+* Session / Account Handling
+* Plugins: Database / Email
+* Deploymnet
+
