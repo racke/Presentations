@@ -1,27 +1,28 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
 
 TEXFILE=dancer-beamer
-INPUTS=dancer.tex
+INPUTS=dancer-beamer.tex dancer-de-beamer.tex
+OUTPUTS=$(INPUTS:%.tex=%.pdf)
 
-all: $(TEXFILE).pdf; make clean
+all: $(OUTPUTS); make clean
 
 .PHONY: all clean
 
-$(TEXFILE).pdf: $(TEXFILE).tex $(INPUTS)
+$(OUTPUTS): %-beamer.pdf: %.tex
 # initial run
-	pdflatex $(TEXFILE)
+	pdflatex $(<:%.tex=%-beamer.tex)
 
 # run BibTeX if missing citations
-	@if(grep "Citation" $(TEXFILE).log > /dev/null);\
+	@if(grep "Citation" $(<:%.tex=%-beamer).log > /dev/null);\
     then \
-        bibtext $(TEXFILE); \
-		pdflatex $(TEXFILE); \
+        bibtext $(<:%.tex=%-beamer); \
+		pdflatex $(<:%.tex=%-beame); \
     fi
 
 # rerun if necessary
-	@if(grep "Rerun" $(TEXFILE).log > /dev/null);\
+	@if(grep "Rerun" $(<:%.tex=%-beamer).log > /dev/null);\
     then \
-		pdflatex $(TEXFILE); \
+		pdflatex $(<:%.tex=%-beamer); \
     fi
 
 # Remove unnecessary files
