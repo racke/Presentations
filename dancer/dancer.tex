@@ -247,8 +247,8 @@ get '/home' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{String mit benannten Parametern}
-\begin{frame}[fragile]{String mit benannten Parametern}
+\subsection{Named parameters}
+\begin{frame}[fragile]{Named parameters}
 \begin{lstlisting}
 get '/home/:file' => sub {
     my $files = autoindex(param('file'));
@@ -299,9 +299,9 @@ get '/lostpwd/**' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Regulärer Ausdruck}
+\subsection{Regular Expression}
 
-\begin{frame}[fragile]{Regulärer Ausdruck}
+\begin{frame}[fragile]{Regular Expression}
 
 Catch-All (letzte Route!)
 
@@ -312,9 +312,9 @@ any qr{.*} => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Regulärer Ausdruck mit Captures}
+\subsection{Regular Expression with Captures}
 
-\begin{frame}[fragile]{Regulärer Ausdruck mit Captures}
+\begin{frame}[fragile]{Regular Expression with Captures}
 \begin{lstlisting}
 https://dropbox.nite.si/~racke/talks/dancer-beamer.pdf
 
@@ -350,8 +350,8 @@ get '/home/**' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Upload HTML-Formular}
-\begin{frame}[fragile]{Upload HTML-Formular}
+\subsection{Upload HTML Form}
+\begin{frame}[fragile]{Upload HTML-Form}
 \begin{lstlisting}
 <div class="upload">
 <h2>Upload file</h2>
@@ -403,7 +403,7 @@ The before hook is called after a request has been accepted
 and before routes are matched.
 
 \begin{frame}[fragile]{before Hook}
-Passwort geschützte Website:
+Passwort protected site:
 \begin{lstlisting}
 hook 'before' => sub {
     unless (session('user')
@@ -414,7 +414,7 @@ hook 'before' => sub {
     }
 };
 \end{lstlisting}
-Dateien in public sind nicht geschützt!
+Files in public aren't protected!
 \end{frame}
 
 \begin{frame}[fragile]{before\_template\_render Hook}
@@ -490,24 +490,24 @@ any qr{.*} => sub {
 \begin{frame}{Plugins}
 \begin{itemize}
 \item Features
-\item Schlüsselwörter
+\item Keywords
 \item Routes 
-\item Konfiguration
+\item Configuration
 \end{itemize}
 \end{frame}
 
-\subsection{Plugins auf CPAN}
-\begin{frame}[fragile]{Plugins auf CPAN}
+\subsection{Plugins on CPAN}
+\begin{frame}[fragile]{Plugins on CPAN}
 \begin{itemize}
-\item Anzahl: mehr als 100
-\item Übersicht
+\item Count: more than 100
+\item Overview
 \url{https://metacpan.org/module/Dancer::Plugins}
-\item Suche
+\item Search
 \url{https://metacpan.org/search?q=dancer+plugin}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Plugins auf CPAN}
+\begin{frame}[fragile]{Plugins on CPAN}
 \begin{itemize}
 \item Dancer::Plugin::Database \\
 \verb|database|
@@ -527,7 +527,7 @@ if ($user) {
 \end{lstlisting}
 \end{frame} 
 
-\begin{frame}[fragile]{Dancer::Plugin::Database Konfiguration}
+\begin{frame}[fragile]{Dancer::Plugin::Database Configuration}
 \begin{lstlisting}
 plugins:
   Database: 
@@ -538,7 +538,7 @@ plugins:
 \end{lstlisting}
 \end{frame} 
 
-\begin{frame}[fragile]{Weitere SQL Plugins}
+\begin{frame}[fragile]{More SQL Plugins}
 \begin{itemize}
 \item Dancer::Plugin::DBIC
 \item Dancer::Plugin::SimpleCRUD
@@ -546,7 +546,7 @@ plugins:
 \end{itemize}
 \end{frame} 
 
-\begin{frame}[fragile]{Dancer::Plugin::Email Beispiel}
+\begin{frame}[fragile]{Dancer::Plugin::Email Example}
 \begin{lstlisting}
 $message = template('lostpwd_email', 
        {password => $password, url => $url},
@@ -565,7 +565,7 @@ email ({type => 'html',
 \item Modul:
 
 \verb|Email::Sender::Transport::Redirect|
-\item Konfiguration:
+\item Configuration:
 \begin{lstlisting}
 plugins:
   Email:
@@ -625,9 +625,9 @@ Sessions zu setzen, sonst ist eine Session für immer gültig.
 \begin{itemize} 
 \item Engine \\
 \verb|session: Storable|
-\item Verzeichnis \\
+\item Directory \\
 \verb|session_dir: /var/run/dancer-sessions|
-\item Ablauffrist \\
+\item Expiration \\
 \verb|session_expires: 8 hours|
 \end{itemize} 
 \end{frame}
@@ -654,7 +654,7 @@ werden im Produktionsbetrieb.
 \begin{itemize} 
 \item Engine \\
 \verb|logger: file|
-\item Verzeichnis \\
+\item Directory \\
 \verb|log_path: log|
 \item Format \\
 \verb|logger_format: "%t [%P] %L @%D> %m in %f l. %l"|
@@ -689,15 +689,15 @@ in der Dancer-Dokumentation:
 \item nginx
 \item Perlbal
 \end{itemize}
-\item Dancer Konfiguration \\
+\item Dancer Configuration \\
 \verb|behind_proxy: 1|
 \end{itemize} 
 \end{frame}
 
 \subsection{Starman}
-\begin{frame}[fragile]{plackup und Starman}
+\begin{frame}[fragile]{plackup and Starman}
 \begin{itemize} 
-\item Kommandozeile
+\item Command line
 \begin{lstlisting}
 plackup -E production 
         -s Starman \ 
@@ -707,7 +707,7 @@ plackup -E production
         -a bin/app.pl \
         -D
 \end{lstlisting}
-\item Initscript
+\item Init script
 \begin{itemize} 
 \item \verb|Daemon::Control|
 \end{itemize} 
@@ -786,7 +786,7 @@ Link is ausreichend. Ansonsten wird die Konfiguration nicht gefunden.
 Eine Ausgabe von Meldungen auf der Konsole ist wünschenswert, mit
 \verb|%m| wird lediglich die reine Meldung ausgegeben.
  
-\begin{frame}[fragile]{Skripts}
+\begin{frame}[fragile]{Scripts}
 \begin{lstlisting}
 use Dancer ':script';
 
