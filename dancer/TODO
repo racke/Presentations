@@ -1,4 +1,10 @@
+* Start with short intro what Dancer is about and why it rocks
+
+* Pictures of Dropbox
+
 * Add section about template/layout
   - different layout
-  - tokens in/out
   - engines, configuration
+
+* Pull out things out of
+  Dancer::Tutorial, Dancer::Cookbook and Dancer::Deployment
