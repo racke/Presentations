@@ -714,67 +714,88 @@ plackup -E production
 \end{itemize} 
 \end{frame}
 
-\subsection{Perlbal}
-Am Anfang der Konfigurationsdatei laden wir das ``vpaths''
-Plugin.
+\subsection{Nginx}
+    
+Wir betreiben Nginx als "Reverse Proxy" und benutzen Starman als
+Plack-Backend.
 
-Dann binden wir für bessere Performache
-\verb|http://search.cpan.org/perldoc?Perlbal::XS::HTTPHeaders|
-ein.
+Hier die entsprechende Konfiguration (vereinfacht) für einen virtuellen
+Host:
 
-\begin{frame}[fragile]{Perlbal}
+\begin{frame}[fragile]{Nginx Configuration}
 \begin{lstlisting}
-LOAD vpaths
-XS enable headers
+server {
+    listen 80;
+    server_name elibraryusa.state.gov;
+    root /home/dancer/Elib/public;
+
+    ...
+}
 \end{lstlisting}
 \end{frame}
 
-\subsubsection{Pools}
-Für unsere beiden Projekte erzeugen wir zunächst Pools:
-
-\begin{frame}[fragile]{Perlbal: Pools}
+\begin{frame}[fragile]{Nginx Configuration}
 \begin{lstlisting}
-CREATE POOL prod_starman_dosqua
- POOL prod_starman_dosqua ADD 127.0.0.1:5000
+server {
+    ...
 
-CREATE POOL prod_starman_vsc
- POOL prod_starman_vsc ADD 127.0.0.1:5001
+    location / {
+        try_files $uri @proxy;
+        access_log off;
+        expires max;
+    }
+
+    ...
+}
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Perlbal: Reverse Proxy}
+\begin{frame}[fragile]{Nginx Configuration}
 \begin{lstlisting}
-CREATE SERVICE vsc_prod
- SET role                 = reverse_proxy
- SET pool                 = prod_starman_vsc
- SET buffer_uploads       = on
-ENABLE vsc_prod
+server {
+   ...
+
+   location @proxy {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass       http://localhost:5001;
+    }
+}
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Perlbal: Selector}
+\begin{frame}[fragile]{Nginx Configuration SSL}
 \begin{lstlisting}
-CREATE SERVICE vsc_selector
- SET listen              = 86.59.13.238:80
- SET role                = selector
- SET plugins             = vpaths
- VPATH .*                = vsc_prod
-ENABLE vsc_selector
+server {
+   listen 213.129.249.66:443;
+   server_name eshop.state.gov;
+   root /home/interch/eShop/public;
+
+   ssl on;
+   ssl_certificate_key  /etc/ssl/private/eshop.state.gov.key;
+   ssl_certificate    /etc/ssl/certs/eshop.state.gov.pem;
+
+   ...
+}
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Perlbal: SSL Selector}
+\begin{frame}[fragile]{Nginx Configuration SSL}
 \begin{lstlisting}
-CREATE SERVICE vsc_ssl_selector
- SET listen              = 86.59.13.238:443
- SET role                = selector
- SET plugins             = vpaths
- SET enable_ssl          = on
- SET ssl_key_file        = /etc/ssl/private/vsc.state.gov.key
- SET ssl_cert_file       = /etc/ssl/certs/vsc.state.gov.pem
- VPATH .*                = vsc_prod
-ENABLE vsc_ssl_selector
-HEADER vsc_ssl_selector INSERT X-Forwarded-Proto: HTTPS
+server {
+   ...
+
+   location @proxy {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_pass       http://localhost:5001;
+    }
+}
 \end{lstlisting}
 \end{frame}
 
