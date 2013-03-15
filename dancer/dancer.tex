@@ -417,6 +417,28 @@ hook 'before' => sub {
 Files in public aren't protected!
 \end{frame}
 
+The following information will be added to template tokens:
+
+\begin{description}
+\item[perl_version] Perl version
+\item[dancer_version] Dancer version
+\item[settings] Configuration settings
+\item[request] Request object
+\item[params] Parameters
+\item[vars] Shared variables
+\item[session] Session
+\end{description}
+
+\begin{frame}[fragile]{before\_template\_render Hook}
+\begin{itemize}
+\item \verb|template|
+\item add default tokens (params, vars, session)
+\item before\_template\_render hook
+\item rendering
+\item after\_template\_render hook
+\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{before\_template\_render Hook}
 \begin{lstlisting}
 hook before_template_render => sub {
