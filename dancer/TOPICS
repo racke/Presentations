@@ -1,3 +1,23 @@
+* Mention that second parameter of template is going both to layout and
+  template
+* Explain before_template_render
+    (11:54:21 AM) racke: before_template_render is a Dancer hook
+(11:54:32 AM) racke: which is called inside the "template" call
+(11:54:33 AM) gregap: so i read a bit, $tokens is array of variables that you send to template
+(11:54:46 AM) racke: well actually it works like that:
+(11:54:47 AM) gregap: so here you prepopulate it
+(11:55:02 AM) racke: you say template "index", {foo => bar}
+(11:55:18 AM) racke: so {foo => bar} is the $tokens initially
+(11:55:37 AM) racke: Dancer put more stuff into the tokens like the var space
+(11:56:07 AM) racke: and passes the $tokens hashref to all subs which are registered to the before_template_render hook
+(11:56:20 AM) gregap: ok great
+(11:56:24 AM) racke: and finally passes $tokens to the template engine
+(11:56:30 AM) racke: is that more clear now?
+(11:56:52 AM) gregap: so i can just add $tokens->{selected} = something
+(11:57:05 AM) gregap: and that toggle in xml
+(11:57:11 AM) gregap: *than
+-- 
+
 WHOAMI / WHYDOUSE as starter
 
 http://www.linuxia.de/blog/Status-400-Before-Hook-With-Dancer
