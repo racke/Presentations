@@ -24,6 +24,7 @@
 
 * Deployment
   - Nginx
+  - expiration
 
 * Job offers
 
