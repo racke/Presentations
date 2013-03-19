@@ -386,7 +386,33 @@ post '/home/**' => sub {
 % \end{lstlisting}
 % \end{frame}
 
-\section{Hooks}
+\section{Error Handling}
+\subsection{500}
+\begin{frame}[fragile]{Error Handling: 500}
+\begin{itemize}
+\item Static File: \verb|public/500.html|
+\item Template: \verb|error_template|
+\item Stacktrace: \verb|show_errors|
+\end{itemize}
+\end{frame}
+
+\subsection{404}
+\begin{frame}[fragile]{Error Handling: 404}
+\begin{itemize}
+\item Static File: \verb|public/404.html|
+\item 
+\begin{lstlisting}
+any qr{.*} => sub {
+    status 'not_found';
+    template 'my_404', { path => request->path };
+};
+\end{lstlisting}
+\item Prevent XSS attacks
+\end{itemize}
+\end{frame}
+
+\section{Extensions}
+\subsection{Hooks}
 
 The before hook is called after a request has been accepted
 and before routes are matched.
@@ -472,32 +498,7 @@ Datei (Bild oder CSS-Datei) gesendet wurde.
 % \begin{frame}{Exceptions}
 % \end{frame}
 
-\section{Error Handling}
-\subsection{500}
-\begin{frame}[fragile]{Error Handling: 500}
-\begin{itemize}
-\item Static File: \verb|public/500.html|
-\item Template: \verb|error_template|
-\item Stacktrace: \verb|show_errors|
-\end{itemize}
-\end{frame}
-
-\subsection{404}
-\begin{frame}[fragile]{Error Handling: 404}
-\begin{itemize}
-\item Static File: \verb|public/404.html|
-\item 
-\begin{lstlisting}
-any qr{.*} => sub {
-    status 'not_found';
-    template 'my_404', { path => request->path };
-};
-\end{lstlisting}
-\item Prevent XSS attacks
-\end{itemize}
-\end{frame}
-
-\section{Plugins}
+\subsection{Plugins}
 \begin{frame}{Plugins}
 \begin{itemize}
 \item Features
@@ -507,7 +508,6 @@ any qr{.*} => sub {
 \end{itemize}
 \end{frame}
 
-\subsection{Plugins on CPAN}
 \begin{frame}[fragile]{Plugins on CPAN}
 \begin{itemize}
 \item Count: more than 100
