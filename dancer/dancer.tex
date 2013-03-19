@@ -137,13 +137,13 @@ views/layouts/main.tt
 \subsection{Filebrowser}
 \begin{frame}{Filebrowser}
 \begin{itemize}
-\item Liste der Dateien
+\item List of files
 \item Template
 \item Route
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Liste der Dateien}
+\begin{frame}[fragile]{List of files}
 \begin{lstlisting}
 use Dancer::Plugin::Autoindex;
 
@@ -167,7 +167,7 @@ get '/home' => sub {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Konfiguration}
+\begin{frame}[fragile]{Configuration}
 Standard config.yml:
 \begin{lstlisting}
 # template engine
@@ -212,14 +212,14 @@ Weisen angegeben werden.
 \begin{frame}{Routes}
 \begin{itemize}
 \item String
-\item String mit benannten Parametern
-\item String mit Wildcards 
+\item Named parameters
+\item Wildcards 
 \begin{itemize}
 \item Splat
 \item Megasplat
 \end{itemize}
-\item Regulärer Ausdruck
-\item Regulärer Ausdruck mit Captures
+\item Regular expression
+\item Regular expression with captures
 \end{itemize}
 \end{frame}
 
@@ -292,7 +292,7 @@ get '/lostpwd/**' => sub {
 
 \begin{frame}[fragile]{Regular Expression}
 
-Catch-All (letzte Route!)
+Catch-All (last route!)
 
 \begin{lstlisting}
 any qr{.*} => sub {
@@ -527,7 +527,7 @@ any qr{.*} => sub {
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Dancer::Plugin::Database Beispiel}
+\begin{frame}[fragile]{Dancer::Plugin::Database Example}
 \begin{lstlisting}
 my $user = database->quick_select('users',
     {username => params->{'username'}});
@@ -672,12 +672,12 @@ werden im Produktionsbetrieb.
 \end{itemize} 
 \end{frame}
 
-\subsection{Szenarien}
+\subsection{Scenarios}
 Die möglichen Szenarien für ein Deployment von Dancer findet man
 in der Dancer-Dokumentation:
 \url{http://search.cpan.org/perldoc?Dancer::Deployment}.
 
-\begin{frame}[fragile]{Szenarien}
+\begin{frame}[fragile]{Scenarios}
 \begin{itemize} 
 \item Standalone \\
   \verb|./bin/app.pl|
@@ -810,7 +810,7 @@ server {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Skripts}
+\subsection{Scripts}
 Dancer-Skripts sollten innerhalb der Dancer-Applikation
 liegen, gut geeignet ist das bin/-Verzeichnis. Ein symbolischer
 Link is ausreichend. Ansonsten wird die Konfiguration nicht gefunden.
@@ -838,7 +838,7 @@ set logger_format => '%m';
 % \end{lstlisting}
 % \end{frame}
 
-\section{Ausblick}
+\section{Forecast}
 
 \subsection{Dancer2}
 \begin{frame}{Dancer2}
