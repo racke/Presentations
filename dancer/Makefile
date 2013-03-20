@@ -8,7 +8,7 @@ all: $(OUTPUTS); make clean
 
 .PHONY: all clean
 
-$(OUTPUTS): %-beamer.pdf: %.tex
+$(OUTPUTS): %-beamer.pdf: %.tex layout.pdf
 # initial run
 	pdflatex $(<:%.tex=%-beamer.tex)
 
@@ -24,6 +24,9 @@ $(OUTPUTS): %-beamer.pdf: %.tex
     then \
 		pdflatex $(<:%.tex=%-beamer); \
     fi
+
+layout.pdf: layout.xml layout.html
+	flute --pdf=layout.pdf layout.xml layout.html 
 
 # Remove unnecessary files
 clean:
