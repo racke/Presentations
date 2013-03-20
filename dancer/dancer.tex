@@ -134,50 +134,51 @@ views/layouts/main.tt
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}{Filebrowser}
-\begin{itemize}
-\item List of files
-\item Template
-\item Route
-\end{itemize}
-\end{frame}
+% \subsection{Filebrowser}
+% \begin{frame}{Filebrowser}
+% \begin{itemize}
+% \item List of files
+% \item Template
+% \item Route
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]{List of files}
-\begin{lstlisting}
-use Dancer::Plugin::Autoindex;
+% \begin{frame}[fragile]{List of files}
+% \begin{lstlisting}
+% use Dancer::Plugin::Autoindex;
 
-$files = autoindex('/');
-\end{lstlisting}
-\end{frame}
+% $files = autoindex('/');
+% \end{lstlisting}
+% \end{frame}
 
-\begin{frame}[fragile]{Template}
-\lstinputlisting{views/filebrowser.tt}
-\end{frame}
+% \begin{frame}[fragile]{Template}
+% \lstinputlisting{views/filebrowser.tt}
+% \end{frame}
 
-\begin{frame}[fragile]{Route}
-\begin{lstlisting}
-get '/home' => sub {
-    my $files = autoindex('/');
+% \begin{frame}[fragile]{Route}
+% \begin{lstlisting}
+% get '/home' => sub {
+%     my $files = autoindex('/');
 
-    template 'filebrowser', {directory => 'Home',
-                             files => $files,
-                            };
-};
-\end{lstlisting}
-\end{frame}
+%     template 'filebrowser', {directory => 'Home',
+%                              files => $files,
+%                             };
+% };
+% \end{lstlisting}
+% \end{frame}
 
-\begin{frame}[fragile]{Configuration}
-Standard config.yml:
-\begin{lstlisting}
-# template engine
-# simple: default and very basic template engine
-template: "simple"
-\end{lstlisting}
-Locker config.yml:
-\begin{lstlisting}
-template: "template_toolkit"
-\end{lstlisting}
-\end{frame}
+% \begin{frame}[fragile]{Configuration}
+% Standard config.yml:
+% \begin{lstlisting}
+% # template engine
+% # simple: default and very basic template engine
+% template: "simple"
+% \end{lstlisting}
+% Locker config.yml:
+% \begin{lstlisting}
+% template: "template_toolkit"
+% \end{lstlisting}
+% \end{frame}
 
 \section{Templates}
 \begin{frame}{Templates}
@@ -317,6 +318,205 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \end{lstlisting}
 \end{frame}
 
+\section{Extensions}
+\subsection{Hooks}
+
+The before hook is called after a request has been accepted
+and before routes are matched.
+
+\begin{frame}[fragile]{before Hook}
+Password protected site:
+\begin{lstlisting}
+hook 'before' => sub {
+    unless (session('user')
+        || request->path eq '/login'
+        || request->path =~ m%^/lostpwd%
+        ) {
+        redirect '/login';
+    }
+};
+\end{lstlisting}
+Files in public aren't protected!
+\end{frame}
+
+The following information will be added to template tokens:
+
+\begin{description}
+\item[perl_version] Perl version
+\item[dancer_version] Dancer version
+\item[settings] Configuration settings
+\item[request] Request object
+\item[params] Parameters
+\item[vars] Shared variables
+\item[session] Session
+\end{description}
+
+\begin{frame}[fragile]{before\_template\_render Hook}
+\begin{itemize}
+\item \verb|template|
+\item add default tokens (params, vars, session)
+\item before\_template\_render hook
+\item rendering
+\item after\_template\_render hook
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{before\_template\_render Hook}
+\begin{lstlisting}
+hook before_template_render => sub {
+    my $tokens = shift;
+    my $menu;
+
+    if (session('user')) {
+        $menu = [{name => 'Logout', url => '/logout'}];
+    }
+    else {
+        $menu = [{name => 'Login', url => '/login'}];
+    }
+
+    $tokens->{menu} = $menu;
+};
+\end{lstlisting}
+\end{frame}
+
+Die folgenden Hooks existieren in Dancer:
+
+\begin{itemize}
+\item before\_deserializer
+\item before\_file\_render
+\item before\_error\_init
+\item before\_error\_render
+\item before\_template\_render
+\item before\_layout\_render
+\item before\_serializer
+\item after\_deserializer
+\item after\_file\_render
+\item after\_template\_render
+\item after\_layout\_render
+\item after\_error\_render
+\end{itemize}
+
+Der after\_file\_render-Hook wird ausgelöst, nachdem eine statische
+Datei (Bild oder CSS-Datei) gesendet wurde.
+
+% \section{Exceptions}
+% Exceptions in Dancer sind nicht objektorientiert, um sie
+% leichtgewichtig und schnell zu halten.
+% \begin{frame}{Exceptions}
+% \end{frame}
+
+\subsection{Plugins}
+What is part of a plugin? A plugin usually defines keywords,
+it can also setup routes for your application and can
+be configured as well.
+
+\begin{frame}{Plugins}
+\begin{itemize}
+\item Features
+\item Keywords
+\item Routes 
+\item Configuration
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Plugins on CPAN}
+\begin{itemize}
+\item Count: more than 100
+\item Overview
+\url{https://metacpan.org/module/Dancer::Plugins}
+\item Search
+\url{https://metacpan.org/search?q=dancer+plugin}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Plugins on CPAN}
+\begin{itemize}
+\item Dancer::Plugin::Database \\
+\verb|database|
+\item Dancer::Plugin::Email \\
+\verb|email|
+\item Dancer::Plugin::Auth::Extensible \\
+\verb|require_login,require_role,...|
+\verb|/login, /login-denied/|
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Database Example}
+\begin{lstlisting}
+my $user = database->quick_select('users',
+    {username => params->{'username'}});
+
+if ($user) {
+    session user => params->{'username'};
+}
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Database Configuration}
+\begin{lstlisting}
+plugins:
+  Database: 
+    driver: Pg
+    database: dropbox
+    username: vienna
+    password: nevairbe
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{More SQL Plugins}
+\begin{itemize}
+\item Dancer::Plugin::DBIC
+\item Dancer::Plugin::SimpleCRUD
+\item ...
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Email Example}
+\begin{lstlisting}
+$message = template('lostpwd_email', 
+       {password => $password, url => $url},
+       {layout => undef});
+	
+email ({type => 'html',
+        from => 'service@linuxia.de',
+        to => param('email'),
+        subject => 'Forgot password',
+        message => $message});
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Email Redirect}
+\begin{itemize}
+\item Modul:
+
+\verb|Email::Sender::Transport::Redirect|
+\item Configuration:
+\begin{lstlisting}
+plugins:
+  Email:
+    transport:
+      Sendmail:
+        redirect_address: biz@icdev.de
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible}
+\begin{lstlisting}
+get '/home/**' => require_login sub {
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible}
+\begin{lstlisting}
+get '/accounts' => require_role Administrator sub {
+    template 'accounts', ...
+};
+\end{lstlisting}
+\end{frame}
+
 \section{Download/Upload}
 \subsection{Download}
 \begin{frame}[fragile]{File Download}
@@ -407,193 +607,6 @@ any qr{.*} => sub {
 \end{lstlisting}
 \item Prevent XSS attacks
 \end{itemize}
-\end{frame}
-
-\section{Extensions}
-\subsection{Hooks}
-
-The before hook is called after a request has been accepted
-and before routes are matched.
-
-\begin{frame}[fragile]{before Hook}
-Password protected site:
-\begin{lstlisting}
-hook 'before' => sub {
-    unless (session('user')
-        || request->path eq '/login'
-        || request->path =~ m%^/lostpwd%
-        ) {
-        redirect '/login';
-    }
-};
-\end{lstlisting}
-Files in public aren't protected!
-\end{frame}
-
-The following information will be added to template tokens:
-
-\begin{description}
-\item[perl_version] Perl version
-\item[dancer_version] Dancer version
-\item[settings] Configuration settings
-\item[request] Request object
-\item[params] Parameters
-\item[vars] Shared variables
-\item[session] Session
-\end{description}
-
-\begin{frame}[fragile]{before\_template\_render Hook}
-\begin{itemize}
-\item \verb|template|
-\item add default tokens (params, vars, session)
-\item before\_template\_render hook
-\item rendering
-\item after\_template\_render hook
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{before\_template\_render Hook}
-\begin{lstlisting}
-hook before_template_render => sub {
-    my $tokens = shift;
-    my $menu;
-
-    if (session('user')) {
-        $menu = [{name => 'Logout', url => '/logout'}];
-    }
-    else {
-        $menu = [{name => 'Login', url => '/login'}];
-    }
-
-    $tokens->{menu} = $menu;
-};
-\end{lstlisting}
-\end{frame}
-
-Die folgenden Hooks existieren in Dancer:
-
-\begin{itemize}
-\item before\_deserializer
-\item before\_file\_render
-\item before\_error\_init
-\item before\_error\_render
-\item before\_template\_render
-\item before\_layout\_render
-\item before\_serializer
-\item after\_deserializer
-\item after\_file\_render
-\item after\_template\_render
-\item after\_layout\_render
-\item after\_error\_render
-\end{itemize}
-
-Der after\_file\_render-Hook wird ausgelöst, nachdem eine statische
-Datei (Bild oder CSS-Datei) gesendet wurde.
-
-% \section{Exceptions}
-% Exceptions in Dancer sind nicht objektorientiert, um sie
-% leichtgewichtig und schnell zu halten.
-% \begin{frame}{Exceptions}
-% \end{frame}
-
-\subsection{Plugins}
-\begin{frame}{Plugins}
-\begin{itemize}
-\item Features
-\item Keywords
-\item Routes 
-\item Configuration
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Plugins on CPAN}
-\begin{itemize}
-\item Count: more than 100
-\item Overview
-\url{https://metacpan.org/module/Dancer::Plugins}
-\item Search
-\url{https://metacpan.org/search?q=dancer+plugin}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Plugins on CPAN}
-\begin{itemize}
-\item Dancer::Plugin::Database \\
-\verb|database|
-\item Dancer::Plugin::Email \\
-\verb|email|
-\item Dancer::Plugin::Auth::Extensible \\
-\verb|require_login,require_role|
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Dancer::Plugin::Database Example}
-\begin{lstlisting}
-my $user = database->quick_select('users',
-    {username => params->{'username'}});
-
-if ($user) {
-    session user => params->{'username'};
-}
-\end{lstlisting}
-\end{frame} 
-
-\begin{frame}[fragile]{Dancer::Plugin::Database Configuration}
-\begin{lstlisting}
-plugins:
-  Database: 
-    driver: Pg
-    database: dropbox
-    username: vienna
-    password: nevairbe
-\end{lstlisting}
-\end{frame} 
-
-\begin{frame}[fragile]{More SQL Plugins}
-\begin{itemize}
-\item Dancer::Plugin::DBIC
-\item Dancer::Plugin::SimpleCRUD
-\item ...
-\end{itemize}
-\end{frame} 
-
-\begin{frame}[fragile]{Dancer::Plugin::Email Example}
-\begin{lstlisting}
-$message = template('lostpwd_email', 
-       {password => $password, url => $url},
-       {layout => undef});
-	
-email ({type => 'html',
-        from => 'service@linuxia.de',
-        to => param('email'),
-        subject => 'Forgot password',
-        message => $message});
-\end{lstlisting}
-\end{frame} 
-
-\begin{frame}[fragile]{Dancer::Plugin::Email Redirect}
-\begin{itemize}
-\item Modul:
-
-\verb|Email::Sender::Transport::Redirect|
-\item Configuration:
-\begin{lstlisting}
-plugins:
-  Email:
-    transport:
-      Sendmail:
-        redirect_address: biz@icdev.de
-\end{lstlisting}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible}
-\begin{lstlisting}
-get '/users' => require_login sub {
-    my $user = logged_in_user;
-    return "Hi there, $user->{username}";
-};
-\end{lstlisting}
 \end{frame}
 
 % thin wrapper around CPAN module
