@@ -92,28 +92,34 @@
 
 \subsection{Quickstart}
 
-\begin{frame}[fragile]{Quickstart}
+\begin{frame}[fragile]{Quickstart I}
 \begin{itemize}
 \item cpanm Dancer
 \item cpanm YAML
 \item dancer -a Locker
-\item cd Locker
-\item ./bin/app.pl
-\item x-www-browser \url{http://localhost:3000/}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Programm}
+\begin{frame}[fragile]{Program}
+
+\verb|./bin/app.pl|
+
 \begin{lstlisting}
+
 #!/usr/bin/env perl
 use Dancer;
 use Locker;
 dance;
 \end{lstlisting}
+
 \end{frame}
 
-\begin{frame}[fragile]{Modul}
+\begin{frame}[fragile]{Module}
+
+\verb|lib/Locker.pm|
+
 \begin{lstlisting}
+
 package Locker;
 use Dancer ':syntax';
 
@@ -127,11 +133,41 @@ true;
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Configuration Files}
+\begin{lstlisting}
+config.yml
+environments/development.yml
+environments/production.yml
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Static Files}
+\begin{lstlisting}
+css/style.css
+css/error.css
+images/perldancer-bg.jpg
+images/perldancer.jpg
+javascripts/jquery.js
+500.html
+404.html
+favicon.ico
+dispatch.cgi
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Template}
 \begin{lstlisting}
 views/index.tt
 views/layouts/main.tt
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Quickstart II}
+\begin{itemize}
+\item cd Locker
+\item ./bin/app.pl
+\item x-www-browser \url{http://localhost:3000/}
+\end{itemize}
 \end{frame}
 
 % \subsection{Filebrowser}
@@ -181,6 +217,10 @@ views/layouts/main.tt
 % \end{frame}
 
 \section{Templates}
+The content will be rendered first and passed to the
+layout renderer, so before_layout_render could mangle
+with it.
+
 \begin{frame}{Templates}
 \begin{figure}
 \includegraphics[page=1,width=.6\textwidth]{layout.pdf}
