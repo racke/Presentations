@@ -522,6 +522,8 @@ Datei (Bild oder CSS-Datei) gesendet wurde.
 \verb|database|
 \item Dancer::Plugin::Email \\
 \verb|email|
+\item Dancer::Plugin::Auth::Extensible \\
+\verb|require_login,require_role|
 \end{itemize}
 \end{frame}
 
@@ -583,6 +585,15 @@ plugins:
         redirect_address: biz@icdev.de
 \end{lstlisting}
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible}
+\begin{lstlisting}
+get '/users' => require_login sub {
+    my $user = logged_in_user;
+    return "Hi there, $user->{username}";
+};
+\end{lstlisting}
 \end{frame}
 
 % thin wrapper around CPAN module
