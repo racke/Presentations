@@ -203,47 +203,22 @@ views/layouts/main.tt
 % \end{lstlisting}
 % \end{frame}
 
-% \begin{frame}[fragile]{Template}
-% \lstinputlisting{views/filebrowser.tt}
-% \end{frame}
-
-% \begin{frame}[fragile]{Route}
-% \begin{lstlisting}
-% get '/home' => sub {
-%     my $files = autoindex('/');
-
-%     template 'filebrowser', {directory => 'Home',
-%                              files => $files,
-%                             };
-% };
-% \end{lstlisting}
-% \end{frame}
-
-% \begin{frame}[fragile]{Configuration}
-% Standard config.yml:
-% \begin{lstlisting}
-% # template engine
-% # simple: default and very basic template engine
-% template: "simple"
-% \end{lstlisting}
-% Locker config.yml:
-% \begin{lstlisting}
-% template: "template_toolkit"
-% \end{lstlisting}
-% \end{frame}
-
 \section{Templates}
+
+\subsection{Layout and Content}
+
 The content will be rendered first and passed to the
 layout renderer, so before_layout_render could mangle
 with it.
+
+The values passed to the template keyword are used
+for both layout and content.
 
 \begin{frame}{Templates}
 \begin{figure}
 \includegraphics[page=1,width=.6\textwidth]{layout.pdf}
 \end{figure}
 \end{frame}{Templates}
-
-Das Hash geht in Layout + Content.
 
 \begin{frame}[fragile]{Templates}
 \begin{itemize}
@@ -260,6 +235,37 @@ template 'index', {name => 'Test'}, {layout => 'test'}
 template 'index', {name => 'Test'}, {layout => undef}
 \end{lstlisting}
 \end{itemize}
+\end{frame}
+
+\subsection{Filebrowser}
+
+\begin{frame}[fragile]{Template for Filebrowser}
+\lstinputlisting{views/filebrowser.tt}
+\end{frame}
+
+\begin{frame}[fragile]{Route for Filebrowser}
+\begin{lstlisting}
+get '/home' => sub {
+    my $files = autoindex('/');
+
+    template 'filebrowser', {directory => 'Home',
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Configuration}
+Standard config.yml:
+\begin{lstlisting}
+# template engine
+# simple: default and very basic template engine
+template: "simple"
+\end{lstlisting}
+Locker config.yml:
+\begin{lstlisting}
+template: "template_toolkit"
+\end{lstlisting}
 \end{frame}
 
 \section{Routes}
