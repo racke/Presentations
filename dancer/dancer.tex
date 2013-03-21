@@ -112,7 +112,7 @@
 \begin{itemize}
 \item cpanm Dancer
 \item cpanm YAML
-\item dancer -a Locker
+\item dancer -a Dropbox
 \end{itemize}
 \end{frame}
 
@@ -124,7 +124,7 @@
 
 #!/usr/bin/env perl
 use Dancer;
-use Locker;
+use Dropbox;
 dance;
 \end{lstlisting}
 
@@ -132,11 +132,11 @@ dance;
 
 \begin{frame}[fragile]{Module}
 
-\verb|lib/Locker.pm|
+\verb|lib/Dropbox.pm|
 
 \begin{lstlisting}
 
-package Locker;
+package Dropbox;
 use Dancer ':syntax';
 
 our $VERSION = '0.1';
@@ -180,7 +180,7 @@ views/layouts/main.tt
 
 \begin{frame}[fragile]{Quickstart II}
 \begin{itemize}
-\item cd Locker
+\item cd Dropbox
 \item ./bin/app.pl
 \item x-www-browser \url{http://localhost:3000/}
 \end{itemize}
@@ -262,7 +262,7 @@ Standard config.yml:
 # simple: default and very basic template engine
 template: "simple"
 \end{lstlisting}
-Locker config.yml:
+Dropbox config.yml:
 \begin{lstlisting}
 template: "template_toolkit"
 \end{lstlisting}
