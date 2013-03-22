@@ -448,7 +448,7 @@ The following information will be added to template tokens:
 
 \begin{frame}[fragile]{before\_template\_render Hook}
 \begin{itemize}
-\item \verb|template|
+\item \verb|template 'index', {message => 'Hello'}|
 \item add default tokens (params, vars, session)
 \item before\_template\_render hook
 \item rendering
@@ -524,6 +524,9 @@ be configured as well.
 \end{itemize}
 \end{frame}
 
+Now I'll show you three plugins that a lot of
+we applications are going to need.
+
 \begin{frame}[fragile]{Plugins on CPAN}
 \begin{itemize}
 \item Dancer::Plugin::Database \\
@@ -596,7 +599,7 @@ plugins:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible}
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible require\_login}
 \begin{lstlisting}
 get '/home/**' => require_login sub {
     ...
@@ -604,10 +607,50 @@ get '/home/**' => require_login sub {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible}
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible require\_role}
 \begin{lstlisting}
 get '/accounts' => require_role Administrator sub {
     template 'accounts', ...
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible Providers}
+\begin{itemize}
+\item Config
+\item Unix
+\item Database
+\item LDAP
+\item Subclass
+\verb|D::P::Auth::Extensible::Provider::Base|
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Write Your Own Plugin}
+\begin{lstlisting}
+package Dancer::Plugin::SSO;
+
+use Dancer::Plugin;
+
+register sso_generate_token => sub {
+...
+};
+
+register_plugin;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Hooks in Your Own Plugin}
+Plugin:
+\begin{lstlisting}
+register_hook qw/sso_login sso_failure/;
+\end{lstlisting}
+Application:
+\begin{lstlisting}
+hook sso_login => sub {
+    my $user_ref = shift;
+
+    session user => $user_ref->username;
 };
 \end{lstlisting}
 \end{frame}
