@@ -1,7 +1,7 @@
 Dancer Academy - From Zero to Hero
 
 Dancer, one of the web frameworks written in Perl, became quite
-popular despite it's relatively young age. It is simple to start 
+popular despite its relatively young age. It is simple to start 
 with, yet powerful enough to run larger web applications.
 
 Aside from being easy and straightforward, Dancer is really
@@ -16,5 +16,5 @@ like adding routes, building your templates and using plugins.
 To make you more sure-footed on the dance-floor, the next
 topics are hooks, error handling, logging and Dancer scripts.
 Finally, typical Dancer deployments and a sneak preview about
-Dancer 2 finish up our Dancer Academy.
+Dancer 2 finishes up our Dancer Academy.
 
