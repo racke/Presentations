@@ -1,0 +1,32 @@
+metadata
+	node_id
+	version
+	metadata_type
+	metadata_value
+
+schema_info
+	version
+
+internal_links
+	link_from
+	link_to
+
+content
+	node_id
+	version
+	text
+	modified
+	comment
+	moderated
+	verified
+	verified_info
+
+node
+	id
+	name
+	version
+	text
+	modified
+	moderate
+
+Datenbankfunktionen
