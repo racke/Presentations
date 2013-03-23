@@ -1,0 +1,48 @@
+Stuff: clean up your working directory
+
+Git Training
+
+* Basics
+  Repository + working directory, Predecessors
+  Branches, Rollouts / Rollbacks
+
+* GitHub
+  create GitHub account (or utilize existing one)
+  Git on Windows/Mac?
+  project example => Dancer? HTML ? simple Wiki
+
+* Push / Pull / Merge / Stash
+
+* Screwed Up !!
+  what to do?
+  cherry-pick went wrong => git reset --merge
+
+* Other stuff
+  .gitignore
+  submodules
+
+Thoughts
+
+* fork on GitHub !
+  put changes in upstream !!!
+* create git repository from scratch and push it to Github
+  (populated example)
+* create git repository on Github and pull it from there
+  - setup the connections
+
+Exercises
+
+* Git diff before commit
+* Add a file / Update a file / Remove a file
+* Add a bunch of files / all changed files (careful !!!)
+* Add part of a file !!! (careful !!!)
+
+Research
+
+* Projects using Git for other purposes than version control
+
+Submodules
+
+* Deleting: 
+
+https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial
