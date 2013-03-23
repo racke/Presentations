@@ -1,3 +1,9 @@
+FOSDEM talk by sawyerx:
+
+http://www.slideshare.net/xSawyer/perldancer-for-perlers-fosdem-2011
+
+Slide 19: Recipe for Dancing
+
 * Mention that second parameter of template is going both to layout and
   template
 * Explain before_template_render
