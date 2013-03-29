@@ -1,3 +1,12 @@
+* Change request URLs in before hook:
+
+  hook 'before' => sub {
+        var note => 'Hi there';
+        request->path_info('/foo/oversee')
+    };
+
+* Serialization
+
 * Start with short intro what Dancer is about and why it rocks
 
 * Pictures of Dropbox
