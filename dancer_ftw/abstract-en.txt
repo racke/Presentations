@@ -1,0 +1,7 @@
+Tags: Authentification, Dancer, LDAP, SSO, Web, Nginx, Starman
+
+We delevoping applications for the Bureau of International Information Programs (IIP). The target audience for these applications are the over 850 American Spaces worldwide. Dancer is used since two years as platform, for new applications and relaunches of older applications.
+
+These applications are based on a PostgreSQL database and a LDAP directory and they connecting to a number of online databases  (LibraryThing, ISBNDB, WorldCat, other commercial vendors). The authentification for all applications is done by our own Single Signon server.
+
+This presentation describes the involved techniques and shows the advantages of Dancer in this environment.
