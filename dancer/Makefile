@@ -10,7 +10,7 @@ all: $(OUTPUTS); make clean
 
 $(OUTPUTS): %-beamer.pdf: %.tex layout.pdf
 # initial run
-	pdflatex $(<:%.tex=%-beamer.tex)
+	pdflatex -halt-on-error $(<:%.tex=%-beamer.tex)
 
 # run BibTeX if missing citations
 	@if(grep "Citation" $(<:%.tex=%-beamer).log > /dev/null);\
