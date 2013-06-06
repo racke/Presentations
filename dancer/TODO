@@ -5,6 +5,8 @@
         request->path_info('/foo/oversee')
     };
 
+* max size post body request
+
 * Serialization
 
 * Start with short intro what Dancer is about and why it rocks
