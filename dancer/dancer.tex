@@ -675,6 +675,22 @@ get '/home/**' => sub {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Upload Object}
+\begin{frame}[fragile]{Upload Object}
+\begin{lstlisting}
+upload('upload_file') => Dancer::Request::Upload
+\end{lstlisting}
+
+\begin{description}
+\item[filename] Filename sent by user
+\item[basename] Stripped filename
+\item[size] Size in bytes
+\item[type] Content type
+\item[content]  File content
+\item[copy\_to] Copies temporary file
+\end{description}
+\end{frame}
+
 \subsection{Upload HTML Form}
 \begin{frame}[fragile]{Upload HTML-Form}
 \begin{lstlisting}
