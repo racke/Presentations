@@ -718,7 +718,7 @@ post '/home/**' => sub {
 
     if ($upload_file = upload('upload_file')) {
         # upload file to directory
-        my $target_file = join('/', $path, $upload_file->{filename});
+        my $target_file = join('/', $path, $upload_file->basename);
 		
         unless ($upload_file->copy_to($target_file)) {
             die 'Upload failed';
