@@ -268,7 +268,7 @@ template: "template_toolkit"
 \end{lstlisting}
 \end{frame}
 
-\section{Routes}
+\section{Routes and Keywords}
 
 Für eine Route benötigen wir
 
@@ -278,7 +278,7 @@ Für eine Route benötigen wir
 \item Subroutine
 \end{itemize}
 
-\begin{frame}{Routes}
+\begin{frame}{Routes and Keywords}
 \begin{itemize}
 \item HTTP method
 \begin{itemize}
@@ -403,6 +403,40 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
     ...
 };
 \end{lstlisting}
+\end{frame}
+
+\subsection{Keywords}
+\begin{frame}[fragile]{Keywords}
+\begin{itemize}
+\item get, post, any, put, del, ...
+\item request, params, param
+\item redirect, forward, status, header
+\item config, var, session
+\item from\_json, to\_json, from\_xml, to\_xml
+\end{itemize}
+\end{frame}
+
+\subsubsection{var(s) and session}
+\begin{frame}[fragile]{var(s) and session}
+
+Storing and retrieving data for the current request:
+
+\begin{lstlisting}
+var bar => 'pivo';
+$bar = var 'bar';
+$bar = vars->{bar};
+\end{lstlisting}
+
+Storing and retrieving data from the session:
+
+\begin{lstlisting}
+session username => 'racke@linuxia.de';
+
+if (! session('username')) {
+    redirect uri_for('/login');
+}
+\end{lstlisting}
+
 \end{frame}
 
 \section{Customizing your application}
