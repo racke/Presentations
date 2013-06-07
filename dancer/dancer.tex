@@ -411,6 +411,7 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \begin{itemize}
 \item Hooks
 \item Plugins
+\item Middleware
 \end{itemize}
 \end{frame}
 
@@ -652,6 +653,46 @@ hook sso_login => sub {
 
     session user => $user_ref->username;
 };
+\end{lstlisting}
+\end{frame}
+
+\subsection{Middleware}
+\begin{frame}[fragile]{Middleware Example}
+\begin{lstlisting}
+#!/usr/bin/env perl
+
+use Dancer;
+use Dropbox;
+use Plack::Builder;
+
+my $app = sub {
+    my $env = shift;
+    my $request = Dancer::Request->new(env => $env);
+    Dancer->dance($request);
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Middleware Example}
+\begin{lstlisting}
+builder {
+    enable SizeLimit => (
+                         max_unshared_size_in_kb => 102400, # 100 Mb
+                        check_every_n_requests  => 10,
+                        );
+
+    $app;
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Middleware in Configuration}
+\begin{lstlisting}
+plack_middlewares: 
+  -
+    - SizeLimit
+    - max_unshared_size_in_kb 
+    - 102400
 \end{lstlisting}
 \end{frame}
 
