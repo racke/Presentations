@@ -529,7 +529,31 @@ Sessions zu setzen, sonst ist eine Session für immer gültig.
 \end{itemize} 
 \end{frame}
 
-\subsubsection{Logs}
+\subsubsection{Logger Engines}
+\begin{frame}[fragile]{Logger Engines}
+\begin{description}
+\item[Dancer::Logger::Console] 
+\item[Dancer::Logger::File]
+File in logs/ directory, e.g. \verb|logs/production.log|
+\item[] ... dozens more
+\end{description}
+\end{frame}
+
+Die Rotation der Logs für dateibasierte Engines darf nicht vergessen
+werden im Produktionsbetrieb.
+
+\begin{frame}[fragile]{Logger Configuration}
+\begin{itemize} 
+\item Engine \\
+\verb|logger: file|
+\item Directory \\
+\verb|log_path: log|
+\item File \\
+\verb|log_file: error.log|
+\item Format \\
+\verb|logger_format: "%t [%P] %L @%D> %m in %f l. %l"|
+\end{itemize} 
+\end{frame}
 
 \subsection{Hooks}
 
@@ -976,7 +1000,8 @@ any qr{.*} => sub {
 
 \section{Deployment}
 
-\subsection{Logs}
+% \subsection{Logs}
+
 Die Logger-Engine wird mit \verb|logger| konfiguriert,
 ansonsten werden Logs erzeugt.
 
@@ -991,21 +1016,7 @@ Verfügbare Engines sind u.a.:
 \item log4perl *
 \end{itemize}
 
-Die Rotation der Logs für dateibasierte Engines darf nicht vergessen
-werden im Produktionsbetrieb.
 
-\begin{frame}[fragile]{Logs}
-\begin{itemize} 
-\item Engine \\
-\verb|logger: file|
-\item Directory \\
-\verb|log_path: log|
-\item File \\
-\verb|log_file: error.log|
-\item Format \\
-\verb|logger_format: "%t [%P] %L @%D> %m in %f l. %l"|
-\end{itemize} 
-\end{frame}
 
 \subsection{Scenarios}
 Die möglichen Szenarien für ein Deployment von Dancer findet man
