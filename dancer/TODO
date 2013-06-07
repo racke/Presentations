@@ -1,3 +1,8 @@
+* prefix problems
+
+* Session engines
+  Cookie, Memcache, DBI
+
 * Change request URLs in before hook:
 
   hook 'before' => sub {
@@ -5,7 +10,7 @@
         request->path_info('/foo/oversee')
     };
 
-* max size post body request
+* add example about using Template::Flute
 
 * Serialization
 
@@ -23,3 +28,4 @@
 * Configuration
 
 * Relative paths => see Jon
+  (Template::Flute filter)
