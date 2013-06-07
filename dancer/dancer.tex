@@ -881,8 +881,15 @@ post '/home/**' => sub {
 
 \subsection{Path traversal}
 \begin{frame}[fragile]{Path traversal}
+Example:
 \begin{lstlisting}
-/dropbox/racke@linuxia.de/../../../../etc/passwd
+https://dropbox.nite.si/dropbox/racke@linuxia.de/../../../../etc/passwd
+\end{lstlisting}
+Protection:
+\begin{lstlisting}
+if (grep $_ eq '..', @path) {
+    return status 403; 
+}
 \end{lstlisting}
 \end{frame}
 
