@@ -943,7 +943,10 @@ post '/home/**' => sub {
 
 % \end{lstlisting}
 % \end{frame}
-\section{Security Concerns}
+
+\section{Security and Error Handling}
+
+\subsection{Security Concerns}
 \begin{frame}{Security Concerns}
 \begin{itemize}
 \item Input sanitization
@@ -954,7 +957,7 @@ post '/home/**' => sub {
 \end{itemize}
 \end{frame}
 
-\subsection{Path traversal}
+\subsubsection{Path traversal}
 \begin{frame}[fragile]{Path traversal}
 Example:
 \begin{lstlisting}
@@ -968,8 +971,8 @@ if (grep $_ eq '..', @path) {
 \end{lstlisting}
 \end{frame}
 
-\section{Error Handling}
-\subsection{500}
+\subsection{Error Handling}
+\subsubsection{500}
 \begin{frame}[fragile]{Error Handling: 500}
 \begin{itemize}
 \item Static File: \verb|public/500.html|
@@ -978,7 +981,7 @@ if (grep $_ eq '..', @path) {
 \end{itemize}
 \end{frame}
 
-\subsection{404}
+\subsubsection{404}
 \begin{frame}[fragile]{Error Handling: 404}
 \begin{itemize}
 \item Static File: \verb|public/404.html|
