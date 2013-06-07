@@ -405,15 +405,97 @@ any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
 \end{lstlisting}
 \end{frame}
 
-\section{Extensions}
+\section{Customizing your application}
 
-\begin{frame}{Extensions}
+\begin{frame}{Customizing your application}
 \begin{itemize}
+\item Engines
 \item Hooks
 \item Plugins
 \item Middleware
 \end{itemize}
 \end{frame}
+
+\subsection{Engines}
+\begin{frame}{Engines}
+\begin{itemize}
+\item Templates
+\item Sessions
+\item Logs
+\end{itemize}
+\end{frame}
+
+\subsubsection{Templates}
+\begin{frame}{Template Engines}
+\begin{itemize}
+\item Dancer::Template::Toolkit
+\item Dancer::Template::Xslate
+\item Dancer::Template::TemplateFlute
+\item ... dozens more
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Configuration}
+\begin{lstlisting}
+template: "template_flute"
+
+engines:
+  template_flute:
+    filters:
+      date:
+        options:
+          format: "%m/%d/%Y"
+          strict: 
+            empty: 0
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Sessions}
+\begin{frame}{Session Engines}
+\begin{description}
+\item[Dancer::Session::YAML] 
+File based, development only
+\item[Dancer::Session::Storable]
+File based  
+\item[Dancer::Session::Cookie]
+\item[] ... dozens more
+\end{description}
+\end{frame}
+
+Die Session-Engine wird mit \verb|session| konfiguriert,
+ansonsten werden keine Sessions verwendet. Cookies sind
+Voraussetzung für Sessions mit Dancer.
+
+YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht
+
+Alternativen sind u.a.:
+\begin{itemize} 
+\item Storable
+\item Cookie
+\item Memcached
+\item MongoDB
+\end{itemize}
+
+Eine gute Idee ist es die Session Engine für den Produktionsbetrieb
+in \verb|config.yml| zu konfigurieren und für die Entwicklung in
+\verb|environments/development.yml| zu überschreiben.
+
+Im Produktionsbetrieb ist es empfehlenswert die Ablauffrist für
+Sessions zu setzen, sonst ist eine Session für immer gültig.
+
+\begin{frame}[fragile]{Sessions}
+\begin{itemize} 
+\item Engine \\
+\verb|session: Storable|
+\item Directory \\
+\verb|session_dir: /var/run/dancer-sessions|
+\item Expiration \\
+\verb|session_expires: 8 hours|
+\end{itemize} 
+\end{frame}
+
+\subsubsection{Logs}
 
 \subsection{Hooks}
 
@@ -852,38 +934,6 @@ any qr{.*} => sub {
 % \end{frame}
 
 \section{Deployment}
-\subsection{Sessions}
-Die Session-Engine wird mit \verb|session| konfiguriert,
-ansonsten werden keine Sessions verwendet. Cookies sind
-Voraussetzung für Sessions mit Dancer.
-
-YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht
-
-Alternativen sind u.a.:
-\begin{itemize} 
-\item Storable
-\item Cookie
-\item Memcached
-\item MongoDB
-\end{itemize}
-
-Eine gute Idee ist es die Session Engine für den Produktionsbetrieb
-in \verb|config.yml| zu konfigurieren und für die Entwicklung in
-\verb|environments/development.yml| zu überschreiben.
-
-Im Produktionsbetrieb ist es empfehlenswert die Ablauffrist für
-Sessions zu setzen, sonst ist eine Session für immer gültig.
-
-\begin{frame}[fragile]{Sessions}
-\begin{itemize} 
-\item Engine \\
-\verb|session: Storable|
-\item Directory \\
-\verb|session_dir: /var/run/dancer-sessions|
-\item Expiration \\
-\verb|session_expires: 8 hours|
-\end{itemize} 
-\end{frame}
 
 \subsection{Logs}
 Die Logger-Engine wird mit \verb|logger| konfiguriert,
