@@ -2,30 +2,31 @@
 
 PODFILE=dancer-for-the-world
 TEXFILE=dancer-for-the-world-beamer
-INPUTS=dancer-for-the-world.tex
+INPUTS=dancer-for-the-world-beamer.tex dancer-for-the-world-de-beamer.tex
+OUTPUTS=$(INPUTS:%.tex=%.pdf)
 
-all: $(PODFILE).html $(TEXFILE).pdf clean
+all: $(PODFILE).html $(OUTPUTS) clean
 
 .PHONY: all clean
 
 $(PODFILE).html: $(PODFILE).pod
 	./pod2xhtml $(PODFILE).pod > $(PODFILE).html
 
-$(TEXFILE).pdf: $(TEXFILE).tex $(INPUTS)
+$(OUTPUTS): %-beamer.pdf: %.tex
 # initial run
-	pdflatex $(TEXFILE)
+	pdflatex $(<:%.tex=%-beamer.tex)
 
 # run BibTeX if missing citations
-	@if(grep "Citation" $(TEXFILE).log > /dev/null);\
+	@if(grep "Citation" $(<:%.tex=%-beamer).log > /dev/null);\
     then \
-        bibtext $(TEXFILE); \
-		pdflatex $(TEXFILE); \
+        bibtext $(<:%.tex=%-beamer); \
+		pdflatex $(<:%.tex=%-beame); \
     fi
 
 # rerun if necessary
-	@if(grep "Rerun" $(TEXFILE).log > /dev/null);\
+	@if(grep "Rerun" $(<:%.tex=%-beamer).log > /dev/null);\
     then \
-		pdflatex $(TEXFILE); \
+		pdflatex $(<:%.tex=%-beamer); \
     fi
 
 # Remove unnecessary files
