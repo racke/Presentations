@@ -494,8 +494,11 @@ engines:
 File based, development only
 \item[Dancer::Session::Storable]
 File based  
+\item[Dancer::Session::DBI]
+\item[Dancer::Session::Memcached]
+\item[Dancer::Session::MongoDB]
 \item[Dancer::Session::Cookie]
-\item[] ... dozens more
+Session data stored encrypted in a cookie.
 \end{description}
 \end{frame}
 
@@ -520,7 +523,7 @@ in \verb|config.yml| zu konfigurieren und für die Entwicklung in
 Im Produktionsbetrieb ist es empfehlenswert die Ablauffrist für
 Sessions zu setzen, sonst ist eine Session für immer gültig.
 
-\begin{frame}[fragile]{Sessions}
+\begin{frame}[fragile]{Sessions: Storable}
 \begin{itemize} 
 \item Engine \\
 \verb|session: Storable|
@@ -528,6 +531,15 @@ Sessions zu setzen, sonst ist eine Session für immer gültig.
 \verb|session_dir: /var/run/dancer-sessions|
 \item Expiration \\
 \verb|session_expires: 8 hours|
+\end{itemize} 
+\end{frame}
+
+\begin{frame}[fragile]{Sessions: Cookie}
+\begin{itemize} 
+\item Engine \\
+\verb|session: Cookie|
+\item Key \\
+\verb|session_cookie_key: kjsdf07234hjf0sdkflj12*&(@*jk|
 \end{itemize} 
 \end{frame}
 
