@@ -203,9 +203,11 @@ views/layouts/main.tt
 % \end{lstlisting}
 % \end{frame}
 
-\section{Templates}
+\section{Templates, Routes and Keywords}
 
-\subsection{Layout and Content}
+\subsection{Templates}
+
+\subsubsection{Layout and Content}
 
 The content will be rendered first and passed to the
 layout renderer, so before_layout_render could mangle
@@ -237,7 +239,7 @@ template 'index', {name => 'Test'}, {layout => undef}
 \end{itemize}
 \end{frame}
 
-\subsection{Filebrowser}
+\subsubsection{Filebrowser}
 
 \begin{frame}[fragile]{Template for Filebrowser}
 \lstinputlisting{views/filebrowser.tt}
@@ -268,7 +270,7 @@ template: "template_toolkit"
 \end{lstlisting}
 \end{frame}
 
-\section{Routes and Keywords}
+\subsection{Routes}
 
 Für eine Route benötigen wir
 
@@ -309,7 +311,7 @@ Weisen angegeben werden.
 \end{itemize}
 \end{frame}
 
-\subsection{String}
+\subsubsection{String}
 \begin{frame}[fragile]{String}
 \begin{lstlisting}
 get '/home' => sub {
@@ -322,7 +324,7 @@ get '/home' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Named parameters}
+\subsubsection{Named parameters}
 \begin{frame}[fragile]{Named parameters}
 \begin{lstlisting}
 get '/home/:file' => sub {
@@ -335,7 +337,7 @@ get '/home/:file' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Splat}
+\subsubsection{Splat}
 \begin{frame}[fragile]{Splat}
 \begin{lstlisting}
 get '/images/covers/*.jpg' => sub {
@@ -351,7 +353,7 @@ get '/images/covers/*.jpg' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Megasplat}
+\subsubsection{Megasplat}
 Die einfache Wildcard matcht nur auf einen Teil des Pfads,
 d.h. bis zum nächsten Schrägstrich (Slash).
 
@@ -374,7 +376,7 @@ get '/lostpwd/**' => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Regular Expression}
+\subsubsection{Regular Expression}
 
 \begin{frame}[fragile]{Regular Expression}
 
@@ -387,7 +389,7 @@ any qr{.*} => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Regular Expression with Captures}
+\subsubsection{Regular Expression with Captures}
 
 \begin{frame}[fragile]{Regular Expression with Captures}
 \begin{lstlisting}
