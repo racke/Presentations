@@ -65,7 +65,7 @@ und kommerziellen Datenbanken zur Recherche bereit.
 \end{figure}
 \end{frame}
 
-\section{Anwendungen}
+\section{Applications}
     
 Die im folgenden vorgestellten Anwendungen sind alle mit Dancer realisiert.
 Dancer unterstützt dabei die einfache und schnelle Entwicklung und bietet mit
@@ -76,7 +76,7 @@ hilfsbereit.
 Die Daten befinden sich in einem LDAP-Verzeichnis und in
 mehreren PostgreSQL-Datenbanken.
 
-\begin{frame}{Anwendungen}
+\begin{frame}{Applications}
 \begin{itemize}
 \item Dashboard
 \item eShop
@@ -92,7 +92,7 @@ Startpunkt für alle Anwendungen, stellt Single Sign-On zur Verfügung.
 \begin{frame}{Dashboard}
 \begin{itemize}
 \item \url{https://americanspaces.state.gov/}
-\item Homepage intern/extern
+\item Homepage internal/external
 \item Single Sign-On (SSO)
 \end{itemize}
 \end{frame}
@@ -111,12 +111,12 @@ verwaltet.
 \begin{frame}{eShop}
 \begin{itemize}
 \item \url{https://eshop.state.gov/}
-\item Beschaffung von Materialien
+\item Procurement of Materials
 % Bücher, CD, DVD, eBooks, Promomaterial (Poster, Sticker, Postkarten)
-\item z.Z. 12 Anbieter
-\item Backend für Preise, Ersatztitel
-\item Bestpreis
-\item Anzeige nur für American Spaces
+\item z.Z. 12 Vendors
+\item Backend for prices, substititions
+\item Best price
+\item Price display only for American Spaces
 \end{itemize}
 \end{frame}
 
@@ -126,7 +126,7 @@ verwaltet.
 \item ISBNdb.com
 \item LibraryThing
 \item LiveChat, MailChimp
-\item ProForma-Rechnungen mit PDF::WebKit
+\item ProForma invoices with PDF::WebKit
 \end{itemize}
 \end{frame}
     
@@ -154,9 +154,9 @@ der Benutzer auf Single Sign-On mittels HTTPS-Request zu.
 \begin{frame}{eLibraryUSA}
 \begin{itemize}
 \item \url{http://elibraryusa.state.gov/}
-\item Zugang zu 30 kommerziellen Datenbanken
+\item Access to 30 commercial databases
 % eBook, Videos, Zeitschriften
-\item monatliche Themen
+\item monthly themes
 \item EzProxy-Server
 \end{itemize}
 \end{frame}
@@ -179,8 +179,8 @@ als auch Informationen über den Space aktualisieren.
 \begin{frame}{Administration}
 \begin{description}
 \item[Zugang] Superuser, Referrer, Patrons
-\item[Spaces] Region, Land, Stadt, Homepage, GeoIP, ...
-\item[Benutzer] Space, Rolle, Email, ...
+\item[Spaces] Region, Country, City, Homepage, GeoIP, ...
+\item[Benutzer] Space, Role, Email, ...
 \end{description}
 \end{frame}
 
@@ -226,19 +226,19 @@ Abmeldung sowie das Anlegen und Löschen von Benutzerkontos.
 
 \begin{frame}{Single Sign-On}
 \begin{itemize}
-\item Anmelden
-\item Abmelden
-\item Passwort zurücksetzen
-\item Passwort ändern
+\item Login
+\item Logout
+\item Reset password
+\item Change password
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Single Sign-On}
 \begin{itemize}
-\item Überprüfung Anmeldestatus
-\item Erzeugung eines Tokens
-\item Anmeldeformular
-\item Benutzerdaten laden
+\item Check login status
+\item Create token
+\item Login form
+\item Load user data
 \end{itemize}
 \end{frame}
 
@@ -260,7 +260,7 @@ gesetzt werden:
 Zusätzlich wird ein verschlüsseltes Token vom SSO-Server
 erzeugt und mitgeschickt.                       
                        
-\subsection{Passwort Policy}
+\subsection{Password Policy}
 
 Um die Sicherheit der verwendeten Passwörter zu erhöhen, wird
 folgende Policy eingesetzt:
@@ -272,17 +272,17 @@ anderes Zeichen vorkommen muß.
 Außerdem wird das Passwort auf typische Muster (1234, qwertz),
 Wiederholungen und "Leet" (4tw, m3h, ph34r) geprüft.
 
-\begin{frame}[fragile]{Passwort Policy}
+\begin{frame}[fragile]{Password Policy}
 \begin{itemize}
-\item mindestens 8 Zeichen
-\item Kleinbuchstabe
-\item Muster \verb|qwertz|
+\item Minimum 8 characters
+\item One lowercase and one uppercase
+\item Pattern \verb|qwertz|
 \item Leet \verb|ph34r|
 \item Data::Transpose::PasswordPolicy
 \end{itemize}
 \end{frame}
 
-\subsection{Email-Validierung}
+\subsection{Email validation}
 
 Beim Anlegen der Benutzerkonto wird die Emailadresse
 mit Email::Valid überprüft. Dabei wird außer auf
@@ -315,12 +315,13 @@ racke.linuxia.de
 
 
 \section{Dancer}
-\subsection{Warum Dancer?}
-\begin{frame}{Warum Dancer?}
+\subsection{Why Dancer?}
+\begin{frame}{Why Dancer?}
 \begin{description}
-\item[Einfach] 
-\item[Flexibel]
+\item[Simple] 
+\item[Flexible]
 \item[Community]
+\item[Eco system]
 \end{description}
 \end{frame}
 
@@ -369,9 +370,9 @@ hook sso_failure => sub {
 \end{lstlisting}
 \end{frame}
 
-\section{Entwicklung \& Deployment}
+\section{Development \& Deployment}
 
-\subsection{Lokale OpenLDAP-Instanz}
+\subsection{Local OpenLDAP Instance}
 
 Dazu erstellen wir zunächst eine lokale \verb|slapd.conf|. Dann legen
 wir das \verb|db|-Verzeichnis an und kopieren \verb|DB_CONFIG| aus dem
@@ -385,7 +386,7 @@ Und starten unsere lokale Instanz:
 
     /usr/sbin/slapd -u 1000 -g 1000 -h ldap://127.0.0.1:9009 -f slapd.conf
 
-\begin{frame}[fragile]{Lokale OpenLDAP-Instanz}
+\begin{frame}[fragile]{Local OpenLDAP Instance}
 \begin{lstlisting}
 % rm -rf ldap/db
 % mkdir ldap/db
@@ -423,7 +424,7 @@ Plack-Backend.
 Hier die entsprechende Konfiguration (vereinfacht) für einen virtuellen
 Host:
 
-\begin{frame}[fragile]{Nginx-Konfiguration}
+\begin{frame}[fragile]{Nginx Configuration}
 \begin{lstlisting}
 server {
     listen 80;
@@ -435,7 +436,7 @@ server {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Nginx-Konfiguration}
+\begin{frame}[fragile]{Nginx Configuration}
 \begin{lstlisting}
 server {
     ...
@@ -451,7 +452,7 @@ server {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Nginx-Konfiguration}
+\begin{frame}[fragile]{Nginx Configuration}
 \begin{lstlisting}
 server {
    ...
@@ -467,7 +468,7 @@ server {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Nginx-Konfiguration SSL}
+\begin{frame}[fragile]{Nginx Configuration SSL}
 \begin{lstlisting}
 server {
    listen 213.129.249.66:443;
@@ -483,7 +484,7 @@ server {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Nginx-Konfiguration SSL}
+\begin{frame}[fragile]{Nginx Configuration SSL}
 \begin{lstlisting}
 server {
    ...
@@ -500,7 +501,7 @@ server {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}{Tanzpause}
+\begin{frame}{Dance break}
 Slides:
 \url{http://www.linuxia.de/talks/yapc2013/dancer-for-the-world-beamer.pdf}
 \end{frame}
