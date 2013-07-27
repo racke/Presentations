@@ -1,0 +1,17 @@
+Dancing around the world
+
+We are developing a suite of Dancer applications used by visitors, employees and directors 
+of the 850 "American Spaces" all around the world.
+
+Wir entwickeln Anwendungen für das Bureau of International Information Programs (IIP). Zielgruppe dieser Anwendungen sind die American Spaces, von denen es mehr als 850 weltweit gibt. Als Plattform wird seit zwei Jahren Dancer eingesetzt, sowohl für neue Anwendungen als auch für Relaunches von alten Anwendungen.
+
+Diese Anwendungen basieren auf einer PostgreSQL-Datenbank und einem LDAP-Verzeichnis und verbinden sich zu einer Reihe von Online-Datenbanken (LibraryThing, ISBNDB, weitere kommerzielle Anbieter). Die Authentifizierung für alle Anwendungen erfolgt über einen eigenen SSO-Server.
+
+This presentation explains the advantages of using Dancer ... and shows several techniques and how we
+deploy Dancer applications.
+
+Der Vortrag beschreibt die verwendeten Techniken und stellt die  in diesem Umfeld heraus.
+
+Tags:
+Single Sign-On, LDAP
+
