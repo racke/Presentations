@@ -126,11 +126,44 @@ verwaltet.
 \item WorldCat
 % ISBNdb.com
 \item LibraryThing
+\item Solr / Ajax
 \item LiveChat, MailChimp
 \item ProForma invoices with PDF::WebKit
 \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]{Solr / Ajax}
+\begin{itemize}
+\item Products
+\item Partners
+\item Collections
+\end{itemize}
+\end{frame}
     
+Example: English Language
+
+\begin{frame}[fragile]{WebService::Solr}
+\begin{lstlisting}
+$solr = WebService::Solr->new( config->{solr_url} );
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{WebService::Solr::Document}
+\begin{lstlisting}
+sub value_for {
+    my ( $self, $key ) = @_;
+ 
+    for my $field ( $self->fields ) {
+        if ( $field->name eq $key ) {
+            return $field->value;
+        }
+    }
+ 
+    return;
+}
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{eShop - PDF::WebKit}
 \begin{lstlisting}
 content_type 'application/pdf';
