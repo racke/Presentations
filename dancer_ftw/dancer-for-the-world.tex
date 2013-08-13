@@ -66,17 +66,31 @@ and also online access to commercial databases for research.
 \end{figure}
 \end{frame}
 
+\begin{frame}{American Spaces Event}
+\begin{figure}
+\includegraphics[width=.4\textwidth]{tbilissi.png}
+\end{figure}
+\end{frame}
+
 \subsection{LDAP Directory}
-\begin{frame}{LDAP Directory - Hierarchy}
+\begin{frame}[fragile]{LDAP Directory - Hierarchy}
 \begin{description}
 \item[Region] EUR
 \item[Country] Ukraine
 \item[City] Kyiv
 \item[Space] American Library Kyiv
 \end{description}
-%\begin{lstlisting}
-%dn: ou=American Library Kyiv,ou=Ukraine,ou=EUR,ou=institutes,dc=interchange,dc=at
-%\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{LDAP Directory - DN}
+\begin{lstlisting}
+dn: ou=American Library Kyiv,
+    ou=Ukraine,
+    ou=EUR,
+    ou=institutes,
+    dc=interchange,
+    dc=at
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}{LDAP Directory}
@@ -107,10 +121,7 @@ mehreren PostgreSQL-Datenbanken.
 \item eLibraryUSA
 \item Administration
 \item Training
-\item Locator 
-\begin{itemize}
-\item planned
-\end{itemize}
+\item Locator (planned) 
 \end{itemize}
 \end{frame}
 
@@ -141,18 +152,19 @@ verwaltet.
 \item \url{https://eshop.state.gov/}
 \item Procurement of Materials
 % Bücher, CD, DVD, eBooks, Promomaterial (Poster, Sticker, Postkarten)
-\item z.Z. 12 Vendors
+\item 11 commercial vendors
+\item 3 partners
 \item Backend for prices, substititions
 \item Best price
 \item Price display only for American Spaces
 \end{itemize}
 \end{frame}
 
-\begin{frame}{eShop}
+
 eShop is using WorldCat to retrieve information about books and other
 and save it in the database.
 
-LibraryThing is 
+\begin{frame}{eShop}
 \begin{itemize}
 \item PostgreSQL
 \item WorldCat
@@ -164,7 +176,7 @@ LibraryThing is
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{eShop: Solr / Ajax}
+\begin{frame}[fragile]{eShop: Search Solr / Ajax}
 \begin{itemize}
 \item Products
 \item Partners
@@ -174,13 +186,20 @@ LibraryThing is
     
 Example: English Language
 
-\begin{frame}[fragile]{WebService::Solr}
+\begin{frame}[fragile]{eShop: WebService::Solr}
 \begin{lstlisting}
 $solr = WebService::Solr->new( config->{solr_url} );
+
+$results = $solr->search(_query_:
+    "{!edismax qf='isbn sku title'}englishl*");
+
+$content = from_json $results->{raw_response}->{_content};
+
+@docs = @{$content->{response}->{docs}};			
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{WebService::Solr::Document}
+\begin{frame}[fragile]{eShop: WebService::Solr::Document}
 \begin{lstlisting}
 sub value_for {
     my ( $self, $key ) = @_;
@@ -244,9 +263,9 @@ als auch Informationen über den Space aktualisieren.
 
 \begin{frame}{Administration}
 \begin{description}
-\item[Zugang] Superuser, Referrer, Patrons
+\item[Access] Superuser, Referrer, Patrons
 \item[Spaces] Region, Country, City, Homepage, GeoIP, ...
-\item[Benutzer] Space, Role, Email, ...
+\item[User] Space, Role, Email, ...
 \end{description}
 \end{frame}
 
@@ -364,8 +383,10 @@ existiert.
 \begin{frame}{Email::Valid}
 \begin{itemize}
 \item rfc822
-info@icdev.de; racke@linuxia.de
-racke.linuxia.de
+\begin{itemize}
+\item info@icdev.de; racke@linuxia.de
+\item racke.linuxia.de
+\end{itemize}
 \item tld
 \item mxcheck
 \end{itemize}
@@ -420,15 +441,39 @@ racke.linuxia.de
 \end{frame}
 
 \subsubsection{Dancer::Plugin::Database}
-\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{frame}[fragile]{Dancer::Plugin::Database}
 \begin{lstlisting}
 plugins:
   Database:
-    uri: 'ldap://127.0.0.1:389/'
-    bind: cn=admin,dc=linuxia,dc=de
+    driver: Pg
+    database: iro
+    username: interch
     password: nevairbe
-    base: dc=linuxia,dc=de
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Database}
+\begin{itemize}
+\item quick\_select
+\item quick\_insert
+\item quick\_update
+\item quick\_delete
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Database}
+\begin{lstlisting}
+$user_ref = database->quick_select('users', 
+    {username => lc($username)});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Dancer::Plugin::Database}
+\begin{itemize}
+\item SQL::Abstract
+\item SQL::Abstract::More
+\item DBIx::Class (planned)
+\end{itemize}
 \end{frame}
 
 \subsubsection{Dancer::Plugin::LDAP}
@@ -455,7 +500,12 @@ plugins:
 
 \begin{frame}[fragile]{Dancer::Plugin::LDAP}
 \begin{lstlisting}
-
+ @users = ldap->quick_select(
+              {dosRegionName => 'EUR',
+               c => 'Ukraine',
+               dosInstitute => 'American Library Kyiv',
+               objectClass => 'dosPerson'
+              });
 \end{lstlisting}
 \end{frame}
 
@@ -483,16 +533,21 @@ of triggering an error.
 
 \subsection{Hooks}
 \begin{frame}{Hooks}
-\begin{description}
-\item[before]
-\item[before\_template\_render]
-\item 
-\item[database\_connection\_failed]
-\item[database\_connection\_lost]
-\item
-\item[sso\_login]
-\item[sso\_failure]
-\end{description}
+\begin{itemize}
+\item before
+\item before\_template\_render
+\end{itemize}
+
+\begin{itemize}
+\item database\_connection\_failed
+\item database\_connection\_lost
+\end{itemize}
+
+\begin{itemize}
+\item sso\_login
+\item sso\_failure
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]{eShop SSO hooks}
@@ -503,7 +558,7 @@ hook sso_login => sub {
     if (! (account->become($account->username))) {
         debug "Account not approved for eShop: ", 
               $account->username;
-        vars->{account_missing} = 1;
+        vars->{account_missing} = $account->username;
     }
 };
 
@@ -652,9 +707,24 @@ server {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Conclusion}
 \begin{frame}{Dance break}
 Slides:
 \url{http://www.linuxia.de/talks/yapc2013/dancer-for-the-world-beamer.pdf}
+\end{frame}
+
+Finally, if you want to know more about writing Dancer applications
+or also Ecommerce, we are running an Ecommerce conference focused
+on Open Source / Perl software.
+
+\begin{frame}{Ecommmerce Innovation}
+% just after the Pittsburgh Workshop
+\begin{itemize}
+\item Dancer / Perl / Ecommerce Conference
+\item Hancock, NY, 8-11 October
+\item Speakers and Attendees welcome
+\end{itemize}
+\includegraphics[width=.6\textwidth]{ei.png}
 \end{frame}
 
 \end{document}
