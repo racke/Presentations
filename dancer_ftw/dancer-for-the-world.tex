@@ -24,16 +24,17 @@
 
 \tableofcontents
 
+This presentation is about using Dancer applications for US government
+projects. These applications are providing services to American spaces.
+
+American Spaces are all around the world, usually they have a library
+with books and other media focused on the USA or written by American
+authors. They also hosting events for the local people.
+
+Our applications are doing the procurement for these American Spaces
+and also online access to commercial databases for research.
+
 \section{American Spaces}
-
-% Seit 2003 Zusammenarbeit mit Wien, eine Unterabteilung von DoS 
-% Department of State
-
-Die über 850 "American Spaces" weltweit fördern das Verständnis für die Kultur, Politik und den Lifestyle der USA. 
-
-Wir unterstützen die "American Spaces" bei der Beschaffung von Materialien
-(Bücher, DVD) und stellen die Infrastruktur für den Zugriff auf öffentlichen
-und kommerziellen Datenbanken zur Recherche bereit.
 
 \begin{frame}{American Spaces}
 \begin{itemize}
@@ -65,6 +66,29 @@ und kommerziellen Datenbanken zur Recherche bereit.
 \end{figure}
 \end{frame}
 
+\subsection{LDAP Directory}
+\begin{frame}{LDAP Directory - Hierarchy}
+\begin{description}
+\item[Region] EUR
+\item[Country] Ukraine
+\item[City] Kyiv
+\item[Space] American Library Kyiv
+\end{description}
+%\begin{lstlisting}
+%dn: ou=American Library Kyiv,ou=Ukraine,ou=EUR,ou=institutes,dc=interchange,dc=at
+%\end{lstlisting}
+\end{frame}
+
+\begin{frame}{LDAP Directory}
+\begin{itemize}
+\item Homepage
+\item Longitude
+\item Latitude 
+\item Year Opened
+\item Host Institution 
+\end{itemize}
+\end{frame}
+
 \section{Applications}
     
 Die im folgenden vorgestellten Anwendungen sind alle mit Dancer realisiert.
@@ -83,6 +107,10 @@ mehreren PostgreSQL-Datenbanken.
 \item eLibraryUSA
 \item Administration
 \item Training
+\item Locator 
+\begin{itemize}
+\item planned
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -121,6 +149,10 @@ verwaltet.
 \end{frame}
 
 \begin{frame}{eShop}
+eShop is using WorldCat to retrieve information about books and other
+and save it in the database.
+
+LibraryThing is 
 \begin{itemize}
 \item PostgreSQL
 \item WorldCat
@@ -132,7 +164,7 @@ verwaltet.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Solr / Ajax}
+\begin{frame}[fragile]{eShop: Solr / Ajax}
 \begin{itemize}
 \item Products
 \item Partners
@@ -246,12 +278,6 @@ und umzubenennen.
 %                    });
 % \end{lstlisting}
 \end{frame}
-
-Dancer::Plugin::LDAP kümmert sich um die korrekte Behandlung
-von UTF-8 und wandelt automatische Attribute ohne Wert in eine
-Arrayreferenz mit 0 Elementen um. Da kaum ein LDAP-Attribute einen
-leeren String als Wert akzeptiert, würde sonst ein Fehler
-ausgelöst.
 
 \section{Single Sign-On (SSO)}
 
@@ -391,6 +417,68 @@ racke.linuxia.de
 \item 
 \item[Dancer::Plugin::SSO]
 \end{description}
+\end{frame}
+
+\subsubsection{Dancer::Plugin::Database}
+\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{lstlisting}
+plugins:
+  Database:
+    uri: 'ldap://127.0.0.1:389/'
+    bind: cn=admin,dc=linuxia,dc=de
+    password: nevairbe
+    base: dc=linuxia,dc=de
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Dancer::Plugin::LDAP}
+
+\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{lstlisting}
+plugins:
+  LDAP:
+    uri: 'ldap://127.0.0.1:389/'
+    bind: cn=admin,dc=linuxia,dc=de
+    password: nevairbe
+    base: dc=linuxia,dc=de
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{itemize}
+\item quick\_select
+\item quick\_insert
+\item quick\_update
+\item quick\_delete
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::LDAP}
+\begin{lstlisting}
+
+\end{lstlisting}
+\end{frame}
+
+Dancer::Plugin::LDAP handles correctly input in UTF-8 encoding.
+
+% TODO Reference to Net::LDAP
+
+It also turns empty values for LDAP attributes into an array
+reference without elements.
+
+LDAP attributes in general don't accept empty values and
+the array reference tells Net::LDAP to skip these instead
+of triggering an error.
+
+\begin{frame}{Dancer::Plugin::LDAP features}
+\begin{itemize}
+\item UTF-8 handling
+\begin{itemize}
+    \item DN
+    \item Attributes
+\end{itemize}
+\item Empty values for attributes
+\end{itemize}
 \end{frame}
 
 \subsection{Hooks}
