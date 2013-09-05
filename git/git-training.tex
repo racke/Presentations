@@ -33,9 +33,16 @@
 \end{frame}
 
 \section{Git}
-\begin{frame}{Clone}
+\begin{frame}[fragile]{Clone}
 \begin{lstlisting}
 git clone interch@fsn.icdev.de:/var/cache/git/dashboard.git Dashboard
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Restore deleted files}
+\begin{lstlisting}
+git checkout $(git ls-files -d)
 \end{lstlisting}
 \end{frame}
 
@@ -44,4 +51,4 @@ git clone interch@fsn.icdev.de:/var/cache/git/dashboard.git Dashboard
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: t
-%%% End: 
+%%% End:  
