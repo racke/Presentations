@@ -24,6 +24,52 @@
 
 \tableofcontents
 
+\section{Today}
+
+% sample shops
+\subsection{Eco System}
+
+\begin{frame}{Dancer}
+\end{frame}
+
+\begin{frame}{Template::Flute}
+\end{frame}
+
+\subsection{Carts}
+\begin{frame}[fragile]{Using cart keyword}
+\begin{lstlisting}
+use Dancer::Plugin::Nitesi;
+
+cart->add(sku => 'POM253', name => 'Pomelo',
+    price => 3.00, quantity => 10);
+
+cart->remove(sku => 'POM253');
+
+cart->count();
+
+cart->clear();
+
+cart->total();
+
+cart->subtotal();
+\end{lstlisting}
+\end{frame}
+
+
+\subsection{Payment}
+
+\begin{frame}{Payment}
+\begin{itemize}
+\item Business::OnlinePayment
+\end{itemize}
+\end{frame}
+
+\section{Future}
+
+\subsection{Demo}
+
+\subsection{Admin}
+
 \begin{frame}{Shop break}
 Slides:
 \url{http://www.linuxia.de/talks/eic2013/nitesi-today-future-beamer.pdf}
