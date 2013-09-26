@@ -36,6 +36,22 @@
 \end{frame}
 
 \subsection{Carts}
+\begin{frame}{Cart}
+\begin{itemize}
+\item Multiple carts
+\item Storage in session or database
+\item Combines automatically
+\item Price caching
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Cart Validation}
+\begin{itemize}
+\item SKU, Name, Quantity, Price
+\item Price > 0
+\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Using cart keyword}
 \begin{lstlisting}
 use Dancer::Plugin::Nitesi;
@@ -55,6 +71,7 @@ cart->subtotal();
 \end{lstlisting}
 \end{frame}
 
+\subsection{Account}
 
 \subsection{Payment}
 
@@ -66,6 +83,21 @@ cart->subtotal();
 
 \section{Future}
 
+\subsection{Features}
+\begin{frame}{Features}
+\begin{itemize}
+\item Reviews
+\item Gift Certificates, Coupons
+\end{itemize}
+\end{frame}
+
+\subsection{Development}
+\begin{frame}{Development}
+\begin{itemize}
+\item Dancer::Plugin::Auth::Extensible
+\item DBIx::Class
+\end{itemize}
+\end{frame}
 \subsection{Demo}
 
 \subsection{Admin}
