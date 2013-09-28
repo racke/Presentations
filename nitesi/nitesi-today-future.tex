@@ -114,6 +114,42 @@ cart->subtotal();
 \end{lstlisting}
 \end{frame}
 
+\subsection{Routes}
+
+\begin{frame}[fragile]{Nitesi Routes}
+\begin{description}
+\item[Cart] \verb|/cart| 
+\item[Checkout] \verb|/checkout|
+\item[Navigation]
+\item[Product] 
+\end{description}
+\end{frame}
+
+Navigation and product are inside a catchall route.
+
+\begin{frame}[fragile]{Nitesi Routes}
+\begin{lstlisting}
+ package MyShopApp;
+
+    use Dancer ':syntax';
+    use Dancer::Plugin::Nitesi;
+    use Dancer::Plugin::Nitesi::Routes;
+
+    ...
+
+    shop_setup_routes;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Route Hooks}
+\begin{itemize}
+\item before\_product\_display
+\item before\_cart\_display
+\item before\_checkout\_display
+\item before\_navigation\_display
+\end{itemize}
+\end{frame}
+
 \subsection{Account}
 
 \subsection{Payment}
