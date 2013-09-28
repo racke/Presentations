@@ -151,6 +151,67 @@ Navigation and product are inside a catchall route.
 \end{frame}
 
 \subsection{Account}
+\begin{frame}[fragile]{Accounts}
+\begin{lstlisting}
+post '/login' => sub {
+    if (account->login(username => params('body')->{username},
+                       password => params('body')->{password})) {
+        redirect '/customerservice';
+    }
+    else {
+        redirect '/login';
+    }
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Accounts}
+\begin{lstlisting}
+get '/mywishlist' => sub {
+    if (account->acl(check => 'create_wishlists')) {
+        return template 'mywishlist';
+    }
+
+    account->status(login_info => 'Please login to view wishlist.',
+                    login_continue => 'mywishlist',
+                   )
+
+    redirect '/login';
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Account Manager}
+\begin{frame}{Account manager}
+\begin{itemize}
+\item Account Providers
+\item Login/Logout
+\item Account Information
+\item Login status
+\item Forgot password
+\item Registration
+\end{itemize}
+\end{frame}
+
+\subsubsection{Account Provider}
+\begin{frame}{Account Provider}
+\begin{itemize}
+\item DBI 
+\item LDAP *
+\item Htpasswd * 
+\item OpenID *
+\item OAuth *
+\end{itemize}
+\end{frame}
+
+\subsubsection{Access Control}
+\begin{frame}{Access Control}
+\begin{itemize}
+\item User
+\item Roles
+\item Permissions
+\end{itemize}
+\end{frame}
 
 \subsection{Payment}
 
