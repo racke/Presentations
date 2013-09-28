@@ -160,6 +160,24 @@ Navigation and product are inside a catchall route.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Payment: charge Keyword}
+\begin{lstlisting}
+ $tx = charge(provider => 'Braintree',
+                 amount => cart->total,
+                 first_name => 'Test',
+                 last_name => 'Tester',
+                 card_number => '4111111111111111',
+                 expiration => '0714',
+                 cvc => '222');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Payment: Configuration}
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}
+
 \subsection{API}
 \begin{frame}{API}
 See presentation tomorrow!
