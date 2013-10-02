@@ -1,0 +1,1273 @@
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{ulem} % strikethrough
+\usepackage{beamerthemesplit}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{language=Perl,basicstyle=\footnotesize,tabsize=3,showstringspaces=false}
+
+\title{Dancer Academy - From Zero to Hero}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date{eCommerce Innovation 2013, Hancock, 8th October 2013}
+
+\begin{document}
+\maketitle{}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\tableofcontents
+
+%\section{Hintergrund und Projekte}
+
+\section{Dance floor}
+
+\subsection{American Spaces Applications}
+
+\begin{frame}{American Spaces Applications}
+\begin{itemize}
+\item Dashboard
+\url{https://americanspaces.state.gov}
+\item eLibraryUSA 
+\url{http://elibraryusa.state.gov}
+\item eShop
+\url{https://eshop.state.gov}
+\item LDAP administration
+\end{itemize}
+\end{frame}
+
+\subsection{Why Dancer?}
+
+\begin{frame}{Easy to start with}
+\begin{itemize}
+\item Application ready to go
+\item Syntax easy to understand
+\item Routes and Keywords
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Easy to expand}
+\begin{itemize}
+\item Plugins
+\item Hooks
+\item Engines
+\end{itemize}
+\end{frame}
+
+% \begin{frame}{Projekte}
+% \begin{itemize}
+% \item Dropbox-Klon
+% \item LDAP Benutzerverwaltung
+% \item Procurement für American Corners
+% \end{itemize}
+% \end{frame}
+
+% \subsection{Dropbox}
+% Für die Firma Caithness in New York habe ich einen Dropbox-Klon
+% entwickelt.
+
+% Dropbox demonstriert die automatische Erkennung des MIME-Typs
+% durch Dancer.
+
+% \begin{frame}{Dropbox}
+% \begin{itemize}
+% \item Autoindex
+% \item Upload/Download
+% \item Benutzerverwaltung
+% \end{itemize}
+% \end{frame}
+
+% \subsection{LDAP Benutzerverwaltung}
+% \begin{frame}{LDAP Benutzerverwaltung}
+% \begin{itemize}
+% \item LDAP-Verzeichnis
+% \item Benutzerverwaltung
+% \begin{itemize}
+% \item Adminstrator
+% \item Referrer
+% \item Patron
+% \end{itemize}
+% \end{itemize}
+% \end{frame}
+
+% \subsection{Procurement für American Spaces}
+% \begin{frame}{Procurement für American Spaces}
+% \begin{itemize}
+% \item Warenkorb/Wunschliste
+% \item Genehmigungsprozesse
+% \item LibraryThing
+% \item ISBNDB
+% \end{itemize}
+
+% \url{https://eshop.state.gov/}
+% \end{frame}
+
+\subsection{Quickstart}
+
+\begin{frame}[fragile]{Quickstart I}
+\begin{itemize}
+\item cpanm Dancer
+\item cpanm YAML
+\item dancer -a Dropbox
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Program}
+
+\verb|./bin/app.pl|
+
+\begin{lstlisting}
+
+#!/usr/bin/env perl
+use Dancer;
+use Dropbox;
+dance;
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Module}
+
+\verb|lib/Dropbox.pm|
+
+\begin{lstlisting}
+
+package Dropbox;
+use Dancer ':syntax';
+
+our $VERSION = '0.1';
+
+get '/' => sub {
+    template 'index';
+};
+
+true;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Configuration Files}
+\begin{lstlisting}
+config.yml
+environments/development.yml
+environments/production.yml
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Static Files}
+\begin{lstlisting}
+css/style.css
+css/error.css
+images/perldancer-bg.jpg
+images/perldancer.jpg
+javascripts/jquery.js
+500.html
+404.html
+favicon.ico
+dispatch.cgi
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Template}
+\begin{lstlisting}
+views/index.tt
+views/layouts/main.tt
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Quickstart II}
+\begin{itemize}
+\item cd Dropbox
+\item ./bin/app.pl
+\item x-www-browser \url{http://localhost:3000/}
+\end{itemize}
+\end{frame}
+
+% \subsection{Filebrowser}
+% \begin{frame}{Filebrowser}
+% \begin{itemize}
+% \item List of files
+% \item Template
+% \item Route
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}[fragile]{List of files}
+% \begin{lstlisting}
+% use Dancer::Plugin::Autoindex;
+
+% $files = autoindex('/');
+% \end{lstlisting}
+% \end{frame}
+
+\section{Templates, Routes and Keywords}
+
+\subsection{Templates}
+
+\subsubsection{Layout and Content}
+
+The content will be rendered first and passed to the
+layout renderer, so before_layout_render could mangle
+with it.
+
+The values passed to the template keyword are used
+for both layout and content.
+
+\begin{frame}{Templates}
+\begin{figure}
+\includegraphics[page=1,width=.6\textwidth]{layout.pdf}
+\end{figure}
+\end{frame}{Templates}
+
+\begin{frame}[fragile]{Templates}
+\begin{itemize}
+\item Normal Layout
+\begin{lstlisting}
+template 'index', {name => 'Test'}
+\end{lstlisting}
+\item Specific Layout
+\begin{lstlisting}
+template 'index', {name => 'Test'}, {layout => 'test'}
+\end{lstlisting}
+\item No Layout
+\begin{lstlisting}
+template 'index', {name => 'Test'}, {layout => undef}
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\subsubsection{Filebrowser}
+
+\begin{frame}[fragile]{Template for Filebrowser}
+\lstinputlisting{views/filebrowser.tt}
+\end{frame}
+
+\begin{frame}[fragile]{Route for Filebrowser}
+\begin{lstlisting}
+get '/home' => sub {
+    my $files = autoindex('/');
+
+    template 'filebrowser', {directory => 'Home',
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Configuration}
+Standard config.yml:
+\begin{lstlisting}
+# template engine
+# simple: default and very basic template engine
+template: "simple"
+\end{lstlisting}
+Dropbox config.yml:
+\begin{lstlisting}
+template: "template_toolkit"
+\end{lstlisting}
+\end{frame}
+
+\subsection{Routes}
+
+Für eine Route benötigen wir
+
+\begin{itemize}
+\item HTTP-Methode
+\item Pfad
+\item Subroutine
+\end{itemize}
+
+\begin{frame}{Routes and Keywords}
+\begin{itemize}
+\item HTTP method
+\begin{itemize}
+\item get
+\item post
+\item ...
+\item any
+\end{itemize}
+\item Path
+\item Subroutine
+\end{itemize}
+\end{frame}
+
+Der Pfad für eine Route kann in einer der folgenden
+Weisen angegeben werden.
+
+\begin{frame}{Routes}
+\begin{itemize}
+\item String
+\item Named parameters
+\item Wildcards 
+\begin{itemize}
+\item Splat
+\item Megasplat
+\end{itemize}
+\item Regular expression
+\item Regular expression with captures
+\end{itemize}
+\end{frame}
+
+\subsubsection{String}
+\begin{frame}[fragile]{String}
+\begin{lstlisting}
+get '/home' => sub {
+    my $files = autoindex('/');
+
+    template 'filebrowser', {directory => 'Home',
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Named parameters}
+\begin{frame}[fragile]{Named parameters}
+\begin{lstlisting}
+get '/home/:file' => sub {
+    my $files = autoindex(param('file'));
+
+    template 'filebrowser', {directory => param('file'),
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Splat}
+\begin{frame}[fragile]{Splat}
+\begin{lstlisting}
+get '/images/covers/*.jpg' => sub {
+    my ($isbn) = splat;
+
+    if (-f "public/images/covers/$isbn.jpg") {
+        return send_file "images/covers/$isbn.jpg";
+    }
+
+    status 'not_found';
+    forward 404;
+}
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Megasplat}
+Die einfache Wildcard matcht nur auf einen Teil des Pfads,
+d.h. bis zum nächsten Schrägstrich (Slash).
+
+Mit der doppelten Wildcard (Megasplat) wird einfach der 
+Rest des Pfades gematcht und die \verb|splat|-Funktion
+gibt eine Liste zurück.
+
+\begin{frame}[fragile]{Megasplat}
+\begin{lstlisting}
+https://eshop.state.gov/lostpwd/biz@linuxia.de/e642bd543b9907bd2c06aa485261cb1a849a9f23fc7324bff45ebd35f4efe2cb
+
+get '/lostpwd/**' => sub {
+    my ($email, $hash) = splat;
+
+    form->fill(email => $email,
+               hash => $hash);
+    
+    template('lostpwd_confirm', form => $form);
+}
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Regular Expression}
+
+\begin{frame}[fragile]{Regular Expression}
+
+Catch-All (last route!)
+
+\begin{lstlisting}
+any qr{.*} => sub {
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Regular Expression with Captures}
+
+\begin{frame}[fragile]{Regular Expression with Captures}
+\begin{lstlisting}
+https://dropbox.nite.si/~racke/talks/dancer-beamer.pdf
+
+any qr{^/~(?<user>[^/]+)/(?<file>.*?)/?$} => sub {
+    my ($capts, $user, $file);
+
+    $capts = captures;
+    $file = $capts->{file};
+    $user = $capts->{user};
+
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
+\subsection{Keywords}
+\begin{frame}[fragile]{Keywords}
+\begin{itemize}
+\item get, post, any, put, del, ...
+\item request, params, param
+\item redirect, forward, status, header
+\item config, var, session
+\item from\_json, to\_json, from\_xml, to\_xml
+\end{itemize}
+\end{frame}
+
+\subsubsection{var(s) and session}
+\begin{frame}[fragile]{var(s) and session}
+
+Storing and retrieving data for the current request:
+
+\begin{lstlisting}
+var bar => 'pivo';
+$bar = var 'bar';
+$bar = vars->{bar};
+\end{lstlisting}
+
+Storing and retrieving data from the session:
+
+\begin{lstlisting}
+session username => 'racke@linuxia.de';
+
+if (! session('username')) {
+    redirect uri_for('/login');
+}
+\end{lstlisting}
+
+\end{frame}
+
+\section{Customizing your application}
+
+\begin{frame}{Customizing your application}
+\begin{itemize}
+\item Engines
+\item Hooks
+\item Plugins
+\item Middleware
+\end{itemize}
+\end{frame}
+
+\subsection{Engines}
+\begin{frame}{Engines}
+\begin{itemize}
+\item Templates
+\item Sessions
+\item Logs
+\end{itemize}
+\end{frame}
+
+\subsubsection{Templates}
+\begin{frame}{Template Engines}
+\begin{itemize}
+\item Dancer::Template::Toolkit
+\item Dancer::Template::Xslate
+\item Dancer::Template::TemplateFlute
+\item ... dozens more
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Configuration}
+\begin{lstlisting}
+template: "template_flute"
+
+engines:
+  template_flute:
+    filters:
+      date:
+        options:
+          format: "%m/%d/%Y"
+          strict: 
+            empty: 0
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Sessions}
+\begin{frame}{Session Engines}
+\begin{description}
+\item[Dancer::Session::YAML] 
+File based, development only
+\item[Dancer::Session::Storable]
+File based  
+\item[Dancer::Session::DBI]
+\item[Dancer::Session::Memcached]
+\item[Dancer::Session::MongoDB]
+\item[Dancer::Session::Cookie]
+Session data stored encrypted in a cookie.
+\end{description}
+\end{frame}
+
+Die Session-Engine wird mit \verb|session| konfiguriert,
+ansonsten werden keine Sessions verwendet. Cookies sind
+Voraussetzung für Sessions mit Dancer.
+
+YAML-Sessions und JSON-Sessions sind nur für die Entwicklung gedacht
+
+Alternativen sind u.a.:
+\begin{itemize} 
+\item Storable
+\item Cookie
+\item Memcached
+\item MongoDB
+\end{itemize}
+
+Eine gute Idee ist es die Session Engine für den Produktionsbetrieb
+in \verb|config.yml| zu konfigurieren und für die Entwicklung in
+\verb|environments/development.yml| zu überschreiben.
+
+Im Produktionsbetrieb ist es empfehlenswert die Ablauffrist für
+Sessions zu setzen, sonst ist eine Session für immer gültig.
+
+\begin{frame}[fragile]{Sessions: Storable}
+\begin{itemize} 
+\item Engine \\
+\verb|session: Storable|
+\item Directory \\
+\verb|session_dir: /var/run/dancer-sessions|
+\item Expiration \\
+\verb|session_expires: 8 hours|
+\end{itemize} 
+\end{frame}
+
+\begin{frame}[fragile]{Sessions: Cookie}
+\begin{itemize} 
+\item Engine \\
+\verb|session: Cookie|
+\item Key \\
+\verb|session_cookie_key: kjsdf07234hjf0sdkflj12*&(@*jk|
+\end{itemize} 
+\end{frame}
+
+\subsubsection{Logger Engines}
+\begin{frame}[fragile]{Logger Engines}
+\begin{description}
+\item[Dancer::Logger::Console] 
+\item[Dancer::Logger::File]
+File in logs/ directory, e.g. \verb|logs/production.log|
+\item[Dancer::Logger::Syslog]
+\item[Dancer::Logger::Log4perl]
+\end{description}
+\end{frame}
+
+Die Rotation der Logs für dateibasierte Engines darf nicht vergessen
+werden im Produktionsbetrieb.
+
+\begin{frame}[fragile]{Logger Configuration}
+\begin{itemize} 
+\item Engine \\
+\verb|logger: file|
+\item Directory \\
+\verb|log_path: log|
+\item File \\
+\verb|log_file: error.log|
+\item Format \\
+\verb|logger_format: "%t [%P] %L @%D> %m in %f l. %l"|
+\end{itemize} 
+\end{frame}
+
+\subsection{Hooks}
+
+\begin{frame}[fragile]{Hooks}
+\begin{itemize}
+\item What is a hook?
+\item \verb|before| hook
+\item \verb|before_template_render| hook
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What is a Hook}
+\begin{itemize}
+\item Events inside core and plugins
+\item Hook into the path of execution
+\item Subroutines in your application
+\item Multiple hook routines
+\end{itemize}
+\end{frame}
+
+The before hook is called after a request has been accepted
+and before routes are matched.
+
+\begin{frame}[fragile]{before Hook}
+Password protected site:
+\begin{lstlisting}
+hook 'before' => sub {
+    unless (session('user')
+        || request->path eq '/login'
+        || request->path =~ m%^/lostpwd%
+        ) {
+        redirect '/login';
+    }
+};
+\end{lstlisting}
+Files in public aren't protected!
+\end{frame}
+
+The following information will be added to template tokens:
+
+\begin{description}
+\item[perl_version] Perl version
+\item[dancer_version] Dancer version
+\item[settings] Configuration settings
+\item[request] Request object
+\item[params] Parameters
+\item[vars] Shared variables
+\item[session] Session
+\end{description}
+
+\begin{frame}[fragile]{before\_template\_render Hook}
+\begin{itemize}
+\item \verb|template 'index', {message => 'Hello'}|
+\item add default tokens (params, vars, session)
+\item before\_template\_render hook
+\item rendering
+\item after\_template\_render hook
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{before\_template\_render Hook}
+\begin{lstlisting}
+hook before_template_render => sub {
+    my $tokens = shift;
+    my $menu;
+
+    if (session('user')) {
+        $menu = [{name => 'Logout', url => '/logout'}];
+    }
+    else {
+        $menu = [{name => 'Login', url => '/login'}];
+    }
+
+    $tokens->{menu} = $menu;
+};
+\end{lstlisting}
+\end{frame}
+
+Die folgenden Hooks existieren in Dancer:
+
+\begin{itemize}
+\item before\_deserializer
+\item before\_file\_render
+\item before\_error\_init
+\item before\_error\_render
+\item before\_template\_render
+\item before\_layout\_render
+\item before\_serializer
+\item after\_deserializer
+\item after\_file\_render
+\item after\_template\_render
+\item after\_layout\_render
+\item after\_error\_render
+\end{itemize}
+
+Der after\_file\_render-Hook wird ausgelöst, nachdem eine statische
+Datei (Bild oder CSS-Datei) gesendet wurde.
+
+% \section{Exceptions}
+% Exceptions in Dancer sind nicht objektorientiert, um sie
+% leichtgewichtig und schnell zu halten.
+% \begin{frame}{Exceptions}
+% \end{frame}
+
+\subsection{Plugins}
+What is part of a plugin? A plugin usually defines keywords,
+it can also setup routes for your application and can
+be configured as well.
+
+\begin{frame}{Plugins}
+\begin{itemize}
+\item Features
+\item Keywords
+\item Routes 
+\item Configuration
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Plugins on CPAN}
+\begin{itemize}
+\item Count: more than 100
+\item Overview
+\url{https://metacpan.org/module/Dancer::Plugins}
+\item Search
+\url{https://metacpan.org/search?q=dancer+plugin}
+\end{itemize}
+\end{frame}
+
+Now I'll show you three plugins that a lot of
+we applications are going to need.
+
+\begin{frame}[fragile]{Plugins on CPAN}
+\begin{itemize}
+\item Dancer::Plugin::Database \\
+\verb|database|
+\item Dancer::Plugin::Email \\
+\verb|email|
+\item Dancer::Plugin::Auth::Extensible \\
+\verb|require_login,require_role,...|
+\verb|/login, /login-denied/|
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Database Example}
+\begin{lstlisting}
+my $user = database->quick_select('users',
+    {username => params->{'username'}});
+
+if ($user) {
+    session user => params->{'username'};
+}
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Database Configuration}
+\begin{lstlisting}
+plugins:
+  Database: 
+    driver: Pg
+    database: dropbox
+    username: vienna
+    password: nevairbe
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{More SQL Plugins}
+\begin{itemize}
+\item Dancer::Plugin::DBIC
+\item Dancer::Plugin::SimpleCRUD
+\item ...
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Email Example}
+\begin{lstlisting}
+$message = template('lostpwd_email', 
+       {password => $password, url => $url},
+       {layout => undef});
+	
+email ({type => 'html',
+        from => 'service@linuxia.de',
+        to => param('email'),
+        subject => 'Forgot password',
+        message => $message});
+\end{lstlisting}
+\end{frame} 
+
+\begin{frame}[fragile]{Dancer::Plugin::Email Redirect}
+\begin{itemize}
+\item Module:
+
+\verb|Email::Sender::Transport::Redirect|
+\item Configuration:
+\begin{lstlisting}
+plugins:
+  Email:
+    transport:
+      Sendmail:
+        redirect_address: biz@icdev.de
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible require\_login}
+\begin{lstlisting}
+get '/home/**' => require_login sub {
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible require\_role}
+\begin{lstlisting}
+get '/accounts' => require_role Administrator sub {
+    template 'accounts', ...
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dancer::Plugin::Auth::Extensible Providers}
+\begin{itemize}
+\item Config
+\item Unix
+\item Database
+\item LDAP
+\item Subclass
+\verb|D::P::Auth::Extensible::Provider::Base|
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Write Your Own Plugin}
+\begin{lstlisting}
+package Dancer::Plugin::SSO;
+
+use Dancer::Plugin;
+
+register sso_generate_token => sub {
+...
+};
+
+register_plugin;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Hooks in Your Own Plugin}
+Plugin:
+\begin{lstlisting}
+register_hook qw/sso_login sso_failure/;
+\end{lstlisting}
+Application:
+\begin{lstlisting}
+hook sso_login => sub {
+    my $user_ref = shift;
+
+    session user => $user_ref->username;
+};
+\end{lstlisting}
+\end{frame}
+
+\subsection{Middleware}
+\begin{frame}[fragile]{Middleware Example}
+\begin{lstlisting}
+#!/usr/bin/env perl
+
+use Dancer;
+use Dropbox;
+use Plack::Builder;
+
+my $app = sub {
+    my $env = shift;
+    my $request = Dancer::Request->new(env => $env);
+    Dancer->dance($request);
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Middleware Example}
+\begin{lstlisting}
+builder {
+    enable SizeLimit => (
+                         max_unshared_size_in_kb => 102400, # 100 Mb
+                        check_every_n_requests  => 10,
+                        );
+
+    $app;
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Middleware in Configuration}
+\begin{lstlisting}
+plack_middlewares: 
+  -
+    - SizeLimit
+    - max_unshared_size_in_kb 
+    - 102400
+\end{lstlisting}
+\end{frame}
+
+\section{Download/Upload}
+\begin{frame}[fragile]{Download/Upload}
+\begin{itemize}
+\item File download
+\item Upload object
+\item Upload form + code
+\end{itemize}
+\end{frame}
+
+\subsection{Download}
+\begin{frame}[fragile]{File Download}
+\begin{lstlisting}
+get '/home/**' => sub {
+    my ($parts) = splat;
+    my $path_relative = join('/', @$parts);
+    my $path = autoindex_file_path($path_relative);
+
+    if (-f $path) {
+        return send_file $path, system_path => 1;
+    }
+    elsif (-d $path) {
+        return template 'filebrowser', {directory => pop(@$parts),
+                               files => autoindex($path_relative)};
+    }
+};
+\end{lstlisting}
+\end{frame}
+
+\subsection{Upload Object}
+\begin{frame}[fragile]{Upload Object}
+\begin{lstlisting}
+upload('upload_file') => Dancer::Request::Upload
+\end{lstlisting}
+
+\begin{description}
+\item[filename] Filename sent by user
+\item[basename] Stripped filename
+\item[size] Size in bytes
+\item[type] Content type
+\item[content]  File content
+\item[copy\_to] Copies temporary file
+\end{description}
+\end{frame}
+
+\subsection{Upload HTML Form}
+\begin{frame}[fragile]{Upload HTML-Form}
+\begin{lstlisting}
+<div class="upload">
+<h2>Upload file</h2>
+<form name="upload" id="upload_form" action="" method="post"
+enctype="multipart/form-data">
+<input type="file" name="upload_file"><br>
+<input type="submit" value="OK">
+</form>
+</div>
+\end{lstlisting}
+\end{frame}
+
+Mit dem upload-Schlüsselwort erhalten wir ein
+Dancer::Request::Upload-Objekt.
+
+\subsection{Upload Route}
+\begin{frame}[fragile]{Upload Route}
+\begin{lstlisting}
+post '/home/**' => sub {
+    my ($parts) = splat;
+    my $path_relative = join('/', @$parts);
+    my $path = autoindex_file_path($path_relative);
+
+    if ($upload_file = upload('upload_file')) {
+        # upload file to directory
+        my $target_file = join('/', $path, $upload_file->basename);
+		
+        unless ($upload_file->copy_to($target_file)) {
+            die 'Upload failed';
+        }
+    }
+
+    redirect "/home/$path_relative";
+};
+\end{lstlisting}
+\end{frame}
+
+% \subsection{Redirect/Forward}
+% \begin{frame}[fragile]{Redirect/Forward}
+% \begin{lstlisting}
+% redirect "~$user->{username}/";
+
+% \end{lstlisting}
+% \end{frame}
+
+\section{Security and Error Handling}
+
+\subsection{Security Concerns}
+\begin{frame}{Security Concerns}
+\begin{itemize}
+\item Input sanitization
+\item Path traversal
+\item XSS
+\item Database injection (SQL/LDAP)
+\item POST request limits
+\end{itemize}
+\end{frame}
+
+\subsubsection{Path traversal}
+\begin{frame}[fragile]{Path traversal}
+Example:
+\begin{lstlisting}
+https://dropbox.nite.si/dropbox/racke@linuxia.de/../../../../etc/passwd
+\end{lstlisting}
+Protection:
+\begin{lstlisting}
+if (grep $_ eq '..', @path) {
+    return status 403; 
+}
+\end{lstlisting}
+\end{frame}
+
+\subsection{Error Handling}
+\subsubsection{500}
+\begin{frame}[fragile]{Error Handling: 500}
+\begin{itemize}
+\item Static File: \verb|public/500.html|
+\item Template: \verb|error_template|
+\item Stacktrace: \verb|show_errors|
+\end{itemize}
+\end{frame}
+
+\subsubsection{404}
+\begin{frame}[fragile]{Error Handling: 404}
+\begin{itemize}
+\item Static File: \verb|public/404.html|
+\item 
+\begin{lstlisting}
+any qr{.*} => sub {
+    status 'not_found';
+    template 'my_404', { path => request->path };
+};
+\end{lstlisting}
+\item Prevent XSS attacks
+\end{itemize}
+\end{frame}
+
+% thin wrapper around CPAN module
+% add keywords (avoid overlaps)
+% add configuration
+
+% \subsection{Writing Plugins}
+% \begin{frame}{Writing Plugins}
+% \begin{itemize}
+% \item register
+% \item register\_plugin
+% \item plugin\_setting
+% \end{itemize}
+% \end{frame}
+
+% \subsection{Plugins and Hooks}
+% \begin{frame}[fragile]{Plugins and Hooks}
+% \begin{lstlisting}
+% register_hook('before_cart_add');
+
+% execute_hook('before_cart_add', ...);
+% \end{lstlisting}
+% \end{frame}
+
+\section{Deployment}
+
+\begin{frame}{Deployment}
+\begin{itemize}
+\item Scenarios
+\item Starman
+\item Nginx
+\item Scripts
+\end{itemize}
+\end{frame}
+
+% \subsection{Logs}
+
+Die Logger-Engine wird mit \verb|logger| konfiguriert,
+ansonsten werden Logs erzeugt.
+
+Das Format für die Logs wird mit \verb|logger_format| definiert, siehe
+\url{http://search.cpan.org/perldoc?Dancer::Logger::Abstract#logger_format}.
+
+Verfügbare Engines sind u.a.:
+\begin{itemize} 
+\item console
+\item file
+\item syslog *
+\item log4perl *
+\end{itemize}
+
+
+
+\subsection{Scenarios}
+Die möglichen Szenarien für ein Deployment von Dancer findet man
+in der Dancer-Dokumentation:
+\url{http://search.cpan.org/perldoc?Dancer::Deployment}.
+
+\begin{frame}[fragile]{Scenarios}
+\begin{itemize} 
+\item Standalone \\
+  \verb|./bin/app.pl|
+\item CGI, FastCGI
+\item plackup
+\begin{itemize}
+\item Starman
+\item Twiggy
+\item Corona
+\end{itemize}
+\item Reverse Proxy
+\end{itemize} 
+\end{frame}
+
+\begin{frame}[fragile]{Scenarios: Reverse Proxy}
+\begin{itemize}
+\item Server
+\begin{itemize} 
+\item Apache
+\item nginx
+\item Perlbal
+\end{itemize}
+\item Dancer Configuration \\
+\verb|behind_proxy: 1|
+\end{itemize} 
+\end{frame}
+
+\subsection{Starman}
+\begin{frame}[fragile]{plackup and Starman}
+\begin{itemize} 
+\item Command line
+\begin{lstlisting}
+plackup -E production 
+        -s Starman \ 
+        --workers=5 \
+        --pid /home/racke/Dropbox/run/Dropbox.pid \
+        -p 5000 \ 
+        -a bin/app.pl \
+        -D
+\end{lstlisting}
+\item Init script
+\begin{itemize} 
+\item \verb|Daemon::Control|
+\end{itemize} 
+\end{itemize} 
+\end{frame}
+
+\subsection{Nginx}
+    
+Wir betreiben Nginx als "Reverse Proxy" und benutzen Starman als
+Plack-Backend.
+
+Hier die entsprechende Konfiguration (vereinfacht) für einen virtuellen
+Host:
+
+\begin{frame}[fragile]{Nginx Configuration}
+\begin{lstlisting}
+server {
+    listen 80;
+    server_name elibraryusa.state.gov;
+    root /home/dancer/Elib/public;
+
+    ...
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nginx Configuration}
+\begin{lstlisting}
+server {
+    ...
+
+    location / {
+        try_files $uri @proxy;
+        access_log off;
+        expires max;
+    }
+
+    ...
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nginx Configuration}
+\begin{lstlisting}
+server {
+   ...
+
+   location @proxy {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass       http://localhost:5001;
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nginx Configuration SSL}
+\begin{lstlisting}
+server {
+   listen 213.129.249.66:443;
+   server_name eshop.state.gov;
+   root /home/interch/eShop/public;
+
+   ssl on;
+   ssl_certificate_key  /etc/ssl/private/eshop.state.gov.key;
+   ssl_certificate    /etc/ssl/certs/eshop.state.gov.pem;
+
+   ...
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nginx Configuration SSL}
+\begin{lstlisting}
+server {
+   ...
+
+   location @proxy {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_pass       http://localhost:5001;
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+\subsection{Scripts}
+Dancer-Skripts sollten innerhalb der Dancer-Applikation
+liegen, gut geeignet ist das bin/-Verzeichnis. Ein symbolischer
+Link is ausreichend. Ansonsten wird die Konfiguration nicht gefunden.
+
+Eine Ausgabe von Meldungen auf der Konsole ist wünschenswert, mit
+\verb|%m| wird lediglich die reine Meldung ausgegeben.
+ 
+\begin{frame}[fragile]{Scripts}
+\begin{lstlisting}
+use Dancer ':script';
+
+set logger => 'console';
+set logger_format => '%m';
+\end{lstlisting}
+\end{frame}
+
+% \subsection{Tests}
+
+% \begin{frame}[fragile]{Tests}
+% \begin{lstlisting}
+% use Test::More tests => 42;
+% use Dancer::Test;
+
+% use Dancer ':tests';
+% \end{lstlisting}
+% \end{frame}
+
+\section{Conclusion and Future}
+
+\subsection{Dancer Problems}
+\begin{frame}[fragile]{Dancer Problems}
+\begin{itemize}
+\item Merging configuration files
+\item \verb|prefix| is global
+\item Session key deletion
+\verb|session user => undef| 
+\end{itemize}
+\end{frame}
+
+\subsection{Dancer2}
+\begin{frame}{Dancer2}
+
+\begin{itemize} 
+\item Pure OO (Moo)
+\item \sout{Globals}
+\item Scoping for Subapplications
+\item YAML => Config::Any 
+\end{itemize}
+
+\end{frame}
+
+\subsection{Community}
+\begin{frame}[fragile]{Community}
+Web: \url{http://perldancer.org/} 
+
+Github: \url{git://github.com/PerlDancer/Dancer.git}
+\url{git://github.com/PerlDancer/Dancer2.git}
+
+Dropbox plugin: \url{https://metacpan.org/module/Dancer::Plugin::Dropbox}
+
+IRC: \#dancer @ irc.perl.org
+
+Contribution: Dancer::Development
+\end{frame}
+
+\begin{frame}{The End}
+Slides:
+\url{http://www.linuxia.de/talks/eic2013/dancer-beamer.pdf}
+\end{frame}
+\end{document}

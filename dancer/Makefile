@@ -1,7 +1,7 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
 
 TEXFILE=dancer-beamer
-INPUTS=dancer-beamer.tex dancer-de-beamer.tex
+INPUTS=dancer-beamer.tex dancer-de-beamer.tex dancer-training-beamer.tex
 OUTPUTS=$(INPUTS:%.tex=%.pdf)
 
 all: $(OUTPUTS); make clean
