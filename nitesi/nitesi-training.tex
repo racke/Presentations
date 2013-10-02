@@ -24,6 +24,54 @@
 
 \tableofcontents
 
+\section{Separation}
+\begin{frame}{Principle of Separation}
+\begin{itemize}
+\item Data
+\item Template
+\item Layout
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{ITL example}
+\begin{lstlisting}
+[fly-list code="[data session arg]"]
+<div>
+<p>[L]Description[/L]: [item-description]</p>
+<p>[L]Price[/L]: [item-price]</p>
+</div>
+[query ...]
+[/query]
+[/fly-list]
+\end{lstlisting}
+\end{frame}
+
+In this example we see a couple of problems.
+
+\begin{frame}{ITL problems}
+\begin{itemize}
+\item Code duplication
+\item ITL deserts
+\item Queries inside ITL
+\item Interaction with designers
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solutions}
+\begin{itemize}
+\item Fetch data inside code / embed with JSON
+\item Better templating engine
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solutions}
+\begin{itemize}
+\item Template::Flute
+\item Data: Values, Iterators
+\item Template: HTML, Specification
+\end{itemize}
+\end{frame}
+
 \section{Products}
 
 \begin{frame}[fragile]{Products}
