@@ -105,7 +105,16 @@ Different types: categories, menus
 
 \subsubsection{Variants}
 \begin{frame}{Variants}
+\begin{itemize}
+\item Each variant is a product
+\item GTIN (ISBN, EAN, UPC)
+\item Data in product attributes
+\end{itemize}
 \end{frame}
+
+For variants, we are usually creating one entry in products table per
+product. This make sense as we will usually have a different GTIN/EAN/UPC
+for each variant.
 
 \subsection{Carts}
 \begin{frame}{Cart}
