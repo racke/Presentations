@@ -309,7 +309,16 @@ get '/mywishlist' => sub {
 
 \begin{frame}[fragile]{Payment: Configuration}
 \begin{lstlisting}
-...
+plugins:
+  Nitesi:
+    Payment:
+      default_provider: Braintree
+      providers:
+        Braintree:
+          merchant_id: sai8eicieki8aehe 
+          public_key: vetheifaezaigh8u 
+          private_key: oov8keiquiughie0
+#         test_transaction: 1
 \end{lstlisting}
 \end{frame}
 
