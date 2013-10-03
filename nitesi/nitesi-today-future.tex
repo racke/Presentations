@@ -81,17 +81,6 @@ hooks, plugins and proper database based carts.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Interchange ``Routes''}
-\begin{itemize}
-\item ActionMap
-\item AutoPage
-\item FlyPage
-\item MissingPage
-\end{itemize}
-\end{frame}
-
-ActionMap is a very limited route, as you can only
-specify the first part of the path.
 
 \begin{frame}{Template::Flute}
 \end{frame}
@@ -173,6 +162,36 @@ cart->subtotal();
 \end{frame}
 
 \subsection{Routes}
+
+Routes was an idea introduced by Ruby's Sinatra framework (which we often
+credit) and takes a much cleaner and clearer approach to cut down on the
+added hierarchy complexity that MVC can add.
+
+Routes are basically paths the user takes which are attached to code that
+will be triggered when a user reaches the specific route.
+
+(from http://advent.perldancer.org/2010/2, SawyerX)
+
+\begin{frame}{Routes}
+\begin{itemize}
+\item Routes in Web Frameworks
+\item Interchange ``Routes''
+\item Nitesi Routes
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Interchange ``Routes''}
+\begin{itemize}
+\item ActionMap
+\item AutoPage
+\item FlyPage
+\item MissingPage
+\end{itemize}
+\end{frame}
+
+ActionMap is a very limited route, as you can only
+specify the first part of the path.
 
 \begin{frame}[fragile]{Nitesi Routes}
 \begin{description}
