@@ -1,6 +1,6 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
 
-INPUTS=nitesi-today-future-beamer.tex nitesi-training-beamer.tex
+INPUTS=nitesi-today-future-beamer.tex nitesi-training-beamer.tex nitesi-api-beamer.tex
 OUTPUTS=$(INPUTS:%.tex=%.pdf)
 
 all: $(OUTPUTS) clean
