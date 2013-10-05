@@ -108,6 +108,46 @@ shop_product->create();
 
 \section{Task I: Implement wishlists}
 
+
+\subsection{Carts}
+\begin{frame}{Cart}
+\begin{itemize}
+\item Multiple carts
+\item Storage in session or database
+\item Combines automatically
+\item Price caching
+\end{itemize}
+\end{frame}
+
+Interchange has a saved carts feature, but the way to store it is
+really awkward.
+
+\begin{frame}{Cart Validation}
+\begin{itemize}
+\item SKU, Name, Quantity, Price
+\item Price > 0
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Using cart keyword}
+\begin{lstlisting}
+use Dancer::Plugin::Nitesi;
+
+cart->add(sku => 'POM253', name => 'Pomelo',
+    price => 3.00, quantity => 10);
+
+cart->remove(sku => 'POM253');
+
+cart->count();
+
+cart->clear();
+
+cart->total();
+
+cart->subtotal();
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Shop break}
 Slides:
 \url{http://www.linuxia.de/talks/eic2013/nitesi-training-beamer.pdf}
