@@ -153,15 +153,7 @@ shop_product->create();
 \end{itemize}
 \end{frame}
 
-\section{Project I: Implement wishlists}
-\begin{frame}{Implement wishlists}
-\begin{itemize}
-\item Carts
-\item Wishlists
-\end{itemize}
-\end{frame}
-
-\subsection{Carts}
+\section{Carts}
 \begin{frame}{Cart}
 \begin{itemize}
 \item Multiple carts
@@ -179,6 +171,59 @@ really awkward.
 \item SKU, Name, Quantity, Price
 \item Price > 0
 \end{itemize}
+\end{frame}
+
+\subsection{Exercise I: Cart error}
+\begin{frame}[fragile]{Add container for error}
+\verb|views/cart.html|
+
+\begin{lstlisting}
+
+<div class="text-error">
+    Cart error
+</div>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Add container for error}
+\verb|views/cart.xml|
+
+\begin{lstlisting}
+
+<container name="error" class="text-error" value="error">
+<value name="error" class="text-error"/>
+</container>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Add container for error}
+\verb|lib/Angler.pm|
+
+\begin{lstlisting}
+
+hook 'before_cart_display' => sub {
+    my $values = @_;
+
+    $values->{error} = 'Testing error';
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Add container for error}
+\verb|lib/Angler.pm|
+
+\begin{lstlisting}
+
+hook 'before_cart_display' => sub {
+    my $values = @_;
+
+    my $item = cart->add(sku => 'WBSG2003',
+                      name => 'ZXL FLY ROD SERIES',
+                      price => 0);
+
+    $values->{error} = cart->error;
+};
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{Using cart keyword}
@@ -199,6 +244,16 @@ cart->total();
 cart->subtotal();
 \end{lstlisting}
 \end{frame}
+
+\section{Project I: Implement wishlists}
+\begin{frame}{Implement wishlists}
+\begin{itemize}
+\item Carts
+\item Wishlists
+\end{itemize}
+\end{frame}
+
+
 
 \subsection{Wishlists}
 
