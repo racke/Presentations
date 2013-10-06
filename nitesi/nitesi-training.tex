@@ -106,8 +106,7 @@ shop_product->create();
 \end{itemize}
 \end{frame}
 
-\section{Task I: Implement wishlists}
-
+\section{Project I: Implement wishlists}
 
 \subsection{Carts}
 \begin{frame}{Cart}
@@ -145,6 +144,19 @@ cart->clear();
 cart->total();
 
 cart->subtotal();
+\end{lstlisting}
+\end{frame}
+
+\subsection{Wishlists}
+
+\begin{frame}{Task I}
+Add product to wishlist on flypage access
+\end{frame}
+
+\begin{frame}[fragile]{Wishlists}
+\begin{lstlisting}
+cart('wishlist')->add((sku => 'POM253', name => 'Pomelo',
+    price => 3.00, quantity => 10);
 \end{lstlisting}
 \end{frame}
 
