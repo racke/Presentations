@@ -24,7 +24,19 @@
 
 \tableofcontents
 
-\section{Separation}
+\section{Introduction}
+
+\subsection{Targets}
+\begin{frame}{Targets}
+\begin{itemize}
+\item Getting in touch with Nitesi
+\item Implementing wishlists
+\item Payment with PayPal
+\item Product Filters with Solr
+\end{itemize}
+\end{frame}
+
+\subsection{Separation}
 \begin{frame}{Principle of Separation}
 \begin{itemize}
 \item Data
@@ -73,15 +85,15 @@ In this example we see a couple of problems.
 \end{itemize}
 \end{frame}
 
-\section{Template::Flute}
-\subsection{Data}
+\subsection{Template::Flute}
+\subsubsection{Data}
 \begin{frame}[fragile]{Data}
 \begin{lstlisting}
 $values{cart} = cart->items;
 \end{lstlisting}
 \end{frame}
 
-\subsection{Specification}
+\subsubsection{Specification}
 \begin{frame}[fragile]{Specification}
 \begin{lstlisting}
 <specification>
@@ -94,7 +106,7 @@ $values{cart} = cart->items;
 \end{lstlisting}
 \end{frame}
 
-\subsection{Layout}
+\subsubsection{Layout}
 \begin{frame}[fragile]{Layout}
 \begin{lstlisting}
 <tr class="cartitem">
