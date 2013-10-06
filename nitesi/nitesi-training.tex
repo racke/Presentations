@@ -73,6 +73,41 @@ In this example we see a couple of problems.
 \end{itemize}
 \end{frame}
 
+\section{Template::Flute}
+\subsection{Data}
+\begin{frame}[fragile]{Data}
+\begin{lstlisting}
+$values{cart} = cart->items;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Specification}
+\begin{frame}[fragile]{Specification}
+\begin{lstlisting}
+<specification>
+<list name="cart" class="cartitem" iterator="cart">
+<param name="name"/>
+<param name="price" filter="currency"/>
+<param name="qty" field="quantity"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsection{Layout}
+\begin{frame}[fragile]{Layout}
+\begin{lstlisting}
+<tr class="cartitem">
+   <td class="name">Simms replacement laces</td>
+   <td>
+       <input class="qty" value="2" />
+   </td>
+   <td class="td-right price">$24.55</td>
+   <td class="td-right ">$49.10</td>
+</tr>
+\end{lstlisting}
+\end{frame}
+
 \section{Products}
 \begin{frame}[fragile]{products Table}
 \begin{itemize}
