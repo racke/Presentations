@@ -249,13 +249,17 @@ template 'index', {name => 'Test'}, {layout => undef}
 \subsubsection{Filebrowser}
 
 \begin{frame}[fragile]{Template for Filebrowser}
+\verb|views/filebrowser.tt|
+
 \lstinputlisting{views/filebrowser.tt}
 \end{frame}
 
 \begin{frame}[fragile]{Route for Filebrowser}
 \begin{lstlisting}
+use Dancer::Plugin::Dropbox::AutoIndex qw/autoindex/;
+
 get '/home' => sub {
-    my $files = autoindex('/');
+    my $files = autoindex($ENV{HOME});
 
     template 'filebrowser', {directory => 'Home',
                              files => $files,
