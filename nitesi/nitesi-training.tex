@@ -153,6 +153,45 @@ shop_product->create();
 \end{itemize}
 \end{frame}
 
+\section{Accounts}
+\begin{frame}{Accounts}
+\begin{itemize}
+\item User
+\item Roles
+\item Permissions
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{account Keyword}
+\begin{lstlisting}
+account->login(username => 'racke@e@linuxia.de',
+               password => 'nevairbe');
+
+account->acl(check => 'view_prices');
+
+account->logout();
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{account Keyword}
+\begin{lstlisting}
+account->create(email => 'racke@linuxia.de',
+                          first_name => 'Stefan',
+                          last_name => 'Hornburg',
+                          password => 'nevairbe');
+
+account->become('racke@linuxia.de');
+\end{lstlisting}
+\end{frame}
+
+\subsection{Exercise I: Create account and login}
+\begin{frame}{Exercise I: Create account and login}
+\begin{itemize}
+\item Create account with a Dancer script
+\item Login to the shop
+\end{itemize}
+\end{frame}
+
 \section{Carts}
 \begin{frame}{Cart}
 \begin{itemize}
@@ -173,7 +212,7 @@ really awkward.
 \end{itemize}
 \end{frame}
 
-\subsection{Exercise I: Cart error}
+\subsection{Exercise II: Cart error}
 \begin{frame}[fragile]{Add container for error}
 \verb|views/cart.html|
 
