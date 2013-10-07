@@ -1210,6 +1210,11 @@ Eine Ausgabe von Meldungen auf der Konsole ist wünschenswert, mit
  
 \begin{frame}[fragile]{Scripts}
 \begin{lstlisting}
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+
 use Dancer ':script';
 
 set logger => 'console';
