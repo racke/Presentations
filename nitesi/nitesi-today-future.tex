@@ -39,7 +39,9 @@ compared to young and fast projects like Dancer.
 We tried to alleviate these problems through WellWell, which introduced
 hooks, plugins and proper database based carts.
 
-\section{Motivation}
+\section{Motivation \& Separation}
+
+\subsection{Motivation}
 \begin{frame}{Motivation}
 \begin{itemize}
 \item Modern Perl
@@ -49,7 +51,96 @@ hooks, plugins and proper database based carts.
 \end{itemize}
 \end{frame}
 
+\subsection{Separation}
+\begin{frame}{Principle of Separation}
+\begin{itemize}
+\item Data
+\item Template
+\item Layout
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{ITL example}
+\begin{lstlisting}
+[fly-list code="[data session arg]"]
+<div>
+<p>[L]Description[/L]: [item-description]</p>
+<p>[L]Price[/L]: [item-price]</p>
+</div>
+[query ...]
+[/query]
+[/fly-list]
+\end{lstlisting}
+\end{frame}
+
+In this example we see a couple of problems.
+
+\begin{frame}{ITL problems}
+\begin{itemize}
+\item Eierlegende Wollmilchsau
+\item Code duplication
+\item ITL deserts
+\item Queries inside ITL
+\item Interaction with designers
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solutions}
+\begin{itemize}
+\item Fetch data inside code / embed with JSON
+\item Better templating engine
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solutions}
+\begin{itemize}
+\item Template::Flute
+\item Data: Values, Iterators
+\item Template: HTML, Specification
+\end{itemize}
+\end{frame}
+
+\subsection{Template::Flute}
+\subsubsection{Data}
+\begin{frame}[fragile]{Data}
+\begin{lstlisting}
+$values{cart} = cart->items;
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Specification}
+\begin{frame}[fragile]{Specification}
+\begin{lstlisting}
+<specification>
+<list name="cart" class="cartitem" iterator="cart">
+<param name="name"/>
+<param name="price" filter="currency"/>
+<param name="qty" field="quantity"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Layout}
+\begin{frame}[fragile]{Layout}
+\begin{lstlisting}
+<tr class="cartitem">
+   <td class="name">Simms replacement laces</td>
+   <td>
+       <input class="qty" value="2" />
+   </td>
+   <td class="td-right price">$24.55</td>
+   <td class="td-right ">$49.10</td>
+</tr>
+\end{lstlisting}
+\end{frame}
+
 \section{Today}
+\begin{frame}{Nitesi Projects}
+\url{https://eshop.state.gov}
+\url{http://51.camp.westbranchangler.com:9051}
+\end{frame}
+
 \begin{frame}{Today}
 \begin{itemize}
 \item Eco System
@@ -79,10 +170,6 @@ hooks, plugins and proper database based carts.
 \item Engines
 \item Plugins
 \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Template::Flute}
 \end{frame}
 
 \subsection{Navigation \& Products}
