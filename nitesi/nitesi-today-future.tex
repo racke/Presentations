@@ -397,9 +397,36 @@ See presentation tomorrow!
 \subsubsection{Query}
 \begin{frame}{Query}
 \begin{itemize}
+\item Nitesi::Query::DBI
 \item SQL::Abstract(::More)
-\item reblessed \$dbh
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Query}
+\begin{lstlisting}
+$query = Nitesi::Query::DBI->new(dbh => $dbh);
+ 
+$query->select(table => 'products',
+               fields => [qw/sku name price/],
+               where => {price < 5},
+               order => 'name',
+               limit => 10);
+ 
+$query->insert('products', 
+    {sku => '9780977920150', name => 'Modern Perl'});
+$query->update('products', 
+    {media_format => 'CD'}, {media_format => 'CDROM'});
+$query->delete('products', {inactive => 1});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Query}
+\begin{lstlisting}
+$query->select(join => 'user_roles rid=rid roles',
+    where => { roles.name => {-ilike => 'adm%' },
+    fields => [qw/roles.rid roles.name],
+    );
+\end{lstlisting}
 \end{frame}
 
 \section{Future}
