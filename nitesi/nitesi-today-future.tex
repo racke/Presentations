@@ -98,7 +98,54 @@ Unlimited depth: not recommended.
 Different types: categories, menus
 
 \subsection{Products}
-\begin{frame}{Products}
+\begin{frame}[fragile]{Nitesi::Product}
+\begin{lstlisting}
+$product = shop_product('WBSG2003');
+$product->name;
+$product->description;
+$product->price;
+$product->inactive;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Subclass Nitesi::Product}
+\begin{lstlisting}
+package Angler::Product;
+
+use warnings;
+use strict;
+
+use Moo;
+use base 'Nitesi::Product';
+
+has image => (
+    is => 'rw',
+);
+
+1;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Subclass Nitesi::Product}
+\begin{lstlisting}
+plugins:
+  Nitesi:
+    Product:
+     class: Angler::Product
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Subclass Nitesi::Product}
+\begin{lstlisting}
+plugins:
+  Nitesi:
+    Product:
+     class: Angler::Product
+     attributes:
+       name: description
+       short_description: comment_short
+       description: comment
+\end{lstlisting}
 \end{frame}
 
 \subsubsection{Pricing}
