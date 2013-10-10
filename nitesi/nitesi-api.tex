@@ -46,6 +46,210 @@ XMLRPC vs REST
 \end{itemize}
 \end{frame}
 
+\begin{frame}{ERP Solutions}
+\begin{itemize}
+\item Dataident
+\item AdvanceID
+\end{itemize}
+\end{frame}
+
+\begin{frame}{OpenERP}
+\begin{itemize}
+\item Ecoservice Interchange ERP Connect
+\item XMLRPC API for Interchange
+\end{itemize}
+\end{frame}
+
+\section{ERP Connect}
+\subsection{Export}
+\begin{frame}{Export}
+\begin{itemize}
+\item Categories
+\item Products and Inventory
+\item Product images
+\item Price lists
+\item Partners
+\end{itemize}
+\end{frame}
+
+We only synchronise records which have been
+changed since last export.
+
+\subsection{Import}
+\begin{frame}{Import}
+\begin{itemize}
+\item Orders
+\end{itemize}
+\end{frame}
+
+\section{XMLRPC API}
+\begin{frame}{XMLRPC API}
+\begin{itemize}
+\item Magento API
+\url{http://www.magentocommerce.com/wiki/doc/webservices-api/api/}
+\item Dancer
+\item Nitesi Database Schema
+\url{https://metacpan.org/module/Nitesi::Database::Schema}
+\item RPC::XML
+\end{itemize}
+\end{frame}
+
+\subsection{Workflow}
+\begin{frame}{Workflow}
+\begin{itemize}
+\item Create instance of RPC::XML::Server
+\item Add functions for our API
+\item Dispatch requests
+\item Mapping values
+\item Return result
+\end{itemize}
+\end{frame}
+
+\subsection{RPC::XML}
+\begin{frame}[fragile]{RPC::XML}
+\begin{lstlisting}
+use RPC::XML qw/:types/;
+use RPC::XML::Server;
+
+# force encoding to UTF-8
+$RPC::XML::ENCODING = 'utf-8';
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{RPC::XML::Server Object}
+\begin{lstlisting}
+my %fault_table = (2 => [2 => '%s'],
+                   100 => [100 => '%s'],
+                   ..
+                   107 => [107 => '%s'],
+);
+
+$rpc = RPC::XML::Server->new(no_http => 1, 
+    fault_table => \%fault_table);
+
+# login function
+$rpc->add_function({name => 'login', code => \&login});
+\end{lstlisting}
+\end{frame}
+
+no_http
+
+If passed with a true value, prevents the creation and storage of the
+HTTP::Daemon object. This allows for deployment of a server object in other
+environments. Note that if this is set, the server_loop method described
+below will silently attempt to use the Net::Server module.
+
+\begin{frame}[fragile]{RPC\_STRING}
+\begin{lstlisting}
+sub login {
+    my (@args) = @_;
+    my ($session_id);
+
+    if (account->login(username => $args[0],
+		       password => $args[1])) {
+        # login successful
+        $session_id = session->id;
+
+        # force string type, otherwise we return a session id with .0 appended
+        # to the client
+
+        return RPC_STRING($session_id);
+    }
+    else {
+        return $rpc->server_fault(2, 'Access denied');
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dispatch}
+\begin{lstlisting}
+prefix '/api/rpc/0.001';
+
+any '/' => sub {
+    $xml = request->body;
+
+    $rpc ||= setup();
+
+    eval {
+        $resp = $rpc->dispatch($xml);
+    };
+
+    if ($resp && $resp->is_fault) {
+        content_type 'text/xml';
+        return $resp->as_string;
+    }
+
+    if (ref($resp)) {
+        return $resp->as_string;
+    }
+
+    return $@;
+    
+    status 400;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Create Category}
+\begin{lstlisting}
+sub category_create {
+    my ($parent, $data) = @_;
+    my ($cat, %input);
+
+    %input = _reverse_map('category', $data);
+
+    if ($parent) {
+        $input{parent} = $parent;
+    }
+
+    $cat = shop_navigation->create(%input);
+
+    return $cat->code;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Update Category}
+\begin{lstlisting}
+sub category_update {
+    my ($code, $data) = @_;
+    my (%args);
+
+    unless (shop_navigation($code)->load) {
+        return $rpc->server_fault(102, 'Category not exists');
+    }
+
+    %args = _reverse_map('category', $data);
+    
+    debug("Updating category $code with: ", \%args);
+
+    my $p = shop_navigation($code)->update(%args);
+
+    return $p->code;
+}
+\end{lstlisting}
+\end{frame}
+
+Currently no input validation.
+
+\section{Conclusion}
+
+\begin{frame}{Experiences}
+\begin{itemize}
+\item Works
+\item Stable
+\item RPC::XML needs some love
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Moving to OpenERP}
+Falk Neubert
+ecoservice
+\url{www.ecoservice.de}
+\end{frame}
+
+% OpenERP 7
 \begin{frame}{Break}
 Slides:
 \url{http://www.linuxia.de/talks/eic2013/nitesi-api-beamer.pdf}
