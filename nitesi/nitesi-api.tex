@@ -157,6 +157,7 @@ sub login {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Dispatch}
 \begin{frame}[fragile]{Dispatch}
 \begin{lstlisting}
 prefix '/api/rpc/0.001';
@@ -187,6 +188,37 @@ any '/' => sub {
     }
     return $@;    
     status 400;
+}
+\end{lstlisting}
+\end{frame}
+
+\subsection{Functions and Mapping}
+
+\begin{frame}{Functions}
+\begin{itemize}
+\item 51 functions
+\item product.list
+\item product.info
+\item product.create
+\item product.update
+\item product.delete
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Session Wrapper}
+\begin{lstlisting}
+sub api_call {
+    my $api_sub = shift;
+
+    return sub {
+        my ($session_id, @args) = @_;
+
+        if (session_check($session_id)) {
+            return $api_sub->(@args);
+        };
+
+        return $rpc->server_fault(2, 'Access denied');
+    };
 }
 \end{lstlisting}
 \end{frame}
@@ -267,7 +299,7 @@ ecoservice \\
 \end{frame}
 
 % OpenERP 7
-\begin{frame}{Break}
+\begin{frame}{The End}
 Slides:
 \url{http://www.linuxia.de/talks/eic2013/nitesi-api-beamer.pdf}
 \end{frame}
