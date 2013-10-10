@@ -168,6 +168,16 @@ any '/' => sub {
     eval {
         $resp = $rpc->dispatch($xml);
     };
+    
+    ...
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Dispatch}
+\begin{lstlisting}
+    ...
+    
     if ($resp && $resp->is_fault) {
         content_type 'text/xml';
         return $resp->as_string;
