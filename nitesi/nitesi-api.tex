@@ -221,6 +221,25 @@ sub category_update {
 
 Currently no input validation.
 
+\begin{frame}[fragile]{Mapping}
+\begin{lstlisting}
+category => {code => 'category_id',
+    parent => 'parent_id',
+    uri => 'url_path',
+    scope => undef,
+    priority => undef,
+    type => undef,
+    level => 'level',
+    entered => 'created_at',
+    inactive => {name => 'is_active',
+                 filter => 'invert',
+    },
+    '' => [qw/available_sort_by default_sort_by 
+              include_in_menu/],
+},
+\end{lstlisting}
+\end{frame}
+
 \section{Conclusion}
 
 \begin{frame}{Experiences}
