@@ -146,13 +146,8 @@ sub login {
     my ($session_id);
 
     if (account->login(username => $args[0],
-		       password => $args[1])) {
-        # login successful
+                       password => $args[1])) {
         $session_id = session->id;
-
-        # force string type, otherwise we return a session id with .0 appended
-        # to the client
-
         return RPC_STRING($session_id);
     }
     else {
@@ -168,24 +163,19 @@ prefix '/api/rpc/0.001';
 
 any '/' => sub {
     $xml = request->body;
-
     $rpc ||= setup();
 
     eval {
         $resp = $rpc->dispatch($xml);
     };
-
     if ($resp && $resp->is_fault) {
         content_type 'text/xml';
         return $resp->as_string;
     }
-
     if (ref($resp)) {
         return $resp->as_string;
     }
-
-    return $@;
-    
+    return $@;    
     status 400;
 }
 \end{lstlisting}
@@ -221,8 +211,6 @@ sub category_update {
     }
 
     %args = _reverse_map('category', $data);
-    
-    debug("Updating category $code with: ", \%args);
 
     my $p = shop_navigation($code)->update(%args);
 
