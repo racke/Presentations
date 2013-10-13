@@ -1,9 +1,28 @@
 Users / Camps:
 
+* Laptops
 * SSH keys
+* perlbrew config in .bashrc
 * Ports
+  port: xxxx at the end of environments/development
 
 Quickstart:
 
 * skip cpanm
+
+Other stuff:
+
+* checkout Dancer::Plugin::Dropbox
+* check what is shown in Nitesi presentation
+
+Tasks:
+
+* use a different templating engine
+* write a simple API for the Dropbox
+
+Scripts:
+
+* write simple Dancer scripts
+  account->become
+
 
