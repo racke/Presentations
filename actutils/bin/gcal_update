@@ -1,0 +1,40 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Dancer ':script';
+use ActUtils::ActAPI;
+use ActUtils::GoogleCalendar;
+use DateTime;
+
+set logger => 'console';
+set logger_format => '%m';
+set log => 'warning';
+
+warning "URL: ", config->{act_url};
+
+# API call
+my $api = ActUtils::ActAPI->new(url => config->{act_url},
+                                api_key => config->{api_key},
+                                );
+
+
+my $talk_list = $api->talks(
+                            fields => [qw/title speaker duration datetime abstract/]);
+
+# Connect to Google
+my $gcal = ActUtils::GoogleCalendar->new(url => config->{gcal_url});
+
+warning "Events: ", $gcal->events();
+
+for my $talk (@$talk_list) {
+    my $from = DateTime->from_epoch(epoch => $talk->{datetime});
+    my $to = DateTime->from_epoch(epoch => $talk->{datetime})->add(minutes => $talk->{duration});
+
+    $gcal->create(title => $talk->{title},
+                  author => $talk->{speaker},
+                  status => 'confirmed',
+                  from => $from, to => $to);
+    last;
+}
