@@ -24,7 +24,56 @@
 
 \tableofcontents
 
+\begin{frame}{Übersicht}
+\begin{itemize}
+\item Einführung
+\item DBIC Schemas mit Dancer Plugin
+\item DBIC session engine
+\item Tabelleneditor
+\end{itemize}
+\end{frame}
+
+Wir starten mit einer kurzen Einführung von DBIx::Class.
+
+\section{Einführung}
+\begin{frame}{Datenbank}
+\begin{itemize}
+\item Datenbank
+\item Tabellen
+\item Datensätze
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DBIx::Class}
+\begin{itemize}
+\item Schema
+\item ResultSet
+\item Row / Objekt
+\end{itemize}
+\end{frame}
+
 \section{Dancer::Plugin::DBIC}
+\begin{frame}[fragile]{DBIx::Class ohne Dancer Plugin}
+\begin{lstlisting}
+use Interchange6::Schema;
+
+$schema = Interchange6::Schema->connect($testdb->connection_info);
+
+$schema->resultset('User')->search({..});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{DBIx::Class mit Dancer Plugin}
+\begin{lstlisting}
+use Dancer::Plugin::DBIC;
+
+schema->resultset('User')->search({..});
+
+resultset('User')->search({..});
+
+rset('User')->search({..});
+\end{lstlisting}
+\end{frame}
 
 \section{Dancer::Session::DBIC}
 
