@@ -75,6 +75,19 @@ rset('User')->search({..});
 \end{lstlisting}
 \end{frame}
 
+\subsection{Konfiguration}
+\begin{frame}[fragile]{Konfiguration}
+\begin{lstlisting}
+plugins:
+  DBIC:
+    default:
+      dsn: dbi:mysql:interchange6
+      user: racke
+      pass: nevairbe
+      schema_class: Interchange6::Schema
+\end{lstlisting}
+\end{frame}
+
 \section{Dancer::Session::DBIC}
 
 \section{Table Editor}
