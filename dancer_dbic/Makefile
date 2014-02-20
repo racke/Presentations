@@ -2,17 +2,19 @@
 
 PODFILE=
 TEXFILE=dancer-dbic-beamer
-INPUTS=dancer-dbic-de-beamer.tex dancer-dbic-de-handout.tex
-OUTPUTS=$(INPUTS:%.tex=%.pdf)
+SLIDE_INPUTS=dancer-dbic-de-beamer.tex
+SLIDE_OUTPUTS=$(SLIDE_INPUTS:%.tex=%.pdf)
+HANDOUT_INPUTS=dancer-dbic-de-handout.tex
+HANDOUT_OUTPUTS=$(HANDOUT_INPUTS:%.tex=%.pdf)
 
-all: $(OUTPUTS) clean
+all: $(SLIDE_OUTPUTS) $(HANDOUT_OUTPUTS) clean
 
 .PHONY: all clean
 
 $(PODFILE).html: $(PODFILE).pod
 	./pod2xhtml $(PODFILE).pod > $(PODFILE).html
 
-$(OUTPUTS): %-beamer.pdf: %.tex
+$(SLIDE_OUTPUTS): %-beamer.pdf: %.tex
 # initial run
 	pdflatex $(<:%.tex=%-beamer.tex)
 
@@ -29,7 +31,7 @@ $(OUTPUTS): %-beamer.pdf: %.tex
 		pdflatex $(<:%.tex=%-beamer); \
     fi
 
-$(OUTPUTS): %-handout.pdf: %.tex
+$(HANDOUT_OUTPUTS): %-handout.pdf: %.tex
 # initial run
 	pdflatex $(<:%.tex=%-handout.tex)
 
