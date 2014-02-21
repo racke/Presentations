@@ -88,6 +88,32 @@ plugins:
 \end{lstlisting}
 \end{frame}
 
+\subsection{UTF-8}
+Im Gegensatz zu Dancer::Plugin::Database bietet das DBIC-Plugin
+keine automatische Unterstützung für UTF-8. Also ist die entsprechende
+DBI-Option in der Konfiguration einzutragen.
+\begin{frame}[fragile]{UTF-8 für MySQL}
+\begin{lstlisting}
+plugins:
+  DBIC:
+    default:
+      dsn: dbi:mysql:interchange6
+      user: racke
+      pass: nevairbe
+      schema_class: Interchange6::Schema
+      options:
+        mysql_enable_utf8: 1
+\end{lstlisting}
+\end{frame}
+
+Die Optionen für die gängigen Datenbanken in der Übersicht:
+
+\begin{description}
+\item[SQLite] \verb|sqlite_unicode: 1|
+\item[MySQL] \verb|mysql_enable_utf8: 1|
+\item[PostgreSQL] \verb|pg_enable_utf8: 1| 
+\end{description}
+
 \section{Dancer::Session::DBIC}
 
 \section{Table Editor}
