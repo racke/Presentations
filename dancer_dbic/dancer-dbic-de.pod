@@ -106,4 +106,65 @@ C<pg_enable_utf8: 1>
 
 =back
 
+=head2 Dancer::Session::DBIC
+
+Die Sessionengines werden in Dancer normalerweise transparent
+für den Anwendungscode in der Konfiguration eingerichtet:
+
+=head3 Konfiguration
+
+=over 4
+
+=item session 
+
+Name der Sessionengine, hier DBIC
+
+=item session_options 
+
+Optionen
+
+=item session_expires 
+
+Ablaufzeit der Session
+
+=back
+
+Das sieht dann z.B. für L<Interchange6::Schema> so aus:
+
+    session: "DBIC"
+      session_options:
+      dsn: dbi:mysql:interchange6
+      user: racke
+      pass: nevairbe
+      schema_class: Interchange6::Schema
+      resultset: Session
+      id_column: sessions_id
+      data_column: session_data
+
+Die Konfiguration kann aber ebenso im Hauptmodul
+stattfinden:
+
+    set session => 'DBIC';
+    set session_options => {schema => schema};
+
+Folgendermaßen sieht die Tabelle C<sessions> aus,
+die vom Schema L<Interchange6::Schema> (Version 0.015)
+erzeugt wird:
+
+    CREATE TABLE `sessions` (
+      `sessions_id` varchar(255) NOT NULL,
+      `session_data` text NOT NULL,
+      `created` datetime NOT NULL,
+      `last_modified` datetime NOT NULL,
+    PRIMARY KEY (`sessions_id`)
+    ) ENGINE=InnoDB;
+
+=head3 Sitzungsablauf
+
+Beim Überschreiten der erlaubten Ablaufzeit wird die Sitzung
+ungültig, sie wird jedoch nicht in der Datenbank gelöscht.
+Dafür ist ein Skript zur regelmäßigen Löschung der
+abgelaufenen Datensätze erforderlich.
+
 =cut
+
