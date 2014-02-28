@@ -241,18 +241,31 @@ tests?
 
 \section{Tabelleneditor}
 
-Der Tabelleneditor verwendet das empfohlene Dancer Plugin
-\href{https://metacpan.org/pod/Dancer::Plugin::Auth::Extensible}{Dancer::Plugin::Auth::Extensible}
-für die Authentifizierung.
+\begin{frame}<handout:0>{Übersicht Tabelleneditor}
+\begin{itemize}
+\item Anmeldung
+\end{itemize}
+\end{frame}
+
+\subsection{Anmeldung}
+
+Für die Integration von Authentifizierung in eine Dancer-Anwendung empfehlen
+wir wärmestens das
+\href{https://metacpan.org/pod/Dancer::Plugin::Auth::Extensible}{Auth::Extensible}
+Plugin.
+
+\subsection{Beziehungen}
 
 Beziehungen werden automatisch angezeigt.
 
+\begin{frame}
 \begin{itemize}
 \item might\_have
 \item has\_many
 \item belongs\_to
 \item many\_to\_many
 \end{itemize}
+\end{frame}
 
 Filter
 
