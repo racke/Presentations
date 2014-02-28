@@ -159,7 +159,30 @@ Die Optionen für die gängigen Datenbanken in der Übersicht:
 
 \section{Dancer::Session::DBIC}
 
-Die Konfiguration für Dancer::Session::DBIC ähnelt der von
+\begin{frame}<handout:0>{Übersicht}
+\begin{itemize}
+\item Konfiguration
+\item Serialisierung
+\item Sitzungsablauf
+\end{itemize}
+\end{frame}
+
+Die Sessionengines werden in Dancer für gewöhnlich transparent
+für den Anwendungscode in der Konfiguration eingerichtet:
+
+\begin{frame}{Konfiguration}
+\begin{description}
+\item[session] Name der Sessionengine, hier DBIC
+\item[session\_options] Optionen
+\item[session\_expires] Ablaufzeit der Session
+\end{description}
+\end{frame}
+
+Das ermöglicht auf dem Liveserver eine effizientere Engine
+zu verwenden (z.B. Storable) und auf dem Entwicklungsserver
+eine Engine, die einem beim debuggen hilft (z.B. YAML).
+
+Die Optionen für Dancer::Session::DBIC ähneln der Konfiguration von
 Dancer::Plugin::DBIC, zusätzlich können wir festlegen wie
 die Sessions aus der Datenbank abgerufen werden können:
 
