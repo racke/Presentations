@@ -166,5 +166,11 @@ ungültig, sie wird jedoch nicht in der Datenbank gelöscht.
 Dafür ist ein Skript zur regelmäßigen Löschung der
 abgelaufenen Datensätze erforderlich.
 
+=head2 Tabelleneditor
+
+Das Git-Repository für den Tabelleneditor befindet sich auf Github:
+
+L<https://github.com/interchange/TableEditor>
+
 =cut
 
