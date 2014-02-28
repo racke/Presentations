@@ -23,7 +23,24 @@
 
 \tableofcontents
 
-\begin{frame}{Übersicht}
+\section{Übersicht}
+
+DBIx::Class ist mit Sicherheit einer der größten Schätze von "Modern Perl"
+und bietet schnelle und komfortable Datenbankabfragen.
+
+Ebenso erleichtert Dancer das Erstellen von Webanwendungen mit einer leicht
+verständlichen Programmierung.
+
+Wie können beide zusammen genutzt werden? Zunächst mit dem DBIC Plugin für
+Dancer. Mit diesem können mehrere DBIx::Class Schemas innerhalb der
+Dancer-Anwendung verwenden werden.
+
+Um auch die Dancer-Sessions in der Datenbank zu speichern, habe ich eine Engine für Dancer und DBIC geschrieben.
+
+Außerdem werde ich ein Projekt vorstellen, mit dem man einfach den Inhalt
+von Datenbanken mittels eines DBIx::Class Schemas editieren kann.
+
+\begin{frame}<handout:0>{Übersicht}
 \begin{itemize}
 \item Einführung
 \item DBIC Schemas mit Dancer Plugin
@@ -56,7 +73,7 @@ Wir starten mit einer kurzen Einführung von DBIx::Class.
 \begin{lstlisting}
 use Interchange6::Schema;
 
-$schema = Interchange6::Schema->connect($testdb->connection_info);
+$schema = Interchange6::Schema->connect(...);
 
 $schema->resultset('User')->search({..});
 \end{lstlisting}
@@ -84,6 +101,33 @@ plugins:
       user: racke
       pass: nevairbe
       schema_class: Interchange6::Schema
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Mehrere Schemas}
+\begin{lstlisting}
+plugins:
+  DBIC:
+    default:
+      dsn: dbi:mysql:interchange6
+      user: racke
+      pass: nevairbe
+      schema_class: Interchange6::Schema
+    legacy:
+      dsn: dbi:mysql:interchange5
+      user: racke
+      pass: nevairbe
+      schema_class: Interchange5::Schema
+\end{lstlisting}
+\end{frame}
+
+Das Schema \verb|legacy| wird dann wie folgt verwendet:
+
+\begin{frame}[fragile]{Mehrere Schemas}
+\begin{lstlisting}
+use Dancer::Plugin::DBIC;
+
+schema('legacy')->resultset('UserDb')->search({..});
 \end{lstlisting}
 \end{frame}
 
@@ -115,6 +159,63 @@ Die Optionen für die gängigen Datenbanken in der Übersicht:
 
 \section{Dancer::Session::DBIC}
 
+Die Konfiguration für Dancer::Session::DBIC ähnelt der von
+Dancer::Plugin::DBIC, zusätzlich können wir festlegen wie
+die Sessions aus der Datenbank abgerufen werden können:
+
+\begin{description}
+\item[resultset] DBIx::Class resultset
+\item[id\_column] primärer Schlüssel
+\item[data\_column] Feld für Sitzungsdaten 
+\end{description}
+
+\begin{frame}[fragile]{Konfiguration}
+\begin{lstlisting}
+session: "DBIC"
+session_options:
+  dsn: dbi:mysql:interchange6
+  user: racke
+  pass: nevairbe
+  schema_class: Interchange6::Schema
+  resultset: Session
+  id_column: sessions_id
+  data_column: session_data
+\end{lstlisting}
+\end{frame}
+
+Die Konfiguration kann aber ebenso im Hauptmodul
+stattfinden:
+
+\begin{frame}[fragile]{Konfiguration}
+\begin{lstlisting}
+set session => 'DBIC';
+set session_options => {schema => schema};
+\end{lstlisting}
+\end{frame}
+
+\subsection{Beispieltabelle}
+
+Hier eine Beispieltabelle für die Sessions (aus
+Interchange6::Schema 0.015):
+
+\begin{frame}[fragile]{Beispieltabelle}
+\begin{lstlisting}
+CREATE TABLE `sessions` (
+  `sessions_id` varchar(255) NOT NULL,
+  `session_data` text NOT NULL,
+  `created` datetime NOT NULL,
+  `last_modified` datetime NOT NULL,
+  PRIMARY KEY (`sessions_id`)
+) ENGINE=InnoDB;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Expiration}
+
+JSON
+andere DBIC connection?
+tests?
+
 \section{Tabelleneditor}
 
 Der Tabelleneditor verwendet das empfohlene Dancer Plugin
@@ -123,9 +224,24 @@ für die Authentifizierung.
 
 Beziehungen werden automatisch angezeigt.
 
+\begin{itemize}
+\item might\_have
+\item has\_many
+\item belongs\_to
+\item many\_to\_many
+\end{itemize}
+
+Filter
+
+Es fehlen Felder in related orderline (Übersicht)
+
+Different DBIC keys
+
+Paging
+
 \begin{frame}{Weitere Features}
 \begin{itemize}
-\item Suche
+\item Suche (Solr)
 \end{itemize}
 \end{frame}
 
@@ -137,7 +253,11 @@ Für Dancer2 existiert bereits ein Plugin:
 
 \url{https://metacpan.org/pod/Dancer2::Plugin::DBIC}
 
-Die Sessionengine und der Tabelleneditor wurde noch nicht auf Dancer2 portiert.
+Die Sessionengine und der Tabelleneditor wurden noch nicht auf Dancer2 portiert.
+
+\section{Testing}
+DBIC, Plugin
+Testdatabase
 
 \begin{frame}{Tanzpause}
 Slides:
