@@ -92,6 +92,10 @@ rset('User')->search({..});
 \end{frame}
 
 \subsection{Konfiguration}
+
+Im Normalfall verwendet man nur ein Schema in seiner
+Dancer-Anwendung:
+
 \begin{frame}[fragile]{Konfiguration}
 \begin{lstlisting}
 plugins:
@@ -103,6 +107,8 @@ plugins:
       schema_class: Interchange6::Schema
 \end{lstlisting}
 \end{frame}
+
+Es sind aber auch mehrere möglich:
 
 \begin{frame}[fragile]{Mehrere Schemas}
 \begin{lstlisting}
@@ -134,7 +140,7 @@ schema('legacy')->resultset('UserDb')->search({..});
 \subsection{UTF-8}
 Im Gegensatz zu Dancer::Plugin::Database bietet das DBIC-Plugin
 keine automatische Unterstützung für UTF-8. Also ist die entsprechende
-DBI-Option in der Konfiguration einzutragen.
+DBI-Option in der Konfiguration einzutragen, hier für MySQL:
 \begin{frame}[fragile]{UTF-8 für MySQL}
 \begin{lstlisting}
 plugins:
@@ -178,7 +184,7 @@ für den Anwendungscode in der Konfiguration eingerichtet:
 \end{description}
 \end{frame}
 
-Das ermöglicht auf dem Liveserver eine effizientere Engine
+Das ermöglicht es, auf dem Liveserver eine effizientere Engine
 zu verwenden (z.B. Storable) und auf dem Entwicklungsserver
 eine Engine, die einem beim debuggen hilft (z.B. YAML).
 
@@ -191,6 +197,8 @@ die Sessions aus der Datenbank abgerufen werden können:
 \item[id\_column] primärer Schlüssel
 \item[data\_column] Feld für Sitzungsdaten 
 \end{description}
+
+Das sieht dann z.B. für \href{https://metacpan.org/pod/Interchange6::Schema}{Interchange6::Schema} (Version 0.015) so aus:
 
 \begin{frame}[fragile]{Konfiguration}
 \begin{lstlisting}
@@ -218,8 +226,9 @@ set session_options => {schema => schema};
 
 \subsection{Beispieltabelle}
 
-Hier eine Beispieltabelle für die Sessions (aus
-Interchange6::Schema 0.015):
+Folgendermaßen sieht die Tabelle \verb|sessions| aus,
+die vom Schema \href{https://metacpan.org/pod/Interchange6::Schema}{Interchange6::Schema} (Version 0.015)
+erzeugt wird:
 
 \begin{frame}[fragile]{Beispieltabelle}
 \begin{lstlisting}
@@ -233,7 +242,12 @@ CREATE TABLE `sessions` (
 \end{lstlisting}
 \end{frame}
 
-\subsection{Expiration}
+\subsection{Sitzungsablauf}
+
+Beim Überschreiten der erlaubten Ablaufzeit wird die Sitzung
+ungültig, sie wird jedoch nicht in der Datenbank gelöscht.
+Dafür ist ein Skript zur regelmäßigen Löschung der
+abgelaufenen Datensätze erforderlich.
 
 JSON
 andere DBIC connection?
