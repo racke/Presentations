@@ -168,6 +168,34 @@ abgelaufenen Datensätze erforderlich.
 
 =head2 Tabelleneditor
 
+Das Frontend für den Tabelleneditor basiert auf AngularJS, das mittels
+CRUD/REST auf das mit Dancer realisierte Backend zugreift.
+
+Deshalb besteht das Backend auch nur aus einer schmalen API zur
+Verarbeitung der Abfragen und zur Authentifizierung.
+
+=head3 Beziehungen
+
+Der Tabelleneditor erkennt automatisch Beziehungen zwischen den Tabellen,
+die im Schema vorhanden. Entsprechende Links werden auf den Seiten
+eingeblendet.
+
+Die Beziehungen sind wie folgt:
+
+=over 4
+
+=item has_many
+
+=item belongs_to
+
+=item many_to_many
+
+=item might_have
+
+=back
+
+=head3 Repository
+
 Das Git-Repository für den Tabelleneditor befindet sich auf Github:
 
 L<https://github.com/interchange/TableEditor>
