@@ -1,0 +1,109 @@
+
+=encoding utf-8
+
+=head1 Dancer und DBIx::Class
+
+=head2 Übersicht
+
+DBIx::Class ist mit Sicherheit einer der größten Schätze von "Modern Perl"
+und bietet schnelle und komfortable Datenbankabfragen.
+
+Ebenso erleichtert Dancer das Erstellen von Webanwendungen mit einer leicht
+verständlichen Programmierung.
+
+Wie können beide zusammen genutzt werden? Zunächst mit dem DBIC Plugin für
+Dancer. Mit diesem können mehrere DBIx::Class Schemas innerhalb der
+Dancer-Anwendung verwenden werden.
+
+Um auch die Dancer-Sessions in der Datenbank zu speichern, habe ich eine Engine für Dancer und DBIC geschrieben.
+
+Außerdem werde ich ein Projekt vorstellen, mit dem man einfach den Inhalt
+von Datenbanken mittels eines DBIx::Class Schemas editieren kann.
+
+=head2 Dancer::Plugin::DBIC
+
+=head3 DBIx::Class ohne Dancer Plugin
+
+    use Interchange6::Schema;
+
+    $schema = Interchange6::Schema->connect(...);
+
+    $schema->resultset('User')->search({..});
+
+=head3 DBIx::Class mit Dancer Plugin
+
+    use Dancer::Plugin::DBIC;
+
+    schema->resultset('User')->search({..});
+
+    resultset('User')->search({..});
+
+    rset('User')->search({..});
+
+=head3 Konfiguration
+
+Im Normalfall verwendet man nur ein Schema in seiner
+Dancer-Anwendung:
+
+    plugins:
+      DBIC:
+        default:
+          dsn: dbi:mysql:interchange6
+          user: racke
+          pass: nevairbe
+          schema_class: Interchange6::Schema
+
+Es sind aber auch mehrere möglich:
+
+    plugins:
+      DBIC:
+        default:
+          dsn: dbi:mysql:interchange6
+          user: racke
+          pass: nevairbe
+          schema_class: Interchange6::Schema
+        legacy:
+          dsn: dbi:mysql:interchange5
+          user: racke
+          pass: nevairbe
+          schema_class: Interchange5::Schema
+
+Das Schema C<legacy> wird dann wie folgt angesprochen:
+
+    use Dancer::Plugin::DBIC;
+
+    schema('legacy')->resultset('UserDb')->search({..});
+
+Im Gegensatz zu L<Dancer::Plugin::Database> bietet das DBIC-Plugin
+keine automatische Unterstützung für UTF-8. Also ist die entsprechende
+DBI-Option in der Konfiguration einzutragen, hier für MySQL:
+
+    plugins:
+      DBIC:
+        default:
+          dsn: dbi:mysql:interchange6
+          user: racke
+          pass: nevairbe
+          schema_class: Interchange6::Schema
+          options:
+            mysql_enable_utf8: 1
+
+Die Optionen für die gängigen Datenbanken in der Übersicht:
+
+=over 4
+
+=item SQLite
+
+C<sqlite_unicode: 1>
+
+=item MySQL 
+
+C<mysql_enable_utf8: 1>
+
+=item PostgreSQL
+
+C<pg_enable_utf8: 1>
+
+=back
+
+=cut
