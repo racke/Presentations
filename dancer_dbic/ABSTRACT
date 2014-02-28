@@ -1,0 +1,24 @@
+Subject:
+
+Dancer und DBIx::Class
+
+Body:
+
+DBIx::Class ist mit Sicherheit einer der größten Schätze von "Modern Perl"
+und bietet schnelle und komfortable Datenbankabfragen. 
+
+Ebenso erleichtert Dancer das Erstellen von Webanwendungen mit einer leicht
+verständlichen Programmierung. 
+
+Wie können beide zusammen genutzt werden? Zunächst mit dem DBIC Plugin für
+Dancer. Mit diesem können mehrere DBIx::Class Schemas innerhalb der
+Dancer-Anwendung verwenden werden. 
+
+Um auch die Dancer-Sessions in der Datenbank zu speichern, habe ich eine Engine für Dancer und DBIC geschrieben.
+
+Außerdem werde ich ein Projekt vorstellen, mit dem man einfach den Inhalt
+von Datenbanken mittels eines DBIx::Class Schemas editieren kann.
+
+Tags:
+
+ajax angular dancer dbic editor plugin session table
