@@ -200,5 +200,9 @@ Das Git-Repository für den Tabelleneditor befindet sich auf Github:
 
 L<https://github.com/interchange/TableEditor>
 
+=head2 Dancer2
+
+Lediglich das DBIC-Plugin ist auch für Dancer2 verfügbar.
+
 =cut
 
