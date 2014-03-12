@@ -1,0 +1,21 @@
+Subject:
+
+Dancer and DBIx::Class
+
+Body:
+
+DBIx::Class is certainly one of the greatest treasures of "Modern Perl" and features fast and convenient database queries.
+
+Dancer makes it really easy to build web applications by using a simple syntax and straightforward programming.
+
+How do they fit together? First with the DBIC plugin for Dancer.
+This allows you to use multiple DBIx::Class schemas within a
+single Dancer application.
+
+I also wrote a Dancer session engine based on DBIC, which allows you to save sessions into the database.
+
+Finally, a project is presented that lets you edit database contents based on a DBIx::Class schema.
+
+Tags:
+
+ajax angular bootstrap dancer dbic editor plugin session table
