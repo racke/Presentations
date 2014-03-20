@@ -69,6 +69,7 @@ Wir starten mit einer kurzen Einführung von DBIx::Class.
 \end{frame}
 
 \section{Dancer::Plugin::DBIC}
+\subsection{Anwendung}
 \begin{frame}[fragile]{DBIx::Class ohne Dancer Plugin}
 \begin{lstlisting}
 use Interchange6::Schema;
@@ -162,6 +163,23 @@ Die Optionen für die gängigen Datenbanken in der Übersicht:
 \item[MySQL] \verb|mysql_enable_utf8: 1|
 \item[PostgreSQL] \verb|pg_enable_utf8: 1| 
 \end{description}
+
+\subsection{Schema dynamisch erzeugen}
+Das DBIC-Plugin erzeugt dynamisch ein DBIx::Class::Schema, wenn
+die Schema-Klasse (\verb|schema_class|) nicht angegeben wird.
+Dazu ist das Modul DBIx::Class::Schema::Loader erforderlich.
+
+Dies ist nicht empfehlenswert für den Produktionseinsatz, jedoch
+praktisch für den Tabelleneditor.
+
+\begin{frame}[fragile]{Schema dynamisch erzeugen}
+\begin{itemize}
+\item \verb|schema_class| fehlt in Konfiguration
+\item DBIx::Class::Schema::Loader
+\item Test und Entwicklung
+\item Tabelleneditor
+\end{itemize}
+\end{frame}
 
 \section{Dancer::Session::DBIC}
 
