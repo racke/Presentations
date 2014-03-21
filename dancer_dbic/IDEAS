@@ -1,5 +1,6 @@
+Testing with Test::Database
+
 Plugin:
-   Schema Generation
    Schema Aliases
 
 Session-Problematiken
