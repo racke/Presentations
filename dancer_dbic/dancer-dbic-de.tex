@@ -288,6 +288,19 @@ tests?
 \end{itemize}
 \end{frame}
 
+\subsection{Installation}
+\begin{frame}[fragile]{Installation}
+\begin{lstlisting}
+git clone https://github.com/interchange/TableEditor
+cd TableEditor
+perl Makefile.PL
+cpanm App::mymeta_requires
+mymeta-requires | cpanm
+./bin/app.pl
+\end{lstlisting}
+
+\end{frame}
+
 \subsection{Frontend}
 Das Frontend für den Tabelleneditor ist mit Angular und Bootstrap erstellt.
 Das Theme kann sehr einfach durch Austausch der CSS-Datei für Bootstrap
