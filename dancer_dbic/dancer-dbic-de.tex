@@ -8,6 +8,8 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
+% strikethrough (\sout)
+\usepackage{ulem}
 \lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
 \title{Dancer und DBIx::Class}
@@ -23,33 +25,33 @@
 
 \tableofcontents
 
-\section{Übersicht}
+% \section{Übersicht}
 
-DBIx::Class ist mit Sicherheit einer der größten Schätze von "Modern Perl"
-und bietet schnelle und komfortable Datenbankabfragen.
+% DBIx::Class ist mit Sicherheit einer der größten Schätze von "Modern Perl"
+% und bietet schnelle und komfortable Datenbankabfragen.
 
-Ebenso erleichtert Dancer das Erstellen von Webanwendungen mit einer leicht
-verständlichen Programmierung.
+% Ebenso erleichtert Dancer das Erstellen von Webanwendungen mit einer leicht
+% verständlichen Programmierung.
 
-Wie können beide zusammen genutzt werden? Zunächst mit dem DBIC Plugin für
-Dancer. Mit diesem können mehrere DBIx::Class Schemas innerhalb der
-Dancer-Anwendung verwenden werden.
+% Wie können beide zusammen genutzt werden? Zunächst mit dem DBIC Plugin für
+% Dancer. Mit diesem können mehrere DBIx::Class Schemas innerhalb der
+% Dancer-Anwendung verwenden werden.
 
-Um auch die Dancer-Sessions in der Datenbank zu speichern, habe ich eine Engine für Dancer und DBIC geschrieben.
+% Um auch die Dancer-Sessions in der Datenbank zu speichern, habe ich eine Engine für Dancer und DBIC geschrieben.
 
-Außerdem werde ich ein Projekt vorstellen, mit dem man einfach den Inhalt
-von Datenbanken mittels eines DBIx::Class Schemas editieren kann.
+% Außerdem werde ich ein Projekt vorstellen, mit dem man einfach den Inhalt
+% von Datenbanken mittels eines DBIx::Class Schemas editieren kann.
 
-\begin{frame}<handout:0>{Übersicht}
-\begin{itemize}
-\item Einführung
-\item DBIC Schemas mit Dancer Plugin
-\item DBIC session engine
-\item Tabelleneditor
-\end{itemize}
-\end{frame}
+% \begin{frame}<handout:0>{Übersicht}
+% \begin{itemize}
+% \item Einführung
+% \item DBIC Schemas mit Dancer Plugin
+% \item DBIC session engine
+% \item Tabelleneditor
+% \end{itemize}
+% \end{frame}
 
-Wir starten mit einer kurzen Einführung von DBIx::Class.
+% Wir starten mit einer kurzen Einführung von DBIx::Class.
 
 \section{Einführung}
 % \begin{frame}{Datenbank}
@@ -68,6 +70,22 @@ Wir starten mit einer kurzen Einführung von DBIx::Class.
 % \end{itemize}
 % \end{frame}
 
+\subsection{eCommerce Software}
+\begin{frame}{eCommerce Software}
+\begin{itemize}
+\item \sout{Magento}
+\item Interchange6
+\end{itemize}
+\end{frame}
+
+\subsection{Datenbankadministration}
+\begin{frame}{Datenbankadministration}
+\begin{itemize}
+\item \sout{phpmyadmin}
+\item \sout{phppgadmin}
+\item TableEditor
+\end{itemize}
+\end{frame}
 
 \subsection{Tabelleneditor}
 \begin{frame}{Tabelleneditor}
