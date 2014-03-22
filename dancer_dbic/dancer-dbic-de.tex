@@ -312,9 +312,7 @@ tests?
 \begin{lstlisting}
 git clone https://github.com/interchange/TableEditor
 cd TableEditor
-perl Makefile.PL
-cpanm App::mymeta_requires
-mymeta-requires | cpanm
+cpanm .
 ./bin/app.pl
 \end{lstlisting}
 
