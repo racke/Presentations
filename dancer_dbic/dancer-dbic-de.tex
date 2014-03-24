@@ -210,7 +210,7 @@ praktisch für den Tabelleneditor.
 
 \section{Dancer::Session::DBIC}
 
-\begin{frame}<handout:0>{Übersicht}
+\begin{frame}<handout:0>{Übersicht Dancer::Session::DBIC}
 \begin{itemize}
 \item Konfiguration
 \item Serialisierung
@@ -302,12 +302,19 @@ tests?
 
 \begin{frame}<handout:0>{Übersicht Tabelleneditor}
 \begin{itemize}
+\item Installation
 \item Frontend
 \item Anmeldung
+\item Beziehungen
+\item Einschränkungen
+\item Konfiguration
 \end{itemize}
 \end{frame}
 
 \subsection{Installation}
+Im günstigsten Fall kann die Installation mit 4 Schritten
+erledigt werden:
+
 \begin{frame}[fragile]{Installation}
 \begin{lstlisting}
 git clone https://github.com/interchange/TableEditor
@@ -315,7 +322,14 @@ cd TableEditor
 cpanm .
 ./bin/app.pl
 \end{lstlisting}
+\end{frame}
 
+\begin{frame}[fragile]{Treiber}
+\begin{itemize}
+\item DBD::mysql
+\item DBD::Pg
+\item ...
+\end{itemize}
 \end{frame}
 
 \subsection{Frontend}
@@ -376,6 +390,7 @@ Paging
 \begin{itemize}
 \item Primärschlüssel für \textbf{eine} Spalte
 \item Geschwindigkeit (komplexe Schemas)
+\item Fehlerbehandlung
 \end{itemize}
 \end{frame}
 
