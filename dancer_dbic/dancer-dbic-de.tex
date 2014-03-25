@@ -97,8 +97,13 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Tabelleneditor}
-\begin{frame}{Tabelleneditor}
+Der TableEditor hat ein modernes Frontend. Es basiert
+auf den Javascript-Paketen Bootstrap und Angular.
+Die Templates und ein Teil der Logik sind somit Teil
+des Frontends.
+
+\subsection{TableEditor Demo}
+\begin{frame}{TableEditor}
 \begin{figure}
 \includegraphics{images/te-login.png}
 \caption{Anmeldung}
@@ -214,7 +219,7 @@ praktisch für den Tabelleneditor.
 \item \verb|schema_class| fehlt in Konfiguration
 \item DBIx::Class::Schema::Loader
 \item Test und Entwicklung
-\item Tabelleneditor
+\item TableEditor
 \end{itemize}
 \end{frame}
 
@@ -308,9 +313,9 @@ JSON
 andere DBIC connection?
 tests?
 
-\section{Tabelleneditor}
+\section{TableEditor}
 
-\begin{frame}<handout:0>{Übersicht Tabelleneditor}
+\begin{frame}<handout:0>{Übersicht TableEditor}
 \begin{itemize}
 \item Installation
 \item Frontend
@@ -343,7 +348,7 @@ cpanm .
 \end{frame}
 
 \subsection{Frontend}
-Das Frontend für den Tabelleneditor ist mit Angular und Bootstrap erstellt.
+Das Frontend für den TableEditor ist mit Angular und Bootstrap erstellt.
 Das Theme kann sehr einfach durch Austausch der CSS-Datei für Bootstrap
 geändert werden.
 
@@ -408,7 +413,7 @@ Paging
 \begin{frame}
 \begin{itemize}
 \item Auth::Extensible
-% \item DBIC
+\item DBIC
 % \begin{itemize}
 % \item \verb|default|
 % \end{itemize}
@@ -426,7 +431,7 @@ Paging
 
 \subsection{Entwicklung}
 
-Das Git-Repository für den Tabelleneditor befindet sich auf Github:
+Das Git-Repository für den TableEditor befindet sich auf Github:
 
 \begin{frame}{Entwicklung}
 \url{https://github.com/interchange/TableEditor}
@@ -440,13 +445,13 @@ Für Dancer2 existiert bereits ein Plugin:
 
 \url{https://metacpan.org/pod/Dancer2::Plugin::DBIC}
 
-Die Sessionengine und der Tabelleneditor wurden noch nicht auf Dancer2 portiert.
+Die Sessionengine und der TableEditor wurden noch nicht auf Dancer2 portiert.
 
 \begin{frame}{Dancer2}
   \begin{description}
   \item[Plugin::DBIC] \url{https://metacpan.org/pod/Dancer2::Plugin::DBIC}
   \item[Session::DBIC] noch nicht portiert
-  \item[Tabelleneditor] noch nicht portiert
+  \item[TableEditor] noch nicht portiert
   \end{description}
 \end{frame}
 
