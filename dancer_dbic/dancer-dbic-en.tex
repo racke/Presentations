@@ -227,6 +227,20 @@ praktisch für den TableEditor.
 \end{itemize}
 \end{frame}
 
+\subsection{Engines}
+\begin{frame}{Engines}
+\begin{itemize}
+\item Templates \\
+TT, Xslate, Flute, ...
+\item Sessions \\ 
+Storable, Database, DBIC
+\item Logger \\
+File, Syslog
+\item Serializer  \\
+JSON, YAML, XML
+\end{itemize}
+\end{frame}
+
 Die Sessionengines werden in Dancer für gewöhnlich transparent
 für den Anwendungscode in der Konfiguration eingerichtet:
 
@@ -293,6 +307,17 @@ CREATE TABLE `sessions` (
   `last_modified` datetime NOT NULL,
   PRIMARY KEY (`sessions_id`)
 ) ENGINE=InnoDB;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Serializer}
+\begin{frame}[fragile]{Serializer}
+\begin{lstlisting}
+set 'session_options' => {
+    schema       => schema,
+    serializer   => sub { YAML::Dump(@_); },
+    deserializer => sub { YAML::Load(@_); },
+};
 \end{lstlisting}
 \end{frame}
 

@@ -227,9 +227,30 @@ praktisch für den Tabelleneditor.
 
 \begin{frame}<handout:0>{Übersicht Dancer::Session::DBIC}
 \begin{itemize}
+\item Engines
 \item Konfiguration
 \item Serialisierung
 \item Sitzungsablauf
+\end{itemize}
+\end{frame}
+
+Dancer verwendet ``Engines'' für verschiedene Zwecke.
+Dadurch kamen diese austauschen und das macht Dancer
+weitaus flexibler. Die ``Engines'' werden entweder 
+in der Konfiguration oder im Sourcecode mit dem \verb|set|
+Schlüsselwort eingerichtet.
+
+\subsection{Engines}
+\begin{frame}{Engines}
+\begin{itemize}
+\item Templates \\
+TT, Xslate, Flute, ...
+\item Sitzungen (Sessions) \\ 
+Storable, Database, DBIC
+\item Logger \\
+File, Syslog
+\item Serialisierer  \\
+JSON, YAML, XML
 \end{itemize}
 \end{frame}
 
@@ -299,6 +320,17 @@ CREATE TABLE `sessions` (
   `last_modified` datetime NOT NULL,
   PRIMARY KEY (`sessions_id`)
 ) ENGINE=InnoDB;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Serialisierer}
+\begin{frame}[fragile]{Serialisierer}
+\begin{lstlisting}
+set 'session_options' => {
+    schema       => schema,
+    serializer   => sub { YAML::Dump(@_); },
+    deserializer => sub { YAML::Load(@_); },
+};
 \end{lstlisting}
 \end{frame}
 
