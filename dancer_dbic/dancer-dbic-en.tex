@@ -12,9 +12,8 @@
 \usepackage{ulem}
 \lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
-\title{Dancer und DBIx::Class}
+\title{Dancer and DBIx::Class}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
-\date{16. Deutscher Perl-Workshop, Hannover, 27. März 2013}
 
 \begin{document}
 \maketitle{}
@@ -47,13 +46,13 @@
 % \item Einführung
 % \item DBIC Schemas mit Dancer Plugin
 % \item DBIC session engine
-% \item Tabelleneditor
+% \item TableEditor
 % \end{itemize}
 % \end{frame}
 
 % Wir starten mit einer kurzen Einführung von DBIx::Class.
 
-\section{Einführung}
+\section{Introduction}
 % \begin{frame}{Datenbank}
 % \begin{itemize}
 % \item Datenbank
@@ -78,8 +77,8 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Datenbankadministration}
-\begin{frame}{Datenbankadministration}
+\subsection{Database Administration}
+\begin{frame}{Database Administration}
 \begin{itemize}
 \item \sout{phpmyadmin}
 \item \sout{phppgadmin}
@@ -89,25 +88,25 @@
 
 \begin{frame}{TableEditor Features}
 \begin{itemize}
-\item Unterstützung mehrerer Datenbanksysteme
+\item Different database systems
       MySQL, PostgreSQL
-\item höherer Abstraktionslevel
-\item modernes Frontend
-\item wenig Quellcode
+\item higher level of abstraction
+\item modern frontend
+\item concise source code
 \end{itemize}
 \end{frame}
 
-\subsection{Tabelleneditor}
-\begin{frame}{Tabelleneditor}
+\subsection{TableEditor}
+\begin{frame}{TableEditor}
 \begin{figure}
 \includegraphics{images/te-login.png}
-\caption{Anmeldung}
+\caption{Login}
 \end{figure}
 \end{frame}
 
 \section{Dancer::Plugin::DBIC}
-\subsection{Anwendung}
-\begin{frame}[fragile]{DBIx::Class ohne Dancer Plugin}
+\subsection{Usage}
+\begin{frame}[fragile]{DBIx::Class without Dancer Plugin}
 \begin{lstlisting}
 use Interchange6::Schema;
 
@@ -117,7 +116,7 @@ $schema->resultset('User')->search({..});
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{DBIx::Class mit Dancer Plugin}
+\begin{frame}[fragile]{DBIx::Class with Dancer Plugin}
 \begin{lstlisting}
 use Dancer::Plugin::DBIC;
 
@@ -129,12 +128,12 @@ rset('User')->search({..});
 \end{lstlisting}
 \end{frame}
 
-\subsection{Konfiguration}
+\subsection{Configuration}
 
 Im Normalfall verwendet man nur ein Schema in seiner
 Dancer-Anwendung:
 
-\begin{frame}[fragile]{Konfiguration}
+\begin{frame}[fragile]{Configuration}
 \begin{lstlisting}
 plugins:
   DBIC:
@@ -148,7 +147,7 @@ plugins:
 
 Es sind aber auch mehrere möglich:
 
-\begin{frame}[fragile]{Mehrere Schemas}
+\begin{frame}[fragile]{Multiple Schemas}
 \begin{lstlisting}
 plugins:
   DBIC:
@@ -167,7 +166,7 @@ plugins:
 
 Das Schema \verb|legacy| wird dann wie folgt verwendet:
 
-\begin{frame}[fragile]{Mehrere Schemas}
+\begin{frame}[fragile]{Multiple Schemas}
 \begin{lstlisting}
 use Dancer::Plugin::DBIC;
 
@@ -179,7 +178,7 @@ schema('legacy')->resultset('UserDb')->search({..});
 Im Gegensatz zu Dancer::Plugin::Database bietet das DBIC-Plugin
 keine automatische Unterstützung für UTF-8. Also ist die entsprechende
 DBI-Option in der Konfiguration einzutragen, hier für MySQL:
-\begin{frame}[fragile]{UTF-8 für MySQL}
+\begin{frame}[fragile]{UTF-8 for MySQL}
 \begin{lstlisting}
 plugins:
   DBIC:
@@ -201,41 +200,41 @@ Die Optionen für die gängigen Datenbanken in der Übersicht:
 \item[PostgreSQL] \verb|pg_enable_utf8: 1| 
 \end{description}
 
-\subsection{Schema dynamisch erzeugen}
+\subsection{Create schema dynamically}
 Das DBIC-Plugin erzeugt dynamisch ein DBIx::Class::Schema, wenn
 die Schema-Klasse (\verb|schema_class|) nicht angegeben wird.
 Dazu ist das Modul DBIx::Class::Schema::Loader erforderlich.
 
 Dies ist nicht empfehlenswert für den Produktionseinsatz, jedoch
-praktisch für den Tabelleneditor.
+praktisch für den TableEditor.
 
-\begin{frame}[fragile]{Schema dynamisch erzeugen}
+\begin{frame}[fragile]{Create schema dynamically}
 \begin{itemize}
-\item \verb|schema_class| fehlt in Konfiguration
+\item \verb|schema_class| missing in configuration
 \item DBIx::Class::Schema::Loader
-\item Test und Entwicklung
-\item Tabelleneditor
+\item test and development
+\item TableEditor
 \end{itemize}
 \end{frame}
 
 \section{Dancer::Session::DBIC}
 
-\begin{frame}<handout:0>{Übersicht Dancer::Session::DBIC}
+\begin{frame}<handout:0>{Overview Dancer::Session::DBIC}
 \begin{itemize}
-\item Konfiguration
-\item Serialisierung
-\item Sitzungsablauf
+\item configuration
+\item serialization
+\item session expiration
 \end{itemize}
 \end{frame}
 
 Die Sessionengines werden in Dancer für gewöhnlich transparent
 für den Anwendungscode in der Konfiguration eingerichtet:
 
-\begin{frame}{Konfiguration}
+\begin{frame}{Configuration}
 \begin{description}
-\item[session] Name der Sessionengine, hier DBIC
-\item[session\_options] Optionen
-\item[session\_expires] Ablaufzeit der Session
+\item[session] name of session engine (DBIC)
+\item[session\_options] options
+\item[session\_expires] expiration date
 \end{description}
 \end{frame}
 
@@ -249,13 +248,13 @@ die Sessions aus der Datenbank abgerufen werden können:
 
 \begin{description}
 \item[resultset] DBIx::Class resultset
-\item[id\_column] primärer Schlüssel
-\item[data\_column] Feld für Sitzungsdaten 
+\item[id\_column] primary key
+\item[data\_column] field for session data 
 \end{description}
 
 Das sieht dann z.B. für \href{https://metacpan.org/pod/Interchange6::Schema}{Interchange6::Schema} (Version 0.015) so aus:
 
-\begin{frame}[fragile]{Konfiguration}
+\begin{frame}[fragile]{Configuration}
 \begin{lstlisting}
 session: "DBIC"
 session_options:
@@ -272,20 +271,20 @@ session_options:
 Die Konfiguration kann aber ebenso im Hauptmodul
 stattfinden:
 
-\begin{frame}[fragile]{Konfiguration}
+\begin{frame}[fragile]{Configuration}
 \begin{lstlisting}
 set session => 'DBIC';
 set session_options => {schema => schema};
 \end{lstlisting}
 \end{frame}
 
-\subsection{Beispieltabelle}
+\subsection{Example table}
 
 Folgendermaßen sieht die Tabelle \verb|sessions| aus,
 die vom Schema \href{https://metacpan.org/pod/Interchange6::Schema}{Interchange6::Schema} (Version 0.015)
 erzeugt wird:
 
-\begin{frame}[fragile]{Beispieltabelle}
+\begin{frame}[fragile]{Example table}
 \begin{lstlisting}
 CREATE TABLE `sessions` (
   `sessions_id` varchar(255) NOT NULL,
@@ -297,7 +296,7 @@ CREATE TABLE `sessions` (
 \end{lstlisting}
 \end{frame}
 
-\subsection{Sitzungsablauf}
+\subsection{Session expiration}
 
 Beim Überschreiten der erlaubten Ablaufzeit wird die Sitzung
 ungültig, sie wird jedoch nicht in der Datenbank gelöscht.
@@ -308,16 +307,16 @@ JSON
 andere DBIC connection?
 tests?
 
-\section{Tabelleneditor}
+\section{TableEditor}
 
-\begin{frame}<handout:0>{Übersicht Tabelleneditor}
+\begin{frame}<handout:0>{Overview TableEditor}
 \begin{itemize}
 \item Installation
 \item Frontend
-\item Anmeldung
-\item Beziehungen
-\item Einschränkungen
-\item Konfiguration
+\item Login
+\item Relationships
+\item Limitations
+\item Configuration
 \end{itemize}
 \end{frame}
 
@@ -334,7 +333,7 @@ cpanm .
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Treiber}
+\begin{frame}[fragile]{Driver}
 \begin{itemize}
 \item DBD::mysql
 \item DBD::Pg
@@ -343,7 +342,7 @@ cpanm .
 \end{frame}
 
 \subsection{Frontend}
-Das Frontend für den Tabelleneditor ist mit Angular und Bootstrap erstellt.
+Das Frontend für den TableEditor ist mit Angular und Bootstrap erstellt.
 Das Theme kann sehr einfach durch Austausch der CSS-Datei für Bootstrap
 geändert werden.
 
@@ -355,14 +354,14 @@ geändert werden.
 \end{itemize}
 \end{frame}
 
-\subsection{Anmeldung}
+\subsection{Login}
 
 Für die Integration von Authentifizierung in eine Dancer-Anwendung empfehlen
 wir wärmestens das
 \href{https://metacpan.org/pod/Dancer::Plugin::Auth::Extensible}{Auth::Extensible}
 Plugin.
 
-\begin{frame}{Anmeldung}
+\begin{frame}{Login}
 \begin{itemize}
 \item Dancer::Plugin::Auth::Extensible
 \item Provider
@@ -370,15 +369,15 @@ Plugin.
 \item Unix
 \item DBIC
 \end{itemize}
-\item Datenbank \textit{(geplant)}
+\item Database \textit{(planned)}
 \end{itemize}
 \end{frame}
 
-\subsection{Beziehungen}
+\subsection{Relationships}
 
 Beziehungen werden automatisch angezeigt.
 
-\begin{frame}{Beziehungen}
+\begin{frame}{Relationships}
 \begin{itemize}
 \item might\_have
 \item has\_many
@@ -395,16 +394,16 @@ Different DBIC keys
 
 Paging
 
-\subsection{Einschränkungen}
-\begin{frame}{Einschränkungen}
+\subsection{Limitations}
+\begin{frame}{Limitations}
 \begin{itemize}
-\item Primärschlüssel für \textbf{eine} Spalte
-\item Geschwindigkeit (komplexe Schemas)
-\item Fehlerbehandlung
+\item Primary key for \textbf{one} column only
+\item Speed (complex schemas)
+\item Error handling
 \end{itemize}
 \end{frame}
 
-\subsection{Konfiguration}
+\subsection{Configuration}
 \begin{frame}
 \begin{itemize}
 \item Auth::Extensible
@@ -415,20 +414,20 @@ Paging
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Weitere Features}
+\begin{frame}{Planned Features}
 \begin{itemize}
-\item Suche (Solr)
-\item Auswahl Schema
+\item Search (Solr)
+\item Select schema
 \end{itemize}
 \end{frame}
 
 \section{Ausblick und Mitarbeit}
 
-\subsection{Entwicklung}
+\subsection{Development}
 
-Das Git-Repository für den Tabelleneditor befindet sich auf Github:
+Das Git-Repository für den TableEditor befindet sich auf Github:
 
-\begin{frame}{Entwicklung}
+\begin{frame}{Development}
 \url{https://github.com/interchange/TableEditor}
 \end{frame}
 
@@ -440,13 +439,13 @@ Für Dancer2 existiert bereits ein Plugin:
 
 \url{https://metacpan.org/pod/Dancer2::Plugin::DBIC}
 
-Die Sessionengine und der Tabelleneditor wurden noch nicht auf Dancer2 portiert.
+Die Sessionengine und der TableEditor wurden noch nicht auf Dancer2 portiert.
 
 \begin{frame}{Dancer2}
   \begin{description}
   \item[Plugin::DBIC] \url{https://metacpan.org/pod/Dancer2::Plugin::DBIC}
-  \item[Session::DBIC] noch nicht portiert
-  \item[Tabelleneditor] noch nicht portiert
+  \item[Session::DBIC] not yet ported
+  \item[TableEditor] not yet ported
   \end{description}
 \end{frame}
 
@@ -454,12 +453,12 @@ Die Sessionengine und der Tabelleneditor wurden noch nicht auf Dancer2 portiert.
 % DBIC, Plugin
 % Testdatabase
 
-\subsection{Slides}
+% \subsection{Slides}
 
-\begin{frame}{Slides}
-Slides:
-\url{http://www.linuxia.de/talks/pws2014/dancer-dbic-de-beamer.pdf}
-\end{frame}
+% \begin{frame}{Slides}
+% Slides:
+% \url{http://www.linuxia.de/talks/pws2014/dancer-dbic-de-beamer.pdf}
+% \end{frame}
 
 \end{document}
 
