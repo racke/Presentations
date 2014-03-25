@@ -2,9 +2,9 @@
 
 PODFILE=
 TEXFILE=dancer-dbic-beamer
-SLIDE_INPUTS=dancer-dbic-de-beamer.tex
+SLIDE_INPUTS=dancer-dbic-de-beamer.tex dancer-dbic-en-beamer.tex
 SLIDE_OUTPUTS=$(SLIDE_INPUTS:%.tex=%.pdf)
-HANDOUT_INPUTS=dancer-dbic-de-handout.tex
+HANDOUT_INPUTS=dancer-dbic-de-handout.tex dancer-dbic-en-handout.tex
 HANDOUT_OUTPUTS=$(HANDOUT_INPUTS:%.tex=%.pdf)
 
 all: $(SLIDE_OUTPUTS) $(HANDOUT_OUTPUTS) clean
