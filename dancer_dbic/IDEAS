@@ -2,6 +2,11 @@ Testing with Test::Database
 
 More Screenshots
 
+Session expiration
+UTF8 für Session-Engine?
+
+Ask people to test with their schemas / databases
+
 Plugin:
    Schema Aliases
 
