@@ -8,6 +8,7 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{ulem}
 \lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
 \title{Interchange 6 - Open Source Shop Machine}
@@ -53,10 +54,92 @@ und hat eine komplizierte Datenbankstruktur.
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Komponenten ``Hacker''}
+  \begin{itemize}
+  \item DBIx::Class
+  \item Moo
+  \item \sout{Dancer} Web::Simple
+  \item \sout{Template::Flute} Template Toolkit
+  \end{itemize}
+\end{frame}
+
 \section{Status Quo}
 \begin{frame}{Status Quo}
- \item Interchange6::Schema
+\begin{itemize}
+ \item Interchange6::Schema (Businesslogik)
   \item Dancer::Plugin::Interchange6
+\end{itemize}
+\end{frame}
+
+\section{DBIx::Class}
+\begin{frame}{Interchange6::Schema}
+\begin{itemize}
+ \item Produkte, Attribute, Preise, Bestand
+ \item Benutzer, Adressen
+ \item Warenkorb, Sitzungen
+ \item Bestellungen, Zahlungen
+ \item Steuern, Versand \textit{(in Arbeit)}
+\end{itemize}
+\end{frame}
+
+\section{Payment}
+\subsection{Payment Module}
+\begin{frame}{Payment Module}
+\begin{itemize}
+\item Business::OnlinePayment
+\item unterstützt viele Anbieter
+\item nicht sehr modern
+\item 3D secure, Redirect
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Alternativen}
+\begin{itemize}
+\item AnyMerchant \url{https://metacpan.org/pod/AnyMerchant}
+\item keine Entwicklung
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Payment Module}
+\begin{itemize}
+\item Business::OnlinePayment::IPayment (1\&1) \\
+Silent CGI
+\item Business::OnlinePayment::FirstData \\
+Connect \textit{(in Arbeit)}
+\end{itemize}
+\end{frame}
+
+\section{Dancer Plugin}
+\subsection{Keywords}
+\begin{frame}[fragile]{Keywords}
+\begin{itemize}
+\item \verb|shop_schema|
+\item \verb|shop_product|, \verb|shop_address|, ...
+\end{itemize}
+\end{frame}
+
+\subsection{Routes}
+\begin{frame}{Routes}
+\begin{itemize}
+\item Product
+\item Navigation
+\item Cart
+\item Checkout
+\end{itemize}
+\end{frame}
+
+\section{Demo Shop}
+
+\begin{frame}{Mitarbeit}
+\begin{itemize}
+\item kleines Entwicklerteam
+\item Github
+\item IRC 
+%\begin{itemize}
+%\item #interchange freenode
+%\item #dancer
+%\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Infos}
