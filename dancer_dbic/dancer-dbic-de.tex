@@ -12,6 +12,14 @@
 \usepackage{ulem}
 \lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
+\newcommand {\framedgraphic}[2] {
+    \begin{frame}{#1}
+        \begin{center}
+            \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{#2}
+        \end{center}
+    \end{frame}
+}
+
 \title{Dancer und DBIx::Class}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
 \date{16. Deutscher Perl-Workshop, Hannover, 27. März 2013}
@@ -89,11 +97,12 @@
 
 \begin{frame}{TableEditor Features}
 \begin{itemize}
-\item Unterstützung mehrerer Datenbanksysteme
-      MySQL, PostgreSQL
+\item Unterstützung mehrerer Datenbanksysteme \\
+      MySQL, PostgreSQL, ...
 \item höherer Abstraktionslevel
 \item modernes Frontend
 \item wenig Quellcode
+\item ``einfache'' Installation
 \end{itemize}
 \end{frame}
 
@@ -102,11 +111,11 @@ auf den Javascript-Paketen Bootstrap und Angular.
 Die Templates und ein Teil der Logik sind somit Teil
 des Frontends.
 
-\begin{frame}{Anmeldung}
-  \begin{center}
-    \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/login.png}
-  \end{center}
-\end{frame}
+% \begin{frame}{Anmeldung}
+%   \begin{center}
+%     \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/login.png}
+%   \end{center}
+% \end{frame}
 
 \begin{frame}{Eingabe Datenbankparameter}
   \begin{center}
@@ -132,7 +141,24 @@ des Frontends.
   \end{center}
 \end{frame}
 
+% \subsection{Dropbox}
+% \begin{frame}{Dropbox}
+% \begin{itemize}
+% \item \href{https://github.com/melmothx/dancer-plugin-dropbox}{Dropbox Plugin}
+% \end{itemize}
+% \end{frame}
+
 \section{Dancer::Plugin::DBIC}
+
+\begin{frame}{Übersicht Dancer::Plugin::DBIC}
+\begin{itemize}
+\item Anwendung
+\item Konfiguration
+\item UTF-8
+\item Schema erzeugen
+\end{itemize}
+\end{frame}
+
 \subsection{Anwendung}
 \begin{frame}[fragile]{DBIx::Class ohne Dancer Plugin}
 \begin{lstlisting}
@@ -368,6 +394,16 @@ JSON
 andere DBIC connection?
 tests?
 
+\begin{frame}[fragile]{Sitzungsablauf}
+\begin{itemize}
+\item alte Sitzungen aus Datenbank löschen
+\item \verb|Interchange6::Schema::Resultset::Session|
+\end{itemize}
+\begin{lstlisting}
+$schema->resultset('Session')->expire('12 hours');
+\end{lstlisting}
+\end{frame}
+
 \section{TableEditor}
 
 \begin{frame}<handout:0>{Übersicht TableEditor}
@@ -410,9 +446,26 @@ geändert werden.
 \begin{frame}<handout:0>{Frontend}
 \begin{itemize}
 \item Angular
+\begin{itemize}
+\item Routes für das Frontend
+\item XHR-Abfragen an REST API
+\item JSON
+\end{itemize}
 \item Bootstrap
 \item Theme
 \end{itemize}
+\end{frame}
+
+\subsection{Routes}
+\begin{frame}[fragile]{Routes}
+\begin{lstlisting}
+get '/:class/:id' => require_login sub {
+    # retrieve database record and add relationships
+    ...
+
+    return to_json($data, {allow_unknown => 1});
+};
+\end{lstlisting}
 \end{frame}
 
 \subsection{Anmeldung}
@@ -465,7 +518,7 @@ Paging
 \end{frame}
 
 \subsection{Konfiguration}
-\begin{frame}
+\begin{frame}{Konfiguration}
 \begin{itemize}
 \item Auth::Extensible
 \item DBIC
