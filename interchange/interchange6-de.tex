@@ -109,6 +109,39 @@ Connect \textit{(in Arbeit)}
 \end{itemize}
 \end{frame}
 
+\subsection{Ablauf}
+\begin{frame}[fragile]{PaymentOrder erzeugen}
+\begin{lstlisting}
+$payment_order = $schema->resultset('PaymentOrder')
+       ->create(\%payment_data);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Zahlung erfolgreich}
+\begin{itemize}
+\item Status und Transaktionscode aktualisieren
+\begin{lstlisting}
+$payment_order->update({
+    status => 'success',
+    auth_code => $bop_object->authorization,
+});
+\end{lstlisting}
+\item Bestellung abschließen
+\item Email(s) versenden
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Zahlung fehlgeschlagen}
+\begin{itemize}
+\item Status aktualisieren
+\begin{lstlisting}
+$payment_order->update({
+    status => 'failure',
+});
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
 \section{Dancer Plugin}
 \subsection{Keywords}
 \begin{frame}[fragile]{Keywords}
