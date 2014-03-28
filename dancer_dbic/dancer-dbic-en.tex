@@ -361,6 +361,16 @@ JSON
 andere DBIC connection?
 tests?
 
+\begin{frame}[fragile]{Session expiration}
+\begin{itemize}
+\item remove old sessions from database
+\item \verb|Interchange6::Schema::Resultset::Session|
+\end{itemize}
+\begin{lstlisting}
+$schema->resultset('Session')->expire('12 hours');
+\end{lstlisting}
+\end{frame}
+
 \section{TableEditor}
 
 \begin{frame}<handout:0>{Overview TableEditor}
