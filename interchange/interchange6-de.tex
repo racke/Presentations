@@ -209,6 +209,18 @@ any qr{.*} => sub {
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Routes Configuration}
+\begin{lstlisting}
+Interchange6::Routes:
+    cart:
+      template: checkout-giftinfo
+      uri: warenkorb
+    navigation:
+      template: listing
+      records: 20
+\end{lstlisting}
+\end{frame}
+
 \section{Demo \&\& Administration}
 \begin{frame}{Demo Shop}
 \begin{itemize}
