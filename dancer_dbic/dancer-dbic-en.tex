@@ -423,6 +423,18 @@ geändert werden.
 \end{itemize}
 \end{frame}
 
+\subsection{Routes}
+\begin{frame}[fragile]{Routes}
+\begin{lstlisting}
+get '/:class/:id' => require_login sub {
+    # retrieve database record and add relationships
+    ...
+
+    return to_json($data, {allow_unknown => 1});
+};
+\end{lstlisting}
+\end{frame}
+
 \subsection{Login}
 
 Für die Integration von Authentifizierung in eine Dancer-Anwendung empfehlen
