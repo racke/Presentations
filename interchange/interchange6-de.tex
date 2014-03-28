@@ -168,21 +168,45 @@ $payment_order->update({
 \subsection{Routes}
 \begin{frame}{Routes}
 \begin{itemize}
-\item Product
+\item Produkt
 \item Navigation
-\item Cart
+\item Warenkorb
 \item Checkout
+\item Konto
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Produkt}
+\begin{itemize}
+\item Produkt ``Dancer und DBIx::Class''\\
+\item \verb|sku| 978-0815-0815 \\
+\item \verb|uri| Dancer-DBIx-Class
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Navigation}
+\begin{itemize}
+\item Kategorien \\
+\url{http://www.cart.pm/Programming/Perl/Dancer}
+\item Produktfilter \\
+\url{http://www.cart.pm/Programming/Perl/Dancer/Author/racke/Sort/price}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Fallback Routes}
-\begin{itemize}
-\item Product\\
-\verb|uri| field
-\item Navigation\\
-\verb|uri| field
-apples/jonagold
-\end{itemize}
+\begin{lstlisting}
+any qr{.*} => sub {
+    # check for matching product
+    ...
+
+    # check for matching navigation
+    ...
+
+    # display not_found page
+    status 'not_found';
+    forward 404;
+};
+\end{lstlisting}
 \end{frame}
 
 \section{Demo \&\& Administration}
