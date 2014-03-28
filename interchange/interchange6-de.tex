@@ -150,6 +150,7 @@ $payment_order->update({
 \item Keywords
 \item Routes
 \item Configuration
+\item Hooks
 \end{itemize}
 \end{frame}
 
@@ -209,6 +210,7 @@ any qr{.*} => sub {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Configuration}
 \begin{frame}[fragile]{Routes Configuration}
 \begin{lstlisting}
 Interchange6::Routes:
@@ -218,6 +220,22 @@ Interchange6::Routes:
     navigation:
       template: listing
       records: 20
+\end{lstlisting}
+\end{frame}
+
+\subsection{Hooks}
+\begin{frame}[fragile]{Hooks}
+\begin{lstlisting}
+hook 'before_navigation_display' => sub {
+    my $nav_tokens = shift;
+
+    # load list of brands
+    my $brands = shop_navigation->search(
+        {type => 'manufacturer',
+         active => 1});
+
+    $nav_tokens->{brands} = [$brands->all];
+};
 \end{lstlisting}
 \end{frame}
 
