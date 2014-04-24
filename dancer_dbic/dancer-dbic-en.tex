@@ -497,7 +497,47 @@ Paging
 \end{itemize}
 \end{frame}
 
-\section{Ausblick und Mitarbeit}
+\section{Tips and Tricks}
+
+\subsection{Object Inflation}
+
+\begin{frame}[fragile]{User role}
+\begin{lstlisting}
+interchange6=> select * from roles where roles_id = 3;
+ roles_id | name | label
+----------+------+-------
+        3 | user | User
+(1 row)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{User role}
+\begin{lstlisting}
+$role = $schema->resultset('Role')->find(3);
+
+# primary key
+$role->id;
+
+# name and label
+$role->name;
+$role->label;
+\end{lstlisting}
+\end{frame}
+
+The search functions of DBIx::Class return objects, but in some
+situations you prefer a hashref.
+
+\begin{frame}{Object vs Hashref}
+\begin{itemize}
+\item Debug / Logs
+\item Templates
+\item API / JSON
+\item Speed
+\end{itemize}
+\end{frame}
+
+
+\section{Forecast and Contribution}
 
 \subsection{Development}
 
