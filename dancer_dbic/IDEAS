@@ -22,6 +22,14 @@ TE Logo
 
 More Screenshots
 
+Describe relationships
+    configuration example for many-to-many
+    change display of "needs to be configured"
+
+has_one/belongs_to:
+
+http://wellington.pm.org/archive/201306/travis-holton-dbic-howto.html
+
 Session expiration
 UTF8 für Session-Engine?
 
