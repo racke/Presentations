@@ -30,6 +30,10 @@ has_one/belongs_to:
 
 http://wellington.pm.org/archive/201306/travis-holton-dbic-howto.html
 
+Github:
+
+https://github.com/heytrav/cocktailfu/tree/master/lib/CocktailFu/Schema/Result
+
 Session expiration
 UTF8 für Session-Engine?
 
