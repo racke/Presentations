@@ -93,12 +93,252 @@ framework.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Easy to start with}
+\begin{itemize}
+\item cpanm Dancer YAML
+\item dancer -a Dropbox
+\item cd Dropbox
+\item ./bin/app.pl
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Program}
+
+\verb|./bin/app.pl|
+
+\begin{lstlisting}
+
+#!/usr/bin/env perl
+use Dancer;
+use Dropbox;
+dance;
+
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Module}
+
+\verb|lib/Dropbox.pm|
+
+\begin{lstlisting}
+
+package Dropbox;
+use Dancer ':syntax';
+
+our $VERSION = '0.1';
+
+get '/' => sub {
+    template 'index';
+};
+
+true;
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Templates}
+
+The content will be rendered first and passed to the
+layout renderer, so before\_layout\_render could mangle
+with it.
+
+The values passed to the template keyword are used
+for both layout and content.
+
+\begin{frame}{Templates}
+\begin{figure}
+\includegraphics[page=1,width=.6\textwidth]{layout.pdf}
+\end{figure}
+\end{frame}{Templates}
+
+\begin{frame}[fragile]{Templates}
+\begin{itemize}
+\item Normal Layout
+\begin{lstlisting}
+template 'index', {name => 'Test'}
+\end{lstlisting}
+\item Specific Layout
+\begin{lstlisting}
+template 'index', {name => 'Test'}, {layout => 'test'}
+\end{lstlisting}
+\item No Layout
+\begin{lstlisting}
+template 'index', {name => 'Test'}, {layout => undef}
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\subsubsection{Routes}
+
+Für eine Route benötigen wir
+
+\begin{itemize}
+\item HTTP-Methode
+\item Pfad
+\item Subroutine
+\end{itemize}
+
+\begin{frame}{Routes and Keywords}
+\begin{itemize}
+\item HTTP method
+\begin{itemize}
+\item get
+\item post
+\item ...
+\item any
+\end{itemize}
+\item Path
+\item Subroutine
+\end{itemize}
+\end{frame}
+
+Der Pfad für eine Route kann in einer der folgenden
+Weisen angegeben werden.
+
+\begin{frame}{Routes}
+\begin{itemize}
+\item String
+\item Named parameters
+\item Wildcards 
+\begin{itemize}
+\item Splat
+\item Megasplat
+\end{itemize}
+\item Regular expression
+\end{itemize}
+\end{frame}
+
+\subsubsection{String}
+\begin{frame}[fragile]{String}
+\begin{lstlisting}
+get '/home' => sub {
+    my $files = autoindex('/');
+
+    template 'filebrowser', {directory => 'Home',
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Named parameters}
+\begin{frame}[fragile]{Named parameters}
+\begin{lstlisting}
+get '/home/:file' => sub {
+    my $files = autoindex(param('file'));
+
+    template 'filebrowser', {directory => param('file'),
+                             files => $files,
+                            };
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Splat}
+\begin{frame}[fragile]{Splat}
+\begin{lstlisting}
+get '/images/covers/*.jpg' => sub {
+    my ($isbn) = splat;
+
+    if (-f "public/images/covers/$isbn.jpg") {
+        return send_file "images/covers/$isbn.jpg";
+    }
+
+    status 'not_found';
+    forward 404;
+}
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Megasplat}
+Die einfache Wildcard matcht nur auf einen Teil des Pfads,
+d.h. bis zum nächsten Schrägstrich (Slash).
+
+Mit der doppelten Wildcard (Megasplat) wird einfach der 
+Rest des Pfades gematcht und die \verb|splat|-Funktion
+gibt eine Liste zurück.
+
+\begin{frame}[fragile]{Megasplat}
+\begin{lstlisting}
+https://eshop.state.gov/lostpwd/biz@linuxia.de/e642bd543b9907bd2c06aa485261cb1a849a9f23fc7324bff45ebd35f4efe2cb
+
+get '/lostpwd/**' => sub {
+    my ($email, $hash) = splat;
+
+    form->fill(email => $email,
+               hash => $hash);
+    
+    template('lostpwd_confirm', form => $form);
+}
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Regular Expression}
+
+\begin{frame}[fragile]{Regular Expression}
+
+Catch-All (last route!)
+
+\begin{lstlisting}
+any qr{.*} => sub {
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Keywords}
+\begin{frame}[fragile]{Keywords}
+\begin{itemize}
+\item get, post, any, put, del, ...
+\item request, params, param
+\item redirect, forward, status, header
+\item config, var, session
+\item from\_json, to\_json, from\_xml, to\_xml
+\end{itemize}
+\end{frame}
+
+\subsubsection{var(s) and session}
+\begin{frame}[fragile]{var(s) and session}
+
+Storing and retrieving data for the current request:
+
+\begin{lstlisting}
+var bar => 'pivo';
+$bar = var 'bar';
+$bar = vars->{bar};
+\end{lstlisting}
+
+Storing and retrieving data from the session:
+
+\begin{lstlisting}
+session username => 'racke@linuxia.de';
+
+if (! session('username')) {
+    redirect uri_for('/login');
+}
+\end{lstlisting}
+
+\end{frame}
+
 \begin{frame}{Easy to expand}
 \begin{itemize}
 \item Plugins
 \item Hooks
 \item Engines
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{before Hook}
+Password protected site:
+\begin{lstlisting}
+hook 'before' => sub {
+    unless (session('user')
+        || request->path eq '/login'
+        || request->path =~ m%^/lostpwd%
+        ) {
+        redirect '/login';
+    }
+};
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}{Solid}
