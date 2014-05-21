@@ -130,6 +130,145 @@ framework.
 
 It took some time to get involved with DBIx::Class for various reasons.
 
+\begin{frame}{DBIx::Class}
+\begin{itemize}
+\item Table => Result classes
+\item users => Interchange6::Schema::Result::User
+\item Searches => Result sets
+\end{itemize}
+\end{frame}
+
+\begin{frame}{User and Roles}
+\begin{description}
+\item[User]
+\begin{itemize}
+\item racke@linuxia.de
+\item info@nite.si
+\item test@linuxia.at
+\end{itemize}
+\item[Role]
+\begin{itemize}
+\item user
+\item editor
+\item admin
+\item guest
+\end{itemize}
+\end{description}
+\end{frame}
+
+\begin{frame}{Tables}
+\begin{itemize}
+\item users
+\begin{itemize}
+\item users\_id
+\item email
+\item first\_name
+\item ...
+\end{itemize}
+\item roles
+\begin{itemize}
+\item roles\_id
+\item name
+\item label
+\end{itemize}
+\item user\_roles
+\begin{itemize}
+\item users\_id
+\item roles\_id
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Roles for an user}
+\begin{lstlisting}
+mysql> select R.name from users U
+       join user_roles UR on (U.users_id = UR.users_id)
+       join roles R on (UR.roles_id = R.roles_id)
+       where U.email = 'racke@linuxia.de';
+
++--------+
+| name   |
++--------+
+| user   |
+| editor |
++--------+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{User with DBIx::Class}
+\begin{lstlisting}
+$rs = $schema->resultset('User');
+$user = $rs->find(1);
+$user = $rs->find({email => 'racke@linuxia.de'});
+
+$first_name = $user->first_name;
+
+$users_linuxia = $rs->search({
+    email => {like => '%@linuxia.de'}});
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Roles with DBIx::Class}
+\begin{lstlisting}
+$rs = $schema->resultset('User');
+$user = $rs->find({email => 'racke@linuxia.de'});
+
+$roles = $user->roles;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{User Result Class}
+\begin{lstlisting}
+package Interchange6::Schema::Result::User;
+
+__PACKAGE__->table("users");
+
+__PACKAGE__->add_columns(...);
+
+__PACKAGE__->set_primary_key("users_id");
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{User Result Class}
+\begin{lstlisting}
+package Interchange6::Schema::Result::User;
+
+__PACKAGE__->has_many("UserRole",
+  "Interchange6::Schema::Result::UserRole",
+  { "foreign.users_id" => "self.users_id" },
+);
+
+__PACKAGE__->many_to_many("roles", "UserRole", "Role");
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Tips and Tricks}
+
+\begin{frame}[fragile]{Object inflation}
+\begin{lstlisting}
+debug "Role: ", $role;
+
+debug "Role: ", {$role->get_inflated_columns};
+\end{lstlisting}
+\begin{lstlisting}
+Role: {'label' => 'User',
+       'name' => 'user',
+       'roles_id' => '3'} 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Object vs Hashref}
+\begin{itemize}
+\item Debug / Logs
+\item Templates
+\item API / JSON
+\item Speed
+\end{itemize}
+\end{frame}
+
+
 \subsection{Database Administration}
 \begin{frame}{Database Administration}
 \begin{itemize}
@@ -559,55 +698,6 @@ Paging
 \end{itemize}
 \end{frame}
 
-\section{Tips and Tricks}
-
-\subsection{Object Inflation}
-
-\begin{frame}[fragile]{User role}
-\begin{lstlisting}
-interchange6=> select * from roles where roles_id = 3;
- roles_id | name | label
-----------+------+-------
-        3 | user | User
-(1 row)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{User role}
-\begin{lstlisting}
-$role = $schema->resultset('Role')->find(3);
-
-# primary key
-$role->id;
-
-# name and label
-$role->name;
-$role->label;
-\end{lstlisting}
-\end{frame}
-
-The search functions of DBIx::Class return objects, but in some
-situations you prefer a hashref.
-
-\begin{frame}{Object vs Hashref}
-\begin{itemize}
-\item Debug / Logs
-\item Templates
-\item API / JSON
-\item Speed
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Dump user role}
-\begin{lstlisting}
-debug "Role: ", {$role->get_inflated_columns};
-\end{lstlisting}
-\begin{lstlisting}
-Role: {'label' => 'User',
-       'name' => 'user',
-       'roles_id' => '3'} 
-\end{lstlisting}
-\end{frame}
 
 \section{Forecast and Contribution}
 
