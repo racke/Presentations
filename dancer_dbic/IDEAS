@@ -1,3 +1,11 @@
+Cut down presentation
+Use logos for introduction
+More / better screenshots diagrams
+
+Keynote: no phpmyadmin alternative
+   whois wtfadmin.org
+
+
 /status problems / Flute => new release of TF
 
 get_inflated_columns / hashref
@@ -14,7 +22,9 @@ Surge protection
 Angular JS and Jquery
 	https://docs.angularjs.org/misc/faq
 
-
+Test::DBIx::Class
+  => no has_one
+  => no default_value
 
 Dropbox
 
