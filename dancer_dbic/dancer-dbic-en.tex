@@ -818,6 +818,7 @@ $schema->resultset('Session')->expire('12 hours');
 
 \begin{frame}<handout:0>{Overview TableEditor}
 \begin{itemize}
+\item Features
 \item Installation
 \item Frontend
 \item Routes
@@ -826,6 +827,24 @@ $schema->resultset('Session')->expire('12 hours');
 % \item Limitations
 \item Configuration
 \end{itemize}
+\end{frame}
+
+\subsection{Features}
+\begin{frame}
+\begin{itemize}
+\item HTML editor
+\item Date and time picker
+\item File uploads
+\end{itemize}
+\end{frame}
+
+We are using Summernote, the ``Super Simple WYSIWYG Editor on Bootstrap'',
+found at \url{http://hackerwins.github.io/summernote/}.
+
+\begin{frame}[plain]{WYSIWYG editor}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/datepicker-htmleditor.png}
+  \end{center}
 \end{frame}
 
 \subsection{Installation}
@@ -949,7 +968,13 @@ Paging
 \end{itemize}
 \end{frame}
 
+\subsection{Resources}
 
+\begin{frame}{Resources}
+\begin{itemize}
+\item Summernote \url{http://hackerwins.github.io/summernote/}.
+\end{itemize}
+\end{frame}{}
 \section{Forecast and Contribution}
 
 \subsection{Development}
