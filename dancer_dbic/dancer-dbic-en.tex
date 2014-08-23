@@ -75,6 +75,10 @@
 Let's dance. I'm Racke from Hannover.pm in Germany and work
 as self employeed programmer and system administrator.
 
+Most part of my work consists of eCommmerce projects, which
+means that amongst other things I'm writing web applications which are using
+databases.
+
 My presentation today is about Dancer and DBIX::Class and how they play
 together.
 
@@ -88,8 +92,21 @@ or Postgres. DBIx::Class is an Object Relational Mapper that provides
 you with objects instead of just data. This is easier, more convenient 
 and even faster for reading and manipulating your database records.
 
+\begin{frame}{Introduction}
+\begin{itemize}
+\item Dancer
+\item DBIx::Class
+\item TableEditor
+\end{itemize}
+\end{frame}
+
+My presentation starts with a short introduction into Dancer and
+DBIx::Class. After that I'll show you a general purpose application
+called TableEditor before we dip into the gory details about
+how you make Dancer and DBIx::Class working together.
+
 So, let's start to dance first.
- 
+
 \begin{frame}{Easy to start with}
 \begin{itemize}
 \item Application ready to go
@@ -327,6 +344,7 @@ if (! session('username')) {
 \begin{frame}{Easy to expand}
 \begin{itemize}
 \item Plugins
+      Database, Email, Social Networks
 \item Hooks
 \item Engines
 \end{itemize}
@@ -354,15 +372,15 @@ hook 'before' => sub {
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Applications}
-\begin{itemize}
-\item Simple Dropbox 
-\url{https://metacpan.org/pod/Dancer::Plugin::Dropbox}
-\item .state.gov Websites \\
-\url{https://eshop.state.gov/}
-\item Monitor for Power Plant
-\end{itemize}
-\end{frame}
+% \begin{frame}{Applications}
+% \begin{itemize}
+% \item Simple Dropbox 
+% \url{https://metacpan.org/pod/Dancer::Plugin::Dropbox}
+% \item .state.gov Websites \\
+% \url{https://eshop.state.gov/}
+% \item Monitor for Power Plant
+% \end{itemize}
+% \end{frame}
 
 \subsection{DBIx::Class}
 \begin{frame}{DBIx::Class}
@@ -546,21 +564,21 @@ Role: {'label' => 'User',
   \end{center}
 \end{frame}
 
-\begin{frame}[plain]{View Products}
+\begin{frame}[plain]{View Employees}
   \begin{center}
-    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/product.png}
+    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/list.png}
   \end{center}
 \end{frame}
 
-\begin{frame}[plain]{View Product}
+\begin{frame}[plain]{Edit Employee}
   \begin{center}
-    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/product-detail.png}
+    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/form.png}
   \end{center}
 \end{frame}
 
-\begin{frame}[plain]{Relationship Orderline}
+\begin{frame}[plain]{Relationship Title}
   \begin{center}
-    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/product-related.png}
+    \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/add-many.png}
   \end{center}
 \end{frame}
 
@@ -986,21 +1004,21 @@ TableEditor:
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}{Planned Features}
-\begin{itemize}
-\item Search (Solr)
-\item Select schema
-\item Debian packages
-\end{itemize}
-\end{frame}
+% \begin{frame}{Planned Features}
+% \begin{itemize}
+% \item Search (Solr)
+% \item Select schema
+% \item Debian packages
+% \end{itemize}
+% \end{frame}
 
-\subsection{Resources}
+% \subsection{Resources}
 
-\begin{frame}{Resources}
-\begin{itemize}
-\item Summernote \url{http://hackerwins.github.io/summernote/}.
-\end{itemize}
-\end{frame}{}
+% \begin{frame}{Resources}
+% \begin{itemize}
+% \item Summernote \url{http://hackerwins.github.io/summernote/}.
+% \end{itemize}
+% \end{frame}{}
 \section{Forecast and Contribution}
 
 \subsection{Development}
