@@ -25,14 +25,50 @@
 
 \tableofcontents
 
+\section{Support}
+
+First the idea of the support system is to write an email to the helpdesk
+or login to the helpdesk frontend.
+
+\begin{frame}[fragile]{The Idea}
+\begin{itemize}
+\item mycustomer@support.linuxia.de
+\item https://support.linuxia.de/
+\end{itemize}
+\end{frame}
+
+The reality is though ...
+
+% http://en.wikipedia.org/wiki/Telephone#mediaviewer/File:Alt_Telefon.jpg
+
+\begin{frame}{The Reality}
+\begin{center}
+  \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{pics/phone.jpg}
+\end{center}
+\end{frame}
+
 \section{Supported Systems}
 
 \begin{frame}{Supported Systems}
 \begin{itemize}
 \item GitHub
+\item Request Tracker
+\item IMAP
 \item Teamwork
 \item Google Calendar
 \end{itemize}
+\end{frame}
+
+\section{Configuration and Commandline}
+\begin{frame}[fragile]{Configuration}
+\begin{lstlisting}
+inbox:
+  type: imap
+  server: ``support.linuxia.de''
+  user: racke
+  password: nevairbe
+  ssl: 1
+\end{lstlisting}
 \end{frame}
 
 \section{Forecast and Contribution}
