@@ -73,14 +73,25 @@ helpdesk-integration --from=imap
 \end{lstlisting}
 \end{frame}
 
-\section{Supported Systems}
+\section{Helpdesk Systems}
 
-\begin{frame}{Supported Systems}
+\begin{frame}{Helpdesk Systems}
 \begin{itemize}
 \item GitHub
 \item Request Tracker
-\item IMAP
 \item Teamwork
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Email}
+\begin{itemize}
+\item IMAP
+\item PGP/GPG encryption
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Calendar}
+\begin{itemize}
 \item Google Calendar
 \end{itemize}
 \end{frame}
@@ -97,7 +108,38 @@ inbox:
 \end{lstlisting}
 \end{frame}
 
+\section{Examples}
+
+\subsection{Google Calendar}
+
+\begin{frame}[fragile]{Google Calendar}
+\begin{lstlisting}
+helpdesk-integration --source gcal --target github
+\end{lstlisting}
+\end{frame}
+
+\subsection{Email Encryption}
+\begin{frame}[fragile]{Email Encryption}
+\begin{lstlisting}
+inbox:
+  type: imap
+  server: ``support.linuxia.de''
+  user: racke
+  password: nevairbe
+  ssl: 1
+  key: 9B726B71
+\end{lstlisting}
+\end{frame}
+
 \section{Forecast and Contribution}
+
+\subsection{Contribution}
+\begin{frame}{Contribution}
+\begin{itemize}
+\item Documentation
+\item Add support for other helpdesk systems
+\end{itemize}
+\end{frame}
 
 \subsection{Slides}
 
