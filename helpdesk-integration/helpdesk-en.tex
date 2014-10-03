@@ -99,8 +99,9 @@ helpdesk-integration --from=imap
 \end{itemize}
 \end{frame}
 
-\section{Configuration and Commandline}
-\begin{frame}[fragile]{Configuration}
+\section{Examples}
+
+\begin{frame}[fragile]{IMAP}
 \begin{lstlisting}
 inbox:
   type: imap
@@ -111,9 +112,16 @@ inbox:
 \end{lstlisting}
 \end{frame}
 
-\section{Examples}
-
 \subsection{Google Calendar}
+\begin{frame}[fragile]{Configuration}
+\begin{lstlisting}
+  calendar:
+    type: gcal
+    secrets_file: data/secrets.json
+    token_file: data/gcal-token.json
+    calendar_id: xxxxxxxxxxx@group.calendar.google.com
+\end{lstlisting}
+\end{frame}
 
 \begin{frame}[fragile]{Google Calendar}
 \begin{lstlisting}[language=bash]
