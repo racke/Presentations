@@ -25,9 +25,9 @@
 
 \tableofcontents
 
-\section{Support}
+\section{Helpdesk Workflow}
 
-First the idea of the support system is to write an email to the helpdesk
+The the idea of a helpdesk system is to write an email to the helpdesk
 or login to the helpdesk frontend.
 
 \begin{frame}[fragile]{The Idea}
@@ -73,7 +73,7 @@ helpdesk-integration --from=imap
 \end{lstlisting}
 \end{frame}
 
-\section{Helpdesk Systems}
+\section{Supported Systems}
 
 \begin{frame}{Helpdesk Systems}
 \begin{itemize}
@@ -83,6 +83,8 @@ helpdesk-integration --from=imap
 \end{itemize}
 \end{frame}
 
+\section{Email and Calendar}
+\subsection{Email}
 \begin{frame}{Email}
 \begin{itemize}
 \item IMAP
@@ -90,6 +92,7 @@ helpdesk-integration --from=imap
 \end{itemize}
 \end{frame}
 
+\subsection{Calendar}
 \begin{frame}{Calendar}
 \begin{itemize}
 \item Google Calendar
@@ -113,7 +116,7 @@ inbox:
 \subsection{Google Calendar}
 
 \begin{frame}[fragile]{Google Calendar}
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 helpdesk-integration --source gcal --target github
 \end{lstlisting}
 \end{frame}
