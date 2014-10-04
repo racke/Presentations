@@ -25,6 +25,10 @@
 
 \tableofcontents
 
+You can use for example GitHub or RequestTracker to take care of your
+helpdesk requests. This allows to manage incoming requests and also builds
+a history.
+
 \section{Helpdesk Workflow}
 
 The the idea of a helpdesk system is to write an email to the helpdesk
@@ -57,6 +61,10 @@ nada nada
 \end{lstlisting}
 \end{frame}
 
+So what do you do with this email? You can copy \& waste it in your
+helpdesk system, but this is tiresome and you do get a number of
+things wrong.
+
 \begin{frame}{The Reality}
 \begin{itemize}
 \item Copy \& Waste
@@ -65,12 +73,23 @@ nada nada
 \end{itemize}
 \end{frame}
 
+Also you might need to cope with two different helpdesk systems
+in your projects.
+
 \begin{frame}{The Reality}
 \begin{itemize} 
 \item Company A: Request Tracker
 \item Company B: Teamwork
 \end{itemize}
 \end{frame}
+
+My solution is to use Helpdesk::Integration and the commandline
+application helpdesk-integration.
+
+Basically you specify a source and a target for the data to be
+transferred.
+
+Credentials are stored into a configuration file.
 
 \begin{frame}[fragile]{The Solution}
 \begin{lstlisting}
@@ -108,6 +127,7 @@ We are currently supporting the following helpdesk systems:
 \begin{itemize}
 \item Queues
 \item Tickets
+\item Links between tickets
 \item RT 3 und RT 4
 \end{itemize}
 \end{frame}
