@@ -101,6 +101,7 @@ We are currently supporting the following helpdesk systems:
 \begin{itemize}
 \item Queues
 \item Tickets
+\item RT 3 und RT 4
 \end{itemize}
 \end{frame}
 
@@ -157,6 +158,12 @@ The calendar ID is actually for this conference.
 \begin{frame}[fragile]{Google Calendar}
 \begin{lstlisting}[language=bash]
 helpdesk-integration --source gcal --target github
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{RT to Google Calendar}
+\begin{lstlisting}[language=bash]
+helpdesk-integration --source rt=1461 --target gcal
 \end{lstlisting}
 \end{frame}
 
