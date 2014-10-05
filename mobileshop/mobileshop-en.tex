@@ -25,6 +25,8 @@
 
 \tableofcontents
 
+This presentation is about a mobile shop project for Calevo.
+
 \begin{frame}{Calevo}
 \begin{center}
   \includegraphics{pics/calevo.jpg}
@@ -35,23 +37,18 @@
 \end{itemize}
 \end{frame}
 
-\section{Solr}
-\begin{frame}{Solr}
+Instead of rewriting the old Interchange5 application, we started
+to build a Dancer application from scratch.
+
+We are using the same database as for the regular shop though.
+
+\section{Architecture}
+\begin{frame}{Architecture}
 \begin{itemize}
-\item Solr search
-\item Autocomplete with Ajax
+\item Dancer
+\item DBIx::Class
 \end{itemize}
 \end{frame}
-
-\begin{frame}{Ajax Autocomplete}
-\begin{itemize}
-\item Search route /search
-\item Solr search
-\item Return JSON
-\item Jquery script
-\end{itemize}
-\end{frame}
-
 
 \section{I18N}
 \begin{frame}{I18N}
