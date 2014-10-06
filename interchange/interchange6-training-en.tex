@@ -1,0 +1,267 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{caption}
+\captionsetup{labelformat=empty,labelsep=none}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{ulem}
+\lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
+
+\title{Interchange6 Training}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date{Perl::Dancer Conference 2014, Hancock, 9th October 2014}
+
+\begin{document}
+\maketitle{}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Template::Flute intro
+
+\tableofcontents
+
+\section{Übersicht}
+
+Eine Auswahl von Online-Shopsysteme, die in Deutschland häufig eingesetzt
+werden. Alle sind in PHP programmiert. Magento wurde von eBay aufgekauft
+und hat eine komplizierte Datenbankstruktur.
+ 
+\begin{frame}{Shopsoftware}
+  \begin{itemize}
+  \item Magento
+  \item Shopware
+  \item Oxid
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{PHP Cauldron}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/cauldron.jpg}
+  \end{center}
+\end{frame}
+
+\section{Interchange6 Stack}
+\begin{frame}{Standard Stack}
+  \begin{itemize}
+  \item DBIx::Class
+  \item Moo
+  \item Dancer / Dancer2
+  \item Template::Flute
+  \item Solr
+  \end{itemize}
+\end{frame}
+
+\section{Status Quo}
+\begin{frame}{Status Quo}
+\begin{itemize}
+ \item Interchange6::Schema (business logic)
+  \item Dancer::Plugin::Interchange6
+\end{itemize}
+\end{frame}
+
+\section{DBIx::Class}
+\begin{frame}{Interchange6::Schema}
+\begin{itemize}
+ \item Products, Attributes, Prices, Inventory 
+ \item Users, Adresses
+ \item Cart, Sessions
+ \item Orders, Payment
+ \item Taxes, Shipping
+\end{itemize}
+\end{frame}
+
+\section{Payments}
+\subsection{Payment Module}
+\begin{frame}{Payment Module}
+\begin{itemize}
+\item Business::OnlinePayment
+\item many providers
+\item ! Modern Perl
+\item 3D secure, Redirect
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Payment Module}
+\begin{itemize}
+\item Business::OnlinePayment::IPayment (1\&1) \\
+Silent CGI
+\end{itemize}
+\end{frame}
+
+\subsection{Ablauf}
+\begin{frame}[fragile]{Create PaymentOrder}
+\begin{lstlisting}
+$payment_order = $schema->resultset('PaymentOrder')
+       ->create(\%payment_data);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Zahlung erfolgreich}
+\begin{itemize}
+\item Status und Transaktionscode aktualisieren
+\begin{lstlisting}
+$payment_order->update({
+    status => 'success',
+    auth_code => $bop_object->authorization,
+});
+\end{lstlisting}
+\item Bestellung abschließen
+\item Email(s) versenden
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Zahlung fehlgeschlagen}
+\begin{itemize}
+\item Status aktualisieren
+\begin{lstlisting}
+$payment_order->update({
+    status => 'failure',
+});
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\section{Dancer Plugin}
+\begin{frame}{Dancer::Plugin::Interchange6}
+\begin{itemize}
+\item Keywords
+\item Routes
+\item Configuration
+\item Hooks
+\end{itemize}
+\end{frame}
+
+\subsection{Keywords}
+\begin{frame}[fragile]{Keywords}
+\begin{itemize}
+\item shop\_schema
+\item shop\_product, shop\_address, ...\\
+\verb|$product = shop_product('F0001');|
+\item shop\_cart
+\item shop\_charge
+\item shop\_setup\_routes
+\end{itemize}
+\end{frame}
+
+\subsection{Routes}
+\begin{frame}{Routes}
+\begin{itemize}
+\item Product
+\item Navigation
+\item Cart
+\item Checkout
+\item Account
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Product}
+\begin{itemize}
+\item Produkt ``Dancer und DBIx::Class''\\
+\item \verb|sku| 978-0815-0815 \\
+\item \verb|uri| Dancer-DBIx-Class
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Navigation}
+\begin{itemize}
+\item Categories \\
+\url{http://www.cart.pm/Programming/Perl/Dancer}
+\item Product filter \\
+\url{http://www.cart.pm/Programming/Perl/Dancer/Author/racke/Sort/price}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Fallback Routes}
+\begin{lstlisting}
+any qr{.*} => sub {
+    # check for matching product
+    ...
+
+    # check for matching navigation
+    ...
+
+    # display not_found page
+    status 'not_found';
+    forward 404;
+};
+\end{lstlisting}
+\end{frame}
+
+\subsection{Configuration}
+\begin{frame}[fragile]{Routes Configuration}
+\begin{lstlisting}
+Interchange6::Routes:
+    cart:
+      template: checkout-giftinfo
+      uri: warenkorb
+    navigation:
+      template: listing
+      records: 20
+\end{lstlisting}
+\end{frame}
+
+\subsection{Hooks}
+\begin{frame}[fragile]{Hooks}
+\begin{lstlisting}
+hook 'before_navigation_display' => sub {
+    my $nav_tokens = shift;
+
+    # load list of brands
+    my $brands = shop_navigation->search(
+        {type => 'manufacturer',
+         active => 1});
+
+    $nav_tokens->{brands} = [$brands->all];
+};
+\end{lstlisting}
+\end{frame}
+
+\section{Demo \&\& Administration}
+\begin{frame}{Demo Shop}
+\begin{itemize}
+\item  \url{https://github.com/interchange/Interchange6-Demo-Shop}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Administration}
+\begin{itemize}
+\item ERP
+\item API
+\begin{itemize}
+\item OpenERP
+\item Magento kompatibel
+\end{itemize}
+\item TableEditor
+\url{https://github.com/interchange/TableEditor}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Contribution}
+\begin{itemize}
+\item kleines Entwicklerteam
+\item Github
+\item IRC 
+\begin{itemize}
+\item \#interchange freenode
+\item \#dancer
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Infos}
+Slides:
+\url{http://www.linuxia.de/talks/perldancer2014/interchange6-training-en-beamer.pdf}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

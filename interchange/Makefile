@@ -7,7 +7,7 @@ SLIDE_OUTPUTS=$(SLIDE_INPUTS:%.tex=%.pdf)
 HANDOUT_INPUTS=interchange6-de-handout.tex interchange6-training-en-handout.tex
 HANDOUT_OUTPUTS=$(HANDOUT_INPUTS:%.tex=%.pdf)
 
-all: $(SLIDE_OUTPUTS) $(HANDOUT_OUTPUTS) clean
+all: $(HANDOUT_OUTPUTS) $(SLIDE_OUTPUTS) clean
 
 .PHONY: all clean
 
