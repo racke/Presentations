@@ -67,10 +67,13 @@ und hat eine komplizierte Datenbankstruktur.
 \begin{frame}{Interchange6::Schema}
 \begin{itemize}
  \item Products, Attributes, Prices, Inventory 
- \item Users, Adresses
+ \item Navigation (Menus, Categories)
+ \item Users, Roles, Permissions 
+ \item Adresses
+ \item Countries, States
  \item Cart, Sessions
  \item Orders, Payment
- \item Taxes, Shipping
+ \item Taxes, Shipments
 \end{itemize}
 \end{frame}
 
@@ -127,11 +130,12 @@ my %payment_data = (amount => cart->total,
 my $tx = shop_charge(%payment_data);
 
 if ($tx->is_success()) {
-    # create transaction, send email out, ...
+    # create order, send email out, show receipt \cite...
 }
 else {
     my $payment_error = $tx->error_message;
-    template 'checkout-payment', {payment_error => $payment_error};
+    template 'checkout-payment', 
+        {payment_error => $payment_error};
 }
 \end{lstlisting}
 \end{frame}
