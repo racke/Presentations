@@ -26,7 +26,7 @@
 
 \tableofcontents
 
-\section{Übersicht}
+\section{Interchange6}
 
 Eine Auswahl von Online-Shopsysteme, die in Deutschland häufig eingesetzt
 werden. Alle sind in PHP programmiert. Magento wurde von eBay aufgekauft
@@ -46,8 +46,7 @@ und hat eine komplizierte Datenbankstruktur.
   \end{center}
 \end{frame}
 
-\section{Interchange6 Stack}
-\begin{frame}{Standard Stack}
+\begin{frame}{Stack}
   \begin{itemize}
   \item DBIx::Class
   \item Moo
@@ -57,7 +56,6 @@ und hat eine komplizierte Datenbankstruktur.
   \end{itemize}
 \end{frame}
 
-\section{Status Quo}
 \begin{frame}{Status Quo}
 \begin{itemize}
  \item Interchange6::Schema (business logic)
@@ -65,7 +63,7 @@ und hat eine komplizierte Datenbankstruktur.
 \end{itemize}
 \end{frame}
 
-\section{DBIx::Class}
+\section{Interchange6::Schema}
 \begin{frame}{Interchange6::Schema}
 \begin{itemize}
  \item Products, Attributes, Prices, Inventory 
@@ -168,7 +166,7 @@ $payment_order->update({
 \end{itemize}
 \end{frame}
 
-\section{Dancer Plugin}
+\section{Dancer::Plugin::Interchange6}
 \begin{frame}{Dancer::Plugin::Interchange6}
 \begin{itemize}
 \item Keywords
@@ -263,23 +261,10 @@ hook 'before_navigation_display' => sub {
 \end{lstlisting}
 \end{frame}
 
-\section{Demo \&\& Administration}
+\section{Demo Shop}
 \begin{frame}{Demo Shop}
 \begin{itemize}
 \item  \url{https://github.com/interchange/Interchange6-Demo-Shop}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Administration}
-\begin{itemize}
-\item ERP
-\item API
-\begin{itemize}
-\item OpenERP
-\item Magento kompatibel
-\end{itemize}
-\item TableEditor
-\url{https://github.com/interchange/TableEditor}
 \end{itemize}
 \end{frame}
 
