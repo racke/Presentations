@@ -270,6 +270,12 @@ hook 'before_navigation_display' => sub {
 
 \begin{frame}[fragile]{Cart Template}
 \begin{lstlisting}
+template 'checkout', {cart => shop_cart};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Cart Template}
+\begin{lstlisting}
 <table>
   <tr><td>Name</td><td>Qty</td><td>Price</td></tr>
   <tr>
