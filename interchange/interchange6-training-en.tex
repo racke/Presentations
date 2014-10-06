@@ -94,6 +94,47 @@ Silent CGI
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{shop\_charge}
+\begin{lstlisting}
+my %payment_data = (amount => cart->total,
+     first_name => $values->{first_name},
+     last_name => $values->{last_name},
+     card_number => $values->{cc_number},
+     expiration => $expiration,
+     cvc => $values->{cvc_number},
+     action => 'Normal Authorization');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{shop\_charge}
+\begin{lstlisting}
+my $tx = shop_charge(%payment_data);
+
+if ($tx->is_success()) {
+    # create transaction, send email out, ...
+}
+else {
+    my $payment_error = $tx->error_message;
+    template 'checkout-payment', {payment_error => $payment_error};
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Plugin Configuration}
+\begin{lstlisting}
+plugins:
+  Interchange6:
+    payment:
+      default_provider: Braintree
+      providers:
+        Braintree:
+          merchant_id: xxxxxxxxxxxxxx
+          public_key: xxxxxxxxxxxxxx
+          private_key: xxxxxxxxxxxxx
+          test_transaction: 1
+\end{lstlisting}
+\end{frame}
+
 \subsection{Ablauf}
 \begin{frame}[fragile]{Create PaymentOrder}
 \begin{lstlisting}
