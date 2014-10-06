@@ -92,6 +92,15 @@ Silent CGI
 \end{itemize}
 \end{frame}
 
+\begin{frame}{shop\_charge}
+\begin{itemize}
+\item creates payment order
+\item interacts with payment gateway
+\item updates payment order
+\item returns BOP object
+\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{shop\_charge}
 \begin{lstlisting}
 my %payment_data = (amount => cart->total,
