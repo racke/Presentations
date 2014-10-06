@@ -268,6 +268,32 @@ hook 'before_navigation_display' => sub {
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Cart Template}
+\begin{lstlisting}
+<table>
+  <tr><td>Name</td><td>Qty</td><td>Price</td></tr>
+  <tr>
+    <td class="product-name">Organic gift basket</td>
+    <td class="product-quantity">2</td>
+    <td class="product-subtotal">$2000,00</td>
+  </tr>
+</table>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Cart Template}
+\begin{lstlisting}
+<specification>
+<list name="cart-product" iterator="cart.products">
+<param name="product-name" field="name"/>
+<param name="product-quantity" field="quantity"/>
+<param name="product-subtotal" field="subtotal" 
+       filter="currency"/>
+</list>
+</specification>
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Contribution}
 \begin{itemize}
 \item kleines Entwicklerteam
