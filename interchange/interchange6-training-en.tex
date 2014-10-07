@@ -89,6 +89,52 @@ Lots of work
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{User}
+\begin{itemize}
+\item username \\
+  automatically converted to lowercase
+\item email
+\item password \\
+  encrypted with bcrypt
+\item first\_name
+\item last\_name
+\item active
+\item last\_login
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Components for User}
+\begin{itemize}
+\item password \\
+  EncodedColumn
+\item last\_login \\
+  InflateColumn::DateTime
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Components for User}
+\begin{lstlisting}
+ "password",
+  {
+   data_type           => "varchar",
+   default_value       => "",
+   is_nullable         => 0,
+   size                => 60, 
+   encode_column       => 1,
+   encode_class        => 'Crypt::Eksblowfish::Bcrypt',
+   encode_args         => { key_nul => 1, cost => 14 },
+   encode_check_method => 'check_password',
+},
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Components for User}
+\begin{lstlisting}
+"last_login",
+  { data_type => "datetime", is_nullable => 1 },
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}{PaymentOrder}
 \begin{itemize}
  \item Captures payment transactions
