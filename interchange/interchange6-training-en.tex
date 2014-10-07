@@ -246,7 +246,16 @@ $payment_order->update({
 \end{itemize}
 \end{frame}
 
-\section{Dancer::Plugin::Interchange6}
+\section{Dancer Plugins}
+\begin{frame}{Dancer Plugins}
+\begin{itemize}
+\item Dancer::Plugin::DBIC
+\item Dancer::Plugin::Auth::Extensible
+\item Dancer::Plugin::Interchange6
+\end{itemize}
+\end{frame}
+
+\subsection{Dancer::Plugin::Interchange6}
 \begin{frame}{Dancer::Plugin::Interchange6}
 \begin{itemize}
 \item Keywords
@@ -256,7 +265,7 @@ $payment_order->update({
 \end{itemize}
 \end{frame}
 
-\subsection{Keywords}
+\subsubsection{Keywords}
 \begin{frame}[fragile]{Keywords}
 \begin{itemize}
 \item shop\_schema
@@ -268,7 +277,7 @@ $payment_order->update({
 \end{itemize}
 \end{frame}
 
-\subsection{Routes}
+\subsubsection{Routes}
 \begin{frame}{Routes}
 \begin{itemize}
 \item Product
@@ -312,7 +321,7 @@ any qr{.*} => sub {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Account}
+\subsubsection{Account}
 \begin{frame}[fragile]{Account Routes}
 \begin{itemize}
 \item login
@@ -320,7 +329,7 @@ any qr{.*} => sub {
 \end{itemize}
 \end{frame}
 
-\subsection{Configuration}
+\subsubsection{Configuration}
 \begin{frame}[fragile]{Routes Configuration}
 \begin{lstlisting}
 Interchange6::Routes:
@@ -333,7 +342,7 @@ Interchange6::Routes:
 \end{lstlisting}
 \end{frame}
 
-\subsection{Hooks}
+\subsubsection{Hooks}
 \begin{frame}[fragile]{Hooks}
 \begin{lstlisting}
 hook 'before_navigation_display' => sub {
