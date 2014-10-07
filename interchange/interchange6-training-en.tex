@@ -11,6 +11,8 @@
 \usepackage{ulem}
 \lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
+% DBIC session, Auth Extensible DBIC
+
 \title{Interchange6 Training}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
 \date{Perl::Dancer Conference 2014, Hancock, 9th October 2014}
@@ -254,6 +256,14 @@ any qr{.*} => sub {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Account}
+\begin{frame}[fragile]{Account Routes}
+\begin{itemize}
+\item login
+\item logout
+\end{itemize}
+\end{frame}
+
 \subsection{Configuration}
 \begin{frame}[fragile]{Routes Configuration}
 \begin{lstlisting}
@@ -298,6 +308,7 @@ hook 'before_navigation_display' => sub {
 \item Paging
 \item I18N
 \item Object autodetection
+\item Patterns
 \end{itemize}
 \end{frame}
 
@@ -331,6 +342,22 @@ template 'checkout', {cart => shop_cart};
 </list>
 </specification>
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Cart Template}
+\begin{itemize}
+\item HTML
+\begin{lstlisting}
+<p class="cart-link">
+  There are 123 items in your shopping cart.</p>
+\end{lstlisting}
+\item XML
+\begin{lstlisting}
+<pattern name="nitems" type="string">123</pattern>
+<value name="cart-link" field="cart.count"
+       pattern="nitems" skip="empty"/>
+\end{lstlisting}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Contribution}
