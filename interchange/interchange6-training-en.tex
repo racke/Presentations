@@ -223,6 +223,21 @@ plugins:
 \end{itemize}
 \end{frame}
 
+\subsection{Dancer::Plugin::DBIC}
+\begin{frame}[fragile]{Dancer::Plugin::DBIC configuration}
+\begin{lstlisting}
+plugins:
+  DBIC:
+    default:
+      dsn: dbi:mysql:danceshop
+      user: racke
+      password: nevairbe
+      schema_class: Interchange6::Schema
+      options:
+        mysql_enable_utf8: 1
+\end{lstlisting}
+\end{frame}
+
 \subsection{Dancer::Plugin::Interchange6}
 \begin{frame}{Dancer::Plugin::Interchange6}
 \begin{itemize}
