@@ -378,6 +378,26 @@ template 'checkout', {cart => shop_cart};
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Container}
+\begin{itemize}
+\item HTML
+\begin{lstlisting}[language=html]
+<div class="content-section" id="signin-form">
+  <h4>Already have an account with us?<br />
+  <small>Sign in to make checkout faster</small></h4>
+  <form role="form" action="/login" method="POST">
+  ...
+  </form>
+</div>
+\end{lstlisting}
+\item XML
+\begin{lstlisting}[language=xml]
+<container name="signin-form" id="signin-form" 
+   value="!session.logged_in_user"/>
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Contribution}
 \begin{itemize}
 \item kleines Entwicklerteam
