@@ -13,6 +13,8 @@
 
 % content op=hook
 % DBIC session, Auth Extensible DBIC
+% empty basket
+% prevent checkout with empty cart
 
 \title{Interchange6 Training}
 \author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
@@ -500,6 +502,22 @@ template 'checkout', {cart => shop_cart};
 <container name="dropdown-logout" id="dropdown-logout" 
     value="session.logged_in_user"/>
 \end{lstlisting}
+\end{frame}
+
+\subsection{Tasks}
+\subsubsection{Empty cart}
+\begin{frame}[fragile]{Task: Empty cart}
+\begin{itemize}
+\item Display message 
+\item \verb|<container>|
+\end{itemize}
+\end{frame}
+
+\subsubsection{Prevent checkout with empty cart}
+\begin{frame}{Task: Prevent checkout with empty cart}
+\begin{itemize}
+\item Prevent checkout with empty cart
+\end{itemize}
 \end{frame}
 
 \section{Contribution \& Finish}
