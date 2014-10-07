@@ -60,10 +60,12 @@ und hat eine komplizierte Datenbankstruktur.
 
 \begin{frame}{Status Quo}
 \begin{itemize}
- \item Interchange6::Schema (business logic)
-  \item Dancer::Plugin::Interchange6
+\item Interchange6::Schema (business logic)
+\item Dancer::Plugin::Interchange6
+\item Demo Shop
 \end{itemize}
 \end{frame}
+
 
 \section{Interchange6::Schema}
 \begin{frame}{Interchange6::Schema}
@@ -327,7 +329,7 @@ template 'checkout', {cart => shop_cart};
 \end{frame}
 
 \begin{frame}[fragile]{Cart Template}
-\begin{lstlisting}
+\begin{lstlisting}[language=html]
 <table>
   <tr><td>Name</td><td>Qty</td><td>Price</td></tr>
   <tr>
@@ -340,7 +342,7 @@ template 'checkout', {cart => shop_cart};
 \end{frame}
 
 \begin{frame}[fragile]{Cart Template}
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <specification>
 <list name="cart-product" iterator="cart.products">
 <param name="product-name" field="name"/>
@@ -355,12 +357,12 @@ template 'checkout', {cart => shop_cart};
 \begin{frame}[fragile]{Show items in cart}
 \begin{itemize}
 \item HTML
-\begin{lstlisting}
+\begin{lstlisting}[language=html]
 <p class="cart-link">
   There are 123 items in your shopping cart.</p>
 \end{lstlisting}
 \item XML
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <pattern name="nitems" type="string">123</pattern>
 <value name="cart-link" field="cart.count"
        pattern="nitems" skip="empty"/>
