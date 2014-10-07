@@ -11,6 +11,7 @@
 \usepackage{ulem}
 \lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
 
+% content op=hook
 % DBIC session, Auth Extensible DBIC
 
 \title{Interchange6 Training}
@@ -24,7 +25,7 @@
   \titlepage
 \end{frame}
 
-% Template::Flute intro
+% Add to cart links
 
 \tableofcontents
 
@@ -452,6 +453,15 @@ template 'checkout', {cart => shop_cart};
    value="!session.logged_in_user"/>
 \end{lstlisting}
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Container}
+\begin{lstlisting}[language=xml]
+<container name="dropdown-signin" id="dropdown-signin" 
+    value="!session.logged_in_user"/>
+<container name="dropdown-logout" id="dropdown-logout" 
+    value="session.logged_in_user"/>
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}{Contribution}
