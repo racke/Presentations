@@ -175,6 +175,29 @@ We are currently supporting the following helpdesk systems:
 \end{itemize}
 \end{frame}
 
+\subsection{Request Tracker}
+\begin{frame}[fragile]{Request Tracker}
+
+% without Queue it goes to "General"
+\begin{lstlisting}[language=bash]
+helpdesk-integration --source="imap" 
+                     --target="linuxia" 
+                     --subject="Screenshot"
+                     --workers="racke@linuxia.de"
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Request Tracker Configuration}
+\begin{lstlisting}
+linuxia:
+  type: rt
+   server: https://support.linuxia.de/rt
+   user: racke
+   password: "nevairbe"
+   queue: LinuXia
+\end{lstlisting}
+\end{frame}
+
 \subsection{Email / IMAP}
 
 \begin{frame}[fragile]{IMAP}
