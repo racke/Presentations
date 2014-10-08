@@ -75,7 +75,35 @@ Planned release at this end, but it doesn't work out.
 \begin{frame}{I18N}
 \begin{itemize}
 \item Autodetect
+\item Translations
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{I18N with Template::Flute}
+\begin{lstlisting}
+engines:
+  template_flute:
+    i18n:
+      class: CalevoMobile::Lexicon
+      method: try_to_translate
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{I18N with Template::Flute}
+\begin{lstlisting}
+package CalevoMobile::Lexicon;
+
+use Moo;
+use Dancer ':syntax';
+use Dancer::Plugin::SimpleLexicon;
+
+sub try_to_translate {
+    my ($self, $string) = @_;
+    my $translated = l($string);
+    # debug(to_dumper($string));
+    return $translated;
+}
+\end{lstlisting}
 \end{frame}
 
 \subsection{Payment}
