@@ -127,6 +127,7 @@ We are currently supporting the following helpdesk systems:
 \begin{itemize}
 \item Queues
 \item Tickets
+\item Requester and Owner
 \item Links between tickets
 \item RT 3 und RT 4
 \end{itemize}
@@ -136,6 +137,7 @@ We are currently supporting the following helpdesk systems:
 \begin{itemize}
 \item Projects
 \item TODO lists
+\item Workers
 \end{itemize}
 \end{frame}
 
@@ -165,6 +167,15 @@ We are currently supporting the following helpdesk systems:
 
 \section{Examples}
 
+\begin{frame}{Examples}
+\begin{itemize}
+\item IMAP
+
+\end{itemize}
+\end{frame}
+
+\subsection{Email / IMAP}
+
 \begin{frame}[fragile]{IMAP}
 \begin{lstlisting}
 inbox:
@@ -173,6 +184,19 @@ inbox:
   user: racke
   password: nevairbe
   ssl: 1
+\end{lstlisting}
+\end{frame}
+
+\subsection{Email Encryption}
+\begin{frame}[fragile]{Email Encryption}
+\begin{lstlisting}
+inbox:
+  type: imap
+  server: ``support.linuxia.de''
+  user: racke
+  password: nevairbe
+  ssl: 1
+  key: 9B726B71
 \end{lstlisting}
 \end{frame}
 
@@ -199,19 +223,6 @@ helpdesk-integration --source gcal --target github
 \begin{frame}[fragile]{RT to Google Calendar}
 \begin{lstlisting}[language=bash]
 helpdesk-integration --source rt=1461 --target gcal
-\end{lstlisting}
-\end{frame}
-
-\subsection{Email Encryption}
-\begin{frame}[fragile]{Email Encryption}
-\begin{lstlisting}
-inbox:
-  type: imap
-  server: ``support.linuxia.de''
-  user: racke
-  password: nevairbe
-  ssl: 1
-  key: 9B726B71
 \end{lstlisting}
 \end{frame}
 
