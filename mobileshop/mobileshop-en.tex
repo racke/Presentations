@@ -52,6 +52,8 @@ We are using the same database as for the regular shop though.
 
 \section{Features}
 
+% Solr updates
+
 \subsection{Search}
 \begin{frame}{Search}
 \begin{itemize}
@@ -66,6 +68,39 @@ We are using the same database as for the regular shop though.
 \item Autodetect
 \end{itemize}
 \end{frame}
+
+\subsection{Payment}
+\begin{frame}{Payment}
+\begin{itemize}
+\item PayPal
+\item IPayment
+\item Cash in Advance (Vorkasse)
+\end{itemize}
+\end{frame}
+
+\subsection{PayPal}
+\begin{frame}[fragile]{PayPal}
+\begin{itemize}
+\item Business::PayPal::API::ExpressCheckout
+\item CalevoMobile::Routes::PayPal
+\begin{lstlisting}
+prefix '/paypal';
+post '/setrequest' => sub { .. };
+# Checkout response from PayPal
+get '/getrequest' => sub {
+prefix undef;
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\subsection{IPayment}
+\begin{frame}[fragile]{IPayment}
+\begin{itemize}
+\item Business::OnlinePayment::IPayment
+\item Silent CGI
+\end{itemize}
+\end{frame}
+
 
 \section{Conclusion}
 
