@@ -174,11 +174,37 @@ We are currently supporting the following helpdesk systems:
 
 \begin{frame}{Examples}
 \begin{itemize}
+\item Email / IMAP
 \item Request Tracker
 \item GitHub
-\item Email / IMAP
 \item Google Calendar
 \end{itemize}
+\end{frame}
+
+\subsection{Email / IMAP}
+
+\begin{frame}[fragile]{IMAP Configuration}
+\begin{lstlisting}
+inbox:
+  type: imap
+  server: mail.linuxia.de
+  user: racke@linuxia.de
+  password: nevairbe
+  ssl: 1
+\end{lstlisting}
+\end{frame}
+
+\subsection{Email Encryption}
+\begin{frame}[fragile]{Email Encryption}
+\begin{lstlisting}
+inbox:
+  type: imap
+  server: support.linuxia.de
+  user: racke@linuxia.de
+  password: nevairbe
+  ssl: 1
+  key: 9B726B71
+\end{lstlisting}
 \end{frame}
 
 \subsection{Request Tracker}
@@ -223,31 +249,6 @@ github:
 \end{lstlisting}
 \end{frame}
 
-\subsection{Email / IMAP}
-
-\begin{frame}[fragile]{IMAP}
-\begin{lstlisting}
-inbox:
-  type: imap
-  server: ``support.linuxia.de''
-  user: racke
-  password: nevairbe
-  ssl: 1
-\end{lstlisting}
-\end{frame}
-
-\subsection{Email Encryption}
-\begin{frame}[fragile]{Email Encryption}
-\begin{lstlisting}
-inbox:
-  type: imap
-  server: ``support.linuxia.de''
-  user: racke
-  password: nevairbe
-  ssl: 1
-  key: 9B726B71
-\end{lstlisting}
-\end{frame}
 
 \subsection{Google Calendar}
 
