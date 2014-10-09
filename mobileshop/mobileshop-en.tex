@@ -225,14 +225,25 @@ sub try_to_translate {
 \begin{itemize}
 \item Business::PayPal::API::ExpressCheckout
 \item CalevoMobile::Routes::PayPal
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{PayPal}
 \begin{lstlisting}
+package CalevoMobile::Routes::PayPal;
 prefix '/paypal';
-post '/setrequest' => sub { .. };
-# Checkout response from PayPal
-get '/getrequest' => sub {
+
+# Retrieve a token and send user to PayPal
+post '/setrequest' => sub { 
+    .. 
+    redirect $paypal_url;
+};
+
+# Payment response from PayPal
+get '/getrequest' => sub { .. };
+
 prefix undef;
 \end{lstlisting}
-\end{itemize}
 \end{frame}
 
 \subsubsection{IPayment}
