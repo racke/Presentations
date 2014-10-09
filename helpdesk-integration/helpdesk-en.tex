@@ -252,11 +252,25 @@ github:
 
 \subsection{Google Calendar}
 
+\begin{frame}{Setup}
+\begin{itemize}
+\item Login into Google
+\item Create new calendar
+\item Go to Google Developers Console
+\item Create Project
+\item Enable Calendar API
+\item Go to APIs \& auth 
+\item Go to Credentials
+\item Create new Client ID
+\item Click download JSON
+\end{itemize}
+\end{frame}
+
 The calendar ID is actually for this conference.
 
 \begin{frame}[fragile]{Google Calendar: Configuration}
 \begin{lstlisting}
-  calendar:
+  gcal:
     type: gcal
     secrets_file: data/secrets.json
     token_file: data/gcal-token.json
@@ -264,7 +278,23 @@ The calendar ID is actually for this conference.
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Create token}
+\begin{lstlisting}
+helpdesk-integration --source rt=1461 --target gcal
+
+Go to the following link in your browser:
+https://accounts.google.com/o/oauth2/auth?...
+Enter verification code:
+...
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{RT to Google Calendar}
+\begin{itemize}
+\item Starts
+\item Due
+\end{itemize}
+
 \begin{lstlisting}[language=bash]
 helpdesk-integration --source rt=1461 --target gcal
 \end{lstlisting}
