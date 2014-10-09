@@ -175,6 +175,7 @@ We are currently supporting the following helpdesk systems:
 \begin{frame}{Examples}
 \begin{itemize}
 \item Request Tracker
+\item GitHub
 \item Email / IMAP
 \item Google Calendar
 \end{itemize}
@@ -200,6 +201,25 @@ linuxia:
    user: racke
    password: "nevairbe"
    queue: LinuXia
+\end{lstlisting}
+\end{frame}
+
+\subsection{GitHub}
+
+\begin{frame}[fragile]{IMAP to GitHub}
+\begin{lstlisting}
+helpdesk-integration --source=imap --subject=log 
+                     --target=github
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{GitHub configuration}
+\begin{lstlisting}
+github:
+  type: github
+  user: racke
+  password: nevairbe
+  repo: Helpdesk-Integration
 \end{lstlisting}
 \end{frame}
 
