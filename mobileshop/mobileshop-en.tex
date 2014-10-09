@@ -44,13 +44,47 @@ We are using the same database as for the regular shop though.
 
 Planned release at this end, but it doesn't work out.
 
+The Vary HTTP header should be used to signal caching servers
+and help search engine bots to discover mobile-optimized faster.
+
 \begin{frame}{Mobile optimized website}
 \begin{itemize}
+% Bootstrap
 \item Responsive Design
+\begin{itemize}
+  \item Bootstrap
+  \item Foundation
+\end{itemize}
 \item Dynamically serving different HTML
-\item Separate Domain (mobile.calevo.com)
+\begin{itemize}
+  \item UserAgent
+  \item Vary HTTP header
+\end{itemize}
+\item Separate Domain
 \end{itemize}
 \end{frame}
+
+\begin{frame}{Why separate domain}
+\begin{itemize}
+\item Avoid full rewrite 
+\item Focus on the basics
+\item Play with modern website
+\item Keep existing administration
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Disadvantages}
+\begin{itemize}
+\item Reimplementation
+\begin{itemize}
+\item Payment
+\item Prices, Discount
+\item Navigation
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Showcase}
 
 \begin{frame}{Calevo Mobile}
 \begin{itemize}
@@ -59,7 +93,6 @@ Planned release at this end, but it doesn't work out.
 \end{itemize}
 \end{frame}
 
-\section{Showcase}
 \subsection{Home}
 \begin{frame}{Home}
 \begin{center}
@@ -95,6 +128,18 @@ Planned release at this end, but it doesn't work out.
 \item Template::Flute
 \item DBIx::Class
 \item Jquery Mobile
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Database Schema}
+
+We recommend to use the following if you have a heavily customized
+database.
+
+\begin{itemize}
+\item Keep existing database
+\item Write DBIx::Class schema
+\item Clean up database
 \end{itemize}
 \end{frame}
 
