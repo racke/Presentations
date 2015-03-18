@@ -1,0 +1,36 @@
+Title:
+
+    TableEditor
+
+Tags:
+
+    administration angular bootstrap dancer datenbanken dbic
+
+Abstract:
+
+   Datenbanken spielen eine wichtige Rolle für viele Anwendungen
+   und müssen ständig gepflegt werden. Dies kann oftmals automatisiert
+   erfolgen. Auf manuelle Eingabe kann in der Regel jedoch nicht
+   verzichtet werden. In Anwendungen, die keine dezidierte
+   Administrationsoberfläche haben, kommt dann z.B. phpmyadmin
+   zum Einsatz.
+
+   Mit TableEditor stellen wir eine Datenbankadministration zur
+   Verfügung, die anwenderfreundlicher und flexibler ist.
+   Die moderne Oberfläche ist mit Bootstrap 3 und AngularJS auf dem
+   Stand der Technik. Durch Plugins können sowohl die Oberfläche
+   individuell angepaßt werden als auch zusätzlich Features
+   hinzugefügt werden.
+
+   Anstatt direkt mit DBI auf die Datenbank zuzugreifen kommt
+   DBIx::Class mit vorhandenen oder automatisch erzeugten Schemas
+   zum Einsatz. Das erleichtert dem Anwender z.B. das Arbeiten
+   mit Beziehungen zwischen den Tabellen.  
+
+   
+
+   
+Duration:
+
+        
+    
