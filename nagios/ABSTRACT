@@ -1,0 +1,10 @@
+Monitoring with Nagios and check_mk
+
+Monitoring is essential to ensure the integrity of your production systems.
+Lots of things can go wrong which you wouldn't notice otherwise. Disks
+fill up to the brim, ordering in your online shop doesn't work anymore or
+data exchange with other systems ceases to function. All of these result
+in money lost, upset employers and customers going to the competition.
+     
+                
+        
