@@ -5,6 +5,25 @@ Lots of things can go wrong which you wouldn't notice otherwise. Disks
 fill up to the brim, ordering in your online shop doesn't work anymore or
 data exchange with other systems ceases to function. All of these result
 in money lost, upset employers and customers going to the competition.
-     
+
+Nagios is a mature, reliable and flexible monitoring system. Other
+Open Source monitoring systems evolved over the time Nagios is around.
+Nagios and its eco system of plugins and extensions has benefits
+over other solutions in areas like extensibility, dealing with flapping
+and handling escalations.
+
+The check_mk extension enhances Nagios with:
+
+* Automatic service detection
+* High performance through passive checks
+* Easy integration of new hosts (including Windows).
+* Multisite Web GUI and administration of hosts and services
+* Business Intelligence
+
+This presentation shows how to setup and use Nagios with check_mk
+and gives examples of writing custom checks.
+
+  
+ 
                 
         
