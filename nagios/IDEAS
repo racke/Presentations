@@ -21,7 +21,8 @@ Rule based, hierarchical confirmation
     - stuck jobs
     - orders
     - import files
-
+    - email blacklists
+    
 * why monitoring
 * list standard checks with check_mk
 * add custom checks
