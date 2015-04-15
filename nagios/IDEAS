@@ -1,0 +1,33 @@
+Nagios
+
+flexible - custom checks
+escalation
+flapping
+
+    check_mk / agent
+Automatic service detection
+Rule based, hierarchical confirmation
+     High performance through passive checks
+     Creates Nagios configs for you
+     Windows
+
+    alternative - icinga
+
+
+    what to check
+    - diskspace
+    - products on Amazon
+    - crashes
+    - stuck jobs
+    - orders
+    - import files
+
+* why monitoring
+* list standard checks with check_mk
+* add custom checks
+* more features like escalation / flapping etc
+
+
+  
+    
+    
