@@ -1,0 +1,61 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{caption}
+\captionsetup{labelformat=empty,labelsep=none}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+% strikethrough (\sout)
+\usepackage{ulem}
+\lstset{language=Perl,basicstyle=\normalsize,tabsize=3,showstringspaces=false}
+
+\title{Monitoring with Nagios and check\_mk}
+\author[racke]{Stefan Hornburg (Racke)\\ \texttt{racke@linuxia.de}}
+\date{DORS/CLUC 2015, Zagreb}
+
+\begin{document}
+\maketitle{}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\tableofcontents
+
+\section{Why}
+
+\begin{frame}[fragile]{Why}
+\begin{itemize}
+\item Availability of server and services
+\item SLA
+\end{itemize}
+\end{frame}
+
+\section{Nagios}
+
+\begin{frame}[fragile]{Check States}
+\begin{itemize}
+\item OK
+\item WARINING 
+\item CRITICAL
+\item UNKNOWN
+\end{itemize}
+\end{frame}
+
+
+\subsection{Slides}
+
+\begin{frame}{Slides}
+Slides:
+\url{http://www.linuxia.de/talks/dorscluc2015/nagios-en-beamer.pdf}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
