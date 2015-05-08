@@ -1,5 +1,11 @@
 Nagios
 
+    Introduction
+    
+    Failure scenario
+    Monitoring for businesses
+    Monitoring for Open Source projects
+    
 flexible - custom checks
 escalation
 flapping
@@ -14,20 +20,15 @@ Rule based, hierarchical confirmation
     alternative - icinga
 
 
-    what to check
-    - diskspace
-    - products on Amazon
-    - crashes
-    - stuck jobs
-    - orders
-    - import files
-    - email blacklists
-    
-* why monitoring
 * list standard checks with check_mk
 * add custom checks
 * more features like escalation / flapping etc
 
+* check_mk runtime (checks need to be quick)
+
+Use case Email
+    standard checks IMAP/SMTP/Webmail/.../...
+    failures Disk Space - Mail Queue (PHP Worms) - Blacklist
 
   
     
