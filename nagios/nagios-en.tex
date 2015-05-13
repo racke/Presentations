@@ -25,29 +25,100 @@
 
 \tableofcontents
 
+% Introduction
+% Why I'm talking about this subject?
+
 \section{Monitoring}
 
 \begin{frame}[fragile]{Monitoring}
+
 \begin{itemize}
 \item Why ?
+\item Who ?
 \item What ?
 \end{itemize}
 \end{frame}
 
 \subsection{Justification}
 
-\begin{frame}[fragile]{Justification}
+\begin{frame}[fragile]{Why ?}
 \begin{itemize}
 \item Availability of server and services
-\item SLA
+\item 3rd party services (SLA)
 \end{itemize}
 \end{frame}
 
-\subsection{Use Cases}
-\begin{frame}[fragile]{Use Cases}
+\begin{frame}[fragile]{Who ?}
 \begin{itemize}
-\item Inventory
-\item Backup
+\item Companies
+\item Open Source Projects
+\end{itemize}
+\end{frame}
+
+% \subsection{Use Cases}
+% \begin{frame}[fragile]{Use Cases}
+% \begin{itemize}
+% \item Inventory
+% \item Backup
+% \end{itemize}
+% \end{frame}
+
+\subsection{Use Case Mailserver}
+Early in my career as freelancer I worked on a setup for an ISP
+in Zurich, Switzerland. We designed the firewall, web servers
+and mail server on our own. 
+
+Back then, it was a much more easy job to do
+so, literally no SPAM and Virus. Also monitoring started much
+later.
+
+\subsubsection{Basic Checks}
+
+Disk can be eaten up slowly by incoming emails or rather
+quickly by runaway applications filling log files.
+
+\begin{frame}{Basic Checks}
+\begin{itemize}
+\item CPU
+\item Memory Usage
+\item TCP Connections
+\item Disk Usage
+\end{itemize}
+\end{frame}
+
+\subsubsection{Email Checks}
+
+\begin{frame}{Email Checks I}
+
+% IMAP: max connections (multiple per client)
+
+\begin{itemize}
+\item SMTP
+\item IMAP/POP
+\item Webmail
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Email Checks II}
+\begin{itemize}
+\item Virenscanner
+\item Spamfilter
+\item Database
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Email Checks III}
+% newsletter
+% something is going wrong
+% PHP worm
+\begin{itemize}
+\item Queue
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Email Checks IV}
+\begin{itemize}
+\item Blacklists
 \end{itemize}
 \end{frame}
 
