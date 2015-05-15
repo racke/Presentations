@@ -154,10 +154,32 @@ that they are done and can be restored properly.
 \begin{frame}[fragile]{Advantages}
 \begin{itemize}
 \item Flexible
-\item Plugins
+\item Plugins (simple model)
 \item Community
 \item Ecosystem
 \end{itemize}
+\end{frame}
+
+\subsection{Checks}
+All checks in Nagios are realized by plugins.
+
+We distinguish between active and passive checks.
+
+Active checks are initiated by Nagios itself,
+while passive checks are performed and submitted
+to Nagios.
+
+\begin{frame}[fragile]{Checks}
+\begin{itemize}
+\item Check = Plugin
+\verb|/usr/lib/nagios/plugins/check_http|
+\end{itemize}
+
+\begin{itemize}
+\item active checks
+\item passive checks
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]{Check States}
