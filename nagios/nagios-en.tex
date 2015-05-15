@@ -122,18 +122,19 @@ quickly by runaway applications filling log files.
 \end{itemize}
 \end{frame}
 
-\subsection{Checks}
+\subsection{More Checks}
 
-\begin{frame}[fragile]{Checks}
+Backups are very important and you really need to make sure
+that they are done and can be restored properly.
+
+\begin{frame}[fragile]{More Checks}
+
 \begin{itemize}
-\item diskspace
-\item database
 \item stuck jobs
 \item products on Amazon
 \item orders
 \item crashes
 \item import files
-\item email blacklists
 \item backups
 \end{itemize}
 \end{frame}
@@ -223,6 +224,50 @@ Which benefits has \verb|Check_MK| over a standard Nagios installation?
 \item Mobile
 \item Event Console
 \end{itemize}
+\end{frame}
+
+\subsection{Adding and updating hosts}
+There are two ways to add or update hosts, you can do
+it through the commandline or with the WATO administration
+interface.
+
+check\_mk -I finds new services on the hosts on the commandline.
+
+check\_mk -II finds renews services (and drops old services) 
+on the hosts on the commandline.
+
+check\_mk -O rewrites the configuration and reloads Nagios
+
+\begin{frame}[fragile]{Adding and updating hosts}
+\begin{description}
+\item[Inventory] \verb|check_mk -I linuxia|
+\item[Inventory] \verb|check_mk -II linuxia|
+\item[Reload] \verb|check_mk -O linuxia|
+\end{description}
+\end{frame}
+
+% \begin{frame}[fragile]{WATO}
+% \begin{lstlisting}
+%  you have set-up the sudo environment correctly. e.g. proceed as follows:
+
+% install sudo package
+% Append the following to the /etc/sudoers file:
+% # Needed for WATO - the Check_MK Web Administration ToolDefaults:www-data !requirettywww-data ALL = (nagios) NOPASSWD: /usr/bin/check_mk --automation *
+% Retry this operation
+% \end{lstlisting}
+% \end{frame}
+
+
+\subsection{Custom Checks}
+
+% RPE = Remote Plugin Executor
+% soft migration from NRPE to check_mk
+% third party plugins
+\begin{frame}[fragile]{Migrating from NRPE to MRPE}
+\begin{description}
+\item[Configuration file] \verb|/etc/check_mk/mrpe.cfg|
+\item[Example] \verb|APT  /usr/lib/nagios/plugins/check_apt|
+\end{description}
 \end{frame}
 
 \subsection{Practical Advice}
