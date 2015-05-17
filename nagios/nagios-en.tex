@@ -120,10 +120,21 @@ quickly by runaway applications filling log files.
 
 \subsubsection{Email Checks}
 
-\begin{frame}{Email Checks I}
-
 % IMAP: max connections (multiple per client)
+First we are go to monitoring the main services of
+the email server, which are:
 
+SMTP-IMAP/POP-Webmail
+
+In addition of checking that these servers
+are responding to requests, it is useful to check
+further, like actually sending / receiving emails,
+connection limits etc.
+
+And if your database providing authentication for
+users isn't available, all bets are off :-/.
+
+\begin{frame}{Email Checks I}
 \begin{itemize}
 \item SMTP
 \item IMAP/POP
@@ -138,6 +149,20 @@ quickly by runaway applications filling log files.
 \item Spamfilter
 \end{itemize}
 \end{frame}
+
+I will talk about two possible problems,
+you might not think of when running a mail server.
+
+The queue of an email server holds email, which
+cannot be delivered at this moment.
+
+This can be harmless, when your company or organization
+is sending out newsletters to a lot of people.
+
+But it can also point to a big problem, for example
+Wordpress sites infested with PHP worms who are
+sending out emails with SPAM or malware to a lot
+of clients.
 
 \begin{frame}{Email Checks III}
 % newsletter
@@ -187,6 +212,7 @@ that they are done and can be restored properly.
 \begin{itemize}
 \item Flexible
 \item Plugins (simple model)
+\item Addons
 \item Community
 \item Ecosystem
 \end{itemize}
