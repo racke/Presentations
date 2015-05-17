@@ -220,6 +220,9 @@ that they are done and can be restored properly.
 
 \subsection{Checks}
 Checks in Nagios are performed by plugins.
+You can use one of the standard plugins, download a plugin
+from Nagios exchange, or write your own one in your
+favourite programming language. That's quite simple.
 
 We distinguish between active and passive checks.
 
@@ -261,8 +264,11 @@ UNKNOWN - misconfiguration
 \begin{lstlisting}
 HTTP OK: HTTP/1.1 200 OK -
 33920 bytes in 0.263 second response time
+|time=0.262644s;;;0.000000 size=33920B;;;0
 
-time=0.262644s;;;0.000000 size=33920B;;;0
+HTTP WARNING: HTTP/1.1 404 Not Found - 
+317 bytes in 0.004 second response time 
+|time=0.003667s;;;0.000000 size=317B;;;0
 \end{lstlisting}
 \end{frame}
 
