@@ -309,7 +309,7 @@ What is check\_mk? Nagios add-on.
 \item Features
 \item Components
 \item Installation \& Configuration
-% \item Practical Advice
+\item Practical Advice
 \end{itemize}
 \end{frame}
 
@@ -423,7 +423,34 @@ check\_mk -O rewrites the configuration and reloads Nagios
 \end{description}
 \end{frame}
 
-% \subsection{Practical Advice}
+\subsection{Practical Advice}
+\begin{frame}{Practical Advice}
+\begin{itemize}
+\item Check execution time
+\item Check intervals
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Practical Advice}
+\begin{itemize}
+\item Status files
+\item Cached checks
+\end{itemize}
+\end{frame}
+
+\subsubsection{Cached checks}
+
+Run this script in the background and wait not for it to finish.
+Store the result of the script in a cache file below /etc/check\_mk/cache.
+Use that file for 300 seconds before running the script again.
+
+\begin{frame}{Cached checks}
+\begin{itemize}
+\item Run script in background.
+\item Store result in cache file.
+\item Use cache for x seconds.
+\end{itemize}
+\end{frame}
 
 \section{Conclusion}
 
