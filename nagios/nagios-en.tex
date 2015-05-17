@@ -39,11 +39,16 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Justification}
+\subsection{Why ?}
+
+Availability of a server usually means he can be reached with a PING.
+
+If you depend on services from other parties, you can assume that
+they are monitoring them itself. But can you always rely on that?
 
 \begin{frame}[fragile]{Why ?}
 \begin{itemize}
-\item Availability of server and services
+\item Availability of servers and services
 \item 3rd party services (SLA)
 \end{itemize}
 \end{frame}
@@ -63,6 +68,11 @@
 % \end{itemize}
 % \end{frame}
 
+What should be monitored? Aside from standard checks, there are 
+lot of other things you might want to check which aren't obvious.
+I'm going through to an use case of a mailserver and give you
+a couple of examples for custom checks.
+
 \subsection{Use Case Mailserver}
 Early in my career as freelancer I worked on a setup for an ISP
 in Zurich, Switzerland. We designed the firewall, web servers
@@ -73,6 +83,8 @@ so, literally no SPAM and Virus. Also monitoring started much
 later.
 
 \subsubsection{Basic Checks}
+
+First a few examples on basic checks applied to all servers.
 
 Disk can be eaten up slowly by incoming emails or rather
 quickly by runaway applications filling log files.
@@ -96,6 +108,7 @@ quickly by runaway applications filling log files.
 \item SMTP
 \item IMAP/POP
 \item Webmail
+\item Database
 \end{itemize}
 \end{frame}
 
@@ -103,7 +116,6 @@ quickly by runaway applications filling log files.
 \begin{itemize}
 \item Virenscanner
 \item Spamfilter
-\item Database
 \end{itemize}
 \end{frame}
 
@@ -145,8 +157,8 @@ that they are done and can be restored properly.
 \begin{frame}[fragile]{Nagios}
 \begin{itemize}
 \item Advantages
-\item Check States
-\item Concerns
+\item Checks
+\item Disadvantages
 \end{itemize}
 \end{frame}
 
@@ -182,14 +194,22 @@ to Nagios.
 
 \end{frame}
 
+\subsubsection{Check States}
+
+Each of these checks results in one of the four
+following states:
+
 \begin{frame}[fragile]{Check States}
+
 \begin{itemize}
 \item OK
-\item WARINING 
+\item WARNING 
 \item CRITICAL
 \item UNKNOWN
 \end{itemize}
 \end{frame}
+
+UNKNOWN - misconfiguration
 
 \begin{frame}[fragile]{Text and Performance Data}
 \begin{lstlisting}
@@ -227,20 +247,22 @@ and the other is the scalability.
 
 \section{Check\_MK}
 
+What is check\_mk? Nagios add-on.
+
 \begin{frame}[fragile]{Check\_MK}
 \begin{itemize}
-\item Benefits
+\item Features
 \item Components
-\item Installation
+\item Installation \& Configuration
 \item Practical Advice
 \end{itemize}
 \end{frame}
 
-\subsection{Benefits}
+\subsection{Features}
 
-Which benefits has \verb|Check_MK| over a standard Nagios installation?
+Which features adds \verb|Check_MK| to a standard Nagios installation?
 
-\begin{frame}[fragile]{Benefits}
+\begin{frame}[fragile]{Features}
 \begin{itemize}
 \item Automatic service detection
 \item Rule based, hierarchical confirmation
@@ -251,6 +273,29 @@ Which benefits has \verb|Check_MK| over a standard Nagios installation?
 
 \subsection{Components}
 % Source: Check_MK homepage
+
+Configuration and check engine:
+
+automatic servic recognition
+configuration generator
+
+Livestatus
+quick and efficient access to status data
+
+Multisite
+distribute monitoring
+
+WATO
+Web Administration Tool
+management of users, roles, groups, time periods, 
+classical Nagios-Checks and much more
+
+Notify:
+Notification
+
+Event Console:
+processing of SNMP-Traps and log messages
+
 \begin{frame}[fragile]{Components}
 \begin{itemize}
 \item Configuration \& Check Engine
@@ -264,7 +309,22 @@ Which benefits has \verb|Check_MK| over a standard Nagios installation?
 \end{itemize}
 \end{frame}
 
-\subsection{Adding and updating hosts}
+\begin{frame}{Architecture}
+\begin{figure}
+\includegraphics[width=\textwidth]{images/overview_600_trans.png}
+\end{figure}
+Source: http://mathias-kettner.de/bilder/overview\_600.trans.png
+\end{frame}
+
+\subsection{Installation \& Configuration}
+
+\begin{frame}[fragile]{Installation}
+\begin{itemize}
+\item Open Monitoring Distribution \url{http://omdistro.org/}
+\end{itemize}
+\end{frame}
+
+\subsubsection{Adding and updating hosts}
 There are two ways to add or update hosts, you can do
 it through the commandline or with the WATO administration
 interface.
@@ -296,7 +356,7 @@ check\_mk -O rewrites the configuration and reloads Nagios
 % \end{frame}
 
 
-\subsection{Custom Checks}
+\subsubsection{Custom Checks}
 
 % RPE = Remote Plugin Executor
 % soft migration from NRPE to check_mk

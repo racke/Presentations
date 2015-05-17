@@ -1,35 +1,73 @@
-Nagios
+Structure
+    10 minutes general stuff
+    5 minutes Nagios
+    10 check_mk
+    5 custom checks
+
+    ping time
+    calls to add hosts with check_mk
+    
+    Nagios
 
     Introduction
     
     Failure scenario
     Monitoring for businesses
     Monitoring for Open Source projects
+    vs Online checks
+
+    fail2ban
+
+    apt check: warnings
     
 flexible - custom checks
 escalation
 flapping
-
+    http://flapjack.io/docs/1.0/usage/quickstart/
+    
     check_mk / agent
-Automatic service detection
-Rule based, hierarchical confirmation
-     High performance through passive checks
      Creates Nagios configs for you
      Windows
 
     alternative - icinga
 
-
+OMD
+    
 * list standard checks with check_mk
 * add custom checks
+  https://mathias-kettner.de/checkmk_localchecks.html
+  cached local checks
 * more features like escalation / flapping etc
 
 * check_mk runtime (checks need to be quick)
-
+  Service time checked out
+  
 Use case Email
     standard checks IMAP/SMTP/Webmail/.../...
     failures Disk Space - Mail Queue (PHP Worms) - Blacklist
+    no performance data from mail queue plugin
+    
+MRPE => reusing nagios plugins
+check_mk plugins
 
-  
+           
+    https://mathias-kettner.de/checkmk_check_catalogue.html
+
     
-    
+    https://mathias-kettner.de/check_mk_exchange.php
+
+    windows
+
+Debian wheezy:
+       apt-get install check-mk-agent
+       add host
+       vi /etc/xinetd.d/check_mk
+       /etc/init.d/xinetd restart
+       
+    Service time
+
+Related presentations:
+        
+http://www.slideshare.net/arturmartins/omd-and-checkmk
+
+    http://programm.froscon.de/2012/system/attachments/190/original/handout-check_mk.pdf
