@@ -31,6 +31,8 @@ flapping
 
     alternative - icinga
 
+NTP => lot of false positives
+
 OMD
     
 * list standard checks with check_mk
