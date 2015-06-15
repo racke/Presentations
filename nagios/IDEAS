@@ -36,6 +36,8 @@ Global settings
 Graphs in notification emails
 WATO + GIT
 
+Apt-get running wild (load > 200)
+
 OMD
     
 * list standard checks with check_mk
