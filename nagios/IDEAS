@@ -39,7 +39,21 @@ WATO + GIT
 Apt-get running wild (load > 200)
 
 OMD
-    
+
+* restart
+  https://mathias-kettner.de/checkmk_install_with_omd.html#H1:Creating%20your%20first%20OMD%20site
+
+* extras
+extra_service_conf["max_check_attempts"] = [
+        ( "5", ALL_HOSTS, ["PING"]),
+        ( "5", ["njswitch"], ["Interface 0003"]),
+]
+
+extra_host_conf["max_check_attempts"] = [
+        ( "5", ALL_HOSTS),
+]
+
+        
 * list standard checks with check_mk
 * add custom checks
   https://mathias-kettner.de/checkmk_localchecks.html
