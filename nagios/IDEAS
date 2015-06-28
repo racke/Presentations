@@ -6,7 +6,8 @@ Structure
 
     ping time
     calls to add hosts with check_mk
-    
+    how performance data is assembled
+        
     Nagios
 
     Introduction
