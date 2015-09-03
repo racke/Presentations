@@ -4,10 +4,17 @@ Structure
     10 check_mk
     5 custom checks
 
-    ping time
-    calls to add hosts with check_mk
+    check abstract !!!
+       
+    false positives
+    delegation
+     calls to add hosts with check_mk
     how performance data is assembled
-        
+    amazon example
+    disable notificatons
+    imap check
+        check_mk_active-mail_loop
+            
     Nagios
 
     Introduction
