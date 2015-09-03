@@ -37,6 +37,8 @@ over the years that a lot of these situations could be prevented
 by proper planning or at least detected by monitoring the servers
 and services running on them.
 
+% 60 hosts at caithness
+
 \section{Monitoring}
 
 \begin{frame}[fragile]{Monitoring}
@@ -490,6 +492,7 @@ check\_mk -O rewrites the configuration and reloads Nagios
 \item Connect timeout
 \item Check interval
 \item Ping round trip time
+\item NTP notifications
 \end{itemize}
 \end{frame}
 
@@ -526,6 +529,17 @@ ping_levels = [
     ['wan', ], ALL_HOSTS, 
     {'comment': u'Allow longer round trip times when pinging WAN hosts'} ),
 ] + ping_levels
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{NTP notifications}
+
+\begin{lstlisting}
+
+extra_service_conf["notification_options"] = [
+( "n", ALL_HOSTS, ["NTP Time"]),
+]
 
 \end{lstlisting}
 \end{frame}
