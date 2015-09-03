@@ -476,9 +476,58 @@ check\_mk -O rewrites the configuration and reloads Nagios
 \subsection{Practical Advice}
 \begin{frame}{Practical Advice}
 \begin{itemize}
+\item Tune configuration for slower hosts
 \item Check execution time
 \item Check intervals
 \end{itemize}
+\end{frame}
+
+
+\verb|conf.d/wato/rules.mk|
+
+\begin{frame}{Tune configuration for slower hosts}
+\begin{itemize}
+\item Connect timeout
+\item Check interval
+\item Ping round trip time
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Connect timeout}
+\verb|conf.d/wato/global.mk|
+\begin{lstlisting}
+
+tcp_connect_timeout = 10.0 # default 5 seconds
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Check interval}
+\verb|conf.d/wato/rules.mk|
+\begin{lstlisting}
+
+extra_host_conf['check_interval'] = [
+  ( 3.0, [], ALL_HOSTS, {'comment': u'Set check interval to 3 minutes'} ),
+] + extra_host_conf['check_interval']
+
+# default 1 minute
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Ping round trip time}
+\verb|conf.d/wato/rules.mk|
+\begin{lstlisting}
+
+ping_levels = [
+  ( {'loss': (80.0, 100.0), 
+     'packets': 6, 
+     'timeout': 20, 
+     'rta': (1500.0, 3000.0)}, 
+    ['wan', ], ALL_HOSTS, 
+    {'comment': u'Allow longer round trip times when pinging WAN hosts'} ),
+] + ping_levels
+
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}{Practical Advice}
