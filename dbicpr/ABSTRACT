@@ -1,0 +1,36 @@
+Introduction:
+
+Racke is a long term Perl programmer and uses it for his
+business as eCommerce and Linux consultant. A few years ago
+he moved to the bright side of Perl enticed by Sawyer X
+(Dancer) and Ribasushi (DBIx::Class). You can meet him
+on various Perl events where he acts as presenter, trainer
+and Conference driven development disciple.
+
+Title:
+
+    DBIx::Class - Can of Worms || Best Thing Since Sliced Bread
+
+Summary:
+
+DBIx::Class is both a very useful tool for applications using SQL
+databases and an intimidating piece of software.
+
+You can find comprehensive documentation about DBIx::Class on
+CPAN, but it is not easy to find the stuff that makes it the
+best thing since sliced bread in my humble opinion.
+
+So in this talk we brush through rough edges of DBIx::Class
+and look how they can be alleviated with goodies like Candy,
+Helpers and other amazing add-ons for DBIx::Class.
+
+Also I will make a case why using DBIx::Class is splendid idea,
+for example getting rid of embedded SQL, painless database
+upgrades and keeping the business logic outside of your main
+applications.
+
+DBIx::Class 
+
+Duration:
+
+30 minutes (or 20 minutes if necessary)
