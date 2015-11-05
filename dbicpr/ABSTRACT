@@ -18,18 +18,16 @@ databases and an intimidating piece of software.
 
 You can find comprehensive documentation about DBIx::Class on
 CPAN, but it is not easy to find the stuff that makes it the
-best thing since sliced bread in my humble opinion.
+best thing since sliced bread.
 
-So in this talk we brush through rough edges of DBIx::Class
+In this talk we brush through the rough edges of DBIx::Class
 and look how they can be alleviated with goodies like Candy,
 Helpers and other amazing add-ons for DBIx::Class.
 
-Also I will make a case why using DBIx::Class is splendid idea,
+Also I will make a case why using DBIx::Class is a splendid idea,
 for example getting rid of embedded SQL, painless database
 upgrades and keeping the business logic outside of your main
 applications.
-
-DBIx::Class 
 
 Duration:
 
