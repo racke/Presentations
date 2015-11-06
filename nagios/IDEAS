@@ -48,6 +48,9 @@ Apt-get running wild (load > 200)
 
 OMD
 
+* commandline
+  omd (restart, stop, ...) sites
+  
 * restart
   https://mathias-kettner.de/checkmk_install_with_omd.html#H1:Creating%20your%20first%20OMD%20site
 
