@@ -1,0 +1,32 @@
+\documentclass[ignorenonframetext]{beamer}
+% \usepackage{beamerthemesplit}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+\setbeamertemplate{caption}{\footnotesize\insertcaption\par}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{ulem}
+\usepackage{gensymb} % degree
+\lstset{language=Perl,basicstyle=\ttfamily\small,tabsize=3,showstringspaces=false}
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+
+\defbeamertemplate{description item}{align left}{\insertdescriptionitem\hfill}
+\setbeamertemplate{description item}[align left]
+
+\title{DBIx::Class Training}
+\author{S. Hornburg (Racke), P. Mottram (SysPete)}
+\date{Perl Dancer Conference 2015}
+
+
+\input{dbic-pr-en.tex}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
