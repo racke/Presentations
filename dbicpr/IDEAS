@@ -1,0 +1,63 @@
+Q to riba:
+  Performacne
+
+Sliced bread:
+  NoSQL / OO
+  Business Logic
+  Performance
+  Cross RDBMS
+  Shortcuts / Helpers
+  Dbicdump for startes
+
+  Best practices
+  separate repo
+  CSV/DBIC
+    
+    History:
+
+riba at GPW
+rose db
+sql abstract
+
+Cow
+  Result
+  ResultSet
+  Schema
+  
+Fixes
+BTSSTB
+
+real cow instead of can of worms
+
+http://ubuntuforums.org/archive/index.php/t-2095395.html
+
+(Actually, a lot of my code uses DBIx::Class, which is a whole can of worms, but I still recommend it if you're doing significant amounts of database access in Perl. It's a lot cleaner than embedding SQL into Perl directly.)
+
+Nice stuff:
+   Chaining, pass around resultsets + executing at the latest moment
+   Examples for extra methods
+      (predefined searches)
+   Tracing
+   Extra relationships
+      https://colinnewell.wordpress.com/2013/02/14/adhoc-parameters-to-joins-in-dbixclass/
+      
+CoW stuff:
+   SQL::Abstract
+   Moo C3
+   
+Report
+   http://blogs.perl.org/users/ovid/2015/03/dbixclassreport---generate-ad-hoc-dbic-classes-from-sql.html
+
+DBIx::Class Training AD
+
+Example: Linuxia work
+
+Break out Git repository
+-
+
+
+https://pixabay.com/en/lightbulb-electric-light-bright-idea-31254/
+
+    Performance
+    - best thing
+    - 
