@@ -37,6 +37,44 @@ handwritten SQL is most cases.
 \end{itemize}
 \end{frame}
  
+In case you feel that isn't correct, please call our hotline:
+
+\begin{frame}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{img/perldance-2014-modern-tech.jpg}
+\end{figure}
+\end{frame}
+
+But if you want to resort to SQL at some point, DBIx::Class allows you
+to that too
+
+\begin{frame}[fragile]{Literal SQL}
+\begin{lstlisting}
+$schema->resultset('PlaceVisited')->search(
+{
+  users_id => {
+    -in => \[
+       'SELECT users_id FROM users WHERE users_id > ?',
+       2
+    ]
+  }
+});
+\end{lstlisting}
+\end{frame}
+
+But please don't complain if that leads to headache
+and wasted time better spent on proper DBIx::Class
+code.
+
+\begin{frame}{SQL Headache}
+% https://pixabay.com/en/stress-man-hand-flame-burn-fire-864141/
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{img/stress.jpg}
+\end{figure}
+\end{frame}
+
 \section{Introduction}
 
 This training describes a sample application making use of
