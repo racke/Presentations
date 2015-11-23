@@ -127,6 +127,26 @@ code.
 \section{Other Nice Stuff}
 \subsection{Subclassing Schema}
 
+You can also subclass schemas.
+
+* add new columns to existing tables
+
+\begin{frame}[fragile]{Subclass Example}
+\begin{lstlisting}
+package PerlDance::Schema;
+
+use base 'Interchange6::Schema';
+
+Interchange6::Schema->load_namespaces(
+    default_resultset_class => 'ResultSet',
+    result_namespace        =>
+        [ 'Result', '+PerlDance::Schema::Result' ],
+    resultset_namespace     =>
+        [ 'ResultSet', '+PerlDance::Schema::ResultSet' ],
+);
+\end{lstlisting}
+\end{frame}
+
 \section{Composability}
 
 Composability means that you don't need to construct the
