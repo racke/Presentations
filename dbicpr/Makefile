@@ -6,6 +6,8 @@ SLIDE_INPUTS=dbic-pr-en-beamer.tex
 SLIDE_OUTPUTS=$(SLIDE_INPUTS:%.tex=%.pdf)
 HANDOUT_INPUTS=dbic-pr-en-handout.tex
 HANDOUT_OUTPUTS=$(HANDOUT_INPUTS:%.tex=%.pdf)
+NOTES_INPUTS=dbic-pr-en-notes.tex
+NOTES_OUTPUTS=$(NOTES_INPUTS:%.tex=%.pdf)
 
 all: $(SLIDE_OUTPUTS) $(HANDOUT_OUTPUTS) clean
 
@@ -46,6 +48,23 @@ $(HANDOUT_OUTPUTS): %-handout.pdf: %.tex $(HANDOUT_INPUTS)
 	@if(grep "Rerun" $(<:%.tex=%-handout).log > /dev/null);\
     then \
 		pdflatex $(<:%.tex=%-handout); \
+    fi
+
+$(NOTES_OUTPUTS): %-notes.pdf: %.tex $(NOTES_INPUTS)
+# initial run
+	pdflatex $(<:%.tex=%-notes.tex)
+
+# run BibTeX if missing citations
+	@if(grep "Citation" $(<:%.tex=%-notes).log > /dev/null);\
+    then \
+        bibtext $(<:%.tex=%-notes); \
+		pdflatex $(<:%.tex=%-notes); \
+    fi
+
+# rerun if necessary
+	@if(grep "Rerun" $(<:%.tex=%-notes).log > /dev/null);\
+    then \
+		pdflatex $(<:%.tex=%-notes); \
     fi
 
 # Remove unnecessary files
