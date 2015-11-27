@@ -196,11 +196,48 @@ my $talks = $schema->resultset('Talk')->search(
   we are talking about a number of results aka
   table rows.
 }
+
 \begin{frame}{Truth of ResultSet}
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.5\linewidth]{img/pdc_users.jpg}
 \end{figure}
+\end{frame}
+
+% https://pixabay.com/en/wrong-way-sign-road-caution-167535/
+
+\begin{frame}{Truth of ResultSet}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{img/wrong-way.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Truth of ResultSet}
+% \centering
+\sout{ResultSet}
+
+\begin{lstlisting}
+isa(Query Plan);
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Truth of ResultSet}
+
+This doesn't execute SQL:
+
+\begin{lstlisting}
+my $talks = $schema->resultset('Talk')->search(...);
+\end{lstlisting}
+
+This does:
+
+\begin{lstlisting}
+my $first_talk = $schema->resultset('Talk')
+                 ->search(...)->first;
+\end{lstlisting}
+
 \end{frame}
 
 \section{Other Nice Stuff}
