@@ -155,6 +155,41 @@ code.
 \end{figure}
 \end{frame}
 
+\section{SQL/OO}
+\begin{frame}[fragile]{Simple SQL query}
+List of talks on last day of Perl Dancer Conference:
+\begin{lstlisting}
+SELECT talks_id, author_id, conferences_id, duration,
+title, tags, abstract, url, comments, accepted, confirmed, 
+lightning, scheduled, start_time, room, survey_id 
+FROM talks 
+WHERE accepted is TRUE 
+AND conferences_id = 1 
+AND room != '' 
+AND start_time IS NOT NULL 
+AND start_time >= '2015-10-22 00:00:00'
+AND start_time <= '2015-10-23 00:00:00'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Simple SQL query}
+With DBIx::Class:
+\begin{lstlisting}
+my $talks = $schema->resultset('Talk')->search(
+    {
+        accepted       => 1,
+        conferences_id => 1,
+        room           => { '!=' => '' },
+        start_time     => {
+            '!=' => undef,
+            '>=' => '2015-10-22 00:00:00'
+            '<=' => '2015-10-23 00:00:00'
+            },
+    },
+);
+\end{lstlisting}
+\end{frame}
+
 \section{Other Nice Stuff}
 \subsection{Subclassing Schema}
 
