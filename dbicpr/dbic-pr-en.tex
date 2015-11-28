@@ -435,6 +435,41 @@ __PACKAGE__->load_components( 'Helper::Schema::QuoteNames' );
 \end{lstlisting}
 \end{frame}
 
+\subsection{Helper::Resultset::Me}
+
+Predefined queries present a problem: what is the table alias I need to use?
+We can do:
+
+\begin{frame}[fragile]{Helper::Resultset::Me}
+\begin{lstlisting}
+sub in_germany {
+    my $self = shift;
+    my $current_source_alias =
+        $self->current_source_alias;
+    return $self->search(
+        { "$current_source_alias.country_iso_code"
+          => 'DE' }
+    );
+}
+\end{lstlisting}
+\end{frame}
+
+but using this helper makes things much simpler:
+
+\begin{frame}[fragile]{Helper::Resultset::Me}
+\begin{lstlisting}
+sub in_germany {
+    my $self = shift;
+
+
+    return $self->search(
+        { $self->me('country_iso_code') => 'DE' }
+    );
+
+}
+\end{lstlisting}
+\end{frame}
+
 \subsection{CorrelateRelationship}
 
 \begin{frame}{CorrelateRelationship}
@@ -557,68 +592,6 @@ Cool example from Interchange6::Schema::ResultSet::Product :
         );
     }
 \end{lstlisting}
-
-\subsection{Helper::Resultset::Me}
-
-Predefined queries present a problem: what is the table alias I need to use?
-We can do:
-
-\begin{frame}[fragile]{Helper::Resultset::Me}
-\begin{lstlisting}
-sub in_germany {
-    my $self = shift;
-    my $current_source_alias =
-        $self->current_source_alias;
-    return $self->search(
-        { "$current_source_alias.country_iso_code"
-          => 'DE' }
-    );
-}
-\end{lstlisting}
-\end{frame}
-
-but using this helper makes things much simpler:
-
-\begin{frame}[fragile]{Helper::Resultset::Me}
-\begin{lstlisting}
-sub in_germany {
-    my $self = shift;
-
-
-    return $self->search(
-        { $self->me('country_iso_code') => 'DE' }
-    );
-
-}
-\end{lstlisting}
-\end{frame}
-
-\subsection{Helper::ResultSet::RemoveColumns}
-Have a result class with a large number of columns and you want all except
-one (or more) of them:
-
-\begin{frame}[fragile]{Helper::ResultSet::RemoveColumns}
-\begin{lstlisting}
-my $rs = $schema->resultset('User')->search(
-    undef,
-    {
-        remove_columns => [ 'password' ],
-    }
-);
-\end{lstlisting}
-\end{frame}
-
-Make that the default for searches (though this is not generally recommended):
-
-\begin{frame}[fragile]{Helper::ResultSet::RemoveColumns}
-\begin{lstlisting}
-package TravelDance::Schema::Result::User;
-
-__PACKAGE__->resultset_attributes(
-    { remove_columns => [ 'password' ] }
-);
-\end{lstlisting}
-\end{frame}
 
 \subsection{Helper::ResultSet::Shortcut}
 
@@ -1099,6 +1072,7 @@ my $rs = $schema->resultset('Country')->hri;
 \begin{frame}{DBIx::Class Helpers}
 \begin{itemize}
 \item Random
+\item RemoveColumns
 \end{itemize}
 \end{frame}
 
