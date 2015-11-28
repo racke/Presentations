@@ -361,6 +361,64 @@ my $talks = $schema->resultset('Talk')
 \end{frame}
 
 \section{Other Nice Stuff}
+
+\begin{frame}{Other Nice Stuff}
+\begin{itemize}
+\note{Sugar for DBIx::Class}
+\item Candy
+\item Subclassing Schema
+\end{itemize}
+\end{frame}
+
+\subsection{Candy - Sugar for DBIx::Class}
+
+\begin{frame}{Sugar for DBIx::Class}
+% https://pixabay.com/en/candy-cane-candy-cane-winter-488009/
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\linewidth]{img/candy-cane.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Vanilla Result Class}
+\begin{lstlisting}
+package TravelDance::Schema::Result::Country;
+use warnings;
+use strict;
+use base 'DBIx::Class::Core';
+
+__PACKAGE__->table('countries');
+
+__PACKAGE__->add_columns(
+    country_iso_code => {
+        data_type => "char",
+        size      => 2,
+    },
+    name => {
+        data_type => "varchar",
+        size      => 255,
+    },
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Candy Result Class}
+\begin{lstlisting}
+package TravelDance::Schema::Result::Country;
+use TravelDance::Schema::Candy;
+
+primary_column country_iso_code => {
+    data_type => "char",
+    size      => 2
+};
+
+column name => {
+    data_type => "varchar",
+    size      => 255
+};
+\end{lstlisting}
+\end{frame}
+
 \subsection{Subclassing Schema}
 
 You can also subclass schemas.
