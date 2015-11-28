@@ -401,8 +401,38 @@ Simplify the common case stuff for DBIx::Class.
 
 \begin{frame}{DBIx::Class Helpers}
 \begin{itemize}
+\item Quote Names
 \item Me
 \end{itemize}
+\end{frame}
+
+\subsection{Helper::QuoteNames}
+
+\begin{frame}[fragile]{Helper::QuoteNames}
+\begin{itemize}
+\item Escaping reserved words
+\item Differ between engines and version
+\item e.g. MySQL
+\begin{itemize}
+\item \verb|select user from userdb| => crash
+\item \verb|select `user` from `userdb`| => works
+\end{itemize}
+\item \verb|quote_names| in connection info
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Helper::QuoteNames}
+\begin{lstlisting}
+
+package Interchange6::Schema;
+
+use base 'DBIx::Class::Schema';
+
+__PACKAGE__->load_components( 'Helper::Schema::QuoteNames' );
+
+...
+
+\end{lstlisting}
 \end{frame}
 
 \subsection{CorrelateRelationship}
@@ -560,21 +590,6 @@ sub in_germany {
     );
 
 }
-\end{lstlisting}
-\end{frame}
-
-\subsection{Helper::Resultset::Random}
-
-We use this in Interchange6 for finding random 'similar products' and other
-such searches.
-
-Three random countries:
-
-\begin{frame}[fragile]{Helper::Resultset::Me}
-\begin{lstlisting}
-
-my $countries = $schema->resultset('Country')->rand(3);
-
 \end{lstlisting}
 \end{frame}
 
@@ -1054,13 +1069,6 @@ my $rs = $schema->resultset('PlaceVisited')->search(
     }
 );
 \end{lstlisting}
-\end{frame}
-
-\subsection{Helper::QuoteNames}
-
-\begin{frame}{Helper::QuoteNames}
-This should always be used. Force quote\_names in your database
-connect\_info so nobody can forget to add it later.
 \end{frame}
 
 \subsection{HashRefInflator}
