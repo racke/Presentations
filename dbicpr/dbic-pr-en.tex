@@ -381,255 +381,6 @@ Interchange6::Schema->load_namespaces(
 \end{lstlisting}
 \end{frame}
 
-\subsection{Starting with DBIx::Class}
-
-\begin{frame}{Starting with DBIx::Class}
-\begin{itemize}
-\item Existing project
-\item New project
-\end{itemize}
-\end{frame}
-
-\subsubsection{Existing Project}
-
-You can use \verb|dbicdump| to create a ``boilerplate'' schema from the
-existing database.
-
-\begin{frame}[fragile]{dbicdump}
-\begin{lstlisting}
-dbicdump -o dump_directory=/home/dance/TravelDance/lib 
-         TravelDance::Schema 
-         dbi:Pg:dbname=perldance
-\end{lstlisting}
-\end{frame}
-
-\subsubsection{New Project}
-
-For new projects we recommend to write the schema first.
-
-\begin{frame}[fragile]{New Project}
-Write Schema first
-\end{frame}
-
-
-\subsection{DBIC Classes}
-
-\begin{frame}{DBIC Classes}
-\begin{itemize}
-\item One \emph{schema} class
-\begin{itemize}
-\item TravelDance::Schema
-\end{itemize}
-\item One \emph{result} class for each source ( table, view, SQL fragment, etc )
-\begin{itemize}
-\item TravelDance::Schema::Result::Country
-\item TravelDance::Schema::Result::PlaceVisited
-\item TravelDance::Schema::Result::User
-\end{itemize}
-\item One \emph{result set} class for each source ( table, view, SQL fragment, etc )
-\begin{itemize}
-\item TravelDance::Schema::ResultSet::Country
-\item TravelDance::Schema::ResultSet::PlaceVisited
-\item TravelDance::Schema::ResultSet::User
-\end{itemize}
-\end{itemize}
-\end{frame}
-
-\subsubsection{Schema Class}
-
-Here we see the minimal DBIx::Class schema definition:
-
-\begin{frame}[fragile]{Schema Class}
-\begin{lstlisting}
-package TravelDance::Schema;
-use warnings;
-use strict;
-use base 'DBIx::Class::Schema';
-
-__PACKAGE__->load_namespaces();
-1;
-\end{lstlisting}
-\end{frame}
-
-\verb|load_namespaces| searches \verb|TravelDance::Schema::Result{Set}::*|
-for Result and ResultSet classes and loads them into the schema.
-
-\subsubsection{Result Classes}
-
-\begin{frame}{Result Classes}
-\begin{itemize}
-\item Need one result class for each table
-\item Country => countries
-\item PlaceVisited => places\_visited
-\item User => users
-\end{itemize}
-\end{frame}
-
-\subsubsection{Result Class Definition}
-Describes each result class and the database table behind it. 
-
-See \href{https://metacpan.org/pod/DBIx::Class::ResultSource}{DBIx::Class::ResultSource} for more details.
-
-\begin{frame}{Result Class Definition}
-
-\begin{itemize}
-\item Source (RDBMS-side) name
-\item Columns
-\item Primary key
-\item Relationships
-\end{itemize}
-\end{frame}
-
-\subsubsection{Vanilla DBIC Result Class}
-
-\begin{frame}[fragile]{Vanilla DBIC Result Class for Country I}
-\begin{lstlisting}
-package TravelDance::Schema::Result::Country;
-use warnings;
-use strict;
-use base 'DBIx::Class::Core';
-
-__PACKAGE__->table('countries');
-
-__PACKAGE__->add_columns(
-    country_iso_code => {
-        data_type => "char",
-        size      => 2,
-    },
-    name => {
-        data_type => "varchar",
-        size      => 255,
-    },
-);
-\end{lstlisting}
-\textit{... to be continued.}
-\end{frame}
-
-\begin{frame}[fragile]{Vanilla DBIC Result Class for Country II}
-\begin{lstlisting}
-__PACKAGE__->set_primary_key("country_iso_code");
-
-__PACKAGE__->has_many(
-    places_visited =>
-      "TravelDance::Schema::Result::PlaceVisited",
-      'country_iso_code'
-);
-
-__PACKAGE__->many_to_many(
-    users => "places_visited", "user"
-);
-
-1;
-\end{lstlisting}
-\end{frame}
-
-\subsubsection{Candy DBIC Result Class}
-
-\begin{frame}[fragile]{Candy DBIC Result Class for Country I}
-\begin{lstlisting}
-package TravelDance::Schema::Result::Country;
-use TravelDance::Schema::Candy;
-
-primary_column country_iso_code => {
-    data_type => "char",
-    size      => 2
-};
-
-column name => {
-    data_type => "varchar",
-    size      => 255
-};
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Candy DBIC Result Class for Country II}
-\begin{lstlisting}
-has_many
-  places_visited =>
-  "TravelDance::Schema::Result::PlaceVisited",
-  'country_iso_code';
-
-many_to_many users => "places_visited", "user";
-\end{lstlisting}
-\end{frame}
-
-\subsection{DBIx::Class::Schema::Config}
-
-\begin{frame}{DBIx::Class::Schema::Config}
-\begin{itemize}
-\item Credential Management for DBIx::Class.
-\item Move DSN, username, password out of code
-\end{itemize}
-\end{frame}
-
-\subsubsection{Typical script for DBIx::Class}
-\begin{frame}[fragile]{Typical script for DBIx::Class}
-\begin{lstlisting}
-use TravelDance::Schema;
-my $dsn = 'dbi:SQLite:traveldance.db';
-my %dbi_params = (
-    on_connect_call            => 'use_foreign_keys',
-    quote_names                => 1,
-    sqlite_unicode             => 1,
-    sqlite_see_if_its_a_number => 1,
-);
-my $schema = TravelDance::Schema->connect( $dsn,,, 
-    \%dbi_params );
-\end{lstlisting}
-\end{frame}
-
-Move the DBIC config to \textasciitilde/.dbic.yml:
-
-\begin{frame}[fragile]{Configuration File \textasciitilde/.dbic.yml}
-\begin{lstlisting}
-traveldance:
-  dsn: 'dbi:SQLite:traveldance.db'
-  on_connect_call: 'use_foreign_keys'
-  quote_names: 1
-  sqlite_unicode: 1
-  sqlite_see_if_its_a_number: 1
-\end{lstlisting}
-\end{frame}
-
-Now we adjust the schema class and the script to use
-the configuration file:
-
-\begin{frame}[fragile]{Using the configuration file}
-Change the base class of the Schema:
-
-\begin{lstlisting}
-package TravelDance::Schema;
-use base 'DBIx::Class::Schema::Config';
-\end{lstlisting}
-
-Update the script:
-
-\begin{lstlisting}
-use TravelDance::Schema;
-my $schema = TravelDance::Schema
-   ->connect( 'traveldance' );
-\end{lstlisting}
-\end{frame}
-
-Configuration format and files:
-
-\begin{frame}[fragile]{Configuration format and files}
-\begin{itemize}
-\item Config::Any
-\begin{itemize}
-\item YAML
-\item JSON
-\item XML
-\item ...
-\end{itemize}
-\item File locations
-\begin{description}
-\item[project] \verb|./dbic.*| \emph{without} dot
-\item[user] \verb|~/.dbic.*| \emph{with} dot
-\item[system-wide] \verb|/etc/dbic.*|
-\end{description}
-\end{itemize}
-\end{frame}
 
 
 \section{DBIx::Class Helpers}
@@ -1465,6 +1216,21 @@ Reference for directory layout:
 \end{description}
 \item[sql/\_deploy] Structure files (YAML)
 \end{description}
+\end{frame}
+
+\section{Conclusion}
+
+\subsection{Starting with DBIx::Class}
+
+You can use \verb|dbicdump| to create a ``boilerplate'' schema from the
+existing database.
+
+\begin{frame}[fragile]{dbicdump}
+\begin{lstlisting}
+dbicdump -o dump_directory=/home/dance/TravelDance/lib 
+         TravelDance::Schema 
+         dbi:Pg:dbname=perldance
+\end{lstlisting}
 \end{frame}
 
 \end{document}
