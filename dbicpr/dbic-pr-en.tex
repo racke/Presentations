@@ -669,37 +669,6 @@ $rs->search( undef, {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Helper::Row::NumifyGet}
-
-\begin{frame}[fragile]{Helper::Row::NumifyGet}
-
-Force numeric context on numeric columns:
-
-\begin{lstlisting}
-package TravelDance::Schema::Result::Foo_Bar;
-
-use TravelDance::Schema::Candy -components =>
-    [qw(Helper::Row::NumifyGet)];
-
-column foo => {
-    data_type   => 'integer',
-    is_nullable => 0,
-    is_numeric  => 1,   # the magic key
-};
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Helper::Row::NumifyGet}
-\begin{lstlisting}
-sub TO_JSON {
-    return {
-        # 0 instead of "0" due to context
-        foo => $self->foo,  
-    }
-}
-\end{lstlisting}
-\end{frame}
-
 \subsection{Helper::Row::OnColumnChange}
 
 \begin{frame}[fragile]{Helper::Row::OnColumnChange}
@@ -832,6 +801,8 @@ my $rs = $schema->resultset('Country')->hri;
 \begin{itemize}
 \item Random
 \item RemoveColumns
+\note{Force numeric context on numeric columns:}
+\item Helper::Row::NumifyGet
 \end{itemize}
 \end{frame}
 
