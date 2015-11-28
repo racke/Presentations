@@ -595,165 +595,17 @@ Cool example from Interchange6::Schema::ResultSet::Product :
 
 \subsection{Helper::ResultSet::Shortcut}
 
-\begin{frame}[fragile]{distinct Shortcut}
 
-\verb|distinct| shortcut:
 
-\begin{lstlisting}
-$rs->distinct;
-\end{lstlisting}
+\note{A lot of shortcuts are provided, I'll show
+you just a few examples.}
 
-equivalent to:
-
-\begin{lstlisting}
-$rs->search(undef, { distinct => 1 });
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{group\_by Shortcut}
-
-\verb|group_by| shortcut:
-
-\begin{lstlisting}
-$rs->group_by([ qw/ some column names / ]);
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search(undef, { 
-    group_by([ qw/ some column names / ] 
-});
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{order\_by Shortcut}
-
-\verb|order_by| Shortcut:
-
-\begin{lstlisting}
-$rs->order_by({ -desc => 'col1' });
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search(undef, { order_by => { -desc => 'col1' });
-\end{lstlisting}
-
-\end{frame}
-
-\begin{frame}[fragile]{order\_by Shortcut}
-
-Funky magic stuff:
-\begin{lstlisting}
-$rs->order_by('!col1')
-# { order_by => { -desc => 'col1' } }
-
-$rs->order_by('col1,col2')
-# { order_by => [{ -asc => 'col1' },{ -asc => 'col2' }]}
-
-$rs->order_by('col1,!col2')
-# { order_by => [{ -asc => 'col1' },{ -desc => 'col2' }]}
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{hri Shortcut}
-
-\verb|hri| shortcut:
-
-\begin{lstlisting}
-$rs->hri;
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef, {
-    result_class => 
-        'DBIx::Class::ResultClass::HashRefInflator'
-});
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{page Shortcut}
-
-\verb|page| shortcut:
-
-\begin{lstlisting}
-$rs->page(2);
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef, { page => 2 } );
-\end{lstlisting}
-
-\end{frame}
-
-rows / limit
-
-\begin{frame}[fragile]{rows / limit Shortcut}
-
-\begin{lstlisting}
-$rs->rows(3);
-\end{lstlisting}
-
-or:
-
-\begin{lstlisting}
-$rs->limit(3);
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef, { rows => 3 } );
-\end{lstlisting}
-
-\end{frame}
-
-\begin{frame}[fragile]{limited\_page Shortcut}
-
-\verb|limited_page| shortcut:
-
-\begin{lstlisting}
-$rs->limited_page( 2, 3 );
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef, { page => 2, rows => 3 } );
-\end{lstlisting}
-
-\end{frame}
-
-\begin{frame}[fragile]{has\_rows Shortcut}
-
-A lighter way to check if the resultset has data compared to using count.
-
-\begin{lstlisting}
-$rs->has_rows;
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef, { rows => 1 } )->next;
-\end{lstlisting}
-\end{frame}
-
-results\_exists:
-
-\begin{frame}[fragile]{results\_exists Shortcut}
-
-An alternative way to check if the resultset has data using the EXISTS SQL function. Possibly lighter-weight than using count.
-
-\begin{lstlisting}
-$rs->search(...)->results_exist
-\end{lstlisting}
+\begin{frame}{Shortcuts}
+\begin{itemize}
+\item columns
+\item like
+\item hri
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{columns Shortcut}
@@ -771,93 +623,7 @@ $rs->search( undef, {
     columns => [qw/ first_name last_name /] 
 } );
 \end{lstlisting}
-
 \end{frame}
-
-\begin{frame}[fragile]{add\_columns Shortcut}
-
-\verb|add_columns| shortcut:
-
-\begin{lstlisting}
-$rs->add_columns([qw/ some column names /]);
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef,
-    { '+columns' => [qw/ some columns names /] }
-);
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{prefetch Shortcut}
-
-\verb|prefetch| shortcut:
-
-\begin{lstlisting}
-$rs->prefetch( { places_visited => 'country' } );
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search( undef, { 
-    prefetch => { places_visited => 'country' } 
-} );
-\end{lstlisting}
-
-\end{frame}
-
-% null ( @columns || \@columns )
-
-\begin{frame}[fragile]{null Shortcut}
-
-\verb|null| shortcut:
-
-\begin{lstlisting}
-$rs->null( 'col1', 'col2' );
-\end{lstlisting}
-
-or:
-
-\begin{lstlisting}
-$rs->null([ 'col1', 'col2' ]);
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search({ col1 => undef, col2 => undef });
-\end{lstlisting}
-\end{frame}
-
-%not\_null ( @columns || \@columns )
-
-\begin{frame}[fragile]{not\_null Shortcut}
-
-\verb|not_null| shortcut:
-
-\begin{lstlisting}
-$rs->not_null( 'col1', 'col2' );
-\end{lstlisting}
-
-or:
-
-\begin{lstlisting}
-$rs->not_null([ 'col1', 'col2' ]);
-\end{lstlisting}
-
-equivalent to:
-
-\begin{lstlisting}
-$rs->search({
-    col1 => { '!=' => undef }, col2 => { '!=' => undef }
-});
-\end{lstlisting}
-\end{frame}
-
-%like ( @columns || \@columns, $cond )
 
 \begin{frame}[fragile]{like Shortcut}
 
@@ -883,30 +649,21 @@ $rs->search(
 \end{lstlisting}
 \end{frame}
 
-% not\_like ( @columns || \@columns, $cond )
+\begin{frame}[fragile]{hri Shortcut}
 
-\begin{frame}[fragile]{not\_like Shortcut}
-
-\verb|not_like| shortcut:
+\verb|hri| shortcut:
 
 \begin{lstlisting}
-$rs->not_like( 'city', 'region', '%York' );
-\end{lstlisting}
-
-or:
-
-\begin{lstlisting}
-$rs->not_like([ 'city', 'region' ], '%York' );
+$rs->hri;
 \end{lstlisting}
 
 equivalent to:
 
 \begin{lstlisting}
-$rs->search(
-    { city => { -not_like => '%York' },
-    { region => { -not_like => '%York' },
-);
-
+$rs->search( undef, {
+    result_class => 
+        'DBIx::Class::ResultClass::HashRefInflator'
+});
 \end{lstlisting}
 \end{frame}
 
