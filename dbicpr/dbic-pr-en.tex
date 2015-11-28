@@ -284,7 +284,77 @@ my $talks = $schema->resultset('Talk')
 \end{frame}
 
 \subsection{Predefined Search}
-\begin{}
+\begin{frame}[fragile]{Predefined Search}
+\begin{lstlisting}
+sub scheduled_for {
+    my ( $self, $date ) = @_;
+
+    $self->throw_exception("scheduled_for required arg date missing")
+      unless defined $date;
+
+    my $schema = $self->result_source->schema;
+
+    $self->search({
+        start_time     => {
+            '!=' => undef,
+            '>=' => $schema->format_datetime( $date ),
+            '<=' =>
+                $schema->format_datetime( $date->clone->add( days => 1 ) )
+            },
+    });
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Predefined Search}
+\begin{lstlisting}
+sub scheduled_for {
+    my ( $self, $date ) = @_;
+
+    $self->throw_exception("scheduled_for required arg date missing")
+      unless defined $date;
+
+    my $schema = $self->result_source->schema;
+
+    $self->search({
+        start_time     => {
+            '!=' => undef,
+            '>=' => $schema->format_datetime( $date ),
+            '<=' =>
+                $schema->format_datetime( $date->clone->add( days => 1 ) )
+            },
+    });
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Using predefined search}
+
+\begin{lstlisting}
+my $dt_date = DateTime->new(
+    year => 2015,
+    month => 10,
+    day => 22,
+);
+
+my $talks = $schema->resultset('Talk')
+   ->search({accepted       => 1})
+   ->search({conferences_id => 1})
+   ->search({room           => { '!=' => '' }),
+   ->scheduled_for($dt_date);
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Subjects included}
+\begin{itemize}
+\item Exceptions
+\item Access main schema object
+\item DateTime inflation
+\item Schema::DateTime helper
+\end{itemize}
+\end{frame}
+
 \section{Other Nice Stuff}
 \subsection{Subclassing Schema}
 
