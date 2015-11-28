@@ -240,6 +240,51 @@ my $first_talk = $schema->resultset('Talk')
 
 \end{frame}
 
+\section{Composability}
+
+Composability means that you don't need to construct the
+complete at once, but compose it together, e.g with
+chaining.
+
+The underlying mechanism is that \verb|->search| on a
+ResultSet actually doesn't search.
+
+\begin{frame}[fragile]{Talks}
+
+\begin{lstlisting}
+my $talks = $schema->resultset('Talk')->search(
+    {
+        accepted       => 1,
+        conferences_id => 1,
+        room           => { '!=' => '' },
+        start_time     => {
+            '!=' => undef,
+            '>=' => '2015-10-22 00:00:00'
+            '<=' => '2015-10-23 00:00:00'
+            },
+    },
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Talks}
+
+\begin{lstlisting}
+my $talks = $schema->resultset('Talk')
+   ->search({accepted       => 1})
+   ->search({conferences_id => 1})
+   ->search({room           => { '!=' => '' }),
+   ->search({start_time     => {
+            '!=' => undef,
+            '>=' => '2015-10-22 00:00:00'
+            '<=' => '2015-10-23 00:00:00'
+            }}),
+);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Predefined Search}
+\begin{}
 \section{Other Nice Stuff}
 \subsection{Subclassing Schema}
 
@@ -262,16 +307,6 @@ Interchange6::Schema->load_namespaces(
 );
 \end{lstlisting}
 \end{frame}
-
-\section{Composability}
-
-Composability means that you don't need to construct the
-complete at once, but compose it together, e.g with
-chaining.
-
-The underlying mechanism is that \verb|->search| on a
-ResultSet actually doesn't search.
-
 
 \subsection{Starting with DBIx::Class}
 
