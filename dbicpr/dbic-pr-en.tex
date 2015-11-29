@@ -419,11 +419,47 @@ column name => {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Subclassing Schema}
+\subsection{Subclassing Schemas}
 
-You can also subclass schemas.
+\begin{frame}[fragile]{Use cases for subclassing}
+\begin{itemize}
+\item Generic schema e.g. \verb|Interchange6::Schema|
+\item Applications with similar databases
+\end{itemize}
+\end{frame}
 
-* add new columns to existing tables
+\begin{frame}{Subclassing}
+\begin{itemize}
+\item Add new tables
+\item Add new columns to existing tables
+\item Add new relations
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Subclass Example}
+\begin{lstlisting}
+package PerlDance::Schema;
+our $VERSION = 16;
+
+use Interchange6::Schema::Result::User;
+package Interchange6::Schema::Result::User;
+
+__PACKAGE__->add_columns(
+    bio => { data_type => "varchar", size => 2048, 
+             default_value => '' },
+    media_id =>
+      { data_type => "integer", is_foreign_key => 1, 
+        is_nullable => 1 },
+    pause_id => { data_type => "varchar", size => 128, 
+        default_value => '' },
+    t_shirt_size => { data_type => "varchar", size => 8, 
+      is_nullable => 1 },
+);
+\end{lstlisting}
+\end{frame}
+
+Inherit from \verb|Interchange6::Schema| and set result namespace to 
+\verb|Interchange6::Schema::Result| plus \verb|PerlDance::Schema::Result|.
 
 \begin{frame}[fragile]{Subclass Example}
 \begin{lstlisting}
