@@ -719,21 +719,27 @@ $rs->search(
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{hri Shortcut}
+\subsection{HashRefInflator}
 
-\verb|hri| shortcut:
+Using the HashRefInflator makes sense when you need to quickly retrieve
+data from a massive resultset or you need a list of hash references anyway,
+e.g. for input to a template in a web application.
 
+\begin{frame}[fragile]{HashRefInflator}
 \begin{lstlisting}
-$rs->hri;
+my $rs = $schema->resultset('Country')->search({}, {
+   result_class
+     => 'DBIx::Class::ResultClass::HashRefInflator',
+ });
 \end{lstlisting}
+\end{frame}
 
-equivalent to:
-
+\begin{frame}[fragile]{HashRefInflator with HRI helper}
 \begin{lstlisting}
-$rs->search( undef, {
-    result_class => 
-        'DBIx::Class::ResultClass::HashRefInflator'
-});
+my $rs = $schema->resultset('Country')->search({})->hri;
+
+# since 'search' here is redundant we can just use:
+my $rs = $schema->resultset('Country')->hri;
 \end{lstlisting}
 \end{frame}
 
@@ -837,30 +843,6 @@ my $rs = $schema->resultset('PlaceVisited')->search(
         visited => { '>' => $one_year_ago }
     }
 );
-\end{lstlisting}
-\end{frame}
-
-\subsection{HashRefInflator}
-
-Using the HashRefInflator makes sense when you need to quickly retrieve
-data from a massive resultset or you need a list of hash references anyway,
-e.g. for input to a template in a web application.
-
-\begin{frame}[fragile]{HashRefInflator}
-\begin{lstlisting}
-my $rs = $schema->resultset('Country')->search({}, {
-   result_class
-     => 'DBIx::Class::ResultClass::HashRefInflator',
- });
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{HashRefInflator with HRI helper}
-\begin{lstlisting}
-my $rs = $schema->resultset('Country')->search({})->hri;
-
-# since 'search' here is redundant we can just use:
-my $rs = $schema->resultset('Country')->hri;
 \end{lstlisting}
 \end{frame}
 
