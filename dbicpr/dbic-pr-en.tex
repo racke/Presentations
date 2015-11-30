@@ -277,7 +277,7 @@ With DBIx::Class:
 \begin{lstlisting}
 my $talks = $schema->resultset('Talk')->search(
     {
-        accepted       => 1,
+        -bool          => 'accepted',
         conferences_id => 1,
         room           => { '!=' => '' },
         start_time     => {
@@ -353,7 +353,7 @@ ResultSet actually doesn't search.
 \begin{lstlisting}
 my $talks = $schema->resultset('Talk')->search(
     {
-        accepted       => 1,
+        -bool          => 'accepted',
         conferences_id => 1,
         room           => { '!=' => '' },
         start_time     => {
@@ -369,7 +369,7 @@ my $talks = $schema->resultset('Talk')->search(
 
 \begin{lstlisting}
 my $talks = $schema->resultset('Talk')
-   ->search({accepted       => 1})
+   ->search({-bool          => 'accepted'})
    ->search({conferences_id => 1})
    ->search({room           => { '!=' => '' }),
    ->search({start_time     => {
@@ -433,7 +433,7 @@ my $dt_date = DateTime->new(
 );
 
 my $talks = $schema->resultset('Talk')
-   ->search({accepted       => 1})
+   ->search({-bool          => 'accepted',})
    ->search({conferences_id => 1})
    ->search({room           => { '!=' => '' }),
    ->scheduled_for($dt_date);
