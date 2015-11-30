@@ -847,12 +847,14 @@ my $rs = $schema->resultset('PlaceVisited')->search(
 \end{frame}
 
 \subsection{Other useful helpers}
-\begin{frame}{DBIx::Class Helpers}
+\begin{frame}{Other Useful Helpers}
 \begin{itemize}
-\item Random
-\item RemoveColumns
 \note{Easily correlate your ResultSets}
 \item Helper::ResultSet::CorrelateRelationship
+\note{Remove columns from search}
+\item Helper::ResultSet::RemoveColumns
+\note{Random results, don't use Helper::Random}
+\item Helper::ResultSet::Random
 \note{Force numeric context on numeric columns:}
 \item Helper::Row::NumifyGet
 \end{itemize}
