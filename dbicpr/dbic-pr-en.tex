@@ -599,7 +599,9 @@ package Interchange6::Schema;
 
 use base 'DBIx::Class::Schema';
 
-__PACKAGE__->load_components( 'Helper::Schema::QuoteNames' );
+__PACKAGE__->load_components( 
+    'Helper::Schema::QuoteNames' 
+);
 
 ...
 
