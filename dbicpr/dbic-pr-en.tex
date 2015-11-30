@@ -400,26 +400,6 @@ sub scheduled_for {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Predefined Search}
-\begin{lstlisting}
-sub scheduled_for {
-    my ( $self, $date ) = @_;
-
-    $self->throw_exception("scheduled_for required arg date missing")
-      unless defined $date;
-
-    my $schema = $self->result_source->schema;
-
-    $self->search({
-        start_time     => {
-            '>=' => $schema->format_datetime( $date ),
-            '<=' =>
-                $schema->format_datetime( $date->clone->add( days => 1 ) )
-            },
-    });
-}
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]{Using predefined search}
 
