@@ -42,6 +42,7 @@
 \item Self employed programmer since 1998
 \item Web applications
 \item Ecommerce
+\item Database
 \item Customers in Germany, Switzerland, USA, ...
 \end{itemize}
 \end{frame}
@@ -139,8 +140,8 @@ for the training:
 \item OO instead of SQL
 \item Abstracts different SQL implementations
 \item Business Logic
-\item Composability
 \item Performance
+\item ``ResultSet'' features
 \item Ecosystem
 \begin{itemize}
 \item IRC / Mailing list
@@ -446,13 +447,6 @@ my $talks = $schema->resultset('Talk')
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Summary Composability}
-\begin{itemize}
-\item Chaining
-\item Predefined searches
-\end{itemize}
-\end{frame}
-
 \begin{frame}[fragile]{Subjects included}
 \begin{itemize}
 \item Exceptions
@@ -603,6 +597,7 @@ Simplify the common case stuff for DBIx::Class.
 \item Helper::Schema::QuoteNames
 \item Helper::ResultSet::Me
 \item Helper::Row::OnColumnChange
+\item Helper::Schema::DateTime
 \end{itemize}
 \end{frame}
 
@@ -822,10 +817,12 @@ sub change_password {
 \subsection{Helper::Schema::DateTime}
 
 \begin{frame}[fragile]{Helper::Schema::DateTime}
+
 VisitedPlaces visited in the last year:
 
 \begin{lstlisting}
-my $one_year_ago = $schema->format_datetime(
+my $dtf = $schema->storage->datetime_parser; # boilerplate
+my $one_year_ago = $dtf->format_datetime(
     DateTime->now->subtract( year => 1 )
 );
 
@@ -839,11 +836,10 @@ my $rs = $schema->resultset('PlaceVisited')->search(
 
 \begin{frame}[fragile]{Helper::Schema::DateTime}
 
-Without the helper:
+With the helper:
 
 \begin{lstlisting}
-my $dtf = $schema->storage->datetime_parser; # boilerplate
-my $one_year_ago = $dtf->format_datetime(
+my $one_year_ago = $schema->format_datetime(
     DateTime->now->subtract( year => 1 )
 );
 
