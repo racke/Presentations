@@ -2,11 +2,11 @@
 
 PODFILE=
 TEXFILE=dbic-pr-beamer
-SLIDE_INPUTS=dbic-pr-en-beamer.tex
+SLIDE_INPUTS=dbic-pr-en-beamer.tex dbic-pr-de-beamer.tex
 SLIDE_OUTPUTS=$(SLIDE_INPUTS:%.tex=%.pdf)
-HANDOUT_INPUTS=dbic-pr-en-handout.tex
+HANDOUT_INPUTS=dbic-pr-en-handout.tex dbic-pr-de-handout.tex
 HANDOUT_OUTPUTS=$(HANDOUT_INPUTS:%.tex=%.pdf)
-NOTES_INPUTS=dbic-pr-en-notes.tex
+NOTES_INPUTS=dbic-pr-en-notes.tex dbic-pr-de-notes.tex
 NOTES_OUTPUTS=$(NOTES_INPUTS:%.tex=%.pdf)
 
 all: $(SLIDE_OUTPUTS) $(HANDOUT_OUTPUTS) clean
