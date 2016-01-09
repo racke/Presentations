@@ -876,22 +876,22 @@ my $rs = $schema->resultset('PlaceVisited')->search(
 \begin{frame}{Deployment Handler}
 \begin{itemize}
 \item DBIx::Class::DeploymentHandler
-\item Deploy databases
-\item Upgrade databases
-\item Downgrade databases
+\item Datenbankänderungen einspielen
+\item Datenbank upgraden
+\item Datenbank downgraden
 \end{itemize}
 \end{frame}
 
-\subsection{Principles}
+\subsection{Prinzipien}
 
-\begin{frame}{Principles}
+\begin{frame}{Prinzipien}
 \begin{itemize}
-\item Create backup
-\item Change schema
-\item Add custom scripts
+\item Backup anlegen
+\item Schema ändern
+\item Skripts hinzufügen
 \item Bump version number
-\item Prepare upgrade
-\item Deploy upgrade
+\item Upgrade vorbereiten
+\item Upgrade einspielen
 \end{itemize}
 \end{frame}
 
