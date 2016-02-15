@@ -574,7 +574,50 @@ Interchange6::Schema->load_namespaces(
 \end{lstlisting}
 \end{frame}
 
+\section{Komponenten}
 
+Es gibt eine Vielzahl von Komponenten für DBIx::Class.
+
+\subsection{Bäume}
+
+Eine Baumstruktur, wie z.B. für die Navigation einer
+Webseite, kann man mit Hilfe eines \verb|parent_id|-Feldes
+darstellen.
+
+\subsection{Tree::Adjacency Komponente}
+
+\begin{frame}[fragile]{Tree::Adjacency Komponente}
+\begin{lstlisting}
+
+package Interchange6::Schema::Result::Navigation;
+
+...
+
+__PACKAGE__->load_components(qw( Tree::AdjacencyList ... ));
+
+...
+
+__PACKAGE__->add_columns(
+   ...
+ "parent_id",
+  { data_type => "integer", default_value => 0, is_nullable => 0 },
+   ...
+);
+
+...
+
+__PACKAGE__->parent_column('parent_id');
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Tree::Adjacency Methoden}
+\begin{itemize}
+\item ancestors
+\item children
+\item siblings
+\end{itemize}
+\end{frame}
 
 \section{DBIx::Class Helpers}
 
