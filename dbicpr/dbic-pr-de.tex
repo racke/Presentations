@@ -211,6 +211,7 @@ application.
 \item Angebote
 \item Rabatt
 \end{itemize}
+\item Synchronisierung ERP
 \end{itemize}
 \end{frame}
 
@@ -281,7 +282,7 @@ which we will examine through an example soon.}
 \end{itemize}
 \item ResultSet
 \begin{itemize}
-\item Chaining
+\item Verkettung
 \item Relationship Traversal
 \item Subqueries
 \item ...
@@ -388,6 +389,8 @@ chaining.
 The underlying mechanism is that \verb|->search| on a
 ResultSet actually doesn't search.
 
+\subsection{Verkettung}
+
 \begin{frame}[fragile]{Talks}
 
 \begin{lstlisting}
@@ -459,6 +462,11 @@ my $talks = $schema->resultset('Talk')
    ->scheduled_for($dt_date);
 );
 \end{lstlisting}
+\end{frame}
+
+\subsection{Custom join conditions}
+
+\begin{frame}
 \end{frame}
 
 \begin{frame}[fragile]{Subjects included}
