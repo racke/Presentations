@@ -139,7 +139,7 @@ for the training:
 \begin{itemize}
 \item OO instead of SQL
 \item Abstracts different SQL implementations
-\item Business Logic
+\item Businesslogik
 \item Performance
 \item ``ResultSet'' features
 \item Ecosystem
@@ -173,8 +173,8 @@ Using DBIx::Class allows you move all your business logic
 into the database schema instead scattering it around a (web)
 application.
 
-\subsection{Business Logic}
-\begin{frame}{Business Logic}
+\subsection{Businesslogik}
+\begin{frame}{Businesslogik}
 % move business logic into schema
 % https://pixabay.com/en/gear-gears-euro-forex-dollar-384743/
 \begin{figure}[!ht]
@@ -183,20 +183,30 @@ application.
 \end{figure}
 \end{frame}
 
-\begin{frame}{Business Logic Benefits}
+\begin{frame}{Vorteile Businesslogik}
 \begin{itemize}
-\item Multiple Consumers
+\item Mehrere Verbraucher
 \begin{itemize}
-\item Web application(s)
-\item Cron jobs, scripts
-\item Test environments
+\item Webanwendungen
+\item Cronjobs, Skripte
+\item Testumgebungen
 \end{itemize}
-\item Hide Implementation
+\item Implementation verbergen
 \begin{itemize}
-\item SQL Dialects
-\item Application View
+\item SQL-Dialekte
+\item Anwendungsansicht
 \end{itemize}
-\item Changes / DRY
+\item Änderungen / DRY
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Beispiele Businesslogik}
+\begin{itemize}
+\item Preisberechnungen
+\begin{itemize}
+\item Angebote
+\item Rabatt
+\end{itemize}
 \end{itemize}
 \end{frame}
 
