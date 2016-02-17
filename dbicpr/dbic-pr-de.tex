@@ -586,6 +586,58 @@ Interchange6::Schema->load_namespaces(
 \end{lstlisting}
 \end{frame}
 
+\subsection{Zusatzattribute für das Schema}
+
+Für Funktionen der Businesslogik benötigen wir z.B.
+Informationen über die Konfiguration der Webanwendung
+bzw. den angemeldeten Benutzer.
+
+\begin{frame}{Problemstellung}
+\begin{itemize}
+\item Konfiguration
+\item angemeldeter Benutzer
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Schemainstanz erzeugen}
+\begin{lstlisting}
+use Interchange6::Schema;
+
+my $schema = Interchange6::Schema->connect(
+  'dbi:Pg:dbname=perldance', 'racke', 'nevairbe', 
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Zusatzattribute}
+\begin{lstlisting}
+__PACKAGE__->mk_group_ro_accessors(
+    simple => (
+        [ 'current_user' => '_ic6_current_user' ]
+    )
+);
+
+__PACKAGE__->mk_group_wo_accessors(
+    simple => (
+        [ 'set_current_user' => '_ic6_current_user' ]
+    )
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Zusatzattribute}
+\begin{lstlisting}
+package Dancer::Plugin::Interchange6;
+
+hook before => sub {
+    shop_schema->set_current_user(
+        logged_in_user || undef
+    );
+};
+
+\end{lstlisting}
+\end{frame}
+
 \section{Komponenten}
 
 Es gibt eine Vielzahl von Komponenten für DBIx::Class.
