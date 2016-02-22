@@ -732,6 +732,7 @@ Simplify the common case stuff for DBIx::Class.
 \begin{itemize}
 \item Helper::Schema::QuoteNames
 \item Helper::ResultSet::Me
+\item Helper::Row::ProxyResultSetMethod
 \item Helper::Row::OnColumnChange
 \item Helper::Schema::DateTime
 \end{itemize}
@@ -880,6 +881,20 @@ my $rs = $schema->resultset('Country')->search({})->hri;
 
 # since 'search' here is redundant we can just use:
 my $rs = $schema->resultset('Country')->hri;
+\end{lstlisting}
+\end{frame}
+
+\subsection{Helper::Row::ProxyResultSetMethod}
+
+\begin{frame}[fragile]{Helper::Row::ProxyResultSetMethod}
+\begin{lstlisting}
+package Interchange6::Schema::Product;
+
+use Interchange6::Schema::Candy -components => [
+    qw( Helper::Row::ProxyResultSetMethod );
+];
+
+proxy_resultset_method 'variant_count';
 \end{lstlisting}
 \end{frame}
 
