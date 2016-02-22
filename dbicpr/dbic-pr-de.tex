@@ -423,8 +423,8 @@ my $talks = $schema->resultset('Talk')
 \end{lstlisting}
 \end{frame}
 
-\subsection{Predefined Search}
-\begin{frame}[fragile]{Predefined Search}
+\subsection{Vordefinierte Suche}
+\begin{frame}[fragile]{Vordefinierte Suche}
 \begin{lstlisting}
 sub scheduled_for {
   my ( $self, $date ) = @_;
@@ -446,7 +446,7 @@ sub scheduled_for {
 \end{frame}
 
 
-\begin{frame}[fragile]{Using predefined search}
+\begin{frame}[fragile]{Vordefinierte Suche anwenden}
 
 \begin{lstlisting}
 my $dt_date = DateTime->new(
@@ -461,6 +461,23 @@ my $talks = $schema->resultset('Talk')
    ->search({room           => { '!=' => '' }),
    ->scheduled_for($dt_date);
 );
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Vordefinierte Suche: Produktvarianten}
+\begin{lstlisting}
+sub with_variant_count {
+ my $self = shift;
+ return $self->search(
+  undef,
+  {
+   '+columns' => {
+     variant_count =>
+      $self->correlate('variants')->count_rs->as_query
+   }
+  }
+ );
+}
 \end{lstlisting}
 \end{frame}
 
