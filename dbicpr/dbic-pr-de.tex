@@ -330,14 +330,14 @@ my $talks = $schema->resultset('Talk')->search(
 \end{lstlisting}
 \end{frame}
 
-\subsection{Truth of ResultSet}
+\subsection{Wahrheit über das ResultSet}
 \note{
   If you hear the term ResultSet, you probably thing
   we are talking about a number of results aka
   table rows.
 }
 
-\begin{frame}{Truth of ResultSet}
+\begin{frame}{Wahrheit über das ResultSet}
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.5\linewidth]{img/pdc_users.jpg}
@@ -346,32 +346,32 @@ my $talks = $schema->resultset('Talk')->search(
 
 % https://pixabay.com/en/wrong-way-sign-road-caution-167535/
 
-\begin{frame}{Truth of ResultSet}
+\begin{frame}{}
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=1\linewidth]{img/wrong-way.jpg}
 \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Truth of ResultSet}
+\begin{frame}[fragile]{Wahrheit über das ResultSet}
 % \centering
 \sout{ResultSet}
 
 \begin{lstlisting}
-isa(Query Plan);
+isa(Abfrageplan);
 \end{lstlisting}
 
 \end{frame}
 
-\begin{frame}[fragile]{Truth of ResultSet}
+\begin{frame}[fragile]{Wahrheit über das ResultSet}
 
-This doesn't execute SQL:
+Hier wird keine SQL-Abfrage ausgeführt:
 
 \begin{lstlisting}
 my $talks = $schema->resultset('Talk')->search(...);
 \end{lstlisting}
 
-This does:
+Hier schon:
 
 \begin{lstlisting}
 my $first_talk = $schema->resultset('Talk')
