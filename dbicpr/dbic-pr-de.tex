@@ -600,13 +600,13 @@ column name => {
 
 \begin{frame}{Subclassing}
 \begin{itemize}
-\item Add new tables
-\item Add new columns to existing tables
-\item Add new relations
+\item Tabellen hinzufügen
+\item Spalten hinzufügen
+\item Beziehungen hinzufügen
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Subclass Example}
+\begin{frame}[fragile]{Subclass Beispiel}
 \begin{lstlisting}
 package PerlDance::Schema;
 our $VERSION = 16;
@@ -746,7 +746,7 @@ __PACKAGE__->parent_column('parent_id');
 \section{DBIx::Class Helpers}
 
 \begin{frame}{DBIx::Class Helpers}
-Simplify the common case stuff for DBIx::Class.
+Typische Anwendungsfälle für DBIx::Class vereinfachen.
 \end{frame}
 
 \begin{frame}{DBIx::Class Helpers}
@@ -773,8 +773,8 @@ Simplify the common case stuff for DBIx::Class.
 
 \begin{frame}[fragile]{Helper::QuoteNames}
 \begin{itemize}
-\item Escaping reserved words
-\item Differ between engines and version
+\item Maskierung von reservierten Wörtern
+\item Änderungen zwischen Engines und Versionen
 \item e.g. MySQL
 \begin{itemize}
 \item \verb|select user from userdb| => crash
