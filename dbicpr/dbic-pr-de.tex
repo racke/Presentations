@@ -380,7 +380,7 @@ my $first_talk = $schema->resultset('Talk')
 
 \end{frame}
 
-\section{Composability}
+\section{ResultSet-Baukasten}
 
 Composability means that you don't need to construct the
 complete at once, but compose it together, e.g with
@@ -388,6 +388,15 @@ chaining.
 
 The underlying mechanism is that \verb|->search| on a
 ResultSet actually doesn't search.
+
+% https://pixabay.com/en/regulation-screw-colorful-color-261927/
+
+\begin{frame}{ResultSet-Baukasten}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.70\linewidth]{img/baukasten.jpg}
+\end{figure}
+\end{frame}
 
 \subsection{Verkettung}
 
