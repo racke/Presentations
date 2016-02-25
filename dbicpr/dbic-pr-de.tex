@@ -391,76 +391,56 @@ ResultSet actually doesn't search.
 
 \subsection{Verkettung}
 
-\begin{frame}[fragile]{Talks}
+\subsubsection{Suche ohne Verkettung}
 
+\begin{frame}[fragile]{Suche ohne Verkettung}
 \begin{lstlisting}
-my $talks = $schema->resultset('Talk')->search(
-    {
-        -bool          => 'accepted',
-        conferences_id => 1,
-        room           => { '!=' => '' },
-        start_time     => {
-            '>=' => '2015-10-22 00:00:00'
-            '<=' => '2015-10-23 00:00:00'
-            },
-    },
-);
+$schema->resultset('Product')->search({
+    active => 1,
+    canonical_sku => undef,
+});
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Talks}
+\subsubsection{Suche mit Verkettung}
 
+\begin{frame}[fragile]{Suche mit Verkettung}
 \begin{lstlisting}
-my $talks = $schema->resultset('Talk')
-   ->search({-bool          => 'accepted'})
-   ->search({conferences_id => 1})
-   ->search({room           => { '!=' => '' }),
-   ->search({start_time     => {
-            '>=' => '2015-10-22 00:00:00'
-            '<=' => '2015-10-23 00:00:00'
-            }}),
-);
+$schema->resultset('Product')->search({
+    active => 1,
+})->search({
+    canonical_sku => undef,
+});
 \end{lstlisting}
 \end{frame}
 
 \subsection{Vordefinierte Suche}
+
 \begin{frame}[fragile]{Vordefinierte Suche}
 \begin{lstlisting}
-sub scheduled_for {
-  my ( $self, $date ) = @_;
+package Interchange6::Schema::ResultSet::Product;
 
-  $self->throw_exception("scheduled_for: date missing")
-    unless defined $date;
-    
-  my $schema = $self->result_source->schema;
+sub active {
+    my $self = shift;
 
-  $self->search({
-    start_time     => {
-      '>=' => $schema->format_datetime( $date ),
-      '<=' => $schema->format_datetime( 
-                  $date->clone->add( days => 1 ) )
-      },
-  });
+    return $self->search({ $self->me('active') => 1 });
 }
+
+sub canonical_only {
+    my $self = shift;
+
+    return $self->search({ 
+       $self->me('canonical_sku') => undef });
+}
+
 \end{lstlisting}
 \end{frame}
 
+\subsubsection{Vordefinierte Suche anwenden}
 
 \begin{frame}[fragile]{Vordefinierte Suche anwenden}
-
 \begin{lstlisting}
-my $dt_date = DateTime->new(
-    year => 2015,
-    month => 10,
-    day => 22,
-);
-
-my $talks = $schema->resultset('Talk')
-   ->search({-bool          => 'accepted',})
-   ->search({conferences_id => 1})
-   ->search({room           => { '!=' => '' }),
-   ->scheduled_for($dt_date);
-);
+$schema->resultset('Product')->active->canonical_only;
 \end{lstlisting}
 \end{frame}
 
@@ -519,10 +499,8 @@ __PACKAGE__->has_many(
 
 \begin{frame}[fragile]{Subjects included}
 \begin{itemize}
-\item Exceptions
-\item Access main schema object
-\item DateTime inflation
-\item Schema::DateTime helper
+\item Me Helper
+\verb|$self->me('active') => 1|
 \end{itemize}
 \end{frame}
 
@@ -802,35 +780,33 @@ __PACKAGE__->load_components(
 
 \subsection{Helper::ResultSet::Me}
 
-Predefined queries present a problem: what is the table alias I need to use?
-We can do:
+Bei vordefinierten Suchen wissen wir nicht, welcher Tabellen-Alias
+gebraucht wird.
+
+Deshalb verwenden wir die \verb|current_source_alias|-Methode.
 
 \begin{frame}[fragile]{Helper::Resultset::Me}
 \begin{lstlisting}
-sub in_germany {
+sub active {
     my $self = shift;
-    my $current_source_alias =
-        $self->current_source_alias;
-    return $self->search(
-        { "$current_source_alias.country_iso_code"
-          => 'DE' }
-    );
+
+    return $self->search({ 
+        $self->current_source_alias . ".active" => 1,
+    });
 }
 \end{lstlisting}
 \end{frame}
 
-but using this helper makes things much simpler:
+Mit diesen Helper wird der Quellcode übersichtlicher:
 
 \begin{frame}[fragile]{Helper::Resultset::Me}
 \begin{lstlisting}
-sub in_germany {
+sub active {
     my $self = shift;
 
-
-    return $self->search(
-        { $self->me('country_iso_code') => 'DE' }
-    );
-
+    return $self->search({ 
+        $self->me('active') => 1,
+    });
 }
 \end{lstlisting}
 \end{frame}
@@ -912,6 +888,17 @@ my $rs = $schema->resultset('Country')->search({})->hri;
 
 # since 'search' here is redundant we can just use:
 my $rs = $schema->resultset('Country')->hri;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Tickets}
+\begin{lstlisting}
+ $tokens->{tickets} = [
+    $schema->resultset('Conference')
+        ->find( $conferences_id )
+            ->tickets->active->prefetch('inventory')
+                ->hri->all 
+];
 \end{lstlisting}
 \end{frame}
 
