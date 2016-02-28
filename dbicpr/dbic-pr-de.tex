@@ -1060,9 +1060,19 @@ my $rs = $schema->resultset('PlaceVisited')->search(
 \end{itemize}
 \end{frame}
 
-\subsection{Prinzipien}
+\subsection{Skripte für Deployment Handler}
+\begin{frame}{Skripte für Deployment Handler}
+\begin{description}
+\item[dh-prepare-version-storage] Installation Datenbanktabelle vorbereiten
+\item[dh-install-version-storage] Installation Datenbanktabelle einspielen
+\item[dh-prepare-upgrade] Upgrade vorbereiten
+\item[dh-upgrade] Upgrade einspielen
+\end{description}
+\end{frame}
 
-\begin{frame}{Prinzipien}
+\subsection{Update Prinzipien}
+
+\begin{frame}{Update Prinzipien}
 \begin{itemize}
 \item Backup anlegen
 \item Schema ändern
