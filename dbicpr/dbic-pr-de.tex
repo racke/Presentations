@@ -423,6 +423,22 @@ $schema->resultset('Product')->search({
 \end{lstlisting}
 \end{frame}
 
+\subsubsection{Verkettung mit Update}
+
+Die Verkettung kann auch genutzt werden, um
+ein Suchergebnis mit einer anderen Operation zu
+verknüpfen, z.B. ein \verb|UPDATE|.
+
+\begin{frame}[fragile]{Verkettung mit Update}
+\begin{lstlisting}
+$schema->resultset('Product')->search({
+    manufacturer => 'Out of Fashion',
+})->update({
+    active => 0,
+});
+\end{lstlisting}
+\end{frame}
+
 \subsection{Vordefinierte Suche}
 
 \begin{frame}[fragile]{Vordefinierte Suche}
