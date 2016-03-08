@@ -1218,6 +1218,30 @@ $dh->prepare_upgrade(
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Guru update}
+
+\verb|sql/_common/upgrade/13-14/010-gurus.pl|
+
+\begin{lstlisting}
+#!perl
+sub {
+    my $schema = shift;
+    $schema->resultset('User')->search(
+        {
+            username => {
+                -in => [
+                    'xsawyerx@cpan.org',
+                    'russell.jenkins@strategicdata.com.au',
+                    'rabbit@rabbit.us',
+                ]
+            }
+        }
+    )->update( { guru_level => 100 } );
+};
+
+\end{lstlisting}
+\end{frame}
+
 \subsection{Internals}
 
 Reference for directory layout:
