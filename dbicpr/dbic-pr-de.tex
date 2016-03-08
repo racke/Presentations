@@ -1063,7 +1063,34 @@ my $rs = $schema->resultset('PlaceVisited')->search(
 % \begin{frame}{Writing Tests}
 % \end{frame}
 
-\section{Deployment Handler}
+\section{Schema \& Deployment}
+
+\begin{frame}{Deployment}
+\begin{itemize}
+\item Generierung aus dem Schema
+\item Generierung aus der Datenbank
+\end{itemize}
+\end{frame}
+
+Es gibt aber auch Situationen, wo die
+Generierung aus der Datenbank sinnvoll ist,
+z.B. wenn man mit DBIx::Class beginnt und
+bereits ein Schema für eine vorhandene
+Datenbank benötigt.
+
+
+\subsection{dbicdump}
+
+You can use \verb|dbicdump| to create a ``boilerplate'' schema from the
+existing database.
+
+\begin{frame}[fragile]{dbicdump}
+\begin{lstlisting}
+dbicdump -o dump_directory=/home/dance/TravelDance/lib 
+         TravelDance::Schema 
+         dbi:Pg:dbname=perldance
+\end{lstlisting}
+\end{frame}
 
 \subsection{Deploy/Upgrade/Downgrade}
 
@@ -1212,24 +1239,10 @@ Reference for directory layout:
 
 \begin{frame}{Abschluß}
 \begin{itemize}
-\item Mit DBIx::Class beginnen
 \item Resources
 \item Slides
 \item Fragen
 \end{itemize}
-\end{frame}
-
-\subsection{Mit DBIx::Class beginnen}
-
-You can use \verb|dbicdump| to create a ``boilerplate'' schema from the
-existing database.
-
-\begin{frame}[fragile]{dbicdump}
-\begin{lstlisting}
-dbicdump -o dump_directory=/home/dance/TravelDance/lib 
-         TravelDance::Schema 
-         dbi:Pg:dbname=perldance
-\end{lstlisting}
 \end{frame}
 
 \subsection{Resources}
