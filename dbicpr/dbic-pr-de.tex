@@ -675,13 +675,13 @@ my $schema = Interchange6::Schema->connect(
 \begin{frame}[fragile]{Zusatzattribute}
 \begin{lstlisting}
 __PACKAGE__->mk_group_ro_accessors(
-    simple => (
+    inherited => (
         [ 'current_user' => '_ic6_current_user' ]
     )
 );
 
 __PACKAGE__->mk_group_wo_accessors(
-    simple => (
+    inherited => (
         [ 'set_current_user' => '_ic6_current_user' ]
     )
 );
