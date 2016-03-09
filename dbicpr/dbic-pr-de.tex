@@ -1065,10 +1065,16 @@ my $rs = $schema->resultset('PlaceVisited')->search(
 
 \section{Schema \& Deployment}
 
-\begin{frame}{Deployment}
+\begin{frame}[fragile]{Deployment}
 \begin{itemize}
-\item Generierung aus dem Schema
 \item Generierung aus der Datenbank
+\begin{itemize}
+\item \verb|dbicdump|
+\end{itemize}
+\item Generierung aus dem Schema
+\begin{itemize}
+\item \verb|DBIx::Class::DeploymentHandler|
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -1079,17 +1085,35 @@ bereits ein Schema für eine vorhandene
 Datenbank benötigt.
 
 
-\subsection{dbicdump}
+\subsection{Generierung aus der Datenbank}
 
 You can use \verb|dbicdump| to create a ``boilerplate'' schema from the
 existing database.
 
-\begin{frame}[fragile]{dbicdump}
+\begin{frame}[fragile]{Generierung aus der Datenbank: dbicdump}
 \begin{lstlisting}
 dbicdump -o dump_directory=/home/dance/TravelDance/lib 
          TravelDance::Schema 
          dbi:Pg:dbname=perldance
 \end{lstlisting}
+\end{frame}
+
+\verb|dbicdump| kann auch verwendet werden, um Änderungen in
+der Datenbankstruktur in das Schema zu übernehmen.
+
+\begin{frame}[fragile]{Generierung aus der Datenbank: dbicdump}
+\begin{itemize}
+\item \verb|dbicdump| mehrfach anwenden
+\item zusätzlichen Methoden
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Nachteile dbicdump}
+\begin{itemize}
+\item Komponenten, Helpers
+\item Candy
+\item generische Schemas
+\end{itemize}
 \end{frame}
 
 \subsection{Deploy/Upgrade/Downgrade}
@@ -1113,14 +1137,14 @@ dbicdump -o dump_directory=/home/dance/TravelDance/lib
 \end{description}
 \end{frame}
 
-\subsection{Update Prinzipien}
+\subsection{Vorgehensweise für Updates}
 
-\begin{frame}{Update Prinzipien}
+\begin{frame}{Vorgehensweise für Updates}
 \begin{itemize}
 \item Backup anlegen
 \item Schema ändern
 \item Skripts hinzufügen
-\item Bump version number
+\item Versionsnummer erhöhen
 \item Upgrade vorbereiten
 \item Upgrade einspielen
 \end{itemize}
@@ -1138,11 +1162,11 @@ Note: create backup can be done by DeploymentHandler itself.
 \end{itemize}
 \end{frame}
 
-\subsection{Bump version number}
-\begin{frame}{Bump version number}
+\subsection{Versionsnummer erhöhen}
+\begin{frame}{Versionsnummer erhöhen}
 \begin{itemize}
-\item Natural number => 1
-\item Increase by 1 => 2
+\item Natürliche Zahlen: 1, 2, 3, ...
+\item Erhöhen: 1 => 2
 \end{itemize}
 \end{frame}
 
@@ -1249,14 +1273,43 @@ Reference for directory layout:
 
 \begin{frame}[fragile]{Verzeichnisse und Dateien}
 \begin{description}
-\item[sql/PostgreSQL] SQL scripts for deploy and update
-\item[sql/\_common] Custom scripts
+\item[sql/PostgreSQL] Datenbankspezifische SQL-Skripte
 \begin{description}
-\item[sql/\_common/upgrade/\_any] All upgrades
-\item[sql/\_common/upgrade/1-2] Upgrade from 1 to 2
+\item[sql/PostgreSQL/deploy/1/001-auto.sql] Deploy Version 1
+\item[sql/PostgreSQL/upgrade/1-2/001-auto.sql] Upgrade 1 => 2
 \end{description}
-\item[sql/\_deploy] Structure files (YAML)
+\item[sql/\_common] Eigene Skripte
+\begin{description}
+\item[sql/\_common/upgrade/\_any] Alle Upgrades
+\item[sql/\_common/upgrade/1-2] Upgrade 1 => 2
 \end{description}
+\item[sql/\_deploy] Strukturdateien (YAML)
+\end{description}
+\end{frame}
+
+\subsection{Deployment Handler CLI}
+
+\begin{frame}[fragile]{Deployment Handler CLI}
+\begin{lstlisting}
+    #! /usr/bin/env perl
+
+    use strict;
+    use warnings;
+    use PerlDance::Schema;
+    use DBIx::Class::DeploymentHandler::CLI;
+
+    my $schema = PerlDance::Schema->connect('perldance');
+
+    my $dh_cli = DBIx::Class::DeploymentHandler::CLI->new(
+        schema => $schema,
+        databases => 'PostgreSQL',
+        args => \@ARGV,
+    );
+
+    if (my $ret = $dh_cli->run) {
+       print $ret, "\n";
+    }
+\end{lstlisting}
 \end{frame}
 
 \section{Abschluß}
