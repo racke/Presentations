@@ -16,9 +16,8 @@
 Wir benutzen DBIx::Class seit einigen Jahren in verschiedenen
 Projekten, meistens zusammen mit Dancer in einer Webanwendung.
 
-Mit der Einführung von DBIx::Class bindet man sich an ein
-recht umfangreiches Programmpaket, deshalb stellt sich die
-Frage ob man ...
+Bei der Einführung von DBIx::Class stellt sich natürlich
+die Frage, ob man ...
 
 \begin{frame}{Can of Worms}
 \begin{figure}[!ht]
@@ -553,7 +552,7 @@ __PACKAGE__->has_many(
 \begin{itemize}
 \note{Zucker für DBIx::Class}
 \item Candy
-\item Subclassing Schema
+\item Schema "vererben"
 \item Zusatzattribute
 \item Komponenten
 \item Helpers
@@ -610,16 +609,16 @@ column name => {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Subclassing Schemas}
+\subsection{Schemas vererben}
 
-\begin{frame}[fragile]{Use cases for subclassing}
+\begin{frame}[fragile]{Schemas vererben: Anwendungsbeispiele}
 \begin{itemize}
-\item Generic schema e.g. \verb|Interchange6::Schema|
-\item Applications with similar databases
+\item Generisches Schema, z.B. \verb|Interchange6::Schema|
+\item Anwendung mit ähnlichen Datenbanken
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Subclassing}
+\begin{frame}{Schemas vererben}
 \begin{itemize}
 \item Tabellen hinzufügen
 \item Spalten hinzufügen
@@ -627,7 +626,7 @@ column name => {
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Subclass Beispiel}
+\begin{frame}[fragile]{Beispiel Vererbung}
 \begin{lstlisting}
 package PerlDance::Schema;
 our $VERSION = 16;
@@ -651,7 +650,7 @@ __PACKAGE__->add_columns(
 Inherit from \verb|Interchange6::Schema| and set result namespace to 
 \verb|Interchange6::Schema::Result| plus \verb|PerlDance::Schema::Result|.
 
-\begin{frame}[fragile]{Subclass Example}
+\begin{frame}[fragile]{Beispiel Vererbung}
 \begin{lstlisting}
 package PerlDance::Schema;
 
