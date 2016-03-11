@@ -785,7 +785,6 @@ Typische Anwendungsfälle für DBIx::Class vereinfachen.
 \item Helper::ResultSet::Me
 \item Helper::Row::ProxyResultSetMethod
 \item Helper::Row::OnColumnChange
-\item Helper::Schema::DateTime
 \end{itemize}
 \end{frame}
 
@@ -1026,46 +1025,10 @@ sub change_password {
 \end{lstlisting}
 \end{frame}
 
-\subsection{Helper::Schema::DateTime}
-
-\begin{frame}[fragile]{Helper::Schema::DateTime}
-
-VisitedPlaces visited in the last year:
-
-\begin{lstlisting}
-my $dtf = $schema->storage->datetime_parser; # boilerplate
-my $one_year_ago = $dtf->format_datetime(
-    DateTime->now->subtract( year => 1 )
-);
-
-my $rs = $schema->resultset('PlaceVisited')->search(
-    {
-        visited => { '>' => $one_year_ago }
-    }
-);
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Helper::Schema::DateTime}
-
-With the helper:
-
-\begin{lstlisting}
-my $one_year_ago = $schema->format_datetime(
-    DateTime->now->subtract( year => 1 )
-);
-
-my $rs = $schema->resultset('PlaceVisited')->search(
-    {
-        visited => { '>' => $one_year_ago }
-    }
-);
-\end{lstlisting}
-\end{frame}
-
 \subsection{Andere nützliche Helper}
 \begin{frame}{Andere nützliche Helper}
 \begin{itemize}
+\item Helper::Schema::DateTime
 \note{Easily correlate your ResultSets}
 \item Helper::ResultSet::CorrelateRelationship
 \note{Remove columns from search}
@@ -1134,7 +1097,7 @@ der Datenbankstruktur in das Schema zu übernehmen.
 \end{itemize}
 \end{frame}
 
-\subsection{Deploy/Upgrade/Downgrade}
+\subsection{Deployment Handler}
 
 \begin{frame}{Deployment Handler}
 \begin{itemize}
@@ -1244,19 +1207,8 @@ $dh->prepare_upgrade(
 \begin{frame}{Eigene Skripte hinzufügen}
 \begin{itemize}
 \item Deployment
-\item All upgrades
-\item Specific upgrade
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Add custom scripts}
-\begin{itemize}
-\item Populate records on deployment
-\item Add initial values for new tables
-\begin{itemize}
-\item hardcoded in script
-\item from file
-\end{itemize}
+\item für alle Upgrades
+\item bestimmte Upgrades
 \end{itemize}
 \end{frame}
 
