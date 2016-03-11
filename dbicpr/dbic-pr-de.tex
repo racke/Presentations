@@ -876,7 +876,7 @@ you just a few examples.}
 $rs->columns([qw/ first_name last_name /]);
 \end{lstlisting}
 
-equivalent to:
+gleichbedeutend mit:
 
 \begin{lstlisting}
 $rs->search( undef, { 
@@ -893,13 +893,13 @@ $rs->search( undef, {
 $rs->like( 'city', 'region', '%York' );
 \end{lstlisting}
 
-or:
+oder:
 
 \begin{lstlisting}
 $rs->like([ 'city', 'region' ], '%York' );
 \end{lstlisting}
 
-equivalent to:
+gleichbedeutend mit:
 
 \begin{lstlisting}
 $rs->search(
@@ -962,7 +962,8 @@ proxy_resultset_method 'variant_count';
 
 \begin{frame}[fragile]{Helper::Row::OnColumnChange}
 
-Do things when the value of a column changes.
+Führe Aktionen aus, wenn sich der Wert
+einer Spalte ändert:
 
 \begin{itemize}
 \item before\_column\_change
@@ -994,8 +995,8 @@ column last_password_change => {
 On password change:
 
 \begin{itemize}
-\item check new password against old one
-\item update \verb|last_password_change| column
+\item neues Passwort mit dem alten vergleichen
+\item Wert in \verb|last_password_change|-Spalte aktualisieren
 \end{itemize}
 
 \end{frame}
