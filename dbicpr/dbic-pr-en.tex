@@ -438,6 +438,17 @@ sub active {
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Tickets - Helpers}
+
+DBIx::Class::Helper::ResultSet::Shortcut
+
+\begin{lstlisting}
+$tickets_rs->search( undef, { prefetch => 'inventory' } );
+
+$tickets_rs->prefetch('inventory');
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Correlated Subqueries}
 \begin{lstlisting}
 sub with_variant_count {
