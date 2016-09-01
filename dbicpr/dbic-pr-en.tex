@@ -506,6 +506,16 @@ sub with_attendee_count {
 
 \begin{frame}[fragile]{Correlated Subqueries}
 \begin{lstlisting}
+( 
+  SELECT COUNT( * ) 
+  FROM "attendee_talks" "attendee_talks_alias" 
+  WHERE "attendee_talks_alias"."talks_id" = "me"."talks_id"
+), 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
 my $talks = rset('Talk')->search(
   {
     accepted       => 1,
@@ -553,6 +563,28 @@ sub with_attendee_status {
     }
   );
 }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+$talks = $talks->with_attendee_status( $user->id );
+\end{lstlisting}
+
+\begin{lstlisting}
+( 
+    SELECT COUNT( * ) 
+      FROM "attendee_talks" "attendee_talks_alias" 
+    WHERE "attendee_talks_alias"."talks_id" = "me"."talks_id" AND "users_id" = '4'
+), 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+      
+$talks = $talks->with_attendee_status( $user->id );
+
 \end{lstlisting}
 \end{frame}
 
