@@ -527,6 +527,35 @@ my $talks = rset('Talk')->search(
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}{Talks with number of attendees}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\linewidth]{img/schedule2015.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+sub with_attendee_status {
+  my ( $self, $users_id ) = @_;
+
+  $self->search(
+    undef,
+    {
+      '+columns' => {
+        attendee_status => 
+          $self->correlate('attendee_talks')->search(
+          {
+            users_id => $users_id
+          }
+        )->count_rs->as_query
+      }
+    }
+  );
+}
+\end{lstlisting}
+\end{frame}
+
 \section{Other Nice Stuff}
 
 \begin{frame}{Other Nice Stuff}
