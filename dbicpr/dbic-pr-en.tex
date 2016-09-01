@@ -367,7 +367,7 @@ chaining.
 The underlying mechanism is that \verb|->search| on a
 ResultSet actually doesn't search.
 
-\subsection{Chaining}
+\subsection{Tickets}
 
 \begin{frame}{Tickets}
 \begin{figure}[!ht]
@@ -459,18 +459,38 @@ $tickets_rs->prefetch('inventory');
 \end{lstlisting}
 \end{frame}
 
+\subsection{Talks with number of attendees}
+
+\begin{frame}[fragile]{The naive way}
+\begin{lstlisting}
+my @data = map +{
+   %{ $_->as_hash },
+   attendee_count => $_->attendee_talks->count,
+}, $talks_rs->all
+\end{lstlisting}
+
+Problem: one extra query per talk
+
+\end{frame}
+
 \begin{frame}[fragile]{Correlated Subqueries}
 \begin{lstlisting}
-sub with_variant_count {
+package PerlDance::Schema::ResultSet::Talk;
+
+...
+
+sub with_attendee_count {
   my $self = shift;
-  return $self->search(
+
+  $self->search(
     undef,
       {
         '+columns' => {
-          variant_count =>
-            $self->correlate('variants')
-              ->count_rs->as_query
-         }
+           attendee_count =>
+             $self->correlate('attendee_talks')
+               ->count_rs
+               ->as_query
+        }
       }
   );
 }
