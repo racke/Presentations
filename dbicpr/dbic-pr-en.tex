@@ -357,76 +357,84 @@ chaining.
 The underlying mechanism is that \verb|->search| on a
 ResultSet actually doesn't search.
 
-\begin{frame}[fragile]{Talks}
+\subsection{Chaining}
 
+\begin{frame}{Tickets}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\linewidth]{img/cinema-ticket.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Tickets}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\linewidth]{img/ticket-view.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Tickets with inventory}
+\begin{itemize}
+\item Conference
+\item Products (tickets)
+\item Conference Tickets
+\item Inventory
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tickets with inventory}
 \begin{lstlisting}
-my $talks = $schema->resultset('Talk')->search(
-    {
-        -bool          => 'accepted',
-        conferences_id => 1,
-        room           => { '!=' => '' },
-        start_time     => {
-            '>=' => '2015-10-22 00:00:00'
-            '<=' => '2015-10-23 00:00:00'
-            },
-    },
-);
+
+SELECT ticket.sku, ticket.name, 
+  ticket.short_description, ticket.description, 
+  ticket.price, inventory.sku, inventory.quantity 
+  FROM conference_tickets me 
+  JOIN products ticket 
+    ON ticket.sku = me.sku 
+  LEFT JOIN inventories inventory 
+    ON inventory.sku = ticket.sku 
+WHERE me.conferences_id = '2' AND ticket.active = '1'
+
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Talks}
+\begin{frame}[fragile]{Tickets}
 
 \begin{lstlisting}
-my $talks = $schema->resultset('Talk')
-   ->search({-bool          => 'accepted'})
-   ->search({conferences_id => 1})
-   ->search({room           => { '!=' => '' }),
-   ->search({start_time     => {
-            '>=' => '2015-10-22 00:00:00'
-            '<=' => '2015-10-23 00:00:00'
-            }}),
-);
+  $tickets = $schema->resultset( 'Conference' )
+     ->find( {name => 'Perl Dancer Conference 2016'}, )
+     ->tickets
+     ->active
+     ->prefetch('inventory');
 \end{lstlisting}
 \end{frame}
 
-\subsection{Predefined Search}
-\begin{frame}[fragile]{Predefined Search}
+\begin{frame}[fragile]{Tickets - Relationship Traversal}
 \begin{lstlisting}
-sub scheduled_for {
-  my ( $self, $date ) = @_;
+package PerlDance::Schema::Result::Conference;
 
-  $self->throw_exception("scheduled_for: date missing")
-    unless defined $date;
-    
-  my $schema = $self->result_source->schema;
+...
 
-  $self->search({
-    start_time     => {
-      '>=' => $schema->format_datetime( $date ),
-      '<=' => $schema->format_datetime( 
-                  $date->clone->add( days => 1 ) )
-      },
-  });
+has_many
+  conference_tickets => 'PerlDance::Schema::Result::ConferenceTicket',
+  "conferences_id";
+
+many_to_many tickets => "conference_tickets", "ticket";
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Tickets - Predefined Search}
+\begin{lstlisting}
+
+package Interchange6::Schema::ResultSet::Product;
+
+...
+
+sub active {
+    return $_[0]->search({ $_[0]->me('active') => 1 });
 }
-\end{lstlisting}
-\end{frame}
 
-
-\begin{frame}[fragile]{Using predefined search}
-
-\begin{lstlisting}
-my $dt_date = DateTime->new(
-    year => 2015,
-    month => 10,
-    day => 22,
-);
-
-my $talks = $schema->resultset('Talk')
-   ->search({-bool          => 'accepted',})
-   ->search({conferences_id => 1})
-   ->search({room           => { '!=' => '' }),
-   ->scheduled_for($dt_date);
-);
 \end{lstlisting}
 \end{frame}
 
