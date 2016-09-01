@@ -504,6 +504,29 @@ sub with_attendee_count {
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+my $talks = rset('Talk')->search(
+  {
+    accepted       => 1,
+    conferences_id => setting('conferences_id'),
+    room           => { '!=' => '' },
+    start_time     => {
+      '!=' => undef,
+      '>=' => $schema->format_datetime($dt_date),
+      '<=' =>
+         $schema->format_datetime( 
+           $dt_date->clone->add( days => 1 ) )
+    },
+  },
+  {
+    order_by => 'start_time',
+    prefetch => 'author',
+  }
+)->with_attendee_count;
+\end{lstlisting}
+\end{frame}
+
 \section{Other Nice Stuff}
 
 \begin{frame}{Other Nice Stuff}
