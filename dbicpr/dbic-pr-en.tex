@@ -318,7 +318,7 @@ ResultSet actually doesn't search.
 \begin{frame}[fragile]{Tickets with inventory}
 \begin{itemize}
 \item Conference
-\item Products (tickets)
+\item Tickets
 \item Conference Tickets
 \item Inventory
 \end{itemize}
@@ -410,13 +410,12 @@ my @data = map +{
 
 Problem: one extra query per talk
 
+Other solution: \verb|GROUP BY| \textit{(not recommended)}
 \end{frame}
 
 \begin{frame}[fragile]{Correlated Subqueries}
 \begin{lstlisting}
 package PerlDance::Schema::ResultSet::Talk;
-
-...
 
 sub with_attendee_count {
   my $self = shift;
@@ -469,6 +468,12 @@ my $talks = rset('Talk')->search(
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+DBIx::Class::Helper::ResultSet::CorrelateRelationship
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Talks with number of attendees}
 \begin{figure}[!ht]
 \centering
@@ -518,6 +523,49 @@ $talks = $talks->with_attendee_status( $user->id );
       
 $talks = $talks->with_attendee_status( $user->id );
 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+my $talks = rset('Talk')->search(
+  {
+    accepted       => 1,
+    conferences_id => setting('conferences_id'),
+    room           => { '!=' => '' },
+    start_time     => {
+      '!=' => undef,
+      '>=' => $schema->format_datetime($dt_date),
+      '<=' =>
+         $schema->format_datetime( 
+           $dt_date->clone->add( days => 1 ) )
+    },
+  },
+  {
+    order_by => 'start_time',
+    prefetch => 'author',
+  }
+)->with_attendee_count->with_attendee_status( $user->id );
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Correlated Subqueries}
+\begin{lstlisting}
+SELECT me."talks_id", me."author_id", me."conferences_id", me."duration", me."title", me."tags", me."abstract", me."url", me."video_url", me."comments", me."organiser_notes", me."accepted", me."confirmed", me."lightning", me."scheduled", me."start_time", me."room", me."created", me."last_modified", me."survey_id", ( 
+    SELECT COUNT( * ) 
+      FROM "attendee_talks" "attendee_talks_alias" 
+    WHERE "attendee_talks_alias"."talks_id" = me."talks_id"
+   ), ( 
+    SELECT COUNT( * ) 
+      FROM "attendee_talks" "attendee_talks_alias" 
+    WHERE "attendee_talks_alias"."talks_id" = me."talks_id" AND "users_id" = '4'
+   ), "author"."users_id", "author"."username", "author"."nickname", "author"."email", "author"."password", "author"."first_name", "author"."last_name", "author"."last_login", "author"."fail_count", "author"."reset_expires", "author"."reset_token", "author"."is_anonymous", "author"."created", "author"."last_modified", "author"."active", "author"."bio", "author"."media_id", "author"."monger_groups", "author"."pause_id", "author"."guru_level", "author"."t_shirt_size" 
+  FROM "talks" me LEFT JOIN "users" "author" 
+    ON "author"."users_id" = me."author_id" 
+WHERE "accepted" = '1' AND "conferences_id" = '1' AND "room" != '' 
+AND "start_time" IS NOT NULL AND "start_time" <= '2015-10-23 00:00:00' 
+AND "start_time" >= '2015-10-22 00:00:00' 
+ORDER BY "start_time"
 \end{lstlisting}
 \end{frame}
 
