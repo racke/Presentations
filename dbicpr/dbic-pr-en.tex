@@ -366,7 +366,8 @@ package PerlDance::Schema::Result::Conference;
 ...
 
 has_many
-  conference_tickets => 'PerlDance::Schema::Result::ConferenceTicket',
+  conference_tickets =>
+     'PerlDance::Schema::Result::ConferenceTicket',
   "conferences_id";
 
 many_to_many tickets => "conference_tickets", "ticket";
