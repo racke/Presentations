@@ -578,27 +578,69 @@ ORDER BY "start_time"
 \end{lstlisting}
 \end{frame}
 
-\subsection{HashRefInflator}
-
-Using the HashRefInflator makes sense when you need to quickly retrieve
-data from a massive resultset or you need a list of hash references anyway,
-e.g. for input to a template in a web application.
-
-\begin{frame}[fragile]{HashRefInflator}
+\begin{frame}[fragile]{Predefined Searches}
 \begin{lstlisting}
-my $rs = $schema->resultset('Country')->search({}, {
-   result_class
-     => 'DBIx::Class::ResultClass::HashRefInflator',
- });
+my $talks = rset('Talk')->search(
+  {
+    accepted       => 1,
+    conferences_id => setting('conferences_id'),
+    room           => { '!=' => '' },
+    start_time     => {
+      '!=' => undef,
+      '>=' => $schema->format_datetime($dt_date),
+      '<=' =>
+         $schema->format_datetime( 
+           $dt_date->clone->add( days => 1 ) )
+    },
+  },
+  {
+    order_by => 'start_time',
+    prefetch => 'author',
+  }
+)->with_attendee_count->with_attendee_status( $user->id );
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{HashRefInflator with HRI helper}
-\begin{lstlisting}
-my $rs = $schema->resultset('Country')->search({})->hri;
 
-# since 'search' here is redundant we can just use:
-my $rs = $schema->resultset('Country')->hri;
+\begin{frame}[fragile]{Predefined Searches}
+\begin{lstlisting}
+package PerlDance::Schema::ResultSet::Talk;
+
+sub scheduled_for {
+  my ( $self, $dt_date ) = @_;
+  my $schema = $self->result_source->schema;
+
+  $self->search(
+    {
+      start_time     => {
+        '!=' => undef,
+        '>=' => $schema->format_datetime( $dt_date ),
+        '<=' =>
+                $schema->format_datetime( 
+                  $dt_date->clone->add( days => 1 ) ),
+      },
+    }
+  );
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Predefined Searches}
+\begin{lstlisting}
+my $talks = rset('Talk')->search(
+  {
+    accepted       => 1,
+    conferences_id => setting('conferences_id'),
+    room           => { '!=' => '' },
+  },
+  {
+    order_by => 'start_time',
+    prefetch => 'author',
+  }
+)
+->scheduled_for( $dt_date )
+->with_attendee_count
+->with_attendee_status( $user->id );
 \end{lstlisting}
 \end{frame}
 
