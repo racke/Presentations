@@ -106,19 +106,7 @@ for the training:
 \end{itemize}
 \end{frame}
 
-\subsection{Best Thing Since Sliced Bread}
-
-\begin{frame}{Best Thing Since Sliced Bread}
-
-% https://en.wikipedia.org/wiki/Sliced_bread#/media/File:Brood.jpg
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1\linewidth]{img/sliced-bread.jpg}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Best Thing Since Sliced Bread}
+\begin{frame}{DBIx::Class Features}
 \begin{itemize}
 \item OO instead of SQL
 \item Abstracts different SQL implementations
@@ -133,28 +121,6 @@ for the training:
 \end{itemize}
 \end{itemize}
 \end{frame}
-
-\subsection{Can of Worms}
-
-\begin{frame}{Can of Worms}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.75\linewidth]{img/canofworms.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Can of Worms}
-\begin{itemize}
-\item SQL::Abstract
-\item Class names (Result, ResultSet)
-\item Based on C3 instead of Moo(se)
-\item Documentation outline
-\end{itemize}
-\end{frame}
-
-Using DBIx::Class allows you move all your business logic
-into the database schema instead scattering it around a (web)
-application.
 
 \subsection{Business Logic}
 \begin{frame}{Business Logic}
@@ -196,18 +162,6 @@ handwritten SQL is most cases.
 \item Use cases
 \end{itemize}
 \end{frame}
- 
-In case you feel that isn't correct, please call our hotline:
-
-\begin{frame}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1\linewidth]{img/perldance-2014-modern-tech.jpg}
-\end{figure}
-\end{frame}
-
-But if you want to resort to SQL at some point, DBIx::Class allows you
-to that too
 
 \begin{frame}[fragile]{Literal SQL}
 \begin{lstlisting}
@@ -308,28 +262,6 @@ my $talks = $schema->resultset('Talk')->search(
 \end{lstlisting}
 \end{frame}
 
-\subsection{Truth of ResultSet}
-\note{
-  If you hear the term ResultSet, you probably thing
-  we are talking about a number of results aka
-  table rows.
-}
-
-\begin{frame}{Truth of ResultSet}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.5\linewidth]{img/pdc_users.jpg}
-\end{figure}
-\end{frame}
-
-% https://pixabay.com/en/wrong-way-sign-road-caution-167535/
-
-\begin{frame}{Truth of ResultSet}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1\linewidth]{img/wrong-way.jpg}
-\end{figure}
-\end{frame}
 
 \begin{frame}[fragile]{Truth of ResultSet}
 % \centering
@@ -588,167 +520,6 @@ $talks = $talks->with_attendee_status( $user->id );
 \end{lstlisting}
 \end{frame}
 
-\section{Other Nice Stuff}
-
-\begin{frame}{Other Nice Stuff}
-\begin{itemize}
-\note{Sugar for DBIx::Class}
-\item Subclassing Schema
-\item Helpers
-\item Deployment Handler
-\end{itemize}
-\end{frame}
-
-\subsection{Subclassing Schemas}
-
-\begin{frame}[fragile]{Use cases for subclassing}
-\begin{itemize}
-\item Generic schema e.g. \verb|Interchange6::Schema|
-\item Applications with similar databases
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Subclassing}
-\begin{itemize}
-\item Add new tables
-\item Add new columns to existing tables
-\item Add new relations
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Subclass Example}
-\begin{lstlisting}
-package PerlDance::Schema;
-our $VERSION = 16;
-
-use Interchange6::Schema::Result::User;
-package Interchange6::Schema::Result::User;
-
-__PACKAGE__->add_columns(
-    bio => { data_type => "varchar", size => 2048, 
-             default_value => '' },
-    media_id =>
-      { data_type => "integer", is_nullable => 1 },
-    pause_id => { data_type => "varchar", size => 128, 
-        default_value => '' },
-    t_shirt_size => { data_type => "varchar", size => 8, 
-      is_nullable => 1 },
-);
-\end{lstlisting}
-\end{frame}
-
-Inherit from \verb|Interchange6::Schema| and set result namespace to 
-\verb|Interchange6::Schema::Result| plus \verb|PerlDance::Schema::Result|.
-
-\begin{frame}[fragile]{Subclass Example}
-\begin{lstlisting}
-package PerlDance::Schema;
-
-use base 'Interchange6::Schema';
-
-Interchange6::Schema->load_namespaces(
-    default_resultset_class => 'ResultSet',
-    result_namespace        =>
-        [ 'Result', '+PerlDance::Schema::Result' ],
-    resultset_namespace     =>
-        [ 'ResultSet', '+PerlDance::Schema::ResultSet' ],
-);
-\end{lstlisting}
-\end{frame}
-
-
-
-\section{DBIx::Class Helpers}
-
-\begin{frame}{DBIx::Class Helpers}
-Simplify the common case stuff for DBIx::Class.
-\end{frame}
-
-\begin{frame}{DBIx::Class Helpers}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.4\linewidth]{img/frew.png}
-\caption{Arthur Axel "fREW" Schmidt}
-\end{figure}
-\end{frame}
-
-% list of helpers we show
-
-\begin{frame}{DBIx::Class Helpers}
-\begin{itemize}
-\item Helper::Schema::QuoteNames
-\item Helper::ResultSet::Me
-\item Helper::Row::OnColumnChange
-\item Helper::Schema::DateTime
-\end{itemize}
-\end{frame}
-
-\subsection{Helper::QuoteNames}
-
-\begin{frame}[fragile]{Helper::QuoteNames}
-\begin{itemize}
-\item Escaping reserved words
-\item Differ between engines and version
-\item e.g. MySQL
-\begin{itemize}
-\item \verb|select user from userdb| => crash
-\item \verb|select `user` from `userdb`| => works
-\end{itemize}
-\item \verb|quote_names| in connection info
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Helper::QuoteNames}
-\begin{lstlisting}
-
-package Interchange6::Schema;
-
-use base 'DBIx::Class::Schema';
-
-__PACKAGE__->load_components( 
-    'Helper::Schema::QuoteNames' 
-);
-
-...
-
-\end{lstlisting}
-\end{frame}
-
-\subsection{Helper::ResultSet::Me}
-
-Predefined queries present a problem: what is the table alias I need to use?
-We can do:
-
-\begin{frame}[fragile]{Helper::Resultset::Me}
-\begin{lstlisting}
-sub in_germany {
-    my $self = shift;
-    my $current_source_alias =
-        $self->current_source_alias;
-    return $self->search(
-        { "$current_source_alias.country_iso_code"
-          => 'DE' }
-    );
-}
-\end{lstlisting}
-\end{frame}
-
-but using this helper makes things much simpler:
-
-\begin{frame}[fragile]{Helper::Resultset::Me}
-\begin{lstlisting}
-sub in_germany {
-    my $self = shift;
-
-
-    return $self->search(
-        { $self->me('country_iso_code') => 'DE' }
-    );
-
-}
-\end{lstlisting}
-\end{frame}
-
 \subsection{HashRefInflator}
 
 Using the HashRefInflator makes sense when you need to quickly retrieve
@@ -777,24 +548,10 @@ my $rs = $schema->resultset('Country')->hri;
 
 \begin{frame}{Conclusion}
 \begin{itemize}
-\item Starting with DBIx::Class
 \item Resources
 \item Slides
 \item Questions
 \end{itemize}
-\end{frame}
-
-\subsection{Starting with DBIx::Class}
-
-You can use \verb|dbicdump| to create a ``boilerplate'' schema from the
-existing database.
-
-\begin{frame}[fragile]{dbicdump}
-\begin{lstlisting}
-dbicdump -o dump_directory=/home/dance/TravelDance/lib 
-         TravelDance::Schema 
-         dbi:Pg:dbname=perldance
-\end{lstlisting}
 \end{frame}
 
 \subsection{Resources}
@@ -817,7 +574,7 @@ by fRew
 
 \begin{frame}{Slides}
 Slides:
-\url{http://www.linuxia.de/talks/amsx2015/dbic-pr-en-beamer.pdf}
+\url{https://www.linuxia.de/talks/alpine2016/dbic-pr-en-beamer.pdf}
 \end{frame}
 
 \subsection{Finish}
