@@ -460,6 +460,53 @@ sub with_variant_count {
 \end{lstlisting}
 \end{frame}
 
+\subsection{Korrelierte Subqueries}
+
+\begin{frame}[fragile]{Korrelierte Subqueries - Interchange6::Schema}
+  \begin{lstlisting} 
+sub with_status {
+  my $self = shift;
+
+  return $self->search(
+    undef,
+      {
+        '+columns' => {
+        status => $self->correlate('statuses')->rows(1)
+          ->order_by('!created,!order_status_id')->get_column('status')
+          ->as_query,
+        },
+      }
+  );
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Korrelierte Subqueries - Perl Dancer Conference}
+  \begin{lstlisting}
+get '/admin/tickets' => require_role admin => sub {
+  my $tokens = {};
+
+  $tokens->{title} = "Tickets Sold";
+
+  my $orders = rset('Order');
+
+  $tokens->{orders} = $orders->search(
+    {
+       payment_status => 'paid',
+    },
+    {
+       prefetch => 'user',
+       order_by => 'orders_id',
+    }
+  )->with_status;
+
+  template 'admin/tickets', $tokens;
+};
+\end{lstlisting}
+\end{frame}
+
+1;
+
 \subsection{Spezifische JOIN-Bedingungen}
 
 \begin{frame}[fragile]{Spezifische JOIN-Bedingungen}
@@ -689,13 +736,79 @@ Es gibt eine Vielzahl von Komponenten für DBIx::Class.
   \end{itemize}
 \end{frame}
 
-\subsection{Bäume}
+\subsection{ResultSet-Komponenten}
+
+Um eine Komponente in alle ResultSet-Klassen des Schemas
+Interchange6::Schema einzubinden, sind folgende
+Schritte durchzuführen:
+
+\begin{frame}[fragile]{ResultSet-Komponenten}
+\begin{itemize}
+\item Elternklasse anlegen \\
+  \verb|Interchange6::Schema::ResultSet|
+\item Als voreingestellte ResultSet-Klasse eintragen in \\
+  \verb|Interchange6::Schema|
+\item Elternklasse in vorhandene ResultSet-Klassen eintragen \\
+ \verb|Interchange6::Schema::ResultSet::User|
+\end{itemize}
+\end{frame}
+
+\subsubsection{Elternklasse anlegen}
+
+\begin{frame}[fragile]{Elternklasse anlegen}
+\begin{lstlisting}
+package Interchange6::Schema::ResultSet;
+
+use base 'DBIx::Class::ResultSet';
+
+__PACKAGE__->load_components(
+    'Helper::ResultSet::CorrelateRelationship',
+    'Helper::ResultSet::Me',
+    'Helper::ResultSet::Random',
+    'Helper::ResultSet::SetOperations',
+    'Helper::ResultSet::Shortcut'
+);
+
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Als Voreinstellung konfigurieren}
+
+\begin{frame}[fragile]{Als Voreinstellung konfigurieren}
+\begin{lstlisting}
+package Interchange6::Schema;
+
+__PACKAGE__->load_namespaces(
+    default_resultset_class => 'ResultSet'
+);
+
+\end{lstlisting}
+\end{frame}
+
+\subsubsection{Vererbung von der Elternklasse}
+\begin{frame}[fragile]{Vererbung von der Elternklasse}
+
+Bereits vorhandene ResultSet-Klassen müssen die eigene
+ResultSet-Elternklasse übernehmen:
+
+\begin{lstlisting}
+package Interchange6::Schema::ResultSet::User;
+
+use base 'Interchange6::Schema::ResultSet';
+
+__PACKAGE__->load_components(
+    qw(Helper::ResultSet::CorrelateRelationship)
+);
+\end{lstlisting}
+\end{frame}
+
+\subsection{Komponenten für Resultklassen}
+
+\subsubsection{Tree::Adjacency Komponente}
 
 Eine Baumstruktur, wie z.B. für die Navigation einer
 Webseite, kann man mit Hilfe eines \verb|parent_id|-Feldes
 darstellen.
-
-\subsection{Tree::Adjacency Komponente}
 
 \begin{frame}[fragile]{Tree::Adjacency Komponente}
 \begin{lstlisting}
