@@ -736,6 +736,27 @@ Es gibt eine Vielzahl von Komponenten für DBIx::Class.
   \end{itemize}
 \end{frame}
 
+\subsection{Schema-Komponenten}
+
+Schema-Komponenten, wie zum Beispiel einige Helper, können in die
+Hauptschemaklassen mit der Methode load\_components eingebunden werden:
+
+\begin{frame}[fragile]{Schema-Komponenten}
+  \begin{lstlisting}
+package Interchange6::Schema;
+
+use strict;
+use warnings;
+
+use base 'DBIx::Class::Schema::Config';
+
+__PACKAGE__->load_components(
+    'Helper::Schema::QuoteNames'
+    'Helper::Schema::DateTime',
+);
+\end{lstlisting}
+\end{frame}
+
 \subsection{ResultSet-Komponenten}
 
 Um eine Komponente in alle ResultSet-Klassen des Schemas
