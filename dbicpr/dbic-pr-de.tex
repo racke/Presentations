@@ -377,8 +377,7 @@ ResultSet actually doesn't search.
 \begin{itemize}
 \item Verkettung
 \item Vordefinierte Suche
-\item Spezifische JOIN-Bedingungen
-\item ...
+\item Korrelierte Subqueries
 \end{itemize}
 \end{frame}
 
@@ -517,9 +516,14 @@ get '/admin/tickets' => require_role admin => sub {
 
 1;
 
+\section{Relationen}
+
 \subsection{Spezifische JOIN-Bedingungen}
 
 \begin{frame}[fragile]{Spezifische JOIN-Bedingungen}
+
+Relation für \textbf{alle} Adressen eines Benutzers:
+
 \begin{lstlisting}
 
 __PACKAGE__->has_many(
@@ -531,6 +535,8 @@ __PACKAGE__->has_many(
 
 \end{lstlisting}
 \end{frame}
+
+Relation für alle \textbf{Versandanschriften} eines Benutzers:
 
 \begin{frame}[fragile]{Spezifische JOIN-Bedingungen}
 \begin{lstlisting}
