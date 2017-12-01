@@ -573,14 +573,126 @@ diversen Erweiterungen. Hier fehlt leider ein Überblick in der Dokumentation.
 
 \begin{frame}{Ausbaufähig}
 \begin{itemize}
-\note{Zucker für DBIx::Class}
-\item Candy
-\item Schema "vererben"
-\item Zusatzattribute
+  \note{Zucker für DBIx::Class}
 \item Komponenten
-\item Helpers
+  \begin{itemize}
+  \item Helpers
+  \end{itemize}
+\item Zusatzattribute
+\item Schema "vererben"
+\item Candy
 \end{itemize}
 \end{frame}
+
+\subsection{Zusatzattribute für das Schema}
+
+Für Funktionen der Businesslogik benötigen wir z.B.
+Informationen über die Konfiguration der Webanwendung
+bzw. den angemeldeten Benutzer.
+
+\begin{frame}{Problemstellung}
+\begin{itemize}
+\item Konfiguration
+\item angemeldeter Benutzer
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Schemainstanz erzeugen}
+\begin{lstlisting}
+use Interchange6::Schema;
+
+my $schema = Interchange6::Schema->connect(
+  'dbi:Pg:dbname=perldance', 'racke', 'nevairbe', 
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Zusatzattribute}
+\begin{lstlisting}
+__PACKAGE__->mk_group_ro_accessors(
+    inherited => (
+        [ 'current_user' => '_ic6_current_user' ]
+    )
+);
+
+__PACKAGE__->mk_group_wo_accessors(
+    inherited => (
+        [ 'set_current_user' => '_ic6_current_user' ]
+    )
+);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Zusatzattribute}
+\begin{lstlisting}
+package Dancer::Plugin::Interchange6;
+
+hook before => sub {
+    shop_schema->set_current_user(
+        logged_in_user || undef
+    );
+};
+
+\end{lstlisting}
+\end{frame}
+
+\subsection{Schemas vererben}
+
+\begin{frame}[fragile]{Schemas vererben: Anwendungsbeispiele}
+\begin{itemize}
+\item Generisches Schema, z.B. \verb|Interchange6::Schema|
+\item Anwendung mit ähnlichen Datenbanken
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Schemas vererben}
+\begin{itemize}
+\item Tabellen hinzufügen
+\item Spalten hinzufügen
+\item Beziehungen hinzufügen
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Beispiel Vererbung}
+\begin{lstlisting}
+package PerlDance::Schema;
+our $VERSION = 16;
+
+use Interchange6::Schema::Result::User;
+package Interchange6::Schema::Result::User;
+
+__PACKAGE__->add_columns(
+    bio => { data_type => "varchar", size => 2048, 
+             default_value => '' },
+    media_id =>
+      { data_type => "integer", is_nullable => 1 },
+    pause_id => { data_type => "varchar", size => 128, 
+        default_value => '' },
+    t_shirt_size => { data_type => "varchar", size => 8, 
+      is_nullable => 1 },
+);
+\end{lstlisting}
+\end{frame}
+
+Inherit from \verb|Interchange6::Schema| and set result namespace to 
+\verb|Interchange6::Schema::Result| plus \verb|PerlDance::Schema::Result|.
+
+\begin{frame}[fragile]{Beispiel Vererbung}
+\begin{lstlisting}
+package PerlDance::Schema;
+
+use base 'Interchange6::Schema';
+
+Interchange6::Schema->load_namespaces(
+    default_resultset_class => 'ResultSet',
+    result_namespace        =>
+        [ 'Result', '+PerlDance::Schema::Result' ],
+    resultset_namespace     =>
+        [ 'ResultSet', '+PerlDance::Schema::ResultSet' ],
+);
+\end{lstlisting}
+\end{frame}
+
 
 \subsection{Candy - Zucker für DBIx::Class}
 
@@ -650,115 +762,6 @@ package TravelDance::Schema::Result::User;
 
 -__PACKAGE__->table('users');
 +table 'users';
-
-\end{lstlisting}
-\end{frame}
-
-\subsection{Schemas vererben}
-
-\begin{frame}[fragile]{Schemas vererben: Anwendungsbeispiele}
-\begin{itemize}
-\item Generisches Schema, z.B. \verb|Interchange6::Schema|
-\item Anwendung mit ähnlichen Datenbanken
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Schemas vererben}
-\begin{itemize}
-\item Tabellen hinzufügen
-\item Spalten hinzufügen
-\item Beziehungen hinzufügen
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Beispiel Vererbung}
-\begin{lstlisting}
-package PerlDance::Schema;
-our $VERSION = 16;
-
-use Interchange6::Schema::Result::User;
-package Interchange6::Schema::Result::User;
-
-__PACKAGE__->add_columns(
-    bio => { data_type => "varchar", size => 2048, 
-             default_value => '' },
-    media_id =>
-      { data_type => "integer", is_nullable => 1 },
-    pause_id => { data_type => "varchar", size => 128, 
-        default_value => '' },
-    t_shirt_size => { data_type => "varchar", size => 8, 
-      is_nullable => 1 },
-);
-\end{lstlisting}
-\end{frame}
-
-Inherit from \verb|Interchange6::Schema| and set result namespace to 
-\verb|Interchange6::Schema::Result| plus \verb|PerlDance::Schema::Result|.
-
-\begin{frame}[fragile]{Beispiel Vererbung}
-\begin{lstlisting}
-package PerlDance::Schema;
-
-use base 'Interchange6::Schema';
-
-Interchange6::Schema->load_namespaces(
-    default_resultset_class => 'ResultSet',
-    result_namespace        =>
-        [ 'Result', '+PerlDance::Schema::Result' ],
-    resultset_namespace     =>
-        [ 'ResultSet', '+PerlDance::Schema::ResultSet' ],
-);
-\end{lstlisting}
-\end{frame}
-
-\subsection{Zusatzattribute für das Schema}
-
-Für Funktionen der Businesslogik benötigen wir z.B.
-Informationen über die Konfiguration der Webanwendung
-bzw. den angemeldeten Benutzer.
-
-\begin{frame}{Problemstellung}
-\begin{itemize}
-\item Konfiguration
-\item angemeldeter Benutzer
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Schemainstanz erzeugen}
-\begin{lstlisting}
-use Interchange6::Schema;
-
-my $schema = Interchange6::Schema->connect(
-  'dbi:Pg:dbname=perldance', 'racke', 'nevairbe', 
-);
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Zusatzattribute}
-\begin{lstlisting}
-__PACKAGE__->mk_group_ro_accessors(
-    inherited => (
-        [ 'current_user' => '_ic6_current_user' ]
-    )
-);
-
-__PACKAGE__->mk_group_wo_accessors(
-    inherited => (
-        [ 'set_current_user' => '_ic6_current_user' ]
-    )
-);
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Zusatzattribute}
-\begin{lstlisting}
-package Dancer::Plugin::Interchange6;
-
-hook before => sub {
-    shop_schema->set_current_user(
-        logged_in_user || undef
-    );
-};
 
 \end{lstlisting}
 \end{frame}
