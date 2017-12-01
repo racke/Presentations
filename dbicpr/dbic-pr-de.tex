@@ -631,6 +631,29 @@ column name => {
 \end{lstlisting}
 \end{frame}
 
+\subsubsection{Umstellung auf Candy}
+
+\begin{frame}[fragile]{Umstellung auf Candy}
+  \begin{itemize}
+  \item Umstellung des ganzen Schemas
+  \item Neue Resultklassen
+  \item Neue Spalten, Relationen, ...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Umstellung auf Candy}
+  \begin{lstlisting}
+package TravelDance::Schema::Result::User;
+
+- use base 'DBIx::Class::Core';
++ use TravelDance::Schema::Candy;
+
+-__PACKAGE__->table('users');
++table 'users';
+
+\end{lstlisting}
+\end{frame}
+
 \subsection{Schemas vererben}
 
 \begin{frame}[fragile]{Schemas vererben: Anwendungsbeispiele}
