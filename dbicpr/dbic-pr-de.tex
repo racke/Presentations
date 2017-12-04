@@ -619,7 +619,10 @@ __PACKAGE__->has_many(
 \section{Ausbaufähig}
 
 Ein weiteres wichtiges Feature von DBIx::Class ist die Möglichkeit von
-diversen Erweiterungen. Hier fehlt leider ein Überblick in der Dokumentation.
+diversen Erweiterungen. Hier fehlt leider ein Überblick in der
+Dokumentation.
+
+Komponenten behandeln wir in den folgenden Kapiteln.
 
 \begin{frame}{Ausbaufähig}
 \begin{itemize}
@@ -640,12 +643,15 @@ Für Funktionen der Businesslogik benötigen wir z.B.
 Informationen über die Konfiguration der Webanwendung
 bzw. den angemeldeten Benutzer.
 
-\begin{frame}{Problemstellung}
+\begin{frame}{Beispiel für Zusatzattribute}
 \begin{itemize}
 \item Konfiguration
 \item angemeldeter Benutzer
 \end{itemize}
 \end{frame}
+
+Beim Erzeugen der Schemainstanz können keine zusätzlichen Parameter
+übergeben werden.
 
 \begin{frame}[fragile]{Schemainstanz erzeugen}
 \begin{lstlisting}
@@ -671,17 +677,107 @@ __PACKAGE__->mk_group_wo_accessors(
     )
 );
 \end{lstlisting}
+
+Class::C3
 \end{frame}
 
-\begin{frame}[fragile]{Zusatzattribute}
+\begin{frame}[fragile]{Zusatzattribut setzen}
 \begin{lstlisting}
-package Dancer::Plugin::Interchange6;
+sub BUILD {
+  my $plugin = shift;
+   weaken ( my $weak_plugin = $plugin );
+  $plugin->app->add_hook(
+    Dancer2::Core::Hook->new(
+      name => 'before',
+      code => sub {
+        my $user = $weak_plugin->logged_in_user || undef;
+        if ( $user ) {
+          $user = $weak_plugin->shop_user->find(
+            {
+              username => $user->{username}
+            }
+           );
+        }
+        $weak_plugin->shop_schema->set_current_user($user);
+      },
+    )
+  );
+}
+\end{lstlisting}
+\end{frame}
 
-hook before => sub {
-    shop_schema->set_current_user(
-        logged_in_user || undef
-    );
+% https://pixabay.com/en/treasure-chest-fire-flame-money-619937/
+
+\subsubsection{Beispiel: Preisberechnung}
+
+In einem Onlineshop ist die Preisberechnung immer ein heißes Thema.
+
+\begin{frame}{Beispiel: Preisberechnung}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{img/treasure-chest-fire.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Beispiel: Preisberechnung}
+  \begin{itemize}
+  \item Preislisten
+  \item Aktionen
+  \item Rabatte
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tabelle price\_modifiers}
+\begin{lstlisting}
+primary_column price_modifiers_id => {
+    data_type         => "integer",
+    is_auto_increment => 1,
 };
+column sku => { data_type => "varchar", size => 64 };
+column quantity =>  { data_type => "integer", default_value => 0 };
+column roles_id =>  { data_type => "integer", is_nullable => 1 };
+column price => {
+    data_type     => "numeric",
+    size          => [ 21, 3 ],
+};
+column start_date => {
+    data_type     => "date",
+    is_nullable   => 1,
+};
+column end_date => {
+    data_type     => "date",
+    is_nullable   => 1,
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Preisberechnung}
+Suchbedingung für Einträge in \verb|price_modifiers|:
+\begin{lstlisting}
+    my $search_cond = {
+        'start_date' => [ undef, { '<=', $today } ],
+        'end_date'   => [ undef, { '>=', $today } ],
+        'quantity'   => { '<=' => $args->{quantity} },
+        'roles_id'   => undef,
+    };
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Preisberechnung}
+Bedingung für Rollen des Benutzers einfügen:
+
+\begin{lstlisting}
+if ( my $user = $schema->current_user ) {
+    $search_cond->{roles_id} = [
+        undef,
+        {
+            -in => $schema->resultset('UserRole')
+                ->search( { users_id => $user->id } )
+                ->get_column('roles_id')->as_query
+            }
+        ];
+    }
 
 \end{lstlisting}
 \end{frame}
@@ -691,6 +787,10 @@ hook before => sub {
 \begin{frame}[fragile]{Schemas vererben: Anwendungsbeispiele}
 \begin{itemize}
 \item Generisches Schema, z.B. \verb|Interchange6::Schema|
+  \begin{itemize}
+  \item \verb|PerlDance::Schema|
+  \item \verb|DanceShop::Schema|
+  \end{itemize}
 \item Anwendung mit ähnlichen Datenbanken
 \end{itemize}
 \end{frame}
