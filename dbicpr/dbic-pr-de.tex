@@ -35,6 +35,178 @@
   the procurement solution eShop.
 }
 
+\begin{frame}{}
+% https://pixabay.com/en/stress-man-hand-flame-burn-fire-864141/
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{img/stress.jpg}
+\end{figure}
+\end{frame}
+
+\section{Einführung}
+
+\note{
+  Bevor es jedoch ans Eingemachte geht, starten wir erstmal mit einer kurzen Einführung in
+  die Architektur von DBIx::Class und welche Vorteile DBIx::Class bietet.
+}
+
+\begin{frame}{Einführung}
+  \begin{itemize}
+  \item Architektur
+  \item Vorteile
+  \end{itemize}
+\end{frame}
+
+\subsection{DBIx::Class Architektur}
+
+\begin{frame}{DBIx::Class Architektur}
+  \begin{itemize}
+  \item Datenbank \textit{perldance}
+  \item Schemaobjekt \textit{PerlDance::Schema}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{DBIx::Class Architektur}
+  \begin{itemize}
+  \item Tabellen
+    \begin{itemize}
+    \item \textit{countries}
+    \item \textit{users}
+    \end{itemize}
+  \item \textbf{ResultSet-Klassen}
+    \begin{itemize}
+      \item \textit{PerlDance::Schema::ResultSet::Country}
+      \item \textit{PerlDance::Schema::ResultSet::User}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{DBIx::Class Architektur}
+  \begin{itemize}
+  \item Datensätze
+    \verb|{"country_iso_code": "de", "name" : "Germany"} |
+\verb|{"username": "racke", "email" : "racke@racke.pm"} |
+
+  \item \textbf{Result-Klassen}
+    \begin{itemize}
+      \item \textit{PerlDance::Schema::Result::Country}
+      \item \textit{PerlDance::Schema::Result::User}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+Die Interaktion mit einer SQL-Datenbank findet mittels SQL-Befehle statt.
+
+\begin{frame}{DBIx::Class Architektur}
+  \begin{itemize}
+  \item SQL-Befehle
+    \begin{itemize}
+    \item INSERT
+    \item UPDATE
+    \item DELETE
+    \item SELECT
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{DBIx::Class Architektur}
+  INSERT
+  \begin{lstlisting}
+$country = $schema->resultset('Country')->create( { ... } );
+  \end{lstlisting}
+  UPDATE
+  \begin{lstlisting}
+$country->update( { ... } );
+  \end{lstlisting}
+  DELETE
+  \begin{lstlisting}
+$country->delete;
+  \end{lstlisting}
+  SELECT
+   \begin{lstlisting}
+$country = $schema->resultset('Country')->search( { ... } );
+  \end{lstlisting}
+\end{frame}
+
+% https://pixabay.com/en/steam-locomotive-blowing-axis-pivot-1899603/
+
+Wir werden später noch feststellen, da die ResultSet-Klassen der Dreh- und Angelpunkt in einem DBIx::Class-Schema sind.
+
+\begin{frame}{ResultSet-Klassen}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1\linewidth]{img/pivot.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{DBIx::Class Vorteile}
+\begin{itemize}
+\item OO anstatt von SQL
+\item Abstrahierung von SQL-Implementierungen
+\item Businesslogik
+\item Performance
+\item ResultSet Features
+\item Ökosystem
+\begin{itemize}
+\item IRC / Mailing list
+\item Komponenten
+\item Helpers
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Businesslogik}
+\begin{frame}{Businesslogik}
+% move business logic into schema
+% https://pixabay.com/en/gear-gears-euro-forex-dollar-384743/
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.75\linewidth]{img/business-logic.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Vorteile Businesslogik}
+\begin{itemize}
+\item Mehrere Verbraucher
+\begin{itemize}
+\item Webanwendungen
+\item Cronjobs, Skripte
+\item Testumgebungen
+\end{itemize}
+\item Implementation verbergen
+\begin{itemize}
+\item SQL-Dialekte
+\item Anwendungsansicht
+\end{itemize}
+\item Änderungen / DRY
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Beispiele Businesslogik}
+\begin{itemize}
+\item Preisberechnungen
+\begin{itemize}
+\item Angebote
+\item Rabatt
+\end{itemize}
+\item Synchronisierung ERP
+\end{itemize}
+\end{frame}
+
+\subsection{Performance}
+
+All the experience, tests and different areas in which
+DBIx::Class is applied makes it perform better than
+handwritten SQL is most cases.
+
+\begin{frame}{Performance}
+\begin{itemize}
+\item Erfahrung
+\item Testsuiten
+\item Use cases
+\end{itemize}
+\end{frame}
+
 \section{Projekte}
 
 \subsection{Interchange6::Schema}
@@ -154,132 +326,8 @@ for the training:
 \end{figure}
 \end{frame}
 
-\note{Baltimore Outage April}
 
-\begin{frame}[fragile]{Konferenz-Website}
-\begin{itemize}
-\item ACT 2014
-\begin{itemize}
-\item Legacy code
-\item Keine Kontrolle über den Server
-\end{itemize}
-\item www.perl.dance 2015
-\begin{itemize}
-\item Dancer / DBIx::Class
-\item Features aus ACT
-\item neue Features
-\item \url{https://github.com/interchange/Perl-Dancer-Conference}
-\end{itemize}
-\end{itemize}
-\end{frame}
 
-\section{DBIx::Class}
-
-\begin{frame}{DBIx::Class Features}
-\begin{itemize}
-\item OO anstatt von SQL
-\item Abstrahierung von SQL-Implementierungen
-\item Businesslogik
-\item Performance
-\item ``ResultSet'' Features
-\item Ökosystem
-\begin{itemize}
-\item IRC / Mailing list
-\item Komponenten
-\item Helpers
-\end{itemize}
-\end{itemize}
-\end{frame}
-
-\subsection{Businesslogik}
-\begin{frame}{Businesslogik}
-% move business logic into schema
-% https://pixabay.com/en/gear-gears-euro-forex-dollar-384743/
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.75\linewidth]{img/business-logic.jpg}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Vorteile Businesslogik}
-\begin{itemize}
-\item Mehrere Verbraucher
-\begin{itemize}
-\item Webanwendungen
-\item Cronjobs, Skripte
-\item Testumgebungen
-\end{itemize}
-\item Implementation verbergen
-\begin{itemize}
-\item SQL-Dialekte
-\item Anwendungsansicht
-\end{itemize}
-\item Änderungen / DRY
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Beispiele Businesslogik}
-\begin{itemize}
-\item Preisberechnungen
-\begin{itemize}
-\item Angebote
-\item Rabatt
-\end{itemize}
-\item Synchronisierung ERP
-\end{itemize}
-\end{frame}
-
-\subsection{Performance}
-
-All the experience, tests and different areas in which 
-DBIx::Class is applied makes it perform better than
-handwritten SQL is most cases.
-
-\begin{frame}{Performance}
-\begin{itemize}
-\item Erfahrung
-\item Testsuiten
-\item Use cases
-\end{itemize}
-\end{frame}
- 
-In case you feel that isn't correct, please call our hotline:
-
-\begin{frame}{Hotline}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1\linewidth]{img/perldance-2014-modern-tech.jpg}
-\end{figure}
-\end{frame}
-
-But if you want to resort to SQL at some point, DBIx::Class allows you
-to that too
-
-\begin{frame}[fragile]{Literal SQL}
-\begin{lstlisting}
-$schema->resultset('PlaceVisited')->search(
-{
-  users_id => {
-    -in => \[
-       'SELECT users_id FROM users WHERE users_id > ?',
-       2
-    ]
-  }
-});
-\end{lstlisting}
-\end{frame}
-
-But please don't complain if that leads to headache
-and wasted time better spent on proper DBIx::Class
-code.
-
-\begin{frame}{SQL Kopfschmerzen}
-% https://pixabay.com/en/stress-man-hand-flame-burn-fire-864141/
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1\linewidth]{img/stress.jpg}
-\end{figure}
-\end{frame}
 
 
 \subsection{DBIx::Class Mengenlehre}
