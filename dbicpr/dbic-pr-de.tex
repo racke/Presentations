@@ -633,6 +633,27 @@ get '/admin/tickets' => require_role admin => sub {
 
 \section{Relationen}
 
+\begin{frame}{Relationen}
+\begin{itemize}
+\item Relationship Traversal
+\item Spezifische JOIN-Bedingungen
+\end{itemize}
+\end{frame}
+
+\subsection{Relationship Traversal}
+
+\begin{frame}[fragile]{Relationship Traversal}
+Liste der besuchten Vorträge eines Teilnehmers:
+
+\begin{lstlisting}
+$tokens->{attending} =
+  $user->related_resultset('attendee_talks')
+    ->search_related( 'talk',
+      { 'talk.conferences_id' => setting('conferences_id') } )
+    ->order_by('talk.title');
+\end{lstlisting}
+\end{frame}
+
 \subsection{Spezifische JOIN-Bedingungen}
 
 \begin{frame}[fragile]{Spezifische JOIN-Bedingungen}
