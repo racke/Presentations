@@ -365,8 +365,8 @@ which we will examine through an example soon.}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Simple SQL query}
-List of talks on last day of Perl Dancer Conference:
+\begin{frame}[fragile]{Einfache SQL-Abfrage}
+Liste der Vorträge:
 \begin{lstlisting}
 SELECT talks_id, author_id, conferences_id, duration,
 title, tags, abstract, url, comments, accepted, confirmed, 
@@ -380,8 +380,8 @@ AND start_time <= '2015-10-23 00:00:00'
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Simple SQL query}
-With DBIx::Class:
+\begin{frame}[fragile]{Einfache SQL-Abfrage}
+Mit DBIx::Class:
 \begin{lstlisting}
 my $talks = $schema->resultset('Talk')->search(
     {
