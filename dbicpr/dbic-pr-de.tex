@@ -550,13 +550,36 @@ sub with_variant_count {
  return $self->search(
   undef,
   {
-   '+columns' => {
-     variant_count =>
-      $self->correlate('variants')->count_rs->as_query
+    '+columns' => {
+      variant_count =>
+        $self->correlate('variants')->count_rs->as_query
    }
   }
  );
 }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Vordefinierte Suche: Produktvarianten}
+\begin{lstlisting}
+has_many
+  variants => "Interchange6::Schema::Result::Product",
+  { "foreign.canonical_sku" => "self.sku" },
+  { cascade_copy            => 0, cascade_delete => 0 };
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Vordefinierte Suche: Produktvarianten}
+\begin{lstlisting}
+SELECT "me"."sku", "me"."manufacturer_sku", "me"."name",
+"me"."short_description", "me"."description", "me"."price",
+"me"."uri", "me"."weight", "me"."priority", "me"."gtin",
+"me"."canonical_sku", "me"."active",
+"me"."inventory_exempt", "me"."combine", "me"."created",
+"me"."last_modified",
+(SELECT COUNT( * ) FROM "products" "variants_alias"
+WHERE ( "variants_alias"."canonical_sku" = "me"."sku" ))
+FROM "products" "me"
 \end{lstlisting}
 \end{frame}
 
@@ -569,10 +592,11 @@ sub with_status {
 
   return $self->search(
     undef,
-      {
-        '+columns' => {
+    {
+      '+columns' => {
         status => $self->correlate('statuses')->rows(1)
-          ->order_by('!created,!order_status_id')->get_column('status')
+          ->order_by('!created,!order_status_id')
+          ->get_column('status')
           ->as_query,
         },
       }
