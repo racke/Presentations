@@ -97,6 +97,37 @@ sendmail($email);
   \end{lstlisting}
 \end{frame}
 
+\subsection{Transports}
+
+\begin{frame}{Transports}
+  \begin{itemize}
+    \item Sendmail
+    \item SMTP
+    \item Maildir
+    \item Test
+    \item Redirect
+  \end{itemize}
+\end{frame}
+
+
+\begin{lstlisting}
+use Email::Sender::Transport::Maildir qw();
+\end{lstlisting}
+
+\begin{frame}[fragile]{Transport to Maildir}
+  \begin{lstlisting}
+
+my $transport = Email::Sender::Transport::Maildir->new;
+
+sendmail( $email ,
+{
+  transport => $transport,
+}
+);
+
+\end{lstlisting}
+\end{frame}
+
 \section{IMAP}
 
 \subsection{IMAP Modules}
