@@ -1,6 +1,5 @@
 \documentclass{scrartcl}
 % \documentclass{scrreprt}
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 % neutralize beamer
@@ -26,6 +25,15 @@
   backgroundcolor=\color{mygrey},%
   frame=trbl,%
   showstringspaces=false}
+
+% font with smilies
+\usepackage{fontspec}
+\newfontfamily\DejaSans{DejaVu Sans}
+
+% smilies
+\newcommand\goodsmile{{\color{green}\DejaSans ☺}}
+\newcommand\neutralsmile{{\color{blue}\DejaSans 😐}}
+\newcommand\sadsmile{{\color{red}\DejaSans ☹}}
 
 \title{Post mit Perl}
 \author{Stefan Hornburg (Racke)}
