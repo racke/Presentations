@@ -142,8 +142,6 @@ sendmail( $email ,
 %  \end{itemize}
 \end{frame}
 
-\subsection{IMAP Modules}
-
 \begin{frame}{IMAP Modules}
   \begin{itemize}
   \item Net::IMAP::Client
@@ -151,11 +149,27 @@ sendmail( $email ,
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Ordner auswählen}
+  Ordner auswählen:
+
+\begin{lstlisting}
+  $imap->select('Perl');
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Emails suchen}
+  Emails in ausgewählten Ordner suchen:
+
+\begin{lstlisting}
+  $ids = $imap->search( { subject => 'Perl' }, 'DATE' );
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Verarbeitung der Emails}
   Komplette Email herunterladen:
 
 \begin{lstlisting}
-$self->imap->get_rfc822_body($id);
+$imap->get_rfc822_body($id);
 \end{lstlisting}
 
 \end{frame}
