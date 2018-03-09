@@ -61,7 +61,7 @@ my $email = Email::Simple->create(
     header => [
         From    => '"Module Updates" <info@cpan.pm>',
         To      => '"Racke" <racke@racke.pm>',
-        Subject =>  'Änderungen in Module Foo::Bar',
+        Subject =>  'Änderungen im Modul Foo::Bar',
     ],
     body => "Baz.\n",
 );
@@ -88,7 +88,9 @@ my $email = Email::Simple->create(
     header => [
         From    => '"Module Updates" <info@cpan.pm>',
         To      => '"Racke" <racke@racke.pm>',
-        Subject => encode('MIME-Header', 'Änderungen in Module Foo::Bar'),
+        Subject => encode('MIME-Header', 
+                          'Änderungen im Modul Foo::Bar',
+                         ),
     ],
     body => "Baz.\n",
 );
