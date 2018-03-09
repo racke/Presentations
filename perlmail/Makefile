@@ -1,5 +1,6 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
 
+LATEX_BIN=xelatex
 PODFILE=
 TEXFILE=perlmail
 SLIDE_INPUTS=perlmail-de-beamer.tex
@@ -18,53 +19,53 @@ $(PODFILE).html: $(PODFILE).pod
 
 $(SLIDE_OUTPUTS): %-beamer.pdf: %.tex $(SLIDE_INPUTS)
 # initial run
-	pdflatex $(<:%.tex=%-beamer.tex)
+	$(LATEX_BIN) $(<:%.tex=%-beamer.tex)
 
 # run BibTeX if missing citations
 	@if(grep "Citation" $(<:%.tex=%-beamer).log > /dev/null);\
     then \
         bibtext $(<:%.tex=%-beamer); \
-		pdflatex $(<:%.tex=%-beamer); \
+		$(LATEX_BIN) $(<:%.tex=%-beamer); \
     fi
 
 # rerun if necessary
 	@if(grep "Rerun" $(<:%.tex=%-beamer).log > /dev/null);\
     then \
-		pdflatex $(<:%.tex=%-beamer); \
+		$(LATEX_BIN) $(<:%.tex=%-beamer); \
     fi
 
 $(HANDOUT_OUTPUTS): %-handout.pdf: %.tex $(HANDOUT_INPUTS)
 # initial run
-	pdflatex $(<:%.tex=%-handout.tex)
+	$(LATEX_BIN) $(<:%.tex=%-handout.tex)
 
 # run BibTeX if missing citations
 	@if(grep "Citation" $(<:%.tex=%-handout).log > /dev/null);\
     then \
         bibtext $(<:%.tex=%-handout); \
-		pdflatex $(<:%.tex=%-handout); \
+		$(LATEX_BIN) $(<:%.tex=%-handout); \
     fi
 
 # rerun if necessary
 	@if(grep "Rerun" $(<:%.tex=%-handout).log > /dev/null);\
     then \
-		pdflatex $(<:%.tex=%-handout); \
+		$(LATEX_BIN) $(<:%.tex=%-handout); \
     fi
 
 $(NOTES_OUTPUTS): %-notes.pdf: %.tex $(NOTES_INPUTS)
 # initial run
-	pdflatex $(<:%.tex=%-notes.tex)
+	$(LATEX_BIN) $(<:%.tex=%-notes.tex)
 
 # run BibTeX if missing citations
 	@if(grep "Citation" $(<:%.tex=%-notes).log > /dev/null);\
     then \
         bibtext $(<:%.tex=%-notes); \
-		pdflatex $(<:%.tex=%-notes); \
+		$(LATEX_BIN) $(<:%.tex=%-notes); \
     fi
 
 # rerun if necessary
 	@if(grep "Rerun" $(<:%.tex=%-notes).log > /dev/null);\
     then \
-		pdflatex $(<:%.tex=%-notes); \
+		$(LATEX_BIN) $(<:%.tex=%-notes); \
     fi
 
 # Remove unnecessary files
