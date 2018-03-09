@@ -36,6 +36,16 @@
 
 \begin{frame}[fragile]{Beispiel}
   \begin{lstlisting}
+my $email = Email::Simple->create(
+  header => [
+    To      => '"Xavier Q. Ample" <racke@linuxia.de>',
+    From    => '"Bob Fishman" <racke@icdev.de>',
+    Subject => "don't forget to *enjoy the sauce*",
+  ],
+  body => "This message is short, but at least it's cheap.\n",
+);
+
+sendmail($email);    
   \end{lstlisting}
 \end{frame}
 
