@@ -133,21 +133,30 @@ sendmail($email);
   \end{itemize}
 \end{frame}
 
+\subsubsection{Maildir-Transport}
+
+Beim Maildir-Transport wird das Verzeichnis Maildir im aktuellen Verzeichnis
+verwendet und angelegt soweit nicht vorhanden.
+
+Deshalb verwenden wir hier das Verzeichnis Maildir im Homeverzeichnis.
 
 \begin{lstlisting}
 use Email::Sender::Transport::Maildir qw();
+use File::HomeDir;
+use Path::Tiny;
 \end{lstlisting}
 
 \begin{frame}[fragile]{Transport to Maildir}
   \begin{lstlisting}
 
-my $transport = Email::Sender::Transport::Maildir->new;
+my $maildir = path(File::HomeDir->my_home)
+    ->child('Maildir');
 
-sendmail( $email ,
-{
-  transport => $transport,
-}
+my $transport = Email::Sender::Transport::Maildir->new(
+   dir => $maildir
 );
+
+sendmail( $email , { transport => $transport, } );
 
 \end{lstlisting}
 \end{frame}
