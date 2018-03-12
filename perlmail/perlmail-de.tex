@@ -13,6 +13,50 @@
 
 \section{Einführung}
 
+\subsection{Aufbau einer Email}
+
+\begin{frame}{Aufbau einer Email}
+  \begin{itemize}
+  \item Header
+  \item Body
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Aufbau einer Email}
+  \begin{itemize}
+  \item Attachments
+  \item HTML / Plaintext
+  \end{itemize}
+\end{frame}
+
+\subsubsection{MIME::Entity}
+
+Sowohl die gesamte Email als auch ihre Teile können als
+\verb|MIME::Entity|-Objekt abgebildet werden:
+
+\begin{frame}[fragile]{MIME::Entity}
+  \begin{lstlisting}
+
+$email = MIME::Entity->build(
+    From    => '"Module Updates" <info@cpan.pm>',
+    To      => '"Racke" <racke@racke.pm>',
+    Subject => 'Changes in Module Foo::Bar',
+    Data    => ["Added class Foo::Bar::Baz\n"],
+);
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{MIME::Entity Attachment}
+  \begin{lstlisting}
+
+$email->attach(
+    Path => 'img/sunset-3193002_1920.jpg'
+    Type => 'image/jpeg',
+);
+
+  \end{lstlisting}
+\end{frame}
+
 \section{Post verschicken}
 
 \begin{frame}{Post verschicken}
