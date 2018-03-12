@@ -96,6 +96,23 @@ sendmail($email);
   \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Body der Email kodieren}
+  \begin{lstlisting}
+my $email = Email::Simple->create(
+    header => [
+        From    => '"Module Updates" <info@cpan.pm>',
+        To      => '"Racke" <racke@racke.pm>',
+        Subject => encode('MIME-Header',
+                          'Änderungen im Modul Foo::Bar',
+                         ),
+    ],
+    body => encode('UTF-8', "Überflüssig"),
+);
+
+sendmail($email);
+  \end{lstlisting}
+\end{frame}
+
 \subsection{Transports}
 
 \begin{frame}{Transports}
