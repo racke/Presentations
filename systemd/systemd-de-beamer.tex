@@ -1,0 +1,62 @@
+\documentclass[ignorenonframetext]{beamer}
+% \usepackage{beamerthemesplit}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+\setbeamertemplate{caption}{\footnotesize\insertcaption\par}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{ulem}
+\usepackage{gensymb} % degree
+\lstset{language=Perl,basicstyle=\ttfamily\small,tabsize=3,inputencoding=utf8,extendedchars=false,showstringspaces=false,texcl=true}
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+
+% font with smilies
+\usepackage{fontspec}
+\newfontfamily\DejaSans{DejaVu Sans}
+
+% smilies
+\newcommand\goodsmile{{\color{green}\DejaSans ☺}}
+\newcommand\neutralsmile{{\color{blue}\DejaSans 😐}}
+\newcommand\sadsmile{{\color{red}\DejaSans ☹}}
+
+\defbeamertemplate{description item}{align left}{\insertdescriptionitem\hfill}
+\setbeamertemplate{description item}[align left]
+
+\makeatother
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.35\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.30\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+    \insertshortdate{}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatletter
+
+\setbeamertemplate{navigation symbols}{}
+\title{Systemd Crashcourse}
+\author{Stefan Hornburg}
+\date{}
+
+
+\input{systemd-de.tex}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

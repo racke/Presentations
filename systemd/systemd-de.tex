@@ -1,0 +1,266 @@
+\begin{document}
+\maketitle
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\cleardoublepage
+
+\tableofcontents
+
+\cleardoublepage
+
+\section{Einführung}
+
+Systemd ist ein umfangreiches Management-Tool für System und Services mit
+entsprechenden Vor- und Nachteilen. SysV Init ist nur für ein kleines Subset verantwortlich.
+
+\begin{frame}{Systemd}
+  \begin{itemize}
+    \item Geschwindigkeit
+    \item Parallele Ausführung
+    \item Bereitstellung von Sockets
+  \end{itemize}
+\end{frame}
+
+\section{Bestandteile}
+
+\begin{frame}{Bestandteile}
+  \begin{itemize}
+\item Services
+\item Logging
+\item Hostname/Locale/Keyboard/Time/...
+\item Temporäre Dateien
+\item Timers (Cron-Ersatz)
+\item ...
+\end{itemize}
+\end{frame}
+
+\subsection{Unit-Typen}
+
+\begin{frame}{Units}
+  \begin{itemize}
+  \item Services (.service)
+  \item Gruppen (.target)
+  \item Dateisysteme (.mount / .automount)
+  \item Überwachung (.path)
+  \item Sockets (.socket)
+  \item Netzwerke (.network)
+  \item Slice (.slice)
+  \item ...
+\end{itemize}
+\end{frame}
+
+\subsection{Targets}
+Targets sind einfach eine Gruppe von Unitfiles.
+
+Außerdem gibt es Targets, die beim Bootvorgang aufgerufen werden und grob
+die Funktion von Runlevels ausüben:
+
+\begin{frame}[fragile]{Targets}
+  \begin{itemize}
+  \item default.target
+  \item graphical.target
+  \item multiuser.target
+  \item rescue.target
+  \end{itemize}
+\end{frame}
+
+Dabei entspricht graphical grob dem Runlevel 1, multiuser dem Runlevel 3,
+rescue dem Runlevel 1 und default ist ein Alias für das aktive Target
+beim Booten.
+
+\section{Kommandozeile}
+\subsection{systemctl}
+
+\begin{frame}[fragile]{systemctl}
+ \begin{lstlisting} 
+    systemctl status nginx
+    systemctl stop nginx
+    systemctl start nginx
+    systemctl enable nginx
+    systemctl disable nginx
+  \end{lstlisting}
+\end{frame}
+
+\subsection{Fehlermeldungen}
+
+systemctl start gibt keine Fehlermeldungen aus. Im Default-Modus kann es sogar dazu kommen, daß gar keine Meldng kommt.
+
+\begin{frame}[fragile]{systemctl}
+\begin{lstlisting}
+root@dev-debian9:~# systemctl start nginx
+Job for nginx.service failed because the control process exited with error code.
+See "systemctl status nginx.service" and "journalctl -xe" for details.
+\end{lstlisting}
+\end{frame}
+
+\subsection{Übersicht}
+
+Mit SysV Init finden sich die Skripte für die Services in \verb|/etc/init.d|.
+
+\begin{frame}{Units}
+Units auflisten:
+
+    systemctl list-units
+
+Unitdateien:
+
+systemctl list-unit-files
+\end{frame}
+
+\subsection{Status Unitdateien}
+
+\begin{frame}[fragile]{Status Unitdateien}
+\begin{itemize}
+\item enabled
+\item disabled
+\item generated
+\item masked
+\item static
+\end{itemize}
+\end{frame}
+
+\subsection{Filter}
+
+\begin{frame}{Filter}
+Unit-Typ (Services):
+
+    systemctl list-units --type=service
+
+Inaktive und fehlende Services:
+
+    systemctl list-units --type=service --all  
+\end{frame}
+  
+\subsection{Targets}
+
+%\begin{frame}{Targets}
+%\href{https://wiki.archlinux.org/index.php/systemd#Change_default_target_to_boot_into}{Wiki}
+%\end{frame}
+
+
+Aktive Runlevel:
+
+     systemctl list-units --type=target
+
+Alle Runlevel:
+
+     systemctl list-units --type=target
+
+\subsection{Unitdateien}
+
+\begin{frame}[fragile]{Dateisystem}
+  \begin{itemize}
+\item[Standard] \verb|/lib/systemd/system|
+\item[Custom] (Lokal, Ansible) \verb|/etc/systemd/system|
+\end{itemize}
+\end{frame}
+
+\subsubsection{target.wants}
+
+\subsubsection{Vorhandene Unitdateien bearbeiten}
+
+% https://wiki.archlinux.org/index.php/systemd\#Editing_provided_units
+
+ systemctl daemon-reload
+
+ drop-in Unitdateien
+ \subsection{Struktur Unitdatei}
+
+\begin{frame}[fragile]{Struktur Unitdatei}
+ \begin{lstlisting}
+[Unit]
+Description=The PHP FastCGI Process Manager
+After=network.target
+
+[Service]
+Type=notify
+PIDFile=/var/run/php5-fpm.pid
+ExecStartPre=/usr/lib/php5/php5-fpm-checkconf
+ExecStart=/usr/sbin/php5-fpm --nodaemonize --fpm-config /etc/php5/fpm/php-fpm.conf
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+\end{lstlisting}
+\end{frame}
+
+\section{Protokollierung}
+
+journalctl ist für die Protokollierung zuständig. Die Daten werden in einem Binärformat gespeichert.
+
+\begin{frame}[fragile]{Protokollierung}
+  \begin{lstlisting}
+    journalctl -f
+    \end{lstlisting}
+\end{frame}
+  
+\subsection{Filter}
+
+\begin{frame}[fragile]{Filter}
+  \begin{itemize}
+  \item[Service] \verb|journalctl -u nginx|
+  \item[Zeit] \verb|journalctl --since 09:00 --until "1 hour ago"|
+  \item[Priorität] \verb|journalctl -p err|
+  \end{itemize}
+\end{frame}
+
+\section{Systemd \& Sysvinit}
+
+\begin{frame}{Systemd \& SysV-Init}
+  \begin{itemize}
+  \item Initskripte
+  \item Runlevel
+  \item Inetd
+  \end{itemize}
+\end{frame}
+
+\subsection{Einbindung alte Services}
+
+\begin{frame}
+systemd-sysv-generator
+
+ systemctl show --property=UnitPath
+
+ cat /run/systemd/generator.late/ntp.service
+\end{frame}
+
+ \subsubsection{Runlevel}
+
+\begin{frame}{Runlevel}
+ Obsolet in Systemd
+\end{frame}
+
+\section{Abschluß}
+\subsection{Vor- und Nachteile}
+
+\begin{frame}
+\begin{itemize}
+\item monolithish keine manapage keine help
+\item widerspricht Unix-Philosophie
+\item Abhängigkeiten
+\end{itemize}
+\end{frame}
+
+\subsection{Hintergründe}
+
+\begin{frame}
+cgroups
+\end{frame}
+
+\subsection{Referenzen}
+
+\begin{frame}
+\href{https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files}{https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files}
+
+\href{https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs}{https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
