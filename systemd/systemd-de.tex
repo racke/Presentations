@@ -72,6 +72,14 @@ rescue dem Runlevel 1 und default ist ein Alias für das aktive Target
 beim Booten.
 
 \section{Kommandozeile}
+
+\begin{frame}{Kommandozeile}
+  \begin{itemize}
+  \item systemctl
+  \item journalctl
+  \end{itemize}
+\end{frame}
+
 \subsection{systemctl}
 
 \begin{frame}[fragile]{systemctl}
@@ -136,20 +144,13 @@ Inaktive und fehlende Services:
   
 \subsection{Targets}
 
-%\begin{frame}{Targets}
-%\href{https://wiki.archlinux.org/index.php/systemd#Change_default_target_to_boot_into}{Wiki}
-%\end{frame}
+\begin{frame}{Targets}
+ systemctl set-default multi-user.target
+\end{frame}
 
+\section{Unitdateien}
 
-Aktive Runlevel:
-
-     systemctl list-units --type=target
-
-Alle Runlevel:
-
-     systemctl list-units --type=target
-
-\subsection{Unitdateien}
+\subsection{Dateisystem}
 
 \begin{frame}[fragile]{Dateisystem}
   \begin{itemize}
@@ -253,6 +254,8 @@ cgroups
 \subsection{Referenzen}
 
 \begin{frame}
+\href{https://wiki.archlinux.org/index.php/systemd}{ArchWiki}
+
 \href{https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files}{https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files}
 
 \href{https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs}{https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs}
