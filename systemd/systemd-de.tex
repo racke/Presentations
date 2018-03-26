@@ -188,6 +188,31 @@ Unitdateien:
 \end{itemize}
 \end{frame}
 
+\subsection{Ausgabe Unitdatei}
+\begin{frame}[fragile]{Ausgabe Unitdatei}
+\begin{lstlisting}
+root@dev-debian9:~# systemctl cat ssh.service
+# /lib/systemd/system/ssh.service
+[Unit]
+Description=OpenBSD Secure Shell server
+After=network.target auditd.service
+ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
+
+[Service]
+EnvironmentFile=-/etc/default/ssh
+ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
+Alias=sshd.service
+\end{lstlisting}	
+\end{frame}
+
 \subsubsection{target.wants}
 
 \subsubsection{Vorhandene Unitdateien bearbeiten}
