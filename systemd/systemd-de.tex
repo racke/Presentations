@@ -218,7 +218,11 @@ journalctl ist für die Protokollierung zuständig. Die Daten werden in einem Bi
 \item \verb|/run/log/journal| (gelöscht beim Booten)
 \item \verb|/var/log/journal| (persistent)
 \end{itemize}
-\item Weiterleitung an Syslog
+\item Syslog
+	\begin{itemize}
+	\item rsyslog liest Journal
+	\item \verb|ForwardToSyslog=yes|
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
