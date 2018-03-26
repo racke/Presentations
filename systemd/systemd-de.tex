@@ -114,23 +114,44 @@ systemctl start gibt keine Fehlermeldungen aus. Im Default-Modus kann es sogar d
 \begin{frame}[fragile]{systemctl}
 \begin{lstlisting}
 root@dev-debian9:~# systemctl start nginx
-Job for nginx.service failed because the control process exited with error code.
-See "systemctl status nginx.service" and "journalctl -xe" for details.
+Job for nginx.service failed because the control process
+exited with error code.
+See "systemctl status nginx.service" and "journalctl -xe" 
+for details.
 \end{lstlisting}
 \end{frame}
 
-\subsection{Übersicht}
+\subsection{Units anzeigen}
 
 Mit SysV Init finden sich die Skripte für die Services in \verb|/etc/init.d|.
 
-\begin{frame}{Units}
+\begin{frame}[fragile]{Units}
+  \begin{itemize}
+    \item
 Units auflisten:
 
-    systemctl list-units
-
+    \verb|systemctl list-units|
+    \item
 Unitdateien:
 
-systemctl list-unit-files
+\verb|systemctl list-unit-files|
+  \end{itemize}
+\end{frame}
+
+\subsection{Filter}
+
+\begin{frame}[fragile]{Filter}
+  \begin{itemize}
+    \item
+	    Unit-Typ (Services):
+
+    \verb|systemctl list-units --type=service|
+
+\item
+	Inaktive und fehlende Services:
+
+    \verb|systemctl list-units --type=service --all|
+  \end{itemize}
 \end{frame}
 
 \subsection{Status Unitdateien}
@@ -145,18 +166,7 @@ systemctl list-unit-files
 \end{itemize}
 \end{frame}
 
-\subsection{Filter}
 
-\begin{frame}{Filter}
-Unit-Typ (Services):
-
-    systemctl list-units --type=service
-
-Inaktive und fehlende Services:
-
-    systemctl list-units --type=service --all  
-\end{frame}
-  
 \subsection{Targets}
 
 \begin{frame}{Targets}
