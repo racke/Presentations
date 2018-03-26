@@ -284,11 +284,17 @@ journalctl ist für die Protokollierung zuständig. Die Daten werden in einem Bi
   
 \subsection{Filter}
 
-\begin{frame}[fragile]{Filter}
+\begin{frame}[fragile]{Filter für journalctl}
   \begin{itemize}
-  \item[Service] \verb|journalctl -u nginx|
-  \item[Zeit] \verb|journalctl --since 09:00 --until "1 hour ago"|
-  \item[Priorität] \verb|journalctl -p err|
+  \item Service
+
+	  \verb|journalctl -u nginx|
+  \item Zeit
+
+	  \verb|journalctl --since 09:00 --until "1 hour ago"|
+  \item Priorität
+
+	  \verb|journalctl -p err|
   \end{itemize}
 \end{frame}
 
