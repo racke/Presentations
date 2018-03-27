@@ -95,7 +95,7 @@ beim Booten.
 
 \begin{frame}[fragile]{Service Status}
 \begin{lstlisting}
-# systemctl status ntp
+~# systemctl status ntp
 ntp.service - LSB: Start NTP daemon
    Loaded: loaded (/etc/init.d/ntp; generated; vendor preset: enabled)
    Active: active (running) since Mon 2018-03-26 10:15:10 CEST; 25min ago
@@ -113,7 +113,7 @@ systemctl start gibt keine Fehlermeldungen aus. Im Default-Modus kann es sogar d
 
 \begin{frame}[fragile]{Fehlerbehandlung}
 \begin{lstlisting}
-# systemctl start nginx
+~# systemctl start nginx
 Job for nginx.service failed because the control process
 exited with error code.
 See "systemctl status nginx.service" and "journalctl -xe" 
