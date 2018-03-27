@@ -423,10 +423,18 @@ ExecStop=/etc/init.d/ntp stop
 \end{lstlisting}
 \end{frame}
 
- \subsubsection{Runlevel}
+\subsection{Runlevel}
 
 \begin{frame}{Runlevel}
- Obsolet in Systemd
+\begin{itemize}
+\item Obsolet in Systemd
+\item Vergleichbar mit Targets
+\begin{description}[0]
+\item[1] emergency.target
+\item[3] multi-user.target
+\item[5] graphical.target	
+\end{description}		
+\end{itemize}	
 \end{frame}
 
 \section{Abschluß}
