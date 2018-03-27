@@ -258,6 +258,31 @@ WantedBy=multi-user.target
 \end{lstlisting}
 \end{frame}
 
+\subsection{Units bearbeiten}
+\begin{frame}{Units bearbeiten}
+  \begin{itemize}
+    \item Unitdatei kopieren und bearbeiten
+    \item Drop-in erstellen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Drop-in erstellen}
+	\begin{lstlisting}
+# systemctl show -p Restart nginx
+Restart=no
+
+# systemctl edit nginx
+[Service]
+Restart=always
+
+# systemctl show -p Restart nginx
+Restart=always
+\end{lstlisting}
+\end{frame}
+
+Hierbei gilt es auf die korrekte Syntax zu beachten, z.B. \verb|[service]| statt \verb|[Service]|
+führt zur Mißachtung der Anweisungen.
+
 \subsection{Service-Typen}
 
 \begin{frame}{Service-Typen}
