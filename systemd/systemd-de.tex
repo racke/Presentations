@@ -107,17 +107,39 @@ ntp.service - LSB: Start NTP daemon
 \end{lstlisting}
 \end{frame}
 
-\subsection{Fehlermeldungen}
+\subsection{Fehlerbehandlung}
 
-systemctl start gibt keine Fehlermeldungen aus. Im Default-Modus kann es sogar dazu kommen, daß gar keine Meldng kommt.
+systemctl start gibt keine Fehlermeldungen aus. Im Default-Modus kann es sogar dazu kommen, daß gar keine Meldung kommt.
 
-\begin{frame}[fragile]{systemctl}
+\begin{frame}[fragile]{Fehlerbehandlung}
 \begin{lstlisting}
 # systemctl start nginx
 Job for nginx.service failed because the control process
 exited with error code.
 See "systemctl status nginx.service" and "journalctl -xe" 
 for details.
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Fehlerbehandlung}
+\begin{lstlisting}
+~# systemctl start elasticsearch
+~#
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Fehlerbehandlung}
+\begin{lstlisting}
+~# systemctl --failed
+UNIT                      LOAD   ACTIVE SUB    DESCRIPTION
+elasticsearch.service loaded failed failed Elasticsearch
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Fehlerbehandlung}
+\begin{lstlisting}
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 3046768640 bytes for committing reserved memory.
 \end{lstlisting}
 \end{frame}
 
