@@ -121,11 +121,35 @@ for details.
 \end{lstlisting}
 \end{frame}
 
-\subsection{Units anzeigen}
+\subsection{Units}
 
 Mit SysV Init finden sich die Skripte für die Services in \verb|/etc/init.d|.
 
-\begin{frame}[fragile]{Units}
+\begin{frame}[fragile]{Unit anzeigen}
+\begin{lstlisting}
+~# systemctl cat nginx
+# /lib/systemd/system/nginx.service
+[Unit]
+Description=A high performance web server and a reverse proxy server
+Documentation=man:nginx(8)
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/sbin/nginx -t -q -g 'daemon on; master_process on;'
+ExecStart=/usr/sbin/nginx -g 'daemon on; master_process on;'
+ExecReload=/usr/sbin/nginx -g 'daemon on; master_process on;' -s reload
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid
+TimeoutStopSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Liste der Units}
   \begin{itemize}
     \item
 Units auflisten:
@@ -202,31 +226,6 @@ Unitdateien:
 
 	\verb|/run/systemd/system|
 \end{itemize}
-\end{frame}
-
-\subsection{Ausgabe Unitdatei}
-\begin{frame}[fragile]{Ausgabe Unitdatei}
-\begin{lstlisting}
-# systemctl cat ssh.service
-# /lib/systemd/system/ssh.service
-[Unit]
-Description=OpenBSD Secure Shell server
-After=network.target auditd.service
-ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
-
-[Service]
-EnvironmentFile=-/etc/default/ssh
-ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
-ExecReload=/bin/kill -HUP $MAINPID
-KillMode=process
-Restart=on-failure
-RestartPreventExitStatus=255
-Type=notify
-
-[Install]
-WantedBy=multi-user.target
-Alias=sshd.service
-\end{lstlisting}	
 \end{frame}
 
 \subsubsection{target.wants}
