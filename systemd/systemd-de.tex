@@ -169,8 +169,20 @@ Unitdateien:
 
 \subsection{Targets}
 
-\begin{frame}{Boot target}
- systemctl set-default multi-user.target
+\begin{frame}[fragile]{Default Target}
+  \begin{itemize}
+    \item Anzeige
+
+    \verb|systemctl get-default|
+
+    \item Voreinstellung
+
+    \verb|systemctl set-default multi-user.target|
+
+    \item Laufzeitänderung
+
+    \verb|systemctl isolate multi-user.target|
+  \end{itemize}
 \end{frame}
 
 \section{Unitdateien}
