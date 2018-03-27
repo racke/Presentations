@@ -44,14 +44,20 @@ entsprechenden Vor- und Nachteilen. SysV Init ist nur für ein kleines Subset ve
   \begin{itemize}
   \item Services (.service)
   \item Gruppen (.target)
+  \item Slice (.slice)
+  \item Scope (.scope)
   \item Dateisysteme (.mount / .automount)
   \item Überwachung (.path)
   \item Sockets (.socket)
   \item Netzwerke (.network)
   \item Device (.device)
-  \item Slice (.slice)
   \item ...
 \end{itemize}
+
+Der Unit-Typ Slice erzeugt die Cgroup-Hierarchie für Resource-Management.
+
+Der Unit-Typ Scope gruppiert die Worker-Prozesse für einen Service.
+
 \end{frame}
 
 \subsection{Targets}
