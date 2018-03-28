@@ -273,14 +273,7 @@ systemctl list-dependencies multi-user.target
 
 \subsubsection{target.wants}
 
-\subsubsection{Vorhandene Unitdateien bearbeiten}
-
-% https://wiki.archlinux.org/index.php/systemd\#Editing_provided_units
-
- systemctl daemon-reload
-
- drop-in Unitdateien
- \subsection{Struktur Unitdatei}
+\subsection{Struktur Unitdatei}
 
 \begin{frame}[fragile]{Struktur Unitdatei}
  \begin{lstlisting}
@@ -298,6 +291,48 @@ ExecReload=/bin/kill -USR2 $MAINPID
 
 [Install]
 WantedBy=multi-user.target
+\end{lstlisting}
+\end{frame}
+
+\subsection{Direktiven}
+
+\begin{frame}{Direktiven}
+% https://pixabay.com/de/fische-meer-ozean-fischschwarm-22646/
+  \begin{figure}[!ht]
+     \centering
+     \includegraphics[width=0.8\linewidth]{img/fish-22646_1920.jpg}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Abschnitte}
+	\begin{itemize}
+		\item \verb|[Unit]|
+		\item \verb|[Service]|
+		\item \verb|[Install]|
+	        \item ...
+
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}[fragile]{Environment}
+\begin{lstlisting}
+[Service]	
+Environment=ES_HOME=/usr/share/elasticsearch
+Environment=CONF_DIR=/etc/elasticsearch/es1
+
+EnvironmentFile=-/etc/default/es1_elasticsearch
+
+WorkingDirectory=/usr/share/elasticsearch
+
+User=elasticsearch
+Group=elasticsearch
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Restart}
+\begin{lstlisting}
+[Service]	
+Restart=always
 \end{lstlisting}
 \end{frame}
 
