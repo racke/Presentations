@@ -229,24 +229,38 @@ Unitdateien:
 \subsection{Targets}
 
 \begin{frame}[fragile]{Abhängigkeiten anzeigen}
+\begin{itemize}
+	\item		Hierarchie:	
 \begin{lstlisting}
 systemctl list-dependencies multi-user.target
 \end{lstlisting}
+\item	Kinder:
+
+\begin{lstlisting}
+systemctl show -p Wants multi-user.target
+\end{lstlisting}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Default Target}
   \begin{itemize}
     \item Anzeige
-
-    \verb|systemctl get-default|
+\begin{lstlisting}
+systemctl get-default
+\end{lstlisting}
 
     \item Voreinstellung
 
-    \verb|systemctl set-default multi-user.target|
+\begin{lstlisting}
+systemctl set-default multi-user.target
+\end{lstlisting}
 
     \item Laufzeitänderung
 
-    \verb|systemctl isolate multi-user.target|
+\begin{lstlisting}
+systemctl isolate multi-user.target
+\end{lstlisting}
+
   \end{itemize}
 \end{frame}
 
