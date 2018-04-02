@@ -226,6 +226,19 @@ sendmail( $email , { transport => $transport, } );
   \end{itemize}
 \end{frame}
 
+
+\subsection{Emails aus Templates erzeugen}
+
+\begin{frame}[fragile]{Emails aus Templates}
+  \begin{lstlisting}
+    my $html = template $template, $tokens,
+       { layout => 'email' };
+
+    my $f    = HTML::FormatText::WithLinks->new;
+    my $text = $f->parse($html);
+  \end{lstlisting}
+\end{frame}
+
 \section{IMAP}
 
 \begin{frame}{IMAP}
