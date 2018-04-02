@@ -1,6 +1,8 @@
 # Makefile, see http://cgibbons.berkeley.edu/Research/Papers/MakefileTutorial.pdf
-
-LATEX_BIN=xelatex
+#
+# minted needs -shell-escape and python-pygments package
+#
+LATEX_BIN=xelatex -shell-escape
 PODFILE=
 TEXFILE=perlmail
 SLIDE_INPUTS=perlmail-de-beamer.tex

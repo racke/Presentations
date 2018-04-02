@@ -10,3 +10,4 @@
 auto
 *.html
 *.tmp
+_minted*
