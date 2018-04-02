@@ -190,6 +190,20 @@ sendmail($email);
   \end{itemize}
 \end{frame}
 
+\subsubsection{Sendmail-Transport}
+
+Wenn nicht anders angegeben, wird der Sendmail-Transport verwendet, d.h. der
+auf dem Rechner installierte Mailserver.
+
+Das ist nicht immer erwünscht, z.B. wegen dynamischer IP oder vorgebener
+Mailserver.
+
+\begin{frame}[fragile]{Sendmail-Transport}
+\begin{minted}{perl}
+sendmail( $email );
+\end{minted}
+\end{frame}
+
 \subsubsection{Maildir-Transport}
 
 Beim Maildir-Transport wird das Verzeichnis Maildir im aktuellen Verzeichnis
@@ -203,8 +217,8 @@ use File::HomeDir;
 use Path::Tiny;
 \end{lstlisting}
 
-\begin{frame}[fragile]{Transport to Maildir}
-  \begin{lstlisting}
+\begin{frame}[fragile]{Maildir-Transport}
+  \begin{minted}{perl}
 
 my $maildir = path(File::HomeDir->my_home)
     ->child('Maildir');
@@ -215,7 +229,32 @@ my $transport = Email::Sender::Transport::Maildir->new(
 
 sendmail( $email , { transport => $transport, } );
 
-\end{lstlisting}
+\end{minted}
+\end{frame}
+
+\subsubsection{Test-Transport}
+
+\begin{frame}[fragile]{Test-Transport}
+\begin{minted}{perl}
+
+\end{minted}
+\end{frame}
+
+\subsubsection{Redirect-Transport}
+
+\begin{frame}[fragile]{Redirect-Transport}
+  \begin{minted}{perl}
+
+$transport_orig = Email::Sender::Transport::Sendmail->new;
+
+$transport = Email::Sender::Transport::Redirect->new({
+  transport => $transport_orig,
+  redirect_address => 'racke@linuxia.de',
+});
+
+sendmail( $email , { transport => $transport, } );
+
+\end{minted}
 \end{frame}
 
 \subsection{Bilder einbinden}
