@@ -20,6 +20,8 @@
   \item Aufbau einer Email
   \item Emailversand
   \item IMAP
+  \item Email parsen
+  \item Tests und Entwicklung
   \item Use Cases  
   \end{itemize}
 \end{frame}
@@ -383,6 +385,26 @@ $self->mail->walk_parts(sub {
   \item Helpdesk::Integration
   \item Sympa
   \item Spamassassin
+  \end{itemize}
+\end{frame}
+
+\subsection{Helpdesk::Integration}
+
+\begin{frame}{Helpdesk::Integration}
+  \begin{itemize}
+  \item Request Tracker
+    \begin{itemize}
+    \item Web-Interface
+    \item Email-Interface
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Helpdesk::Integration}
+  \begin{itemize}
+  \item IMAP-Postfach durchsuchen
+  \item Email(s) parsen
+  \item Ticket über REST API anlegen/aktualisieren
   \end{itemize}
 \end{frame}
 
