@@ -312,12 +312,16 @@ Here we go.
   \end{itemize}
 \end{frame}
 
+\subsection{IMAP Module}
+
 \begin{frame}{IMAP Module}
   \begin{itemize}
   \item Net::IMAP::Client
   \item Net::IMAP::Simple
   \end{itemize}
 \end{frame}
+
+\subsection{Anmeldung}
 
 \begin{frame}[fragile]{Anmeldung}
 \begin{minted}{perl}
@@ -335,29 +339,34 @@ $imap->login;
 
 login rejected
 
+\subsection{Ordner auswählen}
+
 \begin{frame}[fragile]{Ordner auswählen}
   Ordner auswählen:
 
-\begin{lstlisting}
+\begin{minted}{perl}
   $imap->select('Perl');
-\end{lstlisting}
+\end{minted}
 \end{frame}
+
+\subsection{Emails suchen}
 
 \begin{frame}[fragile]{Emails suchen}
   Emails in ausgewählten Ordner suchen:
 
-\begin{lstlisting}
+\begin{minted}{perl}
   $ids = $imap->search( { subject => 'Perl' }, 'DATE' );
-\end{lstlisting}
+\end{minted}
 \end{frame}
+
+\subsection{Verarbeitung der Emails}
 
 \begin{frame}[fragile]{Verarbeitung der Emails}
   Komplette Email herunterladen:
 
-\begin{lstlisting}
+\begin{minted}{perl}
 $imap->get_rfc822_body($id);
-\end{lstlisting}
-
+\end{minted}
 \end{frame}
 
 \section{Post parsen}
