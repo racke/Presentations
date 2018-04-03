@@ -50,7 +50,7 @@ Sowohl die gesamte Email als auch ihre Teile können als
 \verb|MIME::Entity|-Objekt abgebildet werden:
 
 \begin{frame}[fragile]{MIME::Entity}
-  \begin{lstlisting}
+  \begin{minted}{perl}
 
 $email = MIME::Entity->build(
     From    => '"Module Updates" <info@cpan.pm>',
@@ -58,18 +58,18 @@ $email = MIME::Entity->build(
     Subject => 'Changes in Module Foo::Bar',
     Data    => ["Added class Foo::Bar::Baz\n"],
 );
-  \end{lstlisting}
+  \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{MIME::Entity Attachment}
-  \begin{lstlisting}
+  \begin{minted}{perl}
 
 $email->attach(
     Path => 'img/sunset-3193002_1920.jpg'
     Type => 'image/jpeg',
 );
 
-  \end{lstlisting}
+  \end{minted}
 \end{frame}
 
 \section{Post verschicken}
