@@ -303,16 +303,37 @@ Here we go.
 \section{IMAP}
 
 \begin{frame}{IMAP}
-%  \begin{itemize}
-%  \end{itemize}
+  \begin{itemize}
+  \item Module
+  \item Anmeldung
+  \item Ordner auswählen
+  \item Emails suchen
+  \item Email herunterladen
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{IMAP Modules}
+\begin{frame}{IMAP Module}
   \begin{itemize}
   \item Net::IMAP::Client
   \item Net::IMAP::Simple
   \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]{Anmeldung}
+\begin{minted}{perl}
+my $imap = Net::IMAP::Client->new(
+    server => 'mail.linuxia.pm',
+    ssl => 1,
+    port => 993,
+    user => 'racke@racke.pm',
+    pass => 'nevairbe',
+);
+
+$imap->login;
+\end{minted}
+\end{frame}
+
+login rejected
 
 \begin{frame}[fragile]{Ordner auswählen}
   Ordner auswählen:
