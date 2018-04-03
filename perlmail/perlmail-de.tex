@@ -257,6 +257,24 @@ sendmail( $email , { transport => $transport, } );
 \end{minted}
 \end{frame}
 
+\begin{frame}[fragile]{Redirect-Transport}
+\begin{lstlisting}
+To: racke@linuxia.de
+Cc: racke@linuxia.de
+From: "Module Updates" <info@cpan.pm>
+Subject: Hello world!
+Date: Tue, 3 Apr 2018 08:45:59 +0200
+X-Intercepted-To: "Racke" <racke@racke.pm>
+X-Intercepted-Cc: "Info" <info@racke.pm>
+X-Email-Sender-From: info@cpan.pm
+X-Email-Sender-To: racke@linuxia.de
+X-Email-Sender-To: racke@linuxia.de
+Lines: 1
+
+Here we go.
+\end{lstlisting}
+\end{frame}
+
 \subsection{Bilder einbinden}
 
 \begin{frame}{Bilder einbinden}
