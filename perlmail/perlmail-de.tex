@@ -44,6 +44,22 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Aufbau einer Email}
+\begin{minted}{perl}
+Email::MIME->new( $message )->debug_structure;
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Aufbau einer Email}
+\begin{lstlisting}
++ multipart/mixed;
+    + application/octet-stream; name=83AKE9.pdf
+    + multipart/alternative;
+        + text/plain; charset=UTF-8
+        + text/html; charset=UTF-8
+\end{lstlisting}
+\end{frame}
+
 \subsubsection{MIME::Entity}
 
 Sowohl die gesamte Email als auch ihre Teile können als
