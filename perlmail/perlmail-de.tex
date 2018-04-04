@@ -369,23 +369,21 @@ $imap->get_rfc822_body($id);
 \end{minted}
 \end{frame}
 
-\section{Post parsen}
-
-\subsection{Module zum Parsen}
+\section{Post verarbeiten}
 
 \begin{frame}[fragile]{Email::MIME}
   Email aus IMAP oder Datei einlesen:
 
-  \begin{lstlisting}
+  \begin{minted}{perl}
     Email::MIME->new($message);
-  \end{lstlisting}
+  \end{minted}
 
 \end{frame}
 
 \begin{frame}[fragile]{Email::MIME}
 MIME Parts durchlaufen:
 
-\begin{lstlisting}
+\begin{minted}{perl}
 $self->mail->walk_parts(sub {
   my ($part) = @_;
   return if $part->subparts;
@@ -394,7 +392,7 @@ $self->mail->walk_parts(sub {
     push @out, $part->body_str;
   }
 });
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \subsection{Verschlüsselte Emails}
