@@ -192,6 +192,14 @@ sendmail($email);
   \end{minted}
 \end{frame}
 
+\begin{frame}[fragile]{Kodierter Betreff}
+  \begin{lstlisting}
+To: "Racke" <racke@racke.pm>
+From: "Module Updates" <info@cpan.pm>
+Subject: =?UTF-8?B?w4RuZGVydW5nZW4gaW4gTW9kdWxlIEZvbzo6QmFy?=
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Body der Email kodieren}
   \begin{minted}{perl}
 my $email = Email::Simple->create(
