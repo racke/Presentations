@@ -182,10 +182,10 @@ my $email = Email::Simple->create(
         From    => '"Module Updates" <info@cpan.pm>',
         To      => '"Racke" <racke@racke.pm>',
         Subject => encode('MIME-Header', 
-                          'Änderungen im Modul Foo::Bar',
+                          'Änderungen im Modul Foo',
                          ),
     ],
-    body => "Baz.\n",
+    body => "Bar.\n",
 );
 
 sendmail($email);
@@ -196,7 +196,7 @@ sendmail($email);
   \begin{lstlisting}
 To: "Racke" <racke@racke.pm>
 From: "Module Updates" <info@cpan.pm>
-Subject: =?UTF-8?B?w4RuZGVydW5nZW4gaW4gTW9kdWxlIEZvbzo6QmFy?=
+Subject: =?UTF-8?B?w4RuZGVydW5nZW4gaW4gTW9kdWxlIEZvbw==?=
 \end{lstlisting}
 \end{frame}
 
