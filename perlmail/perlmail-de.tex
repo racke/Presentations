@@ -99,7 +99,7 @@ use Email::Simple::Creator;
 \end{lstlisting}
 
 \begin{frame}[fragile]{Beispiel}
-  \begin{lstlisting}
+  \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
         From    => '"Module Updates" <info@cpan.pm>',
@@ -110,11 +110,33 @@ my $email = Email::Simple->create(
 );
 
 sendmail($email);
-  \end{lstlisting}
+  \end{minted}
+\end{frame}
+
+Leider bietet Email::Simple keine Methode für Attachments, deshalb verwenden
+wir einfach MIME::Entity.
+
+\begin{frame}[fragile]{Beispiel mit Attachment}
+\begin{minted}{perl}
+
+my $email = MIME::Entity->build(
+    From    => '"Module Updates" <info@cpan.pm>',
+    To      => '"Racke" <racke@racke.pm>',
+    Subject => 'Changes in Module Foo::Bar',
+    Data => ["Baz.\n"],
+);
+
+$email->attach(
+    Path => '../perlmail-de-handout.pdf',
+    Type => 'application/pdf',
+);
+
+sendmail($email);
+  \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Beispiel mit Umlaut}
-  \begin{lstlisting}
+  \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
         From    => '"Module Updates" <info@cpan.pm>',
@@ -125,7 +147,7 @@ my $email = Email::Simple->create(
 );
 
 sendmail($email);
-  \end{lstlisting}
+  \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Mail Clients}
@@ -138,7 +160,7 @@ sendmail($email);
 \end{frame}
 
 \begin{frame}[fragile]{Korrektur: Beispiel mit Umlaut}
-  \begin{lstlisting}
+  \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
         From    => '"Module Updates" <info@cpan.pm>',
@@ -151,11 +173,11 @@ my $email = Email::Simple->create(
 );
 
 sendmail($email);
-  \end{lstlisting}
+  \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Body der Email kodieren}
-  \begin{lstlisting}
+  \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
         From    => '"Module Updates" <info@cpan.pm>',
@@ -168,7 +190,7 @@ my $email = Email::Simple->create(
 );
 
 sendmail($email);
-  \end{lstlisting}
+  \end{minted}
 \end{frame}
 
 \subsection{Transports}
