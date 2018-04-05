@@ -32,7 +32,6 @@
   \item Emailversand
   \item IMAP
   \item Email parsen
-  \item Tests und Entwicklung
   \item Use Cases  
   \end{itemize}
 \end{frame}
@@ -345,6 +344,25 @@ Here we go.
   \end{minted}
 \end{frame}
 
+Dancer::Plugin2::Email verwendet MIME::Entity und Email::Sender.
+
+\begin{frame}[fragile]{Emails aus Templates}
+\begin{minted}{perl}
+  email {
+      %args,
+      body   => encode( 'UTF-8', $text ),
+      type   => 'text',
+      attach => {
+         Charset  => 'utf-8',
+         Data     => encode( 'UTF-8', $html ),
+         Encoding => "quoted-printable",
+         Type     => "text/html"
+      },
+      multipart => 'alternative',
+  };
+\end{minted}
+\end{frame}
+
 \section{IMAP}
 
 \begin{frame}{IMAP}
@@ -363,6 +381,22 @@ Here we go.
   \begin{itemize}
   \item Net::IMAP::Client
   \item Net::IMAP::Simple
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Unterschiede IMAP Module}
+  \begin{itemize}
+  \item Konstruktor
+    \begin{itemize}
+      \item server
+      \item ssl / use\_ssl
+    \end{itemize}
+  \item unterstützte Methoden
+  \item Rückgabewerte
+    \begin{itemize}
+    \item select
+      \item search
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -390,7 +424,7 @@ login rejected
   Ordner auswählen:
 
 \begin{minted}{perl}
-  $imap->select('Perl');
+  $imap->select('INBOX.Consulting.Bahn');
 \end{minted}
 \end{frame}
 
@@ -410,26 +444,50 @@ login rejected
   Komplette Email herunterladen:
 
 \begin{minted}{perl}
-$imap->get_rfc822_body($id);
+$message = $imap->get_rfc822_body($id);
 \end{minted}
 \end{frame}
 
 \section{Post verarbeiten}
 
+\begin{frame}{Module zur Verarbeitung}
+  \begin{itemize}
+  \item Email::MIME
+  \item Email::Simple
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Email::MIME}
-  Email aus IMAP oder Datei einlesen:
+  \begin{itemize}
+    \item   Email aus IMAP einlesen:
 
-  \begin{minted}{perl}
-    Email::MIME->new($message);
-  \end{minted}
+\begin{minted}{perl}
+my $message = $imap->get_rfc822_body($id);
+\end{minted}
 
+  \item Email aus Datei einlesen:
+
+\begin{minted}{perl}
+use IO::All;
+my $message = io->file('email.eml')->all;
+\end{minted}
+
+  \item Email parsen:
+
+\begin{minted}{perl}
+my $parser = Email::MIME->new($message);
+\end{minted}
+
+\end{itemize}  
 \end{frame}
 
 \begin{frame}[fragile]{Email::MIME}
 MIME Parts durchlaufen:
 
 \begin{minted}{perl}
-$self->mail->walk_parts(sub {
+my @out;
+
+$parser->walk_parts(sub {
   my ($part) = @_;
   return if $part->subparts;
 
@@ -440,14 +498,39 @@ $self->mail->walk_parts(sub {
 \end{minted}
 \end{frame}
 
-\subsection{Verschlüsselte Emails}
+\subsection{Bahnfahrkarte extrahieren}
 
-\section{Tests und Entwicklung}
+\begin{frame}[fragile]{Bahnfahrkarte(n) extrahieren}
+\begin{minted}{perl}
 
-\begin{frame}{Tests und Entwicklung}
-  \begin{itemize}
-  \item Swaks
-  \end{itemize}
+$ids = $imap->search('FROM buchungsbestaetigung@bahn.de');
+
+for my $imap_id (@$ids) {
+    my $message = $imap->get_rfc822_body($imap_id);
+    my $parser = Email::MIME->new($message);
+    my @out;
+
+    ...
+}
+
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Bahnfahrkarte(n) extrahieren}
+\begin{minted}{perl}
+$parser->walk_parts(
+  sub {
+    my ($part) = @_;
+    return if $part->subparts;
+
+    if ($part->content_type =~ m{application/octet-stream}i){
+      push @out, [ $part->filename, $part->body ];
+    }
+  }
+);
+
+$out[0][1] > io($out[0][0]);
+\end{minted}
 \end{frame}
 
 \section{Use Cases}
