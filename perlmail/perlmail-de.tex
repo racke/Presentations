@@ -74,10 +74,15 @@ Email::MIME->new( $message )->debug_structure;
 \section{Post verschicken}
 
 \begin{frame}{Post verschicken}
+  % https://pixabay.com/en/wealth-currency-paper-abundance-3262562/
   Too many ways to do it ...
+  \begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{img/wealth-3262562_1920.jpg}
+  \end{figure}
 \end{frame}
 
-\begin{frame}{Legacy}
+\begin{frame}{Module (Legacy)}
   \begin{itemize}
     \item Net::SMTP
     \item MIME::Lite
@@ -85,11 +90,22 @@ Email::MIME->new( $message )->debug_structure;
 \end{frame}
 
 \begin{frame}{Module}
+  Versand:
+
   \begin{itemize}
   \item Email::Send (deprecated)
   \item Email::Sender
   \item Email::Sender::Simple
   \end{itemize}
+
+  Sonstiges:
+
+  \begin{itemize}
+  \item Email::MIME
+  \item MIME::Entity
+  \item Mail::Box
+  \end{itemize}
+
 \end{frame}
 
 \begin{lstlisting}
