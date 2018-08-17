@@ -5,11 +5,11 @@
 LATEX_BIN=xelatex -shell-escape
 PODFILE=
 TEXFILE=perlmail
-SLIDE_INPUTS=perlmail-de-beamer.tex
+SLIDE_INPUTS=perlmail-de-beamer.tex perlmail-en-beamer.tex
 SLIDE_OUTPUTS=$(SLIDE_INPUTS:%.tex=%.pdf)
-HANDOUT_INPUTS=perlmail-de-handout.tex
+HANDOUT_INPUTS=perlmail-de-handout.tex perlmail-en-handout.tex
 HANDOUT_OUTPUTS=$(HANDOUT_INPUTS:%.tex=%.pdf)
-NOTES_INPUTS=perlmail-de-notes.tex
+NOTES_INPUTS=perlmail-de-notes.tex perlmail-en-notes.tex
 NOTES_OUTPUTS=$(NOTES_INPUTS:%.tex=%.pdf)
 
 all: $(SLIDE_OUTPUTS) $(HANDOUT_OUTPUTS) clean
