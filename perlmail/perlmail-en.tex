@@ -16,7 +16,7 @@
 \cleardoublepage
 
 
-\begin{frame}{Post mit Perl}
+\begin{frame}{Email with Perl}
   % https://pixabay.com/en/swamp-marsh-green-nature-landscape-1706114/
   \begin{figure}[!ht]
     \centering
@@ -26,41 +26,41 @@
 
 
 
-\begin{frame}{Übersicht}
+\begin{frame}{Overview}
   \begin{itemize}
-  \item Aufbau einer Email
-  \item Emailversand
+  \item Email structure
+  \item Sending emails
   \item IMAP
-  \item Email parsen
+  \item Parsing emails
   \item Use Cases  
   \end{itemize}
 \end{frame}
 
-\section{Einführung}
+\section{Introduction}
 
-\subsection{Aufbau einer Email}
+\subsection{Email structure}
 
-\begin{frame}{Aufbau einer Email}
+\begin{frame}{Email structure}
   \begin{itemize}
   \item Header
   \item Body
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Aufbau einer Email}
+\begin{frame}{Email structure}
   \begin{itemize}
   \item Attachments
   \item HTML / Plaintext
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Aufbau einer Email}
+\begin{frame}[fragile]{Email structure}
 \begin{minted}{perl}
 Email::MIME->new( $message )->debug_structure;
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Aufbau einer Email}
+\begin{frame}[fragile]{Email structure}
 \begin{lstlisting}
 + multipart/mixed;
     + application/octet-stream; name=83AKE9.pdf
@@ -70,9 +70,9 @@ Email::MIME->new( $message )->debug_structure;
 \end{lstlisting}
 \end{frame}
 
-\section{Post verschicken}
+\section{Sending emails}
 
-\begin{frame}{Post verschicken}
+\begin{frame}{Sending emails}
   % https://pixabay.com/en/wealth-currency-paper-abundance-3262562/
   Too many ways to do it ...
   \begin{figure}[!ht]
@@ -89,7 +89,7 @@ Email::MIME->new( $message )->debug_structure;
 \end{frame}
 
 \begin{frame}{Module}
-  Versand:
+  Send:
 
   \begin{itemize}
   \item Email::Send (deprecated)
@@ -97,7 +97,7 @@ Email::MIME->new( $message )->debug_structure;
   \item Email::Sender::Simple
   \end{itemize}
 
-  Sonstiges:
+  Misc:
 
   \begin{itemize}
   \item Email::MIME
@@ -113,7 +113,7 @@ use Email::Simple;
 use Email::Simple::Creator;
 \end{lstlisting}
 
-\begin{frame}[fragile]{Beispiel}
+\begin{frame}[fragile]{Example}
   \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
@@ -128,10 +128,10 @@ sendmail($email);
   \end{minted}
 \end{frame}
 
-Leider bietet Email::Simple keine Methode für Attachments, deshalb verwenden
-wir einfach MIME::Entity.
+Email::Simple unfortunately lacks a method for attachments. So we are simply
+using MIME::Entity instead.
 
-\begin{frame}[fragile]{Beispiel mit Attachment}
+\begin{frame}[fragile]{Example with attachment}
 \begin{minted}{perl}
 
 my $email = MIME::Entity->build(
@@ -150,7 +150,7 @@ sendmail($email);
   \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Beispiel mit Umlaut}
+\begin{frame}[fragile]{Example with umlaut}
   \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
@@ -174,7 +174,7 @@ sendmail($email);
 
 \end{frame}
 
-\begin{frame}[fragile]{Korrektur: Beispiel mit Umlaut}
+\begin{frame}[fragile]{Correction: Example with umlaut}
   \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
@@ -191,7 +191,7 @@ sendmail($email);
   \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Kodierter Betreff}
+\begin{frame}[fragile]{Encoded subject}
   \begin{lstlisting}
 To: "Racke" <racke@racke.pm>
 From: "Module Updates" <info@cpan.pm>
@@ -199,7 +199,7 @@ Subject: =?UTF-8?B?w4RuZGVydW5nZW4gaW4gTW9kdWxlIEZvbw==?=
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Body der Email kodieren}
+\begin{frame}[fragile]{Encoding email body}
   \begin{minted}{perl}
 my $email = Email::Simple->create(
     header => [
@@ -321,20 +321,20 @@ Here we go.
 \end{lstlisting}
 \end{frame}
 
-\subsection{Bilder einbinden}
+\subsection{Embedding images}
 
-\begin{frame}{Bilder einbinden}
+\begin{frame}{Embedding images}
   \begin{itemize}
-  \item Bilder als Links
-  \item Base64 kodiert
+  \item Images as links
+  \item Base64 encoded
   \item CID Inline
   \end{itemize}
 \end{frame}
 
 
-\subsection{Emails aus Templates erzeugen}
+\subsection{Create emails from templates}
 
-\begin{frame}[fragile]{Emails aus Templates}
+\begin{frame}[fragile]{Emails from templates}
   \begin{minted}{perl}
     my $html = template $template, $tokens,
        { layout => 'email' };
@@ -344,9 +344,9 @@ Here we go.
   \end{minted}
 \end{frame}
 
-Dancer::Plugin2::Email verwendet MIME::Entity und Email::Sender.
+Dancer::Plugin2::Email uses MIME::Entity and Email::Sender.
 
-\begin{frame}[fragile]{Emails aus Templates}
+\begin{frame}[fragile]{Emails from templates}
 \begin{minted}{perl}
   email {
       %args,
@@ -367,32 +367,32 @@ Dancer::Plugin2::Email verwendet MIME::Entity und Email::Sender.
 
 \begin{frame}{IMAP}
   \begin{itemize}
-  \item Module
-  \item Anmeldung
-  \item Ordner auswählen
-  \item Emails suchen
-  \item Email herunterladen
+  \item Modules
+  \item Login
+  \item Select folder
+  \item Search emails
+  \item Download emails
   \end{itemize}
 \end{frame}
 
-\subsection{IMAP Module}
+\subsection{IMAP Modules}
 
-\begin{frame}{IMAP Module}
+\begin{frame}{IMAP Modules}
   \begin{itemize}
   \item Net::IMAP::Client
   \item Net::IMAP::Simple
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Unterschiede IMAP Module}
+\begin{frame}[fragile]{Differences between IMAP modules}
   \begin{itemize}
-  \item Konstruktor
+  \item Constructor
     \begin{itemize}
       \item server
       \item ssl / use\_ssl
     \end{itemize}
-  \item unterstützte Methoden
-  \item Rückgabewerte
+  \item Supported methods
+  \item Return values
     \begin{itemize}
     \item select
       \item search
@@ -400,9 +400,9 @@ Dancer::Plugin2::Email verwendet MIME::Entity und Email::Sender.
   \end{itemize}
 \end{frame}
 
-\subsection{Anmeldung}
+\subsection{Login}
 
-\begin{frame}[fragile]{Anmeldung}
+\begin{frame}[fragile]{Login}
 \begin{minted}{perl}
 my $imap = Net::IMAP::Client->new(
     server => 'mail.linuxia.pm',
@@ -418,39 +418,39 @@ $imap->login;
 
 login rejected
 
-\subsection{Ordner auswählen}
+\subsection{Select folder}
 
-\begin{frame}[fragile]{Ordner auswählen}
-  Ordner auswählen:
+\begin{frame}[fragile]{Select folder}
+  Select folder:
 
 \begin{minted}{perl}
   $imap->select('INBOX.Consulting.Bahn');
 \end{minted}
 \end{frame}
 
-\subsection{Emails suchen}
+\subsection{Search emails}
 
-\begin{frame}[fragile]{Emails suchen}
-  Emails in ausgewählten Ordner suchen:
+\begin{frame}[fragile]{Search emails}
+  Search emails in selected folder:
 
 \begin{minted}{perl}
   $ids = $imap->search( { subject => 'Perl' }, 'DATE' );
 \end{minted}
 \end{frame}
 
-\subsection{Verarbeitung der Emails}
+\subsection{Processing emails}
 
-\begin{frame}[fragile]{Verarbeitung der Emails}
-  Komplette Email herunterladen:
+\begin{frame}[fragile]{Processing emails}
+  Download complete email:
 
 \begin{minted}{perl}
 $message = $imap->get_rfc822_body($id);
 \end{minted}
 \end{frame}
 
-\section{Post verarbeiten}
+\section{Processing emails}
 
-\begin{frame}{Module zur Verarbeitung}
+\begin{frame}{Modules for processing}
   \begin{itemize}
   \item Email::MIME
   \item Email::Simple
@@ -459,20 +459,20 @@ $message = $imap->get_rfc822_body($id);
 
 \begin{frame}[fragile]{Email::MIME}
   \begin{itemize}
-    \item   Email aus IMAP einlesen:
+    \item Read Email from IMAP:
 
 \begin{minted}{perl}
 my $message = $imap->get_rfc822_body($id);
 \end{minted}
 
-  \item Email aus Datei einlesen:
+  \item Read email from file:
 
 \begin{minted}{perl}
 use IO::All;
 my $message = io->file('email.eml')->all;
 \end{minted}
 
-  \item Email parsen:
+  \item Parse email:
 
 \begin{minted}{perl}
 my $parser = Email::MIME->new($message);
@@ -482,7 +482,7 @@ my $parser = Email::MIME->new($message);
 \end{frame}
 
 \begin{frame}[fragile]{Email::MIME}
-MIME Parts durchlaufen:
+Walk MIME parts:
 
 \begin{minted}{perl}
 my @out;
@@ -498,9 +498,9 @@ $parser->walk_parts(sub {
 \end{minted}
 \end{frame}
 
-\subsection{Bahnfahrkarte extrahieren}
+\subsection{Extract train ticket}
 
-\begin{frame}[fragile]{Bahnfahrkarte(n) extrahieren}
+\begin{frame}[fragile]{Extract train ticket}
 \begin{minted}{perl}
 
 $ids = $imap->search('FROM buchungsbestaetigung@bahn.de');
@@ -516,7 +516,7 @@ for my $imap_id (@$ids) {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Bahnfahrkarte(n) extrahieren}
+\begin{frame}[fragile]{Extract train ticket}
 \begin{minted}{perl}
 $parser->walk_parts(
   sub {
@@ -558,17 +558,17 @@ $out[0][1] > io($out[0][0]);
 
 \begin{frame}{Helpdesk::Integration}
   \begin{itemize}
-  \item IMAP-Postfach durchsuchen
-  \item Email(s) parsen
-  \item Ticket über REST API anlegen/aktualisieren
+  \item Search IMAP folder
+  \item Parse emails
+  \item Create/update ticket through REST API
   \end{itemize}
 \end{frame}
 
-\section{Abschluß}
+\section{Finish}
 
-\subsection{Fragen}
+\subsection{Questions}
 
-\begin{frame}{Fragen}
+\begin{frame}{Questions}
 % https://pixabay.com/de/fragezeichen-wissen-frage-anmelden-3255140/
   \begin{figure}[!ht]
      \centering
