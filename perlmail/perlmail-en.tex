@@ -482,6 +482,17 @@ my $parser = Email::MIME->new($message);
 \end{frame}
 
 \begin{frame}[fragile]{Email::MIME}
+  Subject header:
+
+\begin{minted}{perl}
+$parser->header_str('Subject');
+\end{minted}
+
+\end{frame}
+
+The header will be already decoded.
+
+\begin{frame}[fragile]{Email::MIME}
 Walk MIME parts:
 
 \begin{minted}{perl}
