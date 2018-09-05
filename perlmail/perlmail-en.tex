@@ -24,7 +24,7 @@
   \end{figure}
 \end{frame}
 
-
+\section{Overview}
 
 \begin{frame}{Overview}
   \begin{itemize}
@@ -36,9 +36,10 @@
   \end{itemize}
 \end{frame}
 
-\section{Introduction}
+\section{Email structure}
 
-\subsection{Email structure}
+Gone are the days of plain text emails, the majority is written in HTML with
+a plain text equivalent if you are lucky.
 
 \begin{frame}{Email structure}
   \begin{itemize}
@@ -53,6 +54,10 @@
   \item HTML / Plaintext
   \end{itemize}
 \end{frame}
+
+A very nice feature of the Email::MIME module (more about that later)
+is the \verb|debug_structure| method which gives you an overview about the
+different parts forming the email body.
 
 \begin{frame}[fragile]{Email structure}
 \begin{minted}{perl}
