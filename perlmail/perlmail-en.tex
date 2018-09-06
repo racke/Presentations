@@ -569,7 +569,21 @@ my $parser = Email::MIME->new($message);
   Subject header:
 
 \begin{minted}{perl}
-$parser->header_str('Subject');
+print $parser->header_str('Subject');
+
+Umlaute with Perl: ü ä ö
+
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]{Email::MIME}
+  Subject header:
+
+\begin{minted}{perl}
+print $parser->header_raw('Subject');
+
+=?UTF-8?B?VW1sYXV0ZSB3aXRoIFBlcmw6IMO8IMOkIMO2?=
 \end{minted}
 
 \end{frame}
