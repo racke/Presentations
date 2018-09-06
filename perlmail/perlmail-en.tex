@@ -493,6 +493,24 @@ error message like \verb|Error in IMAP command received by server|.
 \end{minted}
 \end{frame}
 
+\subsection{Folders}
+
+\begin{frame}[fragile]{Folders}
+  List of folders:
+
+\begin{minted}{perl}
+$imap->folders
+
+[
+  'INBOX/Sympa',
+  'INBOX',
+  'Sent',
+  'Drafts',
+  'Trash'
+]
+\end{minted}
+\end{frame}
+
 \subsection{Processing emails}
 
 \begin{frame}[fragile]{Processing emails}
