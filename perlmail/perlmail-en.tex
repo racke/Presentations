@@ -552,8 +552,8 @@ my $message = $imap->get_rfc822_body($id);
   \item Read email from file:
 
 \begin{minted}{perl}
-use IO::All;
-my $message = io->file('email.eml')->all;
+use Path::Tiny;
+my $message = path('email.eml')->slurp;
 \end{minted}
 
   \item Parse email:
