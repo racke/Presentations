@@ -449,12 +449,29 @@ login rejected
 
 \subsection{Select folder}
 
+IMAP servers use different separators for the folder hierarchy.
+
 \begin{frame}[fragile]{Select folder}
-  Select folder:
+  Select folder (Dbmail):
+
+\begin{minted}{perl}
+  $imap->select('INBOX/Consulting/Bahn');
+\end{minted}
+
+  Select folder (Courier):
 
 \begin{minted}{perl}
   $imap->select('INBOX.Consulting.Bahn');
 \end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]{Folder separator}
+
+\begin{minted}{perl}
+  $imap->separator;
+\end{minted}
+
 \end{frame}
 
 \subsection{Search emails}
