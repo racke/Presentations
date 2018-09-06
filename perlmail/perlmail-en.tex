@@ -480,6 +480,12 @@ It is mandatory to select a folder first, otherwise the search fail with an
 error message like \verb|Error in IMAP command received by server|.
 
 \begin{frame}[fragile]{Search emails}
+  All emails in selected folder:
+
+\begin{minted}{perl}
+  $ids = $imap->search( 'ALL' , 'DATE' );
+\end{minted}
+
   Search emails in selected folder:
 
 \begin{minted}{perl}
