@@ -511,17 +511,28 @@ $imap->folders
 \end{minted}
 \end{frame}
 
-\subsection{Processing emails}
+\subsection{Headers}
 
-\begin{frame}[fragile]{Processing emails}
+\begin{frame}[fragile]{Headers}
+\begin{minted}{perl}
+$summary = $imap->get_summaries($ids);
+\end{minted}
+\end{frame}
+
+\subsection{Download emails}
+
+\begin{frame}[fragile]{Download emails}
   Download complete email:
 
 \begin{minted}{perl}
 $message = $imap->get_rfc822_body($id);
 \end{minted}
+
 \end{frame}
 
 \section{Processing emails}
+
+\subsection{Modules for processing}
 
 \begin{frame}{Modules for processing}
   \begin{itemize}
