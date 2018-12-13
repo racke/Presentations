@@ -1,0 +1,166 @@
+\title{Git und Ansible in der Praxis}
+\author{Stefan Hornburg}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\cleardoublepage
+
+\tableofcontents
+
+\cleardoublepage
+
+\section{Best Practice}
+
+\subsection{Änderungen überprüfen}
+
+\begin{frame}[fragile]{Änderungen überprüfen}
+\begin{lstlisting}
+git status -uno
+git diff
+git diff --cached
+git log -p -n 1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Typische Fehler}
+\begin{itemize}
+\item Neue Dateien übersehen
+% Bei der Durchsicht mit git diff --cached aufgefallen und dann geändert  aber nicht geaddet.
+\item Spätere Änderungen übersehen (git commit, ... , git commit --amend)
+% \item Start from wrong branch
+\end{itemize}
+\end{frame}
+
+\section{Stage}
+
+\begin{frame}[fragile]{Datei für Commit markieren}
+
+Stage changes for the next commit (Snapshots)
+
+\begin{lstlisting}
+git add README.md
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Änderungen anzeigen}
+
+Display staged files:
+
+\begin{lstlisting}
+git diff --name-only --cached
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Änderungen überprüfen}
+Unstage changes:
+
+\begin{lstlisting}
+git reset HEAD
+\end{lstlisting}
+\end{frame}
+
+\section{Patch}
+Änderungen teilweise übernehmen und bearbeiten
+
+requirements.yml:
+
+\begin{frame}[fragile]{Externe Rolle}
+\begin{lstlisting}
+ ________________________________________________
+< TASK [geerlingguy.ntp : Install NTP (Debian).] >
+ ------------------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+
+[DEPRECATION WARNING]: State 'installed' is deprecated.
+Using state 'present' instead.. 
+This feature will be removed in version 2.9. 
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+ok: [10.11.12.117]
+\end{lstlisting}
+\end{frame}
+
+- src: geerlingguy.ntp
+  version: "1.4.1"
+
+Praxisbeispiel:
+
+\begin{frame}[fragile]{Externe Rolle}
+\begin{lstlisting}
+
+ git clone https://github.com/geerlingguy/ansible-role-ntp.git
+ git diff 1.4.1 1.6.2
+ git diff 1.4.1:tasks 1.6.2:tasks
+
+\end{lstlisting}
+\end{frame}
+
+\section{Stash}
+
+\begin{frame}{Stash}
+\begin{itemize}
+\item Unfertige Änderungen
+\end{itemize}
+\end{frame}
+
+\section{Rebasing branches}
+
+\begin{frame}{Rebasing branches}
+\begin{itemize}
+\item Stale branches
+\item Combine branches
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Interaktiv}
+
+\begin{lstlisting}
+export EDITOR=vim
+\end{lstlisting}
+\end{frame}
+
+\section{Abschluß}
+
+\subsection{Referenzen}
+
+\begin{frame}{Referenzen}
+\begin{itemize}	
+\item \href{https://git-scm.com/doc}{Pro Git Book, Reference Manual und Cheat Sheets}
+\end{itemize}
+\end{frame}
+
+\subsection{Fragen}
+
+\begin{frame}{Fragen}
+% https://pixabay.com/de/fragezeichen-wissen-frage-anmelden-3255140/
+  \begin{figure}[!ht]
+     \centering
+     \includegraphics[width=0.9\linewidth]{img/question-mark-3255140_1920.jpg}
+  \end{figure}
+\end{frame}
+
+\subsection{The end}
+
+\begin{frame}{The end}
+% https://pixabay.com/de/ortsschild-ortstafel-schluss-aus-1158385/
+  \begin{figure}[!ht]
+     \centering
+     \includegraphics[width=0.8\linewidth]{img/town-sign-1158385_1920.jpg}
+  \end{figure}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
