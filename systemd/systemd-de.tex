@@ -35,6 +35,7 @@ entsprechenden Vor- und Nachteilen. SysV Init ist nur für ein kleines Subset ve
 \item Logging
 \item Hostname/Locale/Keyboard/Time/...
 \item Temporäre Dateien
+\item Sockets
 \item Timers (Cron-Ersatz)
 \item ...
 \end{itemize}
@@ -225,7 +226,17 @@ Unitdateien:
 %\end{itemize}
 %\end{frame}
 
+\subsection{Sockets}
+\begin{frame}[fragile]{Sockets}
+  \begin{itemize}
+    \item
+Sockets auflisten:
 
+    \verb|systemctl list-sockets|
+    \item
+
+  \end{itemize}
+\end{frame}
 \subsection{Targets}
 
 \begin{frame}[fragile]{Abhängigkeiten anzeigen}
